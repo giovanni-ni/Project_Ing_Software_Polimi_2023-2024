@@ -1,5 +1,7 @@
 package it.polimi.ingsw.module;
 
+import java.util.Map;
+
 public class Gold_Card extends Resource_Card {
 
 	private int n_reqElement;
@@ -16,7 +18,7 @@ public class Gold_Card extends Resource_Card {
 
 	}
 
-	public boolean checkRequirements(Map<?, ?> input) {
+	public boolean checkRequirements(Map input) {
 		return false;
 	}
 

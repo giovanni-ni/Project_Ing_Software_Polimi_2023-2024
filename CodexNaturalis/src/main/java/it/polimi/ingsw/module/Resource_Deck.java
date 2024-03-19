@@ -1,5 +1,7 @@
 package it.polimi.ingsw.module;
 
+import java.util.Stack;
+
 public class Resource_Deck extends Deck {
 
 	private Stack<Card> OpenCard;

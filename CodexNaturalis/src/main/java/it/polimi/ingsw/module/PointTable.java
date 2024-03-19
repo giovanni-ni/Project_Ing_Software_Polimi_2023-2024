@@ -1,12 +1,17 @@
+package it.polimi.ingsw.module;
+
+
+import java.util.Map;
+
 public class PointTable {
 
 	private int maxPoint;
 
 	private int maxPlayerpoint;
 
-	private Map<Player, int> playerPoints;
+	private Map<Player, Integer> playerPoints;
 
-	private Map<Player, int> targetPoints;
+	private Map<Player, Integer> targetPoints;
 
 	public void addPoint() {
 

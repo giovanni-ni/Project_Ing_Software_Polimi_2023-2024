@@ -12,7 +12,7 @@ public class Initial_Card extends Card {
 
 	}
 
-	public Elements getCentralElements() {
+	public Elements[] getCentralElements() {
 
 
         return null;

@@ -1,3 +1,7 @@
+package it.polimi.ingsw.module;
+
+import java.util.List;
+
 public class Match {
 
 	public int idMatch;
@@ -70,7 +74,7 @@ public class Match {
 		return 0;
 	}
 
-	public void IslLastRound:() {
+	public void IslLastRound() {
 
 	}
 
