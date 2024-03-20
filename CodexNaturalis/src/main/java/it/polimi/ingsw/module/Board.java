@@ -249,25 +249,25 @@ public class Board {
 	public void deleteCoveredByCorner(int x, int y,CornerPosition corner){
         switch (corner) {
             case UpLeft -> {
-				if (null != myBoard[x - 1][y + 1]){
+				if (isCardCoordinate( x-1, y+1)){
 					Elements element=myBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
 					addElement(element,-1);
 				}
             }
             case UpRight -> {
-				if (null != myBoard[x + 1][y + 1]){
+				if (isCardCoordinate( x+1, y+1)){
 					Elements element=myBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
 					addElement(element,-1);
 				}
             }
             case DownLeft -> {
-				if (null != myBoard[x - 1][y - 1]){
+				if (isCardCoordinate( x-1, y-1)){
 					Elements element=myBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
 					addElement(element,-1);
 				}
             }
             case DownRight -> {
-				if (null != myBoard[x + 1][y - 1]){
+				if (isCardCoordinate( x+1, y-1)){
 					Elements element=myBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
 					addElement(element,-1);
 				}
