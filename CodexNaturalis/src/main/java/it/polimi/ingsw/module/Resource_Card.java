@@ -6,6 +6,10 @@ public class Resource_Card extends Card {
 
 	private int basePoint;
 
+	public int getbasePoint() { /*added for board */
+		return basePoint;
+	}
+
 	public void setKingdom() {
 
 	}

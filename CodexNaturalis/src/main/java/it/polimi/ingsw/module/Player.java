@@ -11,6 +11,7 @@ public class Player {
 	private Target_Card target;
 
 	private Player_Color playerID;
+	public int currentScore;
 
 	public void chooseTarget(List<Target_Card> input) {
 
