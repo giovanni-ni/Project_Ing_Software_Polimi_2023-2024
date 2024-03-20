@@ -1,7 +1,8 @@
 package it.polimi.ingsw.module;
 
 import java.util.*;
-
+/*how to add point to the ptmap
+* swipe is a  view control maybe*/
 public class Player {
 
 	private List<Card> cardOnHand;

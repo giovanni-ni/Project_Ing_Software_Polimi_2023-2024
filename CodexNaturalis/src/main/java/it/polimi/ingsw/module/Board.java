@@ -174,11 +174,10 @@ public class Board {
 	 */
 	public void addAllCornersElements(Card card){
 		/* no Exception handle*/
-		addCornerElement(card,CornerPosition.UpRight);
-		addCornerElement(card,CornerPosition.UpLeft);
-		addCornerElement(card,CornerPosition.DownLeft);
-		addCornerElement(card,CornerPosition.DownRight);
 
+		for (CornerPosition corner : CornerPosition.values()) {
+			addCornerElement(card, corner);
+		}
 
 	}
 
@@ -231,10 +230,9 @@ public class Board {
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
 	public void deleteCoveredElements(int x, int y){
-		deleteCoveredByCorner(x,y,CornerPosition.UpRight);
-		deleteCoveredByCorner(x,y,CornerPosition.UpLeft);
-		deleteCoveredByCorner(x,y,CornerPosition.DownRight);
-		deleteCoveredByCorner(x,y,CornerPosition.DownLeft);
+		for (CornerPosition corner : CornerPosition.values()) {
+			deleteCoveredByCorner(x,y,corner);
+		}
 	}
 
 
