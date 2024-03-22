@@ -14,7 +14,7 @@ public class Card {
 
 	public boolean isGoldCard(){ /*those booleans would help if some code need to check the requirements that only gold card has*/
 		return false;
-	}
+	} //*watch enum CardType
 
 	public boolean isResourceCard(){
 		return false;
@@ -24,5 +24,7 @@ public class Card {
 		return false;
 	}
 
-
+	public boolean isFront() {
+		return isFront;
+	}
 }

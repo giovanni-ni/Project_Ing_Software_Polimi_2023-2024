@@ -9,44 +9,37 @@ import java.util.Map;
  */
 public class Board {
 
-	private Card[][] myBoard; /* what happens if the index is a negative number*/
+	private Card[][] myCardBoard; /* what happens if the index is a negative number*/
 
     private Map<Elements, Integer> counterOfElements;
 
-
-
 	/**
-	 * Contructor of the board of each player at the start of the game
+	 * Constructor of the board of each player at the start of the game
 	 * @author: Gong
 	 * @param: i:Initial card which would be place at the central position of the board;
-	 		isfront: boolean which represent the face of the card
+	 		isFront: boolean which represent the face of the card
 	 * @exception: WrongCentralElementException: the centralElement is not a natural element
 	 */
-	public Board(Initial_Card i,boolean isfront) {
+	public Board(Initial_Card i) {
 		/*no Exception handle*/
-
-        int maxsize = 80; /*total of cards of two decks*/
-
-        /*initialize myBoard*/
-		for (int j = 0; j < maxsize *2 +1; j++) {
-			for (int k = 0; k < maxsize *2 +1; k++) {
-				myBoard[j][k]=null;
-			}
-		}
-
+		int maxsize= TypeOfCard.ResourceCard.numOfCards+TypeOfCard.GoldCard.numOfCards;
+		initializeMyCardBoard(this.myCardBoard,maxsize);
 		/*put the initial card*/
-		if (isfront){
+		if (i.isFront()){
 			for (int j = 0; j < 3; j++) {
 				Elements centralElement = i.getCentralElements()[j];
 				addElement(centralElement);
 			}
 		} else {
-			addElement(Elements.Animals);
-			addElement(Elements.Mushrooms);
-			addElement(Elements.Vegetal);
-			addElement(Elements.Insect);
+			for(Elements element : Elements.values()){
+				addElement(element);
+			}
+
+
 		}
-		myBoard[maxsize][maxsize]=i;
+        if (myCardBoard != null) {
+            myCardBoard[maxsize][maxsize]=i;
+        }
 
 
     }
@@ -59,9 +52,9 @@ public class Board {
 	 * @param: input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player; x:the coordinate x of the position desired; y:coordinate y desired
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
-	public void addCard(Resource_Card input, boolean front, int x, int y) {
+	public void addCard(Resource_Card input,int x, int y) {
 		/* no Exception handle*/
-		if (front){
+		if (input.isFront()){
 			addAllCornersElements(input);
 		}else{
 			addElement(input.getKingdom());
@@ -79,7 +72,7 @@ public class Board {
 	 * @param: x:the coordinate x of the position desired; y:coordinate y desired
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
-	private boolean check(int x, int y) {
+	public boolean check(int x, int y) {
 		/* no Exception handle*/
 
 		if (checkCorner(x,y,CornerPosition.UpRight) && !isCardCoordinate(x,y))
@@ -104,22 +97,22 @@ public class Board {
             case UpLeft -> {
 				if (!isCardCoordinate(x-1,y+1))
 					return true;
-				return Elements.Hide != myBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
+				return Elements.Hide != myCardBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
             }
             case UpRight -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.Hide != myBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
+				return Elements.Hide != myCardBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
             }
             case DownLeft -> {
 				if (!isCardCoordinate(x-1,y-1))
 					return true;
-				return Elements.Hide != myBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
+				return Elements.Hide != myCardBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
             }
             case DownRight -> {
 				if (!isCardCoordinate(x+1,y-1))
 					return true;
-				return Elements.Hide != myBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
+				return Elements.Hide != myCardBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
             }
         }
         return false;
@@ -131,7 +124,7 @@ public class Board {
 	 * method used for adding the number of elements present in the board of the player
 	 * @author: Gong
 	 * @param: element: the element which number has to be increased;value: the value of the element that has to be increased or decreased
-	 * @exception: NegativeValueofElements: when after changing the value of the count of elements it became negative
+	 * @exception: NegativeValueOfElements: when after changing the value of the count of elements it became negative
 	 */
 	public void addElement(Elements element, Integer value){
 		/* no Exception handle*/
@@ -149,7 +142,7 @@ public class Board {
 	 * increase the number of the element of 1
 	 * @author: Gong
 	 * @param: element: the element which number has to be increased of 1;
-	 * @exception: NegativeValueofElements: when after changing the value of the count of elements it became negative
+	 * @exception: NegativeValueOfElements: when after changing the value of the count of elements it became negative
 	 */
 	public void addElement(Elements element){
 		/* no Exception handle*/
@@ -248,25 +241,25 @@ public class Board {
         switch (corner) {
             case UpLeft -> {
 				if (isCardCoordinate( x-1, y+1)){
-					Elements element=myBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
+					Elements element=myCardBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
 					addElement(element,-1);
 				}
             }
             case UpRight -> {
 				if (isCardCoordinate( x+1, y+1)){
-					Elements element=myBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
+					Elements element=myCardBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
 					addElement(element,-1);
 				}
             }
             case DownLeft -> {
 				if (isCardCoordinate( x-1, y-1)){
-					Elements element=myBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
+					Elements element=myCardBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
 					addElement(element,-1);
 				}
             }
             case DownRight -> {
 				if (isCardCoordinate( x+1, y-1)){
-					Elements element=myBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
+					Elements element=myCardBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
 					addElement(element,-1);
 				}
             }
@@ -307,7 +300,47 @@ public class Board {
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
 	public boolean isCardCoordinate(int x, int y){
-		return myBoard[x][y]!=null;
+		return myCardBoard[x][y]!=null;
 	}
 
+
+	public void setMyCardBoard(Card[][] myCardBoard) {
+
+		this.myCardBoard = myCardBoard;
+	}
+
+	/**
+	 * Initializing it with all null
+	 * @author: Gong
+	 * @param: assign a board  and its max size
+	 * @exception: MaxSizeNegativeException:maxsize is a negative number
+	 */
+	private void initializeMyCardBoard(Card[][] myCardBoard, int maxsize){
+		/*initialize myCardBoard*/
+		for (int j = 0; j < maxsize *2 +1; j++) {
+			for (int k = 0; k < maxsize *2 +1; k++) {
+				if (myCardBoard != null) {
+					myCardBoard[j][k]=null;
+				}
+			}
+		}
+	}
+
+	public void setCounterOfElements(Map<Elements, Integer> counterOfElements) {
+		this.counterOfElements = counterOfElements;
+
+	}
+
+	public Card[][] getMyCardBoard() {
+		return myCardBoard;
+	}
+
+	public Card getCardInBoard(Card[][] cardboard, int x, int y){
+		Card c;
+		c=cardboard[x][y];
+        return c;
+    }
+	public Map<Elements, Integer> getCounterOfElements() {
+		return counterOfElements;
+	}
 }
