@@ -88,10 +88,7 @@ public class Player {
 			System.out.print("Card can't be placed here");
 			return false;
 		}
-		card.
 
-
-		board.addCard(card,x,y);
 		return true;
 	}
 
