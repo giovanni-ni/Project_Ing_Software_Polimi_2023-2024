@@ -2,12 +2,12 @@ package it.polimi.ingsw.module;
 
 public enum CornerPosition {
 
-	UpLeft,
+	UPLEFT,
 
-	UpRight,
+	UPRIGHT,
 
-	DownLeft,
+	DOWNLEFT,
 
-	DownRight;
+	DOWNRIGHT;
 
 }

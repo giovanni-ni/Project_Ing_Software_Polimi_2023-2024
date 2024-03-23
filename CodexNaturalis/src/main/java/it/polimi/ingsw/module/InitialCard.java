@@ -1,6 +1,6 @@
 package it.polimi.ingsw.module;
 
-public class Initial_Card extends Card {
+public class InitialCard extends Card {
 
 	private Elements[] centralElements;
 

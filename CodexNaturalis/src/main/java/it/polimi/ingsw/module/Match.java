@@ -4,6 +4,10 @@ import java.util.List;
 
 public class Match {
 
+	public GoldCard[]goldCards;
+
+	public ResourceOrGoldDeck ResourseDeck= new ResourceOrGoldDeck(goldCards);
+
 	public int idMatch;
 
 	private PointTable pt;
@@ -12,13 +16,12 @@ public class Match {
 
 	private Deck initialdeck;
 
-	private Resource_Deck resourcedeck;
+	private ResourceOrGoldDeck resourcedeck;
 
-	private Resource_Deck golddeck;
+	private ResourceOrGoldDeck golddeck;
 
-	private List<Target_Card> commonTarget;
+	private List<TargetCard> commonTarget;
 
-	private Target_Desk targetdeck;
 
 	private int numplayers;
 
@@ -28,9 +31,9 @@ public class Match {
 
 	private Deck deck;
 
-	private Resource_Deck[] resource_Deck;
+	private ResourceOrGoldDeck[] resource_Deck;
 
-	private Target_Desk target_Desk;
+
 
 	private PointTable pointTable;
 

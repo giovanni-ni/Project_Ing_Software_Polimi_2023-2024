@@ -1,6 +1,6 @@
 package it.polimi.ingsw.module;
 
-public class Resource_Card extends Card {
+public class ResourceCard extends Card {
 
 	private Elements Kingdom;
 

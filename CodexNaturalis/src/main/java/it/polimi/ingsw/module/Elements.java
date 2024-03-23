@@ -1,6 +1,5 @@
 package it.polimi.ingsw.module;
 
 public enum Elements {
-	Mushrooms,Vegetal,Animals,Insect,Hide,Feather,Ink,Parchment,Empty
-
+	MUSHROOMS,VEGETAL,ANIMALS,INSECT,HIDE,FEATHER,INK,PARCHMENT,EMPTY
 }
