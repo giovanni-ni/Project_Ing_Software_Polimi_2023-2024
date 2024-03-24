@@ -22,7 +22,7 @@ public class Board {
 	 		isfront: boolean which represent the face of the card
 	 * @exception: WrongCentralElementException: the centralElement is not a natural element
 	 */
-	public Board(Initial_Card i,boolean isfront) {
+	public Board(InitialCard i,boolean isfront) {
 		/*no Exception handle*/
 
         int maxsize = 80; /*total of cards of two decks*/
@@ -41,10 +41,10 @@ public class Board {
 				addElement(centralElement);
 			}
 		} else {
-			addElement(Elements.Animals);
-			addElement(Elements.Mushrooms);
-			addElement(Elements.Vegetal);
-			addElement(Elements.Insect);
+			addElement(Elements.ANIMALS);
+			addElement(Elements.MUSHROOMS);
+			addElement(Elements.VEGETAL);
+			addElement(Elements.INSECT);
 		}
 		myBoard[maxsize][maxsize]=i;
 
@@ -59,7 +59,7 @@ public class Board {
 	 * @param: input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player; x:the coordinate x of the position desired; y:coordinate y desired
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
-	public void addCard(Resource_Card input, boolean front, int x, int y) {
+	public void addCard(ResourceCard input, boolean front, int x, int y) {
 		/* no Exception handle*/
 		if (front){
 			addAllCornersElements(input);
@@ -82,10 +82,10 @@ public class Board {
 	private boolean check(int x, int y) {
 		/* no Exception handle*/
 
-		if (checkCorner(x,y,CornerPosition.UpRight) && !isCardCoordinate(x,y))
-			if (checkCorner(x,y,CornerPosition.UpLeft))
-				if (checkCorner(x,y,CornerPosition.DownRight))
-                    return checkCorner(x, y,CornerPosition.DownLeft);
+		if (checkCorner(x,y,CornerPosition.UPRIGHT) && !isCardCoordinate(x,y))
+			if (checkCorner(x,y,CornerPosition.UPLEFT))
+				if (checkCorner(x,y,CornerPosition.DOWNRIGHT))
+                    return checkCorner(x, y,CornerPosition.DOWNLEFT);
 		return false;
 	}
 
@@ -101,25 +101,25 @@ public class Board {
 	private boolean checkCorner(int x, int y, CornerPosition corner) {
 		/* no Exception handle*/
         switch (corner) {
-            case UpLeft -> {
+            case UPLEFT -> {
 				if (!isCardCoordinate(x-1,y+1))
 					return true;
-				return Elements.Hide != myBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
+				return Elements.HIDE != myBoard[x - 1][y + 1].corners.get(CornerPosition.DOWNRIGHT);
             }
-            case UpRight -> {
+            case UPRIGHT -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.Hide != myBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
+				return Elements.HIDE != myBoard[x + 1][y + 1].corners.get(CornerPosition.DOWNLEFT);
             }
-            case DownLeft -> {
+            case DOWNLEFT -> {
 				if (!isCardCoordinate(x-1,y-1))
 					return true;
-				return Elements.Hide != myBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
+				return Elements.HIDE != myBoard[x - 1][y - 1].corners.get(CornerPosition.UPRIGHT);
             }
-            case DownRight -> {
+            case DOWNRIGHT -> {
 				if (!isCardCoordinate(x+1,y-1))
 					return true;
-				return Elements.Hide != myBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
+				return Elements.HIDE != myBoard[x + 1][y - 1].corners.get(CornerPosition.UPLEFT);
             }
         }
         return false;
@@ -135,7 +135,7 @@ public class Board {
 	 */
 	public void addElement(Elements element, Integer value){
 		/* no Exception handle*/
-		if (element != Elements.Hide && element!=Elements.Empty) {
+		if (element != Elements.HIDE && element!=Elements.EMPTY) {
 
 			if (counterOfElements.containsKey(element)) {
 				value += counterOfElements.get(element);
@@ -154,7 +154,7 @@ public class Board {
 	public void addElement(Elements element){
 		/* no Exception handle*/
 		Integer value=1;
-		if (element != Elements.Hide && element!=Elements.Empty) {
+		if (element != Elements.HIDE && element!=Elements.EMPTY) {
 
 			if (counterOfElements.containsKey(element)) {
 				value += counterOfElements.get(element);
@@ -195,20 +195,20 @@ public class Board {
 	public void addCornerElement(Card card, CornerPosition corner){
 		/* no Exception handle*/
         switch (corner) {
-            case UpLeft -> {
-				Elements element= card.corners.get(CornerPosition.UpLeft);
+            case UPLEFT -> {
+				Elements element= card.corners.get(CornerPosition.UPLEFT);
 				addElement(element);
             }
-            case UpRight -> {
-				Elements element= card.corners.get(CornerPosition.UpRight);
+            case UPRIGHT -> {
+				Elements element= card.corners.get(CornerPosition.UPRIGHT);
 				addElement(element);
             }
-            case DownLeft -> {
-				Elements element= card.corners.get(CornerPosition.DownLeft);
+            case DOWNLEFT -> {
+				Elements element= card.corners.get(CornerPosition.DOWNLEFT);
 				addElement(element);
             }
-            case DownRight -> {
-				Elements element= card.corners.get(CornerPosition.DownRight);
+            case DOWNRIGHT -> {
+				Elements element= card.corners.get(CornerPosition.DOWNRIGHT);
 				addElement(element);
             }
         }
@@ -246,27 +246,27 @@ public class Board {
 	 */
 	public void deleteCoveredByCorner(int x, int y,CornerPosition corner){
         switch (corner) {
-            case UpLeft -> {
+            case UPLEFT -> {
 				if (isCardCoordinate( x-1, y+1)){
-					Elements element=myBoard[x - 1][y + 1].corners.get(CornerPosition.DownRight);
+					Elements element=myBoard[x - 1][y + 1].corners.get(CornerPosition.DOWNRIGHT);
 					addElement(element,-1);
 				}
             }
-            case UpRight -> {
+            case UPRIGHT -> {
 				if (isCardCoordinate( x+1, y+1)){
-					Elements element=myBoard[x + 1][y + 1].corners.get(CornerPosition.DownLeft);
+					Elements element=myBoard[x + 1][y + 1].corners.get(CornerPosition.DOWNLEFT);
 					addElement(element,-1);
 				}
             }
-            case DownLeft -> {
+            case DOWNLEFT -> {
 				if (isCardCoordinate( x-1, y-1)){
-					Elements element=myBoard[x - 1][y - 1].corners.get(CornerPosition.UpRight);
+					Elements element=myBoard[x - 1][y - 1].corners.get(CornerPosition.UPRIGHT);
 					addElement(element,-1);
 				}
             }
-            case DownRight -> {
+            case DOWNRIGHT -> {
 				if (isCardCoordinate( x+1, y-1)){
-					Elements element=myBoard[x + 1][y - 1].corners.get(CornerPosition.UpLeft);
+					Elements element=myBoard[x + 1][y - 1].corners.get(CornerPosition.UPLEFT);
 					addElement(element,-1);
 				}
             }

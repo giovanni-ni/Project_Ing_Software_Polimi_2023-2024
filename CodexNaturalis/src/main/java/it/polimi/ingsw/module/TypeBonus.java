@@ -1,6 +1,6 @@
 package it.polimi.ingsw.module;
 
-public enum Type_Bonus {
+public enum TypeBonus {
 
 	HideCormer,
 

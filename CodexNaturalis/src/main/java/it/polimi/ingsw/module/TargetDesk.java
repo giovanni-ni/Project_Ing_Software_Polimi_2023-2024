@@ -2,11 +2,11 @@ package it.polimi.ingsw.module;
 
 import java.util.Stack;
 
-public class Target_Desk {
+public class TargetDesk {
 
-	private Stack<Target_Card> deck;
+	private Stack<TargetCard> deck;
 
-	private Target_Card[] target_Card;
+	private TargetCard[] target_Card;
 
 	public void shuffle() {
 

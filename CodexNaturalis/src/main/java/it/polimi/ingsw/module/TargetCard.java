@@ -1,6 +1,6 @@
 package it.polimi.ingsw.module;
 
-public class Target_Card {
+public class TargetCard {
 
 	private int basePoint;
 

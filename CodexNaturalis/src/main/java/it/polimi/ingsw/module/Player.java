@@ -9,12 +9,12 @@ public class Player {
 
 	private Board board;
 
-	private Target_Card target;
+	private TargetCard target;
 
-	private Player_Color playerID;
+	private PlayerColor playerID;
 	public int currentScore;
 
-	public void chooseTarget(List<Target_Card> input) {
+	public void chooseTarget(List<TargetCard> input) {
 
 	}
 

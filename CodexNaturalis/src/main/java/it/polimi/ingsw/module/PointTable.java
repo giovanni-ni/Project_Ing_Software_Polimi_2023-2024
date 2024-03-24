@@ -29,7 +29,7 @@ public class PointTable {
 		return null;
 	}
 
-	public void CountTarget(Player_Color p) {
+	public void CountTarget(PlayerColor p) {
 
 	}
 
