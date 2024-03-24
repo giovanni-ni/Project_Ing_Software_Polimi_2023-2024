@@ -2,10 +2,10 @@ package it.polimi.ingsw.module;
 
 public enum TypeBonus {
 
-	HideCormer,
+	HIDECORNER,
 
-	CountElement,
+	COUNTELEMENT,
 
-	DirectPoint
+	DIRECTPOINT
 
 }
