@@ -12,28 +12,22 @@ public class Match {
 
 	private Deck initialdeck;
 
-	private ResourceOrGoldDeck resourcedeck;
+	private ResourceOrGoldDeck resourceDeck;
 
-	private ResourceOrGoldDeck golddeck;
+	private ResourceOrGoldDeck goldDeck;
 
 	private List<TargetCard> commonTarget;
 
 
-	private int numplayers;
+	private int numPlayers;
 
 	private Player firstPlayer;
 
 	private Player[] player;
 
-	private Deck deck;
-
-	private ResourceOrGoldDeck[] resource_Deck;
-
-
-
 	private PointTable pointTable;
 
-	public void DIstributeResourceDeck() {
+	public void DistributeResourceDeck() {
 
 	}
 
@@ -57,7 +51,7 @@ public class Match {
 
 	}
 
-	public Player getplayerInTurn() {
+	public Player getPlayerInTurn() {
 		return null;
 	}
 
@@ -69,7 +63,7 @@ public class Match {
 		return null;
 	}
 
-	public int getObjectivescore(Player p) {
+	public int getObjectiveScore(Player p) {
 		return 0;
 	}
 
@@ -77,7 +71,7 @@ public class Match {
 
 	}
 
-	public int coutRound() {
+	public int countRound() {
 		return 0;
 	}
 
