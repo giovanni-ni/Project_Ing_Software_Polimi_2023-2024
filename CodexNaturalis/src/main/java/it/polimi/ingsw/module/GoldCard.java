@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class GoldCard extends ResourceCard {
 
-	private int n_reqElement;
+	private int nReqElement;
 
 	private Elements secondElement;
 

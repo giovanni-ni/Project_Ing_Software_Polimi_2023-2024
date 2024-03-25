@@ -1,0 +1,74 @@
+[
+  {
+    "CardId": "41",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "FEATHER",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basepoint": "1",
+    "nReqElement": "2",
+    "secondElement": "ANIMALS",
+    "type": "COUNTELEMENT"
+  },
+
+  {
+    "CardId": "42",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "INK",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basepoint": "1",
+    "nReqElement": "2",
+    "secondElement": "VEGETAL",
+    "type": "COUNTELEMENT"
+  },
+
+  {
+    "CardId": "43",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "PARCHMENT",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basepoint": "1",
+    "nReqElement": "2",
+    "secondElement": "INSECT",
+    "type": "COUNTELEMENT"
+  },
+
+  {
+    "CardId": "44",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basepoint": "2",
+    "nReqElement": "3",
+    "secondElement": "ANIMALS",
+    "type": "HIDECORNER"
+  }
+]
+
