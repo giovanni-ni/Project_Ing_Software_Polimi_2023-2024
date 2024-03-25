@@ -422,122 +422,122 @@
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "32",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
-      "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPRIGHT": "EMPTY",
+      "UPLEFT": "HIDE",
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "INSECT"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "33",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
+      "UPRIGHT": "HIDE",
       "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "DOWNRIGHT": "EMPTY",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "34",
   "isFront": false,
   "corners": [
     {
       "UPRIGHT": "INSECT",
-      "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPLEFT": "EMPTY",
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "35",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
+      "UPRIGHT": "FEATHER",
       "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "ANIMALS"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "36",
   "isFront": false,
   "corners": [
     {
       "UPRIGHT": "INSECT",
-      "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPLEFT": "FEATHER",
+      "DOWNRIGHT": "MUSHROOMS",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "37",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
+      "UPRIGHT": "VEGETAL",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "DOWNLEFT": "INK"
     }
   ],
   "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "31",
+  "CardId": "38",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
+      "UPRIGHT": "HIDE",
       "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
+      "DOWNRIGHT": "EMPTY",
       "DOWNLEFT": "EMPTY"
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": "1"
 },{
-  "CardId": "31",
+  "CardId": "39",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
-      "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPRIGHT": "EMPTY",
+      "UPLEFT": "EMPTY",
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": "1"
 },{
-  "CardId": "31",
+  "CardId": "40",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "INSECT",
-      "UPLEFT": "INSECT",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPRIGHT": "EMPTY",
+      "UPLEFT": "EMPTY",
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": "1"
 }
 
 
