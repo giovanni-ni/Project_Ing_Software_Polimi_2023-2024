@@ -82,7 +82,7 @@ public class PointTable {
 	private List<Player> getPlayers(List<Player> players, Map<Player, Integer> points) {
 		int max=0;
 		int playerPoint;
-		List<Player> maxPlayers = new ArrayList<Player>();
+		List<Player> maxPlayers = new ArrayList<>();
 
 		for(Player p : players){
 			playerPoint = points.get(p);
