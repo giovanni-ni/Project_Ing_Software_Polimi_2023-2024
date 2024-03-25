@@ -309,104 +309,234 @@
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "ANIMALS",
+      "UPRIGHT": "HIDE",
       "UPLEFT": "ANIMALS",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "DOWNRIGHT": "EMPTY",
+      "DOWNLEFT": "ANIMALS"
     }
   ],
   "kingdom": "ANIMALS",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "24",
   "isFront": false,
   "corners": [
     {
       "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPLEFT": "EMPTY",
+      "DOWNRIGHT": "ANIMALS",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "ANIMALS",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "25",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "HIDE",
+      "DOWNRIGHT": "ANIMALS",
+      "DOWNLEFT": "INK"
     }
   ],
   "kingdom": "ANIMALS",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "26",
   "isFront": false,
   "corners": [
     {
       "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPLEFT": "VEGETAL",
+      "DOWNRIGHT": "PARCHMENT",
+      "DOWNLEFT": "HIDE"
     }
   ],
   "kingdom": "ANIMALS",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "27",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
-      "DOWNRIGHT": "HIDE",
-      "DOWNLEFT": "EMPTY"
+      "UPRIGHT": "HIDE",
+      "UPLEFT": "FEATHER",
+      "DOWNRIGHT": "MUSHROOMS",
+      "DOWNLEFT": "ANIMALS"
     }
   ],
   "kingdom": "ANIMALS",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "28",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "EMPTY",
+      "UPLEFT": "HIDE",
+      "DOWNRIGHT": "EMPTY",
+      "DOWNLEFT": "ANIMALS"
+    }
+  ],
+  "kingdom": "ANIMALS",
+  "basePoint": "1"
+},{
+  "CardId": "29",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "HIDE",
+      "UPLEFT": "EMPTY",
+      "DOWNRIGHT": "ANIMALS",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "ANIMALS",
+  "basePoint": "1"
+},{
+  "CardId": "30",
   "isFront": false,
   "corners": [
     {
       "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
+      "UPLEFT": "EMPTY",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
   ],
   "kingdom": "ANIMALS",
+  "basePoint": "1"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "31",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
   ],
-  "kingdom": "ANIMALS",
+  "kingdom": "INSECT",
   "basePoint": "0"
 },{
-  "CardId": "21",
+  "CardId": "31",
   "isFront": false,
   "corners": [
     {
-      "UPRIGHT": "ANIMALS",
-      "UPLEFT": "ANIMALS",
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
   ],
-  "kingdom": "ANIMALS",
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
+  "basePoint": "0"
+},{
+  "CardId": "31",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "INSECT",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "EMPTY"
+    }
+  ],
+  "kingdom": "INSECT",
   "basePoint": "0"
 }
 
