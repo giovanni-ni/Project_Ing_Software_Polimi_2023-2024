@@ -46,8 +46,19 @@ public class Deck {
 		}else
 			return null;
 	}
-	public int getNumOfRemainingCards(){
+
+	public int getNumCards() {
 		return numCards;
 	}
+	public ArrayList<Card> getDeck() {
+		return deck;
+	}
 
+	public void setDeck(ArrayList<Card> deck) {
+		this.deck = deck;
+	}
+
+	public void setNumCards(int numCards) {
+		this.numCards = numCards;
+	}
 }

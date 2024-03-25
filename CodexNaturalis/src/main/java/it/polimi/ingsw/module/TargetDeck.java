@@ -30,8 +30,36 @@ public class TargetDeck {
             return null;
     }
 
+
+    public TargetCard seeFirstTargetCard(){
+        if(numTargetCards>=0)
+            return targetDeck.getLast();
+        else
+            return null;
+    }
+
+    public TargetCard seeSecondTargetCard(){
+        if(numTargetCards>=0)
+            return  targetDeck.getLast();
+        else
+            return null;
+    }
+
+
     public int getNumTargetCards() {
         return numTargetCards;
+    }
+
+    public ArrayList<TargetCard> getTargetDeck() {
+        return targetDeck;
+    }
+
+    public void setNumTargetCards(int numTargetCards) {
+        this.numTargetCards = numTargetCards;
+    }
+
+    public void setTargetDeck(ArrayList<TargetCard> targetDeck) {
+        this.targetDeck = targetDeck;
     }
 
 
