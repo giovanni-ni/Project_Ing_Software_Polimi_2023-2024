@@ -4,10 +4,6 @@ import java.util.List;
 
 public class Match {
 
-	public GoldCard[]goldCards;
-
-	public ResourceOrGoldDeck ResourseDeck= new ResourceOrGoldDeck(goldCards);
-
 	public int idMatch;
 
 	private PointTable pt;
