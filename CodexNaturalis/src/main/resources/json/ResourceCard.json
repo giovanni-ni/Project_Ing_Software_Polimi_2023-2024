@@ -3,8 +3,267 @@
     "CardId": "1",
     "isFront": false,
     "corners": [
-      "UPRIGHT":
-    ]
-
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "2",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "MUSHROOMS",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "3",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "MUSHROOMS",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "4",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "MUSHROOMS",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "MUSHROOMS",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "5",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "FEATHER",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "MUSHROOMS",
+        "DOWNLEFT": "VEGETAL"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "6",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "MUSHROOMS",
+        "UPLEFT": "INK",
+        "DOWNRIGHT": "ANIMALS",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "7",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "INSECT",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "PARCHMENT"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "8",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "MUSHROOMS",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "1"
+  },
+  {
+    "CardId": "9",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "1"
+  },
+  {
+    "CardId": "10",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
+  },
+  {
+    "CardId": "1",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "MUSHROOMS",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "MUSHROOMS"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "0"
   }
+  v
 ]

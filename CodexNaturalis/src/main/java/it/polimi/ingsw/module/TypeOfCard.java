@@ -1,10 +1,10 @@
 package it.polimi.ingsw.module;
 
 public enum TypeOfCard {
-    RESOURCECARD(40,0,39),
-    GOLDCARD(40,40,79),
-    INITIALCARD(6,80,85),
-    TARGETCARD(16,86,101),
+    RESOURCECARD(40,1,40),
+    GOLDCARD(40,41,80),
+    INITIALCARD(6,81,86),
+    TARGETCARD(16,87,102),
     ;
 
     final int numOfCards;

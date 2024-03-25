@@ -6,7 +6,7 @@ public class ResourceCard extends Card {
 
 	private int basePoint;
 
-	public int getbasePoint() { /*added for board */
+	public int getBasePoint() { /*added for board */
 		return basePoint;
 	}
 
