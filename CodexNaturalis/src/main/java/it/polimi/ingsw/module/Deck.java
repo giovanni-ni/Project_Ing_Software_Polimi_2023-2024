@@ -10,8 +10,8 @@ public class Deck {
     public Deck (Card[] cards){
 		deck =new ArrayList<>();
         for(int i =0; i<cards.length; i++) {
-			deck.add(cards[i]);
 			/*method that sets all the cards into backs*/
+			deck.add(cards[i]);
 		}
 		int numCards=cards.length;
 	}
@@ -45,26 +45,6 @@ public class Deck {
 			return deck.get(numCards - 1);
 		}else
 			return null;
-	}
-
-	public Card getFirstFrontCard(){
-		if(numCards>=0){
-			Card tmp = deck.getLast();
-			deck.removeLast();
-			numCards--;
-			return tmp;
-		}
-		return null;
-	}
-
-	public  Card getSecondFrontCard(){
-		if(numCards>=0){
-			Card tmp=deck.get(numCards-1);
-			deck.remove(numCards-1);
-			numCards--;
-			return tmp;
-		}
-		return null;
 	}
 	public int getNumOfRemainingCards(){
 		return numCards;
