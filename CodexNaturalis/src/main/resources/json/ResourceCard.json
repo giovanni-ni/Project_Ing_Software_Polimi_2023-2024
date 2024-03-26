@@ -1,6 +1,6 @@
 [
   {
-    "CardId": "1",
+    "code": 1,
     "isFront": false,
     "corners": [
       {
@@ -11,10 +11,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "2",
+    "code": 2,
     "isFront": false,
     "corners": [
       {
@@ -25,10 +25,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "3",
+    "code": 3,
     "isFront": false,
     "corners": [
       {
@@ -39,10 +39,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "4",
+    "code": 4,
     "isFront": false,
     "corners": [
       {
@@ -53,10 +53,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "5",
+    "code": 5,
     "isFront": false,
     "corners": [
       {
@@ -67,10 +67,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "6",
+    "code": 6,
     "isFront": false,
     "corners": [
       {
@@ -81,10 +81,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "7",
+    "code": 7,
     "isFront": false,
     "corners": [
       {
@@ -95,10 +95,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "8",
+    "code": 8,
     "isFront": false,
     "corners": [
       {
@@ -109,10 +109,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1"
+    "basePoint": 1
   },
   {
-    "CardId": "9",
+    "code": 9,
     "isFront": false,
     "corners": [
       {
@@ -123,10 +123,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1"
+    "basePoint": 1
   },
   {
-    "CardId": "10",
+    "code": 10,
     "isFront": false,
     "corners": [
       {
@@ -137,10 +137,10 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1"
+    "basePoint": 1
   },
   {
-    "CardId": "11",
+    "code": 11,
     "isFront": false,
     "corners": [
       {
@@ -151,10 +151,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "12",
+    "code": 12,
     "isFront": false,
     "corners": [
       {
@@ -165,10 +165,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "13",
+    "code": 13,
     "isFront": false,
     "corners": [
       {
@@ -179,10 +179,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "14",
+    "code": 14,
     "isFront": false,
     "corners": [
       {
@@ -193,10 +193,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "15",
+    "code": 15,
     "isFront": false,
     "corners": [
       {
@@ -207,10 +207,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "16",
+    "code": 16,
     "isFront": false,
     "corners": [
       {
@@ -221,10 +221,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "17",
+    "code": 17,
     "isFront": false,
     "corners": [
       {
@@ -235,10 +235,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "0"
+    "basePoint": 0
   },
   {
-    "CardId": "18",
+    "code": 18,
     "isFront": false,
     "corners": [
       {
@@ -249,10 +249,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1"
+    "basePoint": 1
   },
   {
-    "CardId": "19",
+    "code": 19,
     "isFront": false,
     "corners": [
       {
@@ -263,10 +263,10 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1"
+    "basePoint": 1
   },
   {
-    "CardId": "20",
+    "code": 20,
     "isFront": false,
     "corners": [
       {
@@ -277,9 +277,9 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1"
+    "basePoint": 1
   },{
-  "CardId": "21",
+  "code": 21,
   "isFront": false,
   "corners": [
     {
@@ -290,9 +290,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "22",
+  "code": 22,
   "isFront": false,
   "corners": [
     {
@@ -303,9 +303,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "23",
+  "code": 23,
   "isFront": false,
   "corners": [
     {
@@ -316,9 +316,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "24",
+  "code": 24,
   "isFront": false,
   "corners": [
     {
@@ -329,9 +329,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "25",
+  "code": 25,
   "isFront": false,
   "corners": [
     {
@@ -342,9 +342,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "26",
+  "code": 26,
   "isFront": false,
   "corners": [
     {
@@ -355,9 +355,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "27",
+  "code": 27,
   "isFront": false,
   "corners": [
     {
@@ -368,9 +368,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "28",
+  "code": 28,
   "isFront": false,
   "corners": [
     {
@@ -381,9 +381,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "1"
+  "basePoint": 1
 },{
-  "CardId": "29",
+  "code": 29,
   "isFront": false,
   "corners": [
     {
@@ -394,9 +394,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "1"
+  "basePoint": 1
 },{
-  "CardId": "30",
+  "code": 30,
   "isFront": false,
   "corners": [
     {
@@ -407,9 +407,9 @@
     }
   ],
   "kingdom": "ANIMALS",
-  "basePoint": "1"
+  "basePoint": 1
 },{
-  "CardId": "31",
+  "code": 31,
   "isFront": false,
   "corners": [
     {
@@ -420,9 +420,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "32",
+  "code": 32,
   "isFront": false,
   "corners": [
     {
@@ -433,9 +433,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "33",
+  "code": 33,
   "isFront": false,
   "corners": [
     {
@@ -446,9 +446,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "34",
+  "code": 34,
   "isFront": false,
   "corners": [
     {
@@ -459,9 +459,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "35",
+  "code": 35,
   "isFront": false,
   "corners": [
     {
@@ -472,9 +472,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "36",
+  "code": 36,
   "isFront": false,
   "corners": [
     {
@@ -485,9 +485,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "37",
+  "code": 37,
   "isFront": false,
   "corners": [
     {
@@ -498,9 +498,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "0"
+  "basePoint": 0
 },{
-  "CardId": "38",
+  "code": 38,
   "isFront": false,
   "corners": [
     {
@@ -511,9 +511,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "1"
+  "basePoint": 1
 },{
-  "CardId": "39",
+  "code": 39,
   "isFront": false,
   "corners": [
     {
@@ -524,9 +524,9 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "1"
+  "basePoint": 1
 },{
-  "CardId": "40",
+  "code": 40,
   "isFront": false,
   "corners": [
     {
@@ -537,7 +537,7 @@
     }
   ],
   "kingdom": "INSECT",
-  "basePoint": "1"
+  "basePoint": 1
 }
 
 

@@ -1,6 +1,6 @@
 [
 {
-  "CardId": "41",
+  "code": 41,
   "isFront": false,
   "corners": [
     {
@@ -11,13 +11,13 @@
     }
   ],
   "kingdom": "MUSHROOMS",
-  "basePoint": "3",
-  "n_reqElement": "3",
+  "basePoint": 3,
+  "nReqElement": 3,
   "secondElement": "EMPTY",
   "type": "DIRECTPOINT"
 },
 {
- "CardId": "42",
+ "code": 42,
 "isFront": false,
 "corners": [
 {
@@ -28,13 +28,13 @@
 }
 ],
 "kingdom": "MUSHROOMS",
-"basePoint": "3",
-  "n_reqElement": "3",
+"basePoint": 3,
+  "nReqElement": 3,
   "secondElement": "EMPTY",
   "type": "DIRECTPOINT"
 },
   {
-    "CardId": "43",
+    "code": 43,
     "isFront": false,
     "corners": [
       {
@@ -45,13 +45,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement":3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "44",
+    "code": 44,
     "isFront": false,
     "corners": [
       {
@@ -62,13 +62,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "5",
-    "n_reqElement": "5",
+    "basePoint": 5,
+    "nReqElement": 5,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "45",
+    "code": 45,
     "isFront": false,
     "corners": [
       {
@@ -79,13 +79,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "2",
-    "n_reqElement": "3",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "46",
+    "code": 46,
     "isFront": false,
     "corners": [
       {
@@ -96,13 +96,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "2",
-    "n_reqElement": "3",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "47",
+    "code": 47,
     "isFront": false,
     "corners": [
       {
@@ -113,13 +113,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "2",
-    "n_reqElement": "3",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "INSECT",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "48",
+    "code": 48,
     "isFront": false,
     "corners": [
       {
@@ -130,13 +130,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "INSECT",
     "type": "COUNTELEMENT_P"
   },
   {
-    "CardId": "49",
+    "code": 49,
     "isFront": false,
     "corners": [
       {
@@ -147,13 +147,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "VEGETAL",
     "type": "COUNTELEMENT_I"
   },
   {
-    "CardId": "50",
+    "code": 50,
     "isFront": false,
     "corners": [
       {
@@ -164,13 +164,13 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement":2,
     "secondElement": "ANIMALS",
     "type": "COUNTELEMENT_F"
   },
   {
-    "CardId": "51",
+    "code": 51,
     "isFront": false,
     "corners": [
       {
@@ -181,13 +181,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "52",
+    "code": 52,
     "isFront": false,
     "corners": [
       {
@@ -198,13 +198,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "53",
+    "code": 53,
     "isFront": false,
     "corners": [
       {
@@ -215,13 +215,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "54",
+    "code": 54,
     "isFront": false,
     "corners": [
       {
@@ -232,13 +232,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "5",
-    "n_reqElement": "5",
+    "basePoint": 5,
+    "nReqElement": 5,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "55",
+    "code": 55,
     "isFront": false,
     "corners": [
       {
@@ -249,13 +249,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "2",
-    "n_reqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "56",
+    "code": 56,
     "isFront": false,
     "corners": [
       {
@@ -266,13 +266,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "2",
-    "n_reqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "INSECT",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "57",
+    "code": 57,
     "isFront": false,
     "corners": [
       {
@@ -283,13 +283,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "2",
-    "n_reqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "MUSHROOMS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "58",
+    "code": 58,
     "isFront": false,
     "corners": [
       {
@@ -300,13 +300,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "MUSHROOMS",
     "type": "COUNTELEMENT_P"
   },
   {
-    "CardId": "59",
+    "code": 59,
     "isFront": false,
     "corners": [
       {
@@ -317,13 +317,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "ANIMALS",
     "type": "COUNTELEMENT_I"
   },
   {
-    "CardId": "60",
+    "code": 60,
     "isFront": false,
     "corners": [
       {
@@ -334,13 +334,13 @@
       }
     ],
     "kingdom": "VEGETAL",
-    "basePoint": "1",
-    "n_reqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "INSECT",
     "type": "COUNTELEMENT_F"
   },
   {
-    "CardId": "61",
+    "code": 61,
     "isFront": false,
     "corners": [
       {
@@ -351,13 +351,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "62",
+    "code": 62,
     "isFront": false,
     "corners": [
       {
@@ -368,13 +368,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "63",
+    "code": 63,
     "isFront": false,
     "corners": [
       {
@@ -385,13 +385,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "3",
-    "n_reqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "64",
+    "code": 64,
     "isFront": false,
     "corners": [
       {
@@ -402,13 +402,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "5",
-    "n_reqElement": "5",
+    "basePoint": 5,
+    "nReqElement": 5,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "65",
+    "code": 65,
     "isFront": false,
     "corners": [
       {
@@ -420,12 +420,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "INSECT",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "66",
+    "code": "66",
     "isFront": false,
     "corners": [
       {
@@ -437,12 +437,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "MUSHROOMS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "67",
+    "code": "67",
     "isFront": false,
     "corners": [
       {
@@ -454,12 +454,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "68",
+    "code": "68",
     "isFront": false,
     "corners": [
       {
@@ -471,12 +471,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "VEGETAL",
     "type": "COUNTELEMENT_P"
   },
   {
-    "CardId": "69",
+    "code": "69",
     "isFront": false,
     "corners": [
       {
@@ -488,12 +488,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "INSECT",
     "type": "COUNTELEMENT_I"
   },
   {
-    "CardId": "70",
+    "code": "70",
     "isFront": false,
     "corners": [
       {
@@ -505,12 +505,12 @@
     ],
     "kingdom": "ANIMALS",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "MUSHROOMS",
     "type": "COUNTELEMENT_F"
   },
   {
-    "CardId": "71",
+    "code": "71",
     "isFront": false,
     "corners": [
       {
@@ -522,12 +522,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "3",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "72",
+    "code": "72",
     "isFront": false,
     "corners": [
       {
@@ -539,12 +539,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "3",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "73",
+    "code": "73",
     "isFront": false,
     "corners": [
       {
@@ -556,12 +556,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "3",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "74",
+    "code": "74",
     "isFront": false,
     "corners": [
       {
@@ -573,12 +573,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "5",
-    "n_reqElement": "5",
+    "nReqElement": "5",
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "CardId": "75",
+    "code": "75",
     "isFront": false,
     "corners": [
       {
@@ -590,12 +590,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "76",
+    "code": "76",
     "isFront": false,
     "corners": [
       {
@@ -607,12 +607,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "77",
+    "code": "77",
     "isFront": false,
     "corners": [
       {
@@ -624,12 +624,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "nReqElement": "4",
     "secondElement": "MUSHROOMS",
     "type": "HIDECORNER"
   },
   {
-    "CardId": "78",
+    "code": "78",
     "isFront": false,
     "corners": [
       {
@@ -641,12 +641,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "ANIMALS",
     "type": "COUNTELEMENT_P"
   },
   {
-    "CardId": "79",
+    "code": "79",
     "isFront": false,
     "corners": [
       {
@@ -658,12 +658,12 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "MUSHROOMS",
     "type": "COUNTELEMENT_I"
   },
   {
-    "CardId": "80",
+    "code": "80",
     "isFront": false,
     "corners": [
       {
@@ -675,7 +675,7 @@
     ],
     "kingdom": "INSECT",
     "basePoint": "1",
-    "n_reqElement": "3",
+    "nReqElement": "3",
     "secondElement": "VEGETAL",
     "type": "COUNTELEMENT_F"
   }
