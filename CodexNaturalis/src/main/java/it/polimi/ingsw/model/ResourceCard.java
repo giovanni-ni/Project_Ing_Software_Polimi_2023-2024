@@ -1,4 +1,4 @@
-package it.polimi.ingsw.module;
+package it.polimi.ingsw.model;
 
 public class ResourceCard extends Card {
 

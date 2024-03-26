@@ -1,4 +1,4 @@
-package it.polimi.ingsw.module;
+package it.polimi.ingsw.model;
 
 import java.util.List;
 

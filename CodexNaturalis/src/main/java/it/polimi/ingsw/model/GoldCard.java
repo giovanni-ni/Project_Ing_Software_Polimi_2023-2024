@@ -1,6 +1,4 @@
-package it.polimi.ingsw.module;
-
-import java.util.Map;
+package it.polimi.ingsw.model;
 
 public class GoldCard extends ResourceCard {
 

@@ -1,4 +1,4 @@
-package it.polimi.ingsw.module;
+package it.polimi.ingsw.model;
 
 public enum TypeOfCard {
     RESOURCECARD(40,1,40),
