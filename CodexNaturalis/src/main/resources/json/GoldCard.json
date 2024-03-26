@@ -1,24 +1,142 @@
 [
+{
+  "CardId": "41",
+  "isFront": false,
+  "corners": [
+    {
+      "UPRIGHT": "EMPTY",
+      "UPLEFT": "FEATHER",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "HIDE"
+    }
+  ],
+  "kingdom": "MUSHROOMS",
+  "basePoint": "3",
+  "n_reqElement": "3",
+  "secondElement": "EMPTY",
+  "type": "DIRECTPOINT"
+},
+{
+ "CardId": "42",
+"isFront": false,
+"corners": [
+{
+"UPRIGHT": "PARCHMENT",
+"UPLEFT": "HIDE",
+"DOWNRIGHT": "EMPTY",
+"DOWNLEFT": "HIDE"
+}
+],
+"kingdom": "MUSHROOMS",
+"basePoint": "3",
+  "n_reqElement": "3",
+  "secondElement": "EMPTY",
+  "type": "DIRECTPOINT"
+},
   {
-    "CardId": "41",
+    "CardId": "43",
     "isFront": false,
     "corners": [
       {
-        "UPRIGHT": "EMPTY",
-        "UPLEFT": "HIDE",
-        "DOWNRIGHT": "FEATHER",
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "INK"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "44",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basepoint": "1",
-    "nReqElement": "2",
-    "secondElement": "ANIMALS",
-    "type": "COUNTELEMENT"
+    "basePoint": "5",
+    "n_reqElement": "5",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
   },
-
   {
-    "CardId": "42",
+    "CardId": "45",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "VEGETAL",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "46",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "ANIMALS",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "47",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "INSECT",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "48",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "PARCHMENT",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "MUSHROOMS",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "INSECT",
+    "type": "COUNTELEMENT_P"
+  },
+  {
+    "CardId": "49",
     "isFront": false,
     "corners": [
       {
@@ -29,32 +147,268 @@
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basepoint": "1",
-    "nReqElement": "2",
+    "basePoint": "1",
+    "n_reqElement": "3",
     "secondElement": "VEGETAL",
-    "type": "COUNTELEMENT"
+    "type": "COUNTELEMENT_I"
   },
-
   {
-    "CardId": "43",
+    "CardId": "50",
     "isFront": false,
     "corners": [
       {
-        "UPRIGHT": "HIDE",
-        "UPLEFT": "PARCHMENT",
-        "DOWNRIGHT": "HIDE",
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "FEATHER",
         "DOWNLEFT": "EMPTY"
       }
     ],
     "kingdom": "MUSHROOMS",
-    "basepoint": "1",
-    "nReqElement": "2",
-    "secondElement": "INSECT",
-    "type": "COUNTELEMENT"
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "ANIMALS",
+    "type": "COUNTELEMENT_F"
   },
-
   {
-    "CardId": "44",
+    "CardId": "51",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "FEATHER"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "52",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "PARCHMENT",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "53",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "INK",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "54",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "5",
+    "n_reqElement": "5",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "55",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "ANIMALS",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "56",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "INSECT",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "57",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "MUSHROOMS",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "58",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "PARCHMENT",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "MUSHROOMS",
+    "type": "COUNTELEMENT_P"
+  },
+  {
+    "CardId": "59",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "INK"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "ANIMALS",
+    "type": "COUNTELEMENT_I"
+  },
+  {
+    "CardId": "60",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "FEATHER",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "VEGETAL",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "INSECT",
+    "type": "COUNTELEMENT_F"
+  },
+  {
+    "CardId": "61",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "FEATHER",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "62",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "PARCHMENT"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "63",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "INK",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "64",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "5",
+    "n_reqElement": "5",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "65",
     "isFront": false,
     "corners": [
       {
@@ -64,11 +418,265 @@
         "DOWNLEFT": "HIDE"
       }
     ],
-    "kingdom": "MUSHROOMS",
-    "basepoint": "2",
-    "nReqElement": "3",
+    "kingdom": "ANIMALS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "INSECT",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "66",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "MUSHROOMS",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "67",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "VEGETAL",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "68",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "PARCHMENT",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "VEGETAL",
+    "type": "COUNTELEMENT_P"
+  },
+  {
+    "CardId": "69",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "INK",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "INSECT",
+    "type": "COUNTELEMENT_I"
+  },
+  {
+    "CardId": "70",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "FEATHER"
+      }
+    ],
+    "kingdom": "ANIMALS",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "MUSHROOMS",
+    "type": "COUNTELEMENT_F"
+  },
+  {
+    "CardId": "71",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "FEATHER"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "72",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "PARCHMENT",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "73",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "INK",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "3",
+    "n_reqElement": "3",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "74",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "5",
+    "n_reqElement": "5",
+    "secondElement": "EMPTY",
+    "type": "DIRECTPOINT"
+  },
+  {
+    "CardId": "75",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "2",
+    "n_reqElement": "4",
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
+  },
+  {
+    "CardId": "76",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "VEGETAL",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "77",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "2",
+    "n_reqElement": "4",
+    "secondElement": "MUSHROOMS",
+    "type": "HIDECORNER"
+  },
+  {
+    "CardId": "78",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "HIDE",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "PARCHMENT"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "ANIMALS",
+    "type": "COUNTELEMENT_P"
+  },
+  {
+    "CardId": "79",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "EMPTY",
+        "UPLEFT": "HIDE",
+        "DOWNRIGHT": "INK",
+        "DOWNLEFT": "EMPTY"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "MUSHROOMS",
+    "type": "COUNTELEMENT_I"
+  },
+  {
+    "CardId": "80",
+    "isFront": false,
+    "corners": [
+      {
+        "UPRIGHT": "FEATHER",
+        "UPLEFT": "EMPTY",
+        "DOWNRIGHT": "EMPTY",
+        "DOWNLEFT": "HIDE"
+      }
+    ],
+    "kingdom": "INSECT",
+    "basePoint": "1",
+    "n_reqElement": "3",
+    "secondElement": "VEGETAL",
+    "type": "COUNTELEMENT_F"
   }
 ]
-

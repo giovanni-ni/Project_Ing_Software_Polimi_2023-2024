@@ -1,4 +1,5 @@
 package it.polimi.ingsw.module;
+import java.util.ArrayList;
 import java.util.Map;
 
 
@@ -13,6 +14,10 @@ public class Board {
 
     private Map<Elements, Integer> counterOfElements;
 
+	private Map<Integer, Integer[]> coordinate;
+
+	private ArrayList<Integer> exists;
+
 	/**
 	 * Constructor of the board of each player at the start of the game
 	 * @author: Gong
@@ -25,7 +30,7 @@ public class Board {
 		int maxsize= TypeOfCard.RESOURCECARD.numOfCards+TypeOfCard.GOLDCARD.numOfCards;
 		initializeMyCardBoard(this.myCardBoard,maxsize);
 		/*put the initial card*/
-		if (i.isFront()){
+		if (i.getIsFront()){
 			for (int j = 0; j < 3; j++) {
 				Elements centralElement = i.getCentralElements()[j];
 				addElement(centralElement);
@@ -54,12 +59,15 @@ public class Board {
 	 */
 	public void addCard(ResourceCard input,int x, int y) {
 		/* no Exception handle*/
-		if (input.isFront()){
+		if (input.getIsFront()){
 			addAllCornersElements(input);
 		}else{
 			addElement(input.getKingdom());
 		}
 		deleteCoveredElements(x,y);
+		Integer[] c = {x,y};
+		coordinate.put(input.getCode(), c);
+		exists.add(input.getCode());
 
 	}
 
@@ -338,12 +346,20 @@ public class Board {
 		return myCardBoard;
 	}
 
-	public Card getCardInBoard(Card[][] cardboard, int x, int y){
-		Card c;
-		c=cardboard[x][y];
+	public Card getCardInBoard(/*Card[][] cardboard,*/ int x, int y){
+		Card c = this.myCardBoard[x][y];
+		/*c=cardboard[x][y];*/
         return c;
     }
 	public Map<Elements, Integer> getCounterOfElements() {
 		return counterOfElements;
+	}
+
+	public Map<Integer, Integer[]> getCoordinate() {
+		return coordinate;
+	}
+
+	public ArrayList<Integer> getExists() {
+		return exists;
 	}
 }
