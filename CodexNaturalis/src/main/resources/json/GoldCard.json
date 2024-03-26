@@ -419,13 +419,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "INSECT",
     "type": "HIDECORNER"
   },
   {
-    "code": "66",
+    "code": 66,
     "isFront": false,
     "corners": [
       {
@@ -436,13 +436,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "MUSHROOMS",
     "type": "HIDECORNER"
   },
   {
-    "code": "67",
+    "code": 67,
     "isFront": false,
     "corners": [
       {
@@ -453,13 +453,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
   {
-    "code": "68",
+    "code": 68,
     "isFront": false,
     "corners": [
       {
@@ -470,13 +470,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "VEGETAL",
     "type": "COUNTELEMENT_P"
   },
   {
-    "code": "69",
+    "code": 69,
     "isFront": false,
     "corners": [
       {
@@ -487,13 +487,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "INSECT",
     "type": "COUNTELEMENT_I"
   },
   {
-    "code": "70",
+    "code": 70,
     "isFront": false,
     "corners": [
       {
@@ -504,13 +504,13 @@
       }
     ],
     "kingdom": "ANIMALS",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "MUSHROOMS",
     "type": "COUNTELEMENT_F"
   },
   {
-    "code": "71",
+    "code": 71,
     "isFront": false,
     "corners": [
       {
@@ -521,13 +521,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "3",
-    "nReqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "code": "72",
+    "code": 72,
     "isFront": false,
     "corners": [
       {
@@ -538,13 +538,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "3",
-    "nReqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "code": "73",
+    "code": 73,
     "isFront": false,
     "corners": [
       {
@@ -555,13 +555,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "3",
-    "nReqElement": "3",
+    "basePoint": 3,
+    "nReqElement": 3,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "code": "74",
+    "code": 74,
     "isFront": false,
     "corners": [
       {
@@ -572,13 +572,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "5",
-    "nReqElement": "5",
+    "basePoint": 5,
+    "nReqElement": 5,
     "secondElement": "EMPTY",
     "type": "DIRECTPOINT"
   },
   {
-    "code": "75",
+    "code": 75,
     "isFront": false,
     "corners": [
       {
@@ -589,13 +589,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
   },
   {
-    "code": "76",
+    "code": 76,
     "isFront": false,
     "corners": [
       {
@@ -606,13 +606,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
   {
-    "code": "77",
+    "code": 77,
     "isFront": false,
     "corners": [
       {
@@ -623,13 +623,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "2",
-    "nReqElement": "4",
+    "basePoint": 2,
+    "nReqElement": 3,
     "secondElement": "MUSHROOMS",
     "type": "HIDECORNER"
   },
   {
-    "code": "78",
+    "code": 78,
     "isFront": false,
     "corners": [
       {
@@ -640,13 +640,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "ANIMALS",
     "type": "COUNTELEMENT_P"
   },
   {
-    "code": "79",
+    "code": 79,
     "isFront": false,
     "corners": [
       {
@@ -657,13 +657,13 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "MUSHROOMS",
     "type": "COUNTELEMENT_I"
   },
   {
-    "code": "80",
+    "code": 80,
     "isFront": false,
     "corners": [
       {
@@ -674,8 +674,8 @@
       }
     ],
     "kingdom": "INSECT",
-    "basePoint": "1",
-    "nReqElement": "3",
+    "basePoint": 1,
+    "nReqElement": 2,
     "secondElement": "VEGETAL",
     "type": "COUNTELEMENT_F"
   }
