@@ -58,7 +58,7 @@ public class GoldCard extends ResourceCard {
 			return false;
 		}
 
-	00	return true;
+		return true;
 	}
 	public int goalCount(Board board){
 		int count=0;
