@@ -87,5 +87,9 @@ public class GoldCard extends ResourceCard {
         }
 		return count;
 	}
+	public int getGoalPoint(Board board){
+		int time=goalCount(board);
+		return time*getBasePoint();
+	}
 
 }
