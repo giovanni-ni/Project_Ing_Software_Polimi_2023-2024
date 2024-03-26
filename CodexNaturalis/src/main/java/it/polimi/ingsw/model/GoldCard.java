@@ -50,7 +50,7 @@ public class GoldCard extends ResourceCard {
 
 	public boolean checkRequirements(Board board) {
 
-		if(!board.getCounterOfElements().containsKey(this.secondElement) ) {
+		if(!board.getCounterOfElements().containsKey(this.secondElement) || board.getCounterOfElements().get(this.secondElement)==0 ) {
 			return false;
 		}
 
@@ -58,7 +58,7 @@ public class GoldCard extends ResourceCard {
 			return false;
 		}
 
-		return true;
+	00	return true;
 	}
 	public int goalCount(Board board){
 		int count=0;
