@@ -62,5 +62,30 @@ public class GoldCard extends ResourceCard {
 
 		return true;
 	}
+	public int goalCount(Board board){
+		int count=0;
+		Integer[] coordinate= board.getCoordinate().get(getCode());
+        switch (type) {
+            case HIDECORNER -> {
+				count = board.numCardsAbout(coordinate[0],coordinate[1]);
+            }
+            case COUNTELEMENT_I -> {
+				if (board.getCounterOfElements().containsKey(Elements.INK))
+					count = board.getCounterOfElements().get(Elements.INK);
+            }
+            case COUNTELEMENT_F -> {
+				if (board.getCounterOfElements().containsKey(Elements.FEATHER))
+					count = board.getCounterOfElements().get(Elements.FEATHER);
+            }
+            case COUNTELEMENT_P -> {
+				if (board.getCounterOfElements().containsKey(Elements.FEATHER))
+					count = board.getCounterOfElements().get(Elements.PARCHMENT);
+            }
+            case DIRECTPOINT -> {
+				count=1;
+            }
+        }
+		return count;
+	}
 
 }
