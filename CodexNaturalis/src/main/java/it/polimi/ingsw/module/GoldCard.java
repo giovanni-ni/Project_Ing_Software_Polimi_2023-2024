@@ -20,18 +20,18 @@ public class GoldCard extends ResourceCard {
 
 	public GoldCard(int code, boolean isFront, Elements kingdom, int basePoint, int nReqElement, Elements secondElem, TypeBonus bonus) {
 		super(code, isFront, kingdom, basePoint);
-		this.n_reqElement = nReqElement;
+		this.nReqElement = nReqElement;
 		this.secondElement = secondElem;
 		this.type = bonus;
 	}
 
 
 	public int getN_reqElement() {
-		return n_reqElement;
+		return nReqElement;
 	}
 
 	public void setN_reqElement(int n_reqElement) {
-		this.n_reqElement = n_reqElement;
+		this.nReqElement = n_reqElement;
 	}
 
 	public Elements getSecondElement() {
@@ -56,7 +56,7 @@ public class GoldCard extends ResourceCard {
 			return false;
 		}
 
-		if(this.n_reqElement < board.getCounterOfElements().get(super.getKingdom())) {
+		if(this.nReqElement < board.getCounterOfElements().get(super.getKingdom())) {
 			return false;
 		}
 
