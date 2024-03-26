@@ -80,7 +80,7 @@
     ],
     "kingdom": "MUSHROOMS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "n_reqElement": "3",
     "secondElement": "VEGETAL",
     "type": "HIDECORNER"
   },
@@ -97,7 +97,7 @@
     ],
     "kingdom": "MUSHROOMS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "n_reqElement": "3",
     "secondElement": "ANIMALS",
     "type": "HIDECORNER"
   },
@@ -114,7 +114,7 @@
     ],
     "kingdom": "MUSHROOMS",
     "basePoint": "2",
-    "n_reqElement": "4",
+    "n_reqElement": "3",
     "secondElement": "INSECT",
     "type": "HIDECORNER"
   },

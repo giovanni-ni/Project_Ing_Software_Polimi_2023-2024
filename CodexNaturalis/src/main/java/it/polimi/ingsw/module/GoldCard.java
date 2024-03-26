@@ -52,11 +52,11 @@ public class GoldCard extends ResourceCard {
 
 	public boolean checkRequirements(Board board) {
 
-		if(board.getCounterOfElements().get(this.secondElement) == null ) {
+		if(!board.getCounterOfElements().containsKey(this.secondElement) ) {
 			return false;
 		}
 
-		if(this.nReqElement < board.getCounterOfElements().get(super.getKingdom())) {
+		if(this.nReqElement > board.getCounterOfElements().get(super.getKingdom())) {
 			return false;
 		}
 
@@ -64,7 +64,7 @@ public class GoldCard extends ResourceCard {
 	}
 	public int goalCount(Board board){
 		int count=0;
-		Integer[] coordinate= board.getCoordinate().get(getCode());
+		Integer[] coordinate= board.getCoordinate().get(super.getCode());
         switch (type) {
             case HIDECORNER -> {
 				count = board.numCardsAbout(coordinate[0],coordinate[1]);
