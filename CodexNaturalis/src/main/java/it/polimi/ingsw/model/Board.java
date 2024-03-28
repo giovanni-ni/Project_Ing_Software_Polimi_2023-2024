@@ -293,7 +293,7 @@ public class Board {
 
 		if (isCardCoordinate(x+1,y+1))
 			count++;
-		if (isCardCoordinate(x+1,y-11))
+		if (isCardCoordinate(x+1,y-1))
 			count++;
 		if (isCardCoordinate(x-1,y+1))
 			count++;

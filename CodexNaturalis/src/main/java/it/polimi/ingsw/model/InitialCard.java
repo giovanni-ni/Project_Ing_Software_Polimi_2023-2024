@@ -1,7 +1,6 @@
 package it.polimi.ingsw.model;
 
 public class InitialCard extends Card {
-
 	private Elements[] centralElements;
 
 	public InitialCard(){

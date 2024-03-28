@@ -80,7 +80,7 @@ public class Player {
 	}*/
 
 	public Player(PlayerColor color) {
-		setPlayerID(color);
+		this.playerID = color;
 	}
 
 	public boolean add(ResourceCard card, int x, int y) {
