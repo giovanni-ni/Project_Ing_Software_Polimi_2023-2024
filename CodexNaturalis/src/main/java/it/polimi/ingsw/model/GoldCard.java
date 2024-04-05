@@ -56,7 +56,7 @@ public class GoldCard extends ResourceCard {
 			return false;
 		}
 
-		if(this.nReqElement > board.getCounterOfElements().get(super.getKingdom())) {
+		if(this.nReqElement > board.getCounterOfElements().get(super.getKingdom()) || !board.getCounterOfElements().containsKey(this.getKingdom())) {
 			return false;
 		}
 

@@ -1,5 +1,6 @@
 package it.polimi.ingsw.model;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -29,6 +30,8 @@ public class Board {
 		/*no Exception handle*/
 		int maxsize= TypeOfCard.RESOURCECARD.numOfCards+TypeOfCard.GOLDCARD.numOfCards;
 		initializeMyCardBoard(this.myCardBoard,maxsize);
+		Map<Elements, Integer> couter = new HashMap<>();
+		setCounterOfElements(couter);
 		/*put the initial card*/
 		if (i.getIsFront()){
 			for (int j = 0; j < 3; j++) {
@@ -138,6 +141,7 @@ public class Board {
 	 * @exception: NegativeValueOfElements: when after changing the value of the count of elements it became negative
 	 */
 	public void addElement(Elements element, Integer value){
+
 		/* no Exception handle*/
 		if (element != Elements.HIDE && element!=Elements.EMPTY) {
 
