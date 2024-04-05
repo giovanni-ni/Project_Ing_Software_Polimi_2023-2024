@@ -2,13 +2,18 @@ package it.polimi.ingsw.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoldCardTest {
-    public final GoldCard goldCard78 = new GoldCard(78, false, Elements.INSECT, 1, 2, Elements.ANIMALS, TypeBonus.COUNTELEMENT_P);
+
+    public final Map<CornerPosition,Elements> map = new HashMap<>();
+    public final GoldCard goldCard78 = new GoldCard(78, false, map,Elements.INSECT, 1, 2, Elements.ANIMALS, TypeBonus.COUNTELEMENT_P);
 
 
     /*set a random initial Card to create a board*/
@@ -17,6 +22,13 @@ class GoldCardTest {
     Elements[] centralElements = {Elements.MUSHROOMS};
     InitialCard startCard = new InitialCard(82,true,centralElements);*/
     public final Board playerBoard = new Board(startCard);
+    public CardParsing cp = new CardParsing();
+
+    public ArrayList<GoldCard> goldCards = (ArrayList<GoldCard>) cp.loadGoldCards();
+
+    GoldCardTest() throws IOException {
+    }
+
     @Test
     public void GoldCardRequirementFalse(){
         assertFalse(goldCard78.checkRequirements(playerBoard));
@@ -44,7 +56,7 @@ class GoldCardTest {
     public void testOfDifferentConstructor() {
         GoldCard goldCardV1 = new GoldCard();
         goldCardV1.setType(TypeBonus.COUNTELEMENT_P);
-        goldCardV1.setN_reqElement(2);
+        goldCardV1.setNreqElement(2);
         goldCardV1.setSecondElement(Elements.ANIMALS);
         goldCardV1.setCode(78);
         goldCardV1.setKingdom(Elements.INSECT);
@@ -52,15 +64,15 @@ class GoldCardTest {
         goldCardV1.setBasePoint(1);
 
         assertEquals(goldCardV1.getType(), goldCard78.getType());
-        assertEquals(goldCardV1.getN_reqElement(), goldCard78.getN_reqElement());
+        assertEquals(goldCardV1.getNreqElement(), goldCard78.getNreqElement());
         assertEquals(goldCardV1.getKingdom(), goldCard78.getKingdom());
         assertEquals(goldCardV1.getSecondElement(), goldCard78.getSecondElement());
         assertEquals(goldCardV1.getCode(), goldCard78.getCode());
         assertEquals(goldCardV1.getBasePoint(), goldCard78.getBasePoint());
 
-        GoldCard goldCardV2 = new GoldCard(78, false);
+        GoldCard goldCardV2 = new GoldCard(78, false, map);
         goldCardV2.setType(TypeBonus.COUNTELEMENT_P);
-        goldCardV2.setN_reqElement(2);
+        goldCardV2.setNreqElement(2);
         goldCardV2.setSecondElement(Elements.ANIMALS);
         goldCardV2.setCode(78);
         goldCardV2.setKingdom(Elements.INSECT);
@@ -68,11 +80,45 @@ class GoldCardTest {
         goldCardV2.setBasePoint(1);
 
         assertEquals(goldCardV2.getType(), goldCard78.getType());
-        assertEquals(goldCardV2.getN_reqElement(), goldCard78.getN_reqElement());
+        assertEquals(goldCardV2.getNreqElement(), goldCard78.getNreqElement());
         assertEquals(goldCardV2.getKingdom(), goldCard78.getKingdom());
         assertEquals(goldCardV2.getSecondElement(), goldCard78.getSecondElement());
         assertEquals(goldCardV2.getCode(), goldCard78.getCode());
         assertEquals(goldCardV2.getBasePoint(), goldCard78.getBasePoint());
+    }
+
+    @Test
+    public void checkGoals(){
+
+        //check HideCorner Type with Card code 65
+        GoldCard test65= goldCards.get(65-TypeOfCard.GOLDCARD.codeCardStart);
+
+
+
+
+
+
+        //check DirectPoint Type with Card code 52
+        GoldCard test52= goldCards.get(51-TypeOfCard.GOLDCARD.codeCardStart);
+        //check CountElementF Type with Card code 70
+        GoldCard test70= goldCards.get(69-TypeOfCard.GOLDCARD.codeCardStart);
+        //check CountElementI Type with Card code 59
+        GoldCard test59= goldCards.get(58-TypeOfCard.GOLDCARD.codeCardStart);
+        //check CountElementP Type with Card code 48
+        GoldCard test48= goldCards.get(47-TypeOfCard.GOLDCARD.codeCardStart);
+
+
+        //check Hidecorner
+
+
+        System.out.println(test65.getCode());
+
+    }
+    @Test
+    public void testCardCoordinate(){
+        playerBoard.addCard(goldCard78,1,1);
+        assertTrue(playerBoard.isCardCoordinate(1,1));
+
     }
 
 }
