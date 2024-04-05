@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.Map;
+
 public class ResourceCard extends Card {
 
 	private Elements kingdom;
@@ -10,12 +12,12 @@ public class ResourceCard extends Card {
 		super();
 	}
 
-	public ResourceCard(int code, boolean isFront) {
-		super(code, isFront);
+	public ResourceCard(int code, boolean isFront, Map<CornerPosition, Elements> corners) {
+		super(code, isFront, corners);
 	}
 
-	public ResourceCard(int code, boolean isFront, Elements elem, int basePoint) {
-		super(code, isFront);
+	public ResourceCard(int code, boolean isFront, Map<CornerPosition, Elements> corners, Elements elem, int basePoint) {
+		super(code, isFront,corners);
 		this.kingdom = elem;
 		this.basePoint = basePoint;
 	}

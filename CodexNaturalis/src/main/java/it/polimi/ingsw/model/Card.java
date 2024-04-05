@@ -13,10 +13,10 @@ public class Card {
 
 	}
 
-	public Card(int code, boolean isFront) {
+	public Card(int code, boolean isFront, Map<CornerPosition, Elements> corners) {
 		this.code = code;
 		this.isFront = isFront;
-		/**/
+		this.corners = corners;
 	}
 
 	public int getCode() {

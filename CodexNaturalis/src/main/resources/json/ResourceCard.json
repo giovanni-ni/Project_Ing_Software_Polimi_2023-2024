@@ -2,543 +2,541 @@
   {
     "code": 1,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "MUSHROOMS",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "MUSHROOMS"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 2,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "MUSHROOMS",
         "UPLEFT": "MUSHROOMS",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 3,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "MUSHROOMS",
         "DOWNLEFT": "MUSHROOMS"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 4,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "MUSHROOMS",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "MUSHROOMS",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 5,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "FEATHER",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "MUSHROOMS",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 6,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "MUSHROOMS",
         "UPLEFT": "INK",
         "DOWNRIGHT": "ANIMALS",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 7,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "INSECT",
         "UPLEFT": "MUSHROOMS",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "PARCHMENT"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 0
   },
   {
     "code": 8,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "MUSHROOMS",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1
   },
   {
     "code": 9,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "MUSHROOMS",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1
   },
   {
     "code": 10,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "MUSHROOMS"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1
   },
   {
     "code": 11,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "VEGETAL",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 12,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "VEGETAL",
         "UPLEFT": "VEGETAL",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 13,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "VEGETAL",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 14,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "VEGETAL",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "VEGETAL",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 15,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "INSECT",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "VEGETAL",
         "DOWNLEFT": "FEATHER"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 16,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "VEGETAL",
         "UPLEFT": "MUSHROOMS",
         "DOWNRIGHT": "INK",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 17,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "PARCHMENT",
         "DOWNRIGHT": "ANIMALS",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 0
   },
   {
     "code": 18,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "VEGETAL"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1
   },
   {
     "code": 19,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "VEGETAL",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1
   },
   {
     "code": 20,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "VEGETAL",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1
   },{
   "code": 21,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "ANIMALS",
       "UPLEFT": "ANIMALS",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 22,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "HIDE",
       "DOWNRIGHT": "ANIMALS",
       "DOWNLEFT": "ANIMALS"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 23,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "HIDE",
       "UPLEFT": "ANIMALS",
       "DOWNRIGHT": "EMPTY",
       "DOWNLEFT": "ANIMALS"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 24,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "ANIMALS",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "ANIMALS",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 25,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "INSECT",
       "UPLEFT": "HIDE",
       "DOWNRIGHT": "ANIMALS",
       "DOWNLEFT": "INK"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 26,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "ANIMALS",
       "UPLEFT": "VEGETAL",
       "DOWNRIGHT": "PARCHMENT",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 27,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "HIDE",
       "UPLEFT": "FEATHER",
       "DOWNRIGHT": "MUSHROOMS",
       "DOWNLEFT": "ANIMALS"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 0
 },{
   "code": 28,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "HIDE",
       "DOWNRIGHT": "EMPTY",
       "DOWNLEFT": "ANIMALS"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 1
 },{
   "code": 29,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "HIDE",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "ANIMALS",
       "DOWNLEFT": "EMPTY"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 1
 },{
   "code": 30,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "ANIMALS",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
-  ],
+  ,
   "kingdom": "ANIMALS",
   "basePoint": 1
 },{
   "code": 31,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "INSECT",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "EMPTY"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 32,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "HIDE",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "INSECT"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 33,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "HIDE",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "EMPTY",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 34,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "INSECT",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 35,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "FEATHER",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "ANIMALS"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 36,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "INSECT",
       "UPLEFT": "FEATHER",
       "DOWNRIGHT": "MUSHROOMS",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 37,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "VEGETAL",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "INK"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 0
 },{
   "code": 38,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "HIDE",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "EMPTY",
       "DOWNLEFT": "EMPTY"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 1
 },{
   "code": 39,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 1
 },{
   "code": 40,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "EMPTY",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "INSECT",
   "basePoint": 1
 }
-
-
 ]

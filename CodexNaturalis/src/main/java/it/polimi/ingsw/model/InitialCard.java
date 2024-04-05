@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import java.util.Map;
+
 public class InitialCard extends Card {
 	private Elements[] centralElements;
 
@@ -8,11 +10,11 @@ public class InitialCard extends Card {
 	}
 
 	public InitialCard(int code, boolean isFront) {
-		super(code, isFront);
+		super(code, isFront,null);
 	}
 
-	public InitialCard(int code, boolean isFront, Elements[] elem) {
-		super(code, isFront);
+	public InitialCard(int code, boolean isFront, Map<CornerPosition, Elements> corners, Elements[] elem) {
+		super(code, isFront,corners);
 		for(int i = 0; i < elem.length; i++) {
 			centralElements[i] = elem[i];
 		}

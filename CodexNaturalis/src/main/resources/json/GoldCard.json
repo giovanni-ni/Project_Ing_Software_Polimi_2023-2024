@@ -2,14 +2,14 @@
 {
   "code": 41,
   "isFront": false,
-  "corners": [
+  "corners":
     {
       "UPRIGHT": "EMPTY",
       "UPLEFT": "FEATHER",
       "DOWNRIGHT": "HIDE",
       "DOWNLEFT": "HIDE"
     }
-  ],
+  ,
   "kingdom": "MUSHROOMS",
   "basePoint": 3,
   "nReqElement": 3,
@@ -19,14 +19,14 @@
 {
  "code": 42,
 "isFront": false,
-"corners": [
+"corners":
 {
 "UPRIGHT": "PARCHMENT",
 "UPLEFT": "HIDE",
 "DOWNRIGHT": "EMPTY",
 "DOWNLEFT": "HIDE"
 }
-],
+,
 "kingdom": "MUSHROOMS",
 "basePoint": 3,
   "nReqElement": 3,
@@ -36,14 +36,14 @@
   {
     "code": 43,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "INK"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 3,
     "nReqElement":3,
@@ -53,14 +53,14 @@
   {
     "code": 44,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 5,
     "nReqElement": 5,
@@ -70,14 +70,14 @@
   {
     "code": 45,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -87,14 +87,14 @@
   {
     "code": 46,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -104,14 +104,14 @@
   {
     "code": 47,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -121,14 +121,14 @@
   {
     "code": 48,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "PARCHMENT",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1,
     "nReqElement": 2,
@@ -138,14 +138,14 @@
   {
     "code": 49,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "INK",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1,
     "nReqElement": 2,
@@ -155,14 +155,14 @@
   {
     "code": 50,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "FEATHER",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "MUSHROOMS",
     "basePoint": 1,
     "nReqElement":2,
@@ -172,14 +172,14 @@
   {
     "code": 51,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "FEATHER"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 3,
     "nReqElement": 3,
@@ -189,14 +189,14 @@
   {
     "code": 52,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "PARCHMENT",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 3,
     "nReqElement": 3,
@@ -206,14 +206,14 @@
   {
     "code": 53,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "INK",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 3,
     "nReqElement": 3,
@@ -223,14 +223,14 @@
   {
     "code": 54,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 5,
     "nReqElement": 5,
@@ -240,14 +240,14 @@
   {
     "code": 55,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 2,
     "nReqElement": 3,
@@ -257,14 +257,14 @@
   {
     "code": 56,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 2,
     "nReqElement": 3,
@@ -274,14 +274,14 @@
   {
     "code": 57,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 2,
     "nReqElement": 3,
@@ -291,14 +291,14 @@
   {
     "code": 58,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "PARCHMENT",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1,
     "nReqElement": 2,
@@ -308,14 +308,14 @@
   {
     "code": 59,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "INK"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1,
     "nReqElement": 2,
@@ -325,14 +325,14 @@
   {
     "code": 60,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "FEATHER",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "VEGETAL",
     "basePoint": 1,
     "nReqElement": 2,
@@ -342,14 +342,14 @@
   {
     "code": 61,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "FEATHER",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 3,
     "nReqElement": 3,
@@ -359,14 +359,14 @@
   {
     "code": 62,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "PARCHMENT"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 3,
     "nReqElement": 3,
@@ -376,14 +376,14 @@
   {
     "code": 63,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "INK",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 3,
     "nReqElement": 3,
@@ -393,14 +393,14 @@
   {
     "code": 64,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 5,
     "nReqElement": 5,
@@ -410,14 +410,14 @@
   {
     "code": 65,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -427,14 +427,14 @@
   {
     "code": 66,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -444,14 +444,14 @@
   {
     "code": 67,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 2,
     "nReqElement": 3,
@@ -461,14 +461,14 @@
   {
     "code": 68,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "PARCHMENT",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 1,
     "nReqElement": 2,
@@ -478,14 +478,14 @@
   {
     "code": 69,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "INK",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 1,
     "nReqElement": 2,
@@ -495,14 +495,14 @@
   {
     "code": 70,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "FEATHER"
       }
-    ],
+    ,
     "kingdom": "ANIMALS",
     "basePoint": 1,
     "nReqElement": 2,
@@ -512,14 +512,14 @@
   {
     "code": 71,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "FEATHER"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 3,
     "nReqElement": 3,
@@ -529,14 +529,14 @@
   {
     "code": 72,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "PARCHMENT",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 3,
     "nReqElement": 3,
@@ -546,14 +546,14 @@
   {
     "code": 73,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "INK",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 3,
     "nReqElement": 3,
@@ -563,14 +563,14 @@
   {
     "code": 74,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 5,
     "nReqElement": 5,
@@ -580,14 +580,14 @@
   {
     "code": 75,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 2,
     "nReqElement": 3,
@@ -597,14 +597,14 @@
   {
     "code": 76,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "HIDE",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 2,
     "nReqElement": 3,
@@ -614,14 +614,14 @@
   {
     "code": 77,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 2,
     "nReqElement": 3,
@@ -631,14 +631,14 @@
   {
     "code": 78,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "HIDE",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "PARCHMENT"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 1,
     "nReqElement": 2,
@@ -648,14 +648,14 @@
   {
     "code": 79,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "EMPTY",
         "UPLEFT": "HIDE",
         "DOWNRIGHT": "INK",
         "DOWNLEFT": "EMPTY"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 1,
     "nReqElement": 2,
@@ -665,14 +665,14 @@
   {
     "code": 80,
     "isFront": false,
-    "corners": [
+    "corners":
       {
         "UPRIGHT": "FEATHER",
         "UPLEFT": "EMPTY",
         "DOWNRIGHT": "EMPTY",
         "DOWNLEFT": "HIDE"
       }
-    ],
+    ,
     "kingdom": "INSECT",
     "basePoint": 1,
     "nReqElement": 2,
