@@ -55,4 +55,8 @@ public class Card {
 	public boolean isInitialCard(Card c){
 		return c instanceof InitialCard;
 	}
+
+	public Elements getKingdom() {
+		return null;
+	}
 }

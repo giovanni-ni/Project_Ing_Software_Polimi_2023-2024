@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
 
-public class TargetCard {
+public abstract class TargetCard {
 
 	private int idCard;
 
@@ -43,13 +43,9 @@ public class TargetCard {
 		this.ifCommon = ifCommon;
 	}
 
-	public int countPoint(Board board) {
-		return this.basePoint * checkTarget(board);
-	}
-
-	public int checkTarget(Board input) {
+	/*public int checkTarget(Board input) {
 		/***********maybe controller part****************/
-		int n = 0;
+		/*int n = 0;
 
 		switch(this.idCard) {
 			case 1:
@@ -516,10 +512,10 @@ public class TargetCard {
 
 		}
 
-		return n;
-	}
+		return 0;
+	}*/
 
-	private int minNumElement(int n1, int n2, int n3){
+/*	private int minNumElement(int n1, int n2, int n3){
 		int min;
 		min = n1;
 		if(min >n2) {
@@ -531,6 +527,9 @@ public class TargetCard {
 		}
 
 		return min;
-	}
+	}*/
 
+	public abstract int checkGoal(Board board);
+
+	public abstract int countPoint(Board board);
 }
