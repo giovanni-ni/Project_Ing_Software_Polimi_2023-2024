@@ -72,7 +72,7 @@ public class GoldCard extends ResourceCard {
 					count = board.getCounterOfElements().get(Elements.FEATHER);
             }
             case COUNTELEMENT_P -> {
-				if (board.getCounterOfElements().containsKey(Elements.FEATHER))
+				if (board.getCounterOfElements().containsKey(Elements.PARCHMENT))
 					count = board.getCounterOfElements().get(Elements.PARCHMENT);
             }
             case DIRECTPOINT -> count=1;

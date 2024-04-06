@@ -16,20 +16,19 @@ import static org.junit.jupiter.api.Assertions.*;
 class GoldCardTest {
 
     public final Map<CornerPosition,Elements> map = new HashMap<>();
-    public final GoldCard goldCard78 = new GoldCard(78, false, map,Elements.INSECT, 1, 2, Elements.ANIMALS, TypeBonus.COUNTELEMENT_P);
-
 
     /*set a random initial Card to create a board*/
     public Elements[] centralElments;
-    public final InitialCard startCard = new InitialCard(82,false);
-    /* if it is front
-    Elements[] centralElements = {Elements.MUSHROOMS};
-    InitialCard startCard = new InitialCard(82,true,centralElements);*/
-    public final Board playerBoard = new Board(startCard);
+
+
+
     public CardParsing cp = new CardParsing();
 
+    public ArrayList<InitialCard> initialCards = (ArrayList<InitialCard>) cp.loadInitialCards();
     public ArrayList<GoldCard> goldCards = (ArrayList<GoldCard>) cp.loadGoldCards();
-
+    public final InitialCard startCard = initialCards.get(81-TypeOfCard.INITIALCARD.codeCardStart);
+    public final Board playerBoard = new Board(startCard);
+    public GoldCard goldCard78 = goldCards.get(78-TypeOfCard.GOLDCARD.codeCardStart);
     GoldCardTest() throws IOException {
     }
 
@@ -122,10 +121,11 @@ class GoldCardTest {
         startCard.setCorners(map);
         Board playerBoard = new Board(startCard);
         //check Hidecorner
+
         playerBoard.addCard(test65,1,1);
         playerBoard.addCard(test52,2,2);
-        playerBoard.addCard(test70,2,0);
         playerBoard.addCard(test59,0,2);
+        playerBoard.addCard(test70,2,0);
         int time = test65.goalCount(playerBoard);
         int point = test65.getGoalPoint(playerBoard);
         assertEquals(time,4);
@@ -139,33 +139,33 @@ class GoldCardTest {
         //feather
         time = test70.goalCount(playerBoard);
         point = test70.goalCount(playerBoard);
-        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.FEATHER));
-        assertEquals(point,1);
+        assertEquals(time,0);
+        assertEquals(point,0);
         playerBoard.addElement(Elements.FEATHER);
         time = test70.goalCount(playerBoard);
         point = test70.goalCount(playerBoard);
-        assertEquals(time, 2);
-        assertEquals(point,2);
+        assertEquals(time, 1);
+        assertEquals(point,1);
         //Ink
         time = test59.goalCount(playerBoard);
         point = test59.goalCount(playerBoard);
-        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.INK));
-        assertEquals(point,1);
+        assertEquals(time,0);
+        assertEquals(point,0);
         playerBoard.addElement(Elements.INK,3);
         time = test59.goalCount(playerBoard);
         point = test59.goalCount(playerBoard);
-        assertEquals(time, 4);
-        assertEquals(point,4);
+        assertEquals(time, 3);
+        assertEquals(point,3);
         //Parchment
         time = test48.goalCount(playerBoard);
         point = test48.goalCount(playerBoard);
-        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.PARCHMENT));
-        assertEquals(point,1);
+        assertEquals(time,0);
+        assertEquals(point,0);
         playerBoard.addElement(Elements.PARCHMENT,18);
         time = test48.goalCount(playerBoard);
         point = test48.goalCount(playerBoard);
-        assertEquals(time, 19);
-        assertEquals(point,19);
+        assertEquals(time, 18);
+        assertEquals(point,18);
 
 
     }

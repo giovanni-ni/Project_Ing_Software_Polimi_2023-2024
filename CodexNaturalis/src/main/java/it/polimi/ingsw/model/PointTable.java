@@ -98,7 +98,7 @@ public class PointTable {
 		return maxPlayers;
 	}
 
-	public int CountTarget(Player p,Board board, TargetCard[] targetCards) {
+	/*public int CountTarget(Player p,Board board, TargetCard[] targetCards) {
 		int countOfTarget=0;
 		if(p.getTarget().checkTarget(board)>0)
 			countOfTarget++;
@@ -119,5 +119,5 @@ public class PointTable {
 		}
 		targetPoints.put(p,countOfTarget);
 	}
-
+*/
 }
