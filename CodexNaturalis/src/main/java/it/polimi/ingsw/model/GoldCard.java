@@ -26,12 +26,12 @@ public class GoldCard extends ResourceCard {
 	}
 
 
-	public int getN_reqElement() {
+	public int getNreqElement() {
 		return nReqElement;
 	}
 
-	public void setN_reqElement(int n_reqElement) {
-		this.nReqElement = n_reqElement;
+	public void setNreqElement(int nreqElement) {
+		this.nReqElement = nreqElement;
 	}
 
 	public Elements getSecondElement() {
