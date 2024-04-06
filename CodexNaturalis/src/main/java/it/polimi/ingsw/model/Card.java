@@ -44,15 +44,15 @@ public class Card {
 		this.corners = corners;
 	}
 
-	public boolean isGoldCard(Card c){ /*those booleans would help if some code need to check the requirements that only gold card has*/
-		return c instanceof GoldCard;
+	public boolean isGoldCard(){ /*those booleans would help if some code need to check the requirements that only gold card has*/
+		return this instanceof GoldCard;
 	} //*watch enum CardType
 
-	public boolean isResourceCard(Card c){
-		return c instanceof ResourceCard;
+	public boolean isResourceCard(){
+		return this instanceof ResourceCard;
 	}
 
-	public boolean isInitialCard(Card c){
-		return c instanceof InitialCard;
+	public boolean isInitialCard(){
+		return this instanceof InitialCard;
 	}
 }

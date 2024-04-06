@@ -1,0 +1,154 @@
+[
+  {
+    "code": 81,
+    "isFront": false,
+    "corners":
+      {
+      },
+    "cornersFront":
+      {
+        "UPLEFT":"EMPTY",
+        "UPRIGHT":"VEGETAL",
+        "DOWNRIGHT":"EMPTY",
+        "DOWNLEFT":"EMPTY"
+      },
+    "cornersBack":
+      {
+        "UPLEFT":"MUSHROOMS",
+        "UPRIGHT":"VEGETAL",
+        "DOWNRIGHT":"INSECT",
+        "DOWNLEFT":"ANIMALS"
+      },
+    "centralElements":
+    [
+      "INSECT"
+    ]
+  },
+  {
+    "code": 82,
+    "isFront": false,
+    "corners":
+    {
+    },
+    "cornersFront":
+    {
+      "UPLEFT":"ANIMALS",
+      "UPRIGHT":"EMPTY",
+      "DOWNRIGHT":"MUSHROOMS",
+      "DOWNLEFT":"EMPTY"
+    },
+    "cornersBack":
+    {
+      "UPLEFT":"VEGETAL",
+      "UPRIGHT":"ANIMALS",
+      "DOWNRIGHT":"MUSHROOMS",
+      "DOWNLEFT":"INSECT"
+    },
+    "centralElements":
+    [
+      "MUSHROOMS"
+    ]
+  },
+  {
+    "code": 83,
+    "isFront": false,
+    "corners":
+    {
+    },
+    "cornersFront":
+    {
+      "UPLEFT":"EMPTY",
+      "UPRIGHT":"EMPTY",
+      "DOWNRIGHT":"EMPTY",
+      "DOWNLEFT":"EMPTY"
+    },
+    "cornersBack":
+    {
+      "UPLEFT":"INSECT",
+      "UPRIGHT":"ANIMALS",
+      "DOWNRIGHT":"MUSHROOMS",
+      "DOWNLEFT":"VEGETAL"
+    },
+    "centralElements":
+    [
+      "MUSHROOMS",
+      "VEGETAL"
+    ]
+  },
+  {
+    "code": 84,
+    "isFront": false,
+    "corners":
+    {
+    },
+    "cornersFront":
+    {
+      "UPLEFT":"EMPTY",
+      "UPRIGHT":"EMPTY",
+      "DOWNRIGHT":"EMPTY",
+      "DOWNLEFT":"EMPTY"
+    },
+    "cornersBack":
+    {
+      "UPLEFT":"VEGETAL",
+      "UPRIGHT":"INSECT",
+      "DOWNRIGHT":"ANIMALS",
+      "DOWNLEFT":"MUSHROOMS"
+    },
+    "centralElements":
+    [
+      "ANIMALS",
+      "MUSHROOMS"
+    ]
+  },
+  {
+    "code": 85,
+    "isFront": false,
+    "corners":
+    {
+    },
+    "cornersFront":
+    {
+      "UPLEFT":"EMPTY",
+      "UPRIGHT":"EMPTY",
+      "DOWNRIGHT":"HIDE",
+      "DOWNLEFT":"HIDE"
+    },
+    "cornersBack":
+    {
+      "UPLEFT":"INSECT",
+      "UPRIGHT":"MUSHROOMS",
+      "DOWNRIGHT":"VEGETAL",
+      "DOWNLEFT":"ANIMALS"
+    },
+    "centralElements":
+    [
+      "VEGETAL",
+      "INSECT",
+      "ANIMALS"
+    ]
+  },
+  {
+    "code": 86,
+    "isFront": false,
+    "corners": {
+    },
+    "cornersFront": {
+      "UPLEFT": "EMPTY",
+      "UPRIGHT": "EMPTY",
+      "DOWNRIGHT": "HIDE",
+      "DOWNLEFT": "HIDE"
+    },
+    "cornersBack": {
+      "UPLEFT": "MUSHROOMS",
+      "UPRIGHT": "ANIMALS",
+      "DOWNRIGHT": "VEGETAL",
+      "DOWNLEFT": "INSECT"
+    },
+    "centralElements": [
+      "VEGETAL",
+      "MUSHROOMS",
+      "ANIMALS"
+    ]
+  }
+]
