@@ -56,19 +56,13 @@ public class GoldCard extends ResourceCard {
 			return false;
 		}
 
-		if(this.nReqElement > board.getCounterOfElements().get(super.getKingdom()) || !board.getCounterOfElements().containsKey(this.getKingdom())) {
-			return false;
-		}
-
-		return true;
-	}
+        return this.nReqElement <= board.getCounterOfElements().get(super.getKingdom()) && board.getCounterOfElements().containsKey(this.getKingdom());
+    }
 	public int goalCount(Board board){
 		int count=0;
-		Integer[] coordinate= board.getCoordinate().get(super.getCode());
+		Coordinate xy = board.getCoordinate(this);
         switch (type) {
-            case HIDECORNER -> {
-				count = board.numCardsAbout(coordinate[0],coordinate[1]);
-            }
+            case HIDECORNER -> count = board.numCardsAbout(xy.getX(), xy.getY());
             case COUNTELEMENT_I -> {
 				if (board.getCounterOfElements().containsKey(Elements.INK))
 					count = board.getCounterOfElements().get(Elements.INK);
@@ -81,9 +75,7 @@ public class GoldCard extends ResourceCard {
 				if (board.getCounterOfElements().containsKey(Elements.FEATHER))
 					count = board.getCounterOfElements().get(Elements.PARCHMENT);
             }
-            case DIRECTPOINT -> {
-				count=1;
-            }
+            case DIRECTPOINT -> count=1;
         }
 		return count;
 	}

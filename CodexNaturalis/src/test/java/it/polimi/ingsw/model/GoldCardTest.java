@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -8,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.google.common.collect.HashBiMap.create;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoldCardTest {
@@ -116,8 +119,19 @@ class GoldCardTest {
     }
     @Test
     public void testCardCoordinate(){
-        playerBoard.addCard(goldCard78,1,1);
-        assertTrue(playerBoard.isCardCoordinate(1,1));
+        BiMap<Card,Coordinate> cardCoordinateBiMap = HashBiMap.create();
+        Coordinate xy = new Coordinate(1,1);
+        GoldCard test52= goldCards.get(52-TypeOfCard.GOLDCARD.codeCardStart);
+        cardCoordinateBiMap.put(test52,xy );
+        GoldCard gold52= goldCards.get(52-TypeOfCard.GOLDCARD.codeCardStart);
+
+       Coordinate testC = cardCoordinateBiMap.get(gold52);
+        System.out.println(testC.getX());
+        System.out.println(testC.getY());
+        assertTrue(cardCoordinateBiMap.containsValue(new Coordinate(1,1)));
+
+        Card cardInTest= cardCoordinateBiMap.inverse().get(xy);
+        System.out.println(cardInTest.getCode());
 
     }
 

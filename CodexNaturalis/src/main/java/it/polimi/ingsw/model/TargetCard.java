@@ -72,8 +72,9 @@ public class TargetCard {
 				ArrayList<Integer> copy = input.getExists();
 				for(int i = 1; i <= 10; i++) {
 					if(copy.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x+1, y-1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y-1);
@@ -96,8 +97,9 @@ public class TargetCard {
 
 				for(int j = 41; j <= 50; j++) {
 					if (copy.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x + 1, y - 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y - 1);
@@ -123,8 +125,9 @@ public class TargetCard {
 				ArrayList<Integer> copy6 = input.getExists();
 				for(int i = 31; i <= 40; i++) {
 					if(copy6.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x+1, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
@@ -147,8 +150,9 @@ public class TargetCard {
 
 				for(int j = 71; j <= 80; j++) {
 					if (copy6.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x + 1, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
@@ -176,8 +180,9 @@ public class TargetCard {
 				ArrayList<Integer> copy7 = input.getExists();
 				for(int i = 21; i <= 30; i++) {
 					if(copy7.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x+1, y-1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y-1);
@@ -200,8 +205,9 @@ public class TargetCard {
 
 				for(int j = 61; j <= 70; j++) {
 					if (copy7.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x + 1, y - 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y - 1);
@@ -227,8 +233,9 @@ public class TargetCard {
 				ArrayList<Integer> copy8 = input.getExists();
 				for(int i = 11; i <= 20; i++) {
 					if(copy8.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x+1, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
@@ -251,8 +258,9 @@ public class TargetCard {
 
 				for(int j = 51; j <= 60; j++) {
 					if (copy8.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x + 1, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
@@ -295,8 +303,9 @@ public class TargetCard {
 				ArrayList<Integer> copy13 = input.getExists();
 				for(int i = 1; i <= 10; i++) {
 					if(copy13.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y+1);
@@ -319,8 +328,9 @@ public class TargetCard {
 
 				for(int j = 41; j <= 50; j++) {
 					if (copy13.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y + 1);
@@ -347,8 +357,9 @@ public class TargetCard {
 				ArrayList<Integer> copy14 = input.getExists();
 				for(int i = 21; i <= 30; i++) {
 					if(copy14.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x+1, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
@@ -371,9 +382,9 @@ public class TargetCard {
 
 				for(int j = 61; j <= 70; j++) {
 					if (copy14.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
-
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 						if (input.isCardCoordinate(x + 1, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
 							int next = c1.getCode();
@@ -399,8 +410,9 @@ public class TargetCard {
 				ArrayList<Integer> copy15 = input.getExists();
 				for(int i = 1; i <= 10; i++) {
 					if(copy15.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x-1, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x-1, y+1);
@@ -423,8 +435,9 @@ public class TargetCard {
 
 				for(int j = 41; j <= 50; j++) {
 					if (copy15.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x - 1, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x - 1, y + 1);
@@ -451,8 +464,9 @@ public class TargetCard {
 				ArrayList<Integer> copy16 = input.getExists();
 				for(int i = 11; i <= 20; i++) {
 					if(copy16.contains(i)) {
-						int x = input.getCoordinate().get(i)[0];
-						int y = input.getCoordinate().get(i)[1];
+						Coordinate xy = input.getCoordinate(i);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if(input.isCardCoordinate(x, y+1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y+1);
@@ -475,8 +489,9 @@ public class TargetCard {
 
 				for(int j = 51; j <= 60; j++) {
 					if (copy16.contains(j)) {
-						int x = input.getCoordinate().get(j)[0];
-						int y = input.getCoordinate().get(j)[1];
+						Coordinate xy = input.getCoordinate(j);
+						int x = xy.getX();
+						int y = xy.getY();
 
 						if (input.isCardCoordinate(x, y + 1)) {
 							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y + 1);

@@ -1,4 +1,6 @@
 package it.polimi.ingsw.model;
+import com.google.common.collect.BiMap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -11,11 +13,9 @@ import java.util.Map;
  */
 public class Board {
 
-	private Card[][] myCardBoard; /* what happens if the index is a negative number*/
+	private BiMap<Card,Coordinate> cardCoordinate;
 
     private Map<Elements, Integer> counterOfElements;
-
-	private Map<Integer, Integer[]> coordinate;
 
 	private ArrayList<Integer> exists;
 
@@ -28,10 +28,8 @@ public class Board {
 	 */
 	public Board(InitialCard i) {
 		/*no Exception handle*/
-		int maxsize= TypeOfCard.RESOURCECARD.numOfCards+TypeOfCard.GOLDCARD.numOfCards;
-		initializeMyCardBoard(this.myCardBoard,maxsize);
-		Map<Elements, Integer> couter = new HashMap<>();
-		setCounterOfElements(couter);
+		Map<Elements, Integer> counter = new HashMap<>();
+		setCounterOfElements(counter);
 		/*put the initial card*/
 		if (i.getIsFront()){
 			for (int j = 0; j < 3; j++) {
@@ -45,11 +43,8 @@ public class Board {
 
 
 		}
-        if (myCardBoard != null) {
-            myCardBoard[maxsize][maxsize]=i;
-        }
-
-
+		Coordinate startXY = new Coordinate(0,0);
+		cardCoordinate.put(i,startXY);
     }
 
 
@@ -68,10 +63,8 @@ public class Board {
 			addElement(input.getKingdom());
 		}
 		deleteCoveredElements(x,y);
-		Integer[] c = {x,y};
-		coordinate.put(input.getCode(), c);
+		cardCoordinate.put(input, new Coordinate(x,y));
 		exists.add(input.getCode());
-
 	}
 
 
@@ -111,22 +104,22 @@ public class Board {
             case UPLEFT -> {
 				if (!isCardCoordinate(x-1,y+1))
 					return true;
-				return Elements.HIDE != myCardBoard[x - 1][y + 1].corners.get(CornerPosition.DOWNRIGHT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).corners.get(CornerPosition.DOWNRIGHT);
             }
             case UPRIGHT -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.HIDE != myCardBoard[x + 1][y + 1].corners.get(CornerPosition.DOWNLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(+-1,y+1)).corners.get(CornerPosition.DOWNLEFT);
             }
             case DOWNLEFT -> {
 				if (!isCardCoordinate(x-1,y-1))
 					return true;
-				return Elements.HIDE != myCardBoard[x - 1][y - 1].corners.get(CornerPosition.UPRIGHT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).corners.get(CornerPosition.UPRIGHT);
             }
             case DOWNRIGHT -> {
 				if (!isCardCoordinate(x+1,y-1))
 					return true;
-				return Elements.HIDE != myCardBoard[x + 1][y - 1].corners.get(CornerPosition.UPLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).corners.get(CornerPosition.UPLEFT);
             }
         }
         return false;
@@ -256,29 +249,29 @@ public class Board {
         switch (corner) {
             case UPLEFT -> {
 				if (isCardCoordinate( x-1, y+1)){
-					Elements element=myCardBoard[x - 1][y + 1].corners.get(CornerPosition.DOWNRIGHT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).corners.get(CornerPosition.DOWNRIGHT);
 					addElement(element,-1);
 				}
-            }
-            case UPRIGHT -> {
+			}
+			case UPRIGHT -> {
 				if (isCardCoordinate( x+1, y+1)){
-					Elements element=myCardBoard[x + 1][y + 1].corners.get(CornerPosition.DOWNLEFT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).corners.get(CornerPosition.DOWNLEFT);
 					addElement(element,-1);
 				}
-            }
-            case DOWNLEFT -> {
+			}
+			case DOWNLEFT -> {
 				if (isCardCoordinate( x-1, y-1)){
-					Elements element=myCardBoard[x - 1][y - 1].corners.get(CornerPosition.UPRIGHT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).corners.get(CornerPosition.UPRIGHT);
 					addElement(element,-1);
 				}
-            }
-            case DOWNRIGHT -> {
+			}
+			case DOWNRIGHT -> {
 				if (isCardCoordinate( x+1, y-1)){
-					Elements element=myCardBoard[x + 1][y - 1].corners.get(CornerPosition.UPLEFT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).corners.get(CornerPosition.UPLEFT);
 					addElement(element,-1);
 				}
-            }
-        }
+			}
+		}
 
 	}
 
@@ -315,30 +308,7 @@ public class Board {
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
 	public boolean isCardCoordinate(int x, int y){
-		return myCardBoard[x][y]!=null;
-	}
-
-
-	public void setMyCardBoard(Card[][] myCardBoard) {
-
-		this.myCardBoard = myCardBoard;
-	}
-
-	/**
-	 * Initializing it with all null
-	 * @author: Gong
-	 * @param myCardBoard a board  and its max size
-	 * @exception: MaxSizeNegativeException:maxsize is a negative number
-	 */
-	private void initializeMyCardBoard(Card[][] myCardBoard, int maxsize){
-		/*initialize myCardBoard*/
-		for (int j = 0; j < maxsize *2 +1; j++) {
-			for (int k = 0; k < maxsize *2 +1; k++) {
-				if (myCardBoard != null) {
-					myCardBoard[j][k]=null;
-				}
-			}
-		}
+		return cardCoordinate.containsValue(new Coordinate(x,y));
 	}
 
 	public void setCounterOfElements(Map<Elements, Integer> counterOfElements) {
@@ -346,24 +316,41 @@ public class Board {
 
 	}
 
-	public Card[][] getMyCardBoard() {
-		return myCardBoard;
-	}
-
-	public Card getCardInBoard(/*Card[][] cardboard,*/ int x, int y){
-		Card c = this.myCardBoard[x][y];
-		/*c=cardboard[x][y];*/
-        return c;
-    }
 	public Map<Elements, Integer> getCounterOfElements() {
 		return counterOfElements;
 	}
 
-	public Map<Integer, Integer[]> getCoordinate() {
-		return coordinate;
-	}
-
 	public ArrayList<Integer> getExists() {
 		return exists;
+	}
+
+	public BiMap<Card, Coordinate> getCardCoordinate() {
+		return cardCoordinate;
+	}
+
+	public void setCardCoordinate(BiMap<Card, Coordinate> cardCoordinate) {
+		this.cardCoordinate = cardCoordinate;
+	}
+
+	public void setExists(ArrayList<Integer> exists) {
+		this.exists = exists;
+	}
+	public Card getCardInBoard(int x, int y){
+		Card card = cardCoordinate.inverse().get(new Coordinate(x,y));
+		return card;
+	}
+	public Coordinate getCoordinate (Card card){
+		Coordinate xy = cardCoordinate.get(card);
+		return xy;
+	}
+	public Coordinate getCoordinate (int cardCode){
+		Card theCard = new Card();
+		for (Card card : cardCoordinate.keySet()){
+			if (card.getCode()==cardCode){
+				theCard=card;
+			}
+		}
+		return cardCoordinate.get(theCard);
+
 	}
 }
