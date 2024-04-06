@@ -1,8 +1,10 @@
 package it.polimi.ingsw.model;
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,20 +33,15 @@ public class Board {
 		Map<Elements, Integer> counter = new HashMap<>();
 		setCounterOfElements(counter);
 		/*put the initial card*/
-		if (i.getIsFront()){
-			for (int j = 0; j < 3; j++) {
-				Elements centralElement = i.getCentralElements()[j];
-				addElement(centralElement);
-			}
-		} else {
-			for(Elements element : Elements.values()){
-				addElement(element);
-			}
-
-
-		}
+		i.setSide();
+		addAllElements(i);
+		BiMap<Card,Coordinate> cardCoordinate = HashBiMap.create();
 		Coordinate startXY = new Coordinate(0,0);
 		cardCoordinate.put(i,startXY);
+		setCardCoordinate(cardCoordinate);
+		ArrayList<Integer> exists = new ArrayList<>();
+		setExists(exists);
+		this.exists.add(i.getCode());
     }
 
 
@@ -58,7 +55,7 @@ public class Board {
 	public void addCard(ResourceCard input,int x, int y) {
 		/* no Exception handle*/
 		if (input.getIsFront()){
-			addAllCornersElements(input);
+			addAllElements(input);
 		}else{
 			addElement(input.getKingdom());
 		}
@@ -104,22 +101,22 @@ public class Board {
             case UPLEFT -> {
 				if (!isCardCoordinate(x-1,y+1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).corners.get(CornerPosition.DOWNRIGHT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNRIGHT);
             }
             case UPRIGHT -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(+-1,y+1)).corners.get(CornerPosition.DOWNLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(+-1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
             }
             case DOWNLEFT -> {
 				if (!isCardCoordinate(x-1,y-1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).corners.get(CornerPosition.UPRIGHT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
             }
             case DOWNRIGHT -> {
 				if (!isCardCoordinate(x+1,y-1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).corners.get(CornerPosition.UPLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
             }
         }
         return false;
@@ -173,11 +170,17 @@ public class Board {
 	 * @param card:card with all elements that would be added in the counter of elements
 	 * @exception: nothing for now....
 	 */
-	public void addAllCornersElements(Card card){
+	public void addAllElements(Card card){
 		/* no Exception handle*/
 
 		for (CornerPosition corner : CornerPosition.values()) {
 			addCornerElement(card, corner);
+		}
+		if(card.isInitialCard() && card.getIsFront()){
+			InitialCard card1 = (InitialCard) card;
+			for (Elements e : card1.getCentralElements()){
+				addElement(e);
+			}
 		}
 
 	}
@@ -197,19 +200,19 @@ public class Board {
 		/* no Exception handle*/
         switch (corner) {
             case UPLEFT -> {
-				Elements element= card.corners.get(CornerPosition.UPLEFT);
+				Elements element= card.getCorners().get(CornerPosition.UPLEFT);
 				addElement(element);
             }
             case UPRIGHT -> {
-				Elements element= card.corners.get(CornerPosition.UPRIGHT);
+				Elements element= card.getCorners().get(CornerPosition.UPRIGHT);
 				addElement(element);
             }
             case DOWNLEFT -> {
-				Elements element= card.corners.get(CornerPosition.DOWNLEFT);
+				Elements element= card.getCorners().get(CornerPosition.DOWNLEFT);
 				addElement(element);
             }
             case DOWNRIGHT -> {
-				Elements element= card.corners.get(CornerPosition.DOWNRIGHT);
+				Elements element= card.getCorners().get(CornerPosition.DOWNRIGHT);
 				addElement(element);
             }
         }
@@ -249,25 +252,25 @@ public class Board {
         switch (corner) {
             case UPLEFT -> {
 				if (isCardCoordinate( x-1, y+1)){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).corners.get(CornerPosition.DOWNRIGHT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNRIGHT);
 					addElement(element,-1);
 				}
 			}
 			case UPRIGHT -> {
 				if (isCardCoordinate( x+1, y+1)){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).corners.get(CornerPosition.DOWNLEFT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
 					addElement(element,-1);
 				}
 			}
 			case DOWNLEFT -> {
 				if (isCardCoordinate( x-1, y-1)){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).corners.get(CornerPosition.UPRIGHT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
 					addElement(element,-1);
 				}
 			}
 			case DOWNRIGHT -> {
 				if (isCardCoordinate( x+1, y-1)){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).corners.get(CornerPosition.UPLEFT);
+					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
 					addElement(element,-1);
 				}
 			}

@@ -29,6 +29,13 @@ public class CardParsing {
         });
         return cards;
     }
+    public List<InitialCard> loadInitialCards() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        List<InitialCard> cards;
+        cards =objectMapper.readValue(new File(FilePath.INITIALCARDPATH.value), new TypeReference<>() {
+        });
+        return cards;
+    }
     public CardParsing() {
     }
 }

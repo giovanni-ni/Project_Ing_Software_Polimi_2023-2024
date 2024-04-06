@@ -20,6 +20,7 @@ class GoldCardTest {
 
 
     /*set a random initial Card to create a board*/
+    public Elements[] centralElments;
     public final InitialCard startCard = new InitialCard(82,false);
     /* if it is front
     Elements[] centralElements = {Elements.MUSHROOMS};
@@ -91,30 +92,81 @@ class GoldCardTest {
     }
 
     @Test
-    public void checkGoals(){
+    public void checkEveryKindOfGoals(){
 
         //check HideCorner Type with Card code 65
         GoldCard test65= goldCards.get(65-TypeOfCard.GOLDCARD.codeCardStart);
-
-
-
-
-
-
         //check DirectPoint Type with Card code 52
-        GoldCard test52= goldCards.get(51-TypeOfCard.GOLDCARD.codeCardStart);
+        GoldCard test52= goldCards.get(52-TypeOfCard.GOLDCARD.codeCardStart);
         //check CountElementF Type with Card code 70
-        GoldCard test70= goldCards.get(69-TypeOfCard.GOLDCARD.codeCardStart);
+        GoldCard test70= goldCards.get(70-TypeOfCard.GOLDCARD.codeCardStart);
         //check CountElementI Type with Card code 59
-        GoldCard test59= goldCards.get(58-TypeOfCard.GOLDCARD.codeCardStart);
+        GoldCard test59= goldCards.get(59-TypeOfCard.GOLDCARD.codeCardStart);
         //check CountElementP Type with Card code 48
-        GoldCard test48= goldCards.get(47-TypeOfCard.GOLDCARD.codeCardStart);
+        GoldCard test48= goldCards.get(48-TypeOfCard.GOLDCARD.codeCardStart);
 
+        /* test if gold card has the right corners
+        for (CornerPosition cp :CornerPosition.values()){
+            Elements e= test52.getCorners().get(cp);
+            System.out.println(e);
+        }*/
+        InitialCard card = new InitialCard();
+        card=startCard;
+        ArrayList<Elements> elements = new ArrayList<>();
+        elements.add(Elements.INSECT);
+        startCard.setCentralElements(elements);
+        for (CornerPosition cp : CornerPosition.values()){
 
+            map.put(cp,Elements.EMPTY);
+        }
+        startCard.setCorners(map);
+        Board playerBoard = new Board(startCard);
         //check Hidecorner
+        playerBoard.addCard(test65,1,1);
+        playerBoard.addCard(test52,2,2);
+        playerBoard.addCard(test70,2,0);
+        playerBoard.addCard(test59,0,2);
+        int time = test65.goalCount(playerBoard);
+        int point = test65.getGoalPoint(playerBoard);
+        assertEquals(time,4);
+        assertEquals(point,8);
+        //check DirectPoint
+        time = test52.goalCount(playerBoard);
+        point = test52.getGoalPoint(playerBoard);
+        assertEquals(time,1);
+        assertEquals(point,test52.getBasePoint());
+        //check CountElements
+        //feather
+        time = test70.goalCount(playerBoard);
+        point = test70.goalCount(playerBoard);
+        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.FEATHER));
+        assertEquals(point,1);
+        playerBoard.addElement(Elements.FEATHER);
+        time = test70.goalCount(playerBoard);
+        point = test70.goalCount(playerBoard);
+        assertEquals(time, 2);
+        assertEquals(point,2);
+        //Ink
+        time = test59.goalCount(playerBoard);
+        point = test59.goalCount(playerBoard);
+        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.INK));
+        assertEquals(point,1);
+        playerBoard.addElement(Elements.INK,3);
+        time = test59.goalCount(playerBoard);
+        point = test59.goalCount(playerBoard);
+        assertEquals(time, 4);
+        assertEquals(point,4);
+        //Parchment
+        time = test48.goalCount(playerBoard);
+        point = test48.goalCount(playerBoard);
+        assertEquals(time,playerBoard.getCounterOfElements().get(Elements.PARCHMENT));
+        assertEquals(point,1);
+        playerBoard.addElement(Elements.PARCHMENT,18);
+        time = test48.goalCount(playerBoard);
+        point = test48.goalCount(playerBoard);
+        assertEquals(time, 19);
+        assertEquals(point,19);
 
-
-        System.out.println(test65.getCode());
 
     }
     @Test
@@ -126,12 +178,11 @@ class GoldCardTest {
         GoldCard gold52= goldCards.get(52-TypeOfCard.GOLDCARD.codeCardStart);
 
        Coordinate testC = cardCoordinateBiMap.get(gold52);
-        System.out.println(testC.getX());
-        System.out.println(testC.getY());
+        assertEquals(testC,xy);
         assertTrue(cardCoordinateBiMap.containsValue(new Coordinate(1,1)));
 
         Card cardInTest= cardCoordinateBiMap.inverse().get(xy);
-        System.out.println(cardInTest.getCode());
+        assertEquals(test52,cardInTest);
 
     }
 
