@@ -16,6 +16,15 @@ public class Player {
 	private PlayerColor playerID;
 
 	public int currentScore;
+	public Player (TargetCard[] targetOnHand,PlayerColor playerID, int currentScore){
+		this.targetOnHand=targetOnHand;
+		this.playerID=playerID;
+		this.currentScore=currentScore;
+		this.cardOnHand=new ArrayList<>();
+		this.board=new Board();
+		this.target=new CountTargetCard();//********
+
+	}
 
 	public Board getBoard() {
 		return board;
@@ -39,14 +48,6 @@ public class Player {
 
 	public void setPlayerID(PlayerColor playerID) {
 		this.playerID = playerID;
-	}
-
-	public int getCurrentScore() {
-		return currentScore;
-	}
-
-	public void setCurrentScore(int currentScore) {
-		this.currentScore = currentScore;
 	}
 
 	public List<Card> getCardOnHand() {

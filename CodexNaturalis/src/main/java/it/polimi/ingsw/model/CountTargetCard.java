@@ -11,7 +11,9 @@ public class CountTargetCard extends TargetCard{
 
     }
 
-    public CountTargetCard(Elements[] elemRequired) {
+    public CountTargetCard(int idCard,int basePoint,boolean ifCommon, Elements[] elemRequired) {
+        super(idCard,basePoint,ifCommon);
+
         this.elemRequired = elemRequired;
     }
 

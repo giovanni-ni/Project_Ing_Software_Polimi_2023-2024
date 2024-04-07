@@ -14,7 +14,8 @@ public class PositionGoalTarget extends TargetCard{
 
     }
 
-    public PositionGoalTarget(Elements firstElement,Elements secondElement, CornerPosition cp) {
+    public PositionGoalTarget(int idCard,int basePoint,boolean ifCommon,Elements firstElement,Elements secondElement, CornerPosition cp) {
+        super(idCard,basePoint,ifCommon);
         this.firstElement = firstElement;
         this.secondElement = secondElement;
         this.cp = cp;

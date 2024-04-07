@@ -11,7 +11,8 @@ public class ObliqueTargetCard extends TargetCard{
     public ObliqueTargetCard() {
 
     }
-    public ObliqueTargetCard(Elements elemRequired, CornerPosition cp) {
+    public ObliqueTargetCard(int idCard,int basePoint,boolean ifCommon,Elements elemRequired, CornerPosition cp) {
+        super(idCard,basePoint,ifCommon);
         this.elemRequired = elemRequired;
         this.cp = cp;
     }

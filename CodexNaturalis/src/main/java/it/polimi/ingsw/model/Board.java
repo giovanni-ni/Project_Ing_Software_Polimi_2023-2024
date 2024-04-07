@@ -21,6 +21,10 @@ public class Board {
 
 	private ArrayList<Integer> exists;
 
+	public Board(){
+
+	}
+
 	/**
 	 * Constructor of the board of each player at the start of the game
 	 * @author: Gong
