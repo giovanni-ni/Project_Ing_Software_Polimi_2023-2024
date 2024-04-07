@@ -1,0 +1,34 @@
+[
+{
+  "idCard": 99,
+  "basePoint": 3,
+  "isCommon": false,
+  "firstElement":"MUSHROOMS",
+  "secondElement": "VEGETAL",
+  "cp":UPLEFT
+}
+{
+  "idCard": 100,
+  "basePoint": 3,
+  "isCommon": false,
+  "firstElement":"INSECT",
+  "secondElement": "ANIMALS",
+  "cp":"DOWNRIGHT"
+}
+{
+  "idCard": 101,
+  "basePoint": 3,
+  "isCommon": false,
+  "firstElement":"ANIMALS",
+  "secondElement": "MUSHROOMS",
+  "cornerPosition":"DOWNLEFT"
+}
+{
+  "idCard": 102,
+  "basePoint": 3,
+  "isCommon": false,
+  "firstElement":"VEGETAL",
+  "secondElement": "INSECT",
+  "cornerPosition": "UPRIGHT"
+}
+  ]

@@ -1,0 +1,25 @@
+[
+  {
+    "idCard": 91,
+    "basePoint": 2,
+    "isCommon": false,
+    "elemRequired": "MUSHROOMS",
+    "cornerPosition": "UPRIGHT"
+  },
+  {
+    "idCard": 92,
+    "basePoint": 2,
+    "isCommon": false,
+    "elemRequired": "INSECT",
+    "cornerPosition": "UPLEFT"
+  },
+  {
+    "idCard": 93,
+    "basePoint": 2,
+    "isCommon": false,
+    "elemRequired": "ANIMALS",
+    "cornerPosition": "UPRIGHT"
+  },
+
+
+]

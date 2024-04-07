@@ -1,0 +1,54 @@
+[
+  {
+    "idCard": 87,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["INK","INK"]
+  },
+  {
+    "idCard": 88,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["FEATHER","FEATHER"]
+  },
+  {
+    "idCard": 89,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["PARCHMENT","PARCHMENT"]
+  },
+  {
+    "idCard": 90,
+    "basePoint":3,
+    "ifCommon": false,
+    "elemRequired": ["FEATHER","INK","PARCHMENT"]
+  },
+  {
+    "idCard": 95,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["MUSHROOMS","MUSHROOMS","MUSHROOMS"]
+  },
+  {
+    "idCard": 96,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["INSECT","INSECT","INSECT"]
+  },
+  {
+    "idCard": 97,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["ANIMALS","ANIMALS","ANIMALS"]
+  },
+  {
+    "idCard": 98,
+    "basePoint":2,
+    "ifCommon": false,
+    "elemRequired": ["VEGETAL","VEGETAL","VEGETAL"]
+  }
+
+
+
+
+]
