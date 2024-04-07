@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CountTargetCard extends TargetCard{
 
     Elements[] elemRequired;
@@ -24,16 +27,17 @@ public class CountTargetCard extends TargetCard{
 
         int n = Integer.MAX_VALUE;
 
-        if(this.elemRequired != null && this.elemRequired.length != 0) {
-            for (Elements element : this.elemRequired) {
-                if (!board.getCounterOfElements().containsKey(element)) {
-                    return 0;
-                }
-                int count = board.getCounterOfElements().get(element);
-                n = Math.min(n, count);
-            }
-        } else {
-            return 0;
+        Map<Elements, Integer> elementCounts = new HashMap<>();
+        for (Elements element : this.elemRequired) {
+            elementCounts.put(element, elementCounts.getOrDefault(element, 0) + 1);
+        }
+
+        for (Map.Entry<Elements, Integer> entry : elementCounts.entrySet()) {
+            Elements element = entry.getKey();
+            int countInMap = board.getCounterOfElements().containsKey(element) ? board.getCounterOfElements().get(element) : 0;
+            int countInArray = entry.getValue();
+            int setsPossible = countInMap / countInArray;
+            n = Math.min(n, setsPossible);
         }
 
         return n;
