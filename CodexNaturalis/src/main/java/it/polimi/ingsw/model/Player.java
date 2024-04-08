@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.util.*;
 /*how to add point to the ptmap
-* swipe is a  view control maybe*/
+ * swipe is a  view control maybe*/
 public class Player {
 	//attributes
 	private List<Card> cardOnHand;
@@ -16,6 +16,12 @@ public class Player {
 	private PlayerColor playerID;
 
 	public int currentScore;
+	public Player(int currentScore){
+		this.currentScore=currentScore;
+	}
+	public Player(TargetCard targetOnHand){
+		this.target=targetOnHand;
+	}
 	public Player (TargetCard[] targetOnHand,PlayerColor playerID, int currentScore){
 		this.targetOnHand=targetOnHand;
 		this.playerID=playerID;
