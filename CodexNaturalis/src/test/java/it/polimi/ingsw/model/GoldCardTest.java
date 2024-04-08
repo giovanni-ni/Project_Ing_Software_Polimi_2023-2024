@@ -17,6 +17,8 @@ class GoldCardTest {
     public CardParsing cp = new CardParsing();
     public ArrayList<InitialCard> initialCards = (ArrayList<InitialCard>) cp.loadInitialCards();
     public ArrayList<GoldCard> goldCards = (ArrayList<GoldCard>) cp.loadGoldCards();
+
+    public ArrayList<ResourceCard> resourceCards = (ArrayList<ResourceCard>) cp.loadResourceCards();
     public final InitialCard startCard = initialCards.get(81-TypeOfCard.INITIALCARD.codeCardStart);
     public final Board playerBoard = new Board(startCard);
     public GoldCard goldCard78 = goldCards.get(78-TypeOfCard.GOLDCARD.codeCardStart);
@@ -110,11 +112,20 @@ class GoldCardTest {
         startCard.setCorners(map);
         Board playerBoard = new Board(startCard);
         //check Hidecorner
+        playerBoard.addElement(Elements.VEGETAL,10);
+        playerBoard.addElement(Elements.ANIMALS,10);
+        playerBoard.addElement(Elements.INSECT,10);
+        playerBoard.addElement(Elements.MUSHROOMS,10);
 
-        playerBoard.addCard(test65,1,1);
-        playerBoard.addCard(test52,2,2);
-        playerBoard.addCard(test59,0,2);
-        playerBoard.addCard(test70,2,0);
+        ResourceCard cardR0 = resourceCards.getFirst();
+        assertTrue(test52.checkRequirements(playerBoard));
+        assertTrue(playerBoard.addCard(test65,1,1));
+        assertTrue(playerBoard.addCard(test52,2,2));
+        assertTrue(playerBoard.addCard(test59,0,2));
+        assertTrue(playerBoard.addCard(test70,2,0));
+        assertTrue(playerBoard.addCard(cardR0,3,3));
+
+
         int time = test65.goalCount(playerBoard);
         int point = test65.getGoalPoint(playerBoard);
         assertEquals(time,4);
@@ -176,7 +187,7 @@ class GoldCardTest {
     }
 
     @Test
-    public void testContructon(){
+    public void testConstructor(){
         Map<CornerPosition,Elements> corner = new HashMap<>();
         corner.put(CornerPosition.UPRIGHT,Elements.HIDE);
         corner.put(CornerPosition.UPLEFT,Elements.EMPTY);
@@ -190,6 +201,7 @@ class GoldCardTest {
         assertTrue(goldTest78.isGoldCard());
         Card card = new Card();
         card.getKingdom();
+        assertTrue(goldTest78.isResourceCard());
     }
 
 }

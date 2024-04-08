@@ -50,10 +50,13 @@ public class GoldCard extends ResourceCard {
 		this.secondElement = secondElement;
 	}
 
+	@Override
 	public boolean checkRequirements(Board board) {
 
-		if(!board.getCounterOfElements().containsKey(this.secondElement) || board.getCounterOfElements().get(this.secondElement)==0 ) {
-			return false;
+		if (this.secondElement!=Elements.HIDE && this.secondElement!=Elements.EMPTY) {
+			if (!board.getCounterOfElements().containsKey(this.secondElement) || board.getCounterOfElements().get(this.secondElement) == 0) {
+				return false;
+			}
 		}
 
         return this.nReqElement <= board.getCounterOfElements().get(super.getKingdom()) && board.getCounterOfElements().containsKey(this.getKingdom());

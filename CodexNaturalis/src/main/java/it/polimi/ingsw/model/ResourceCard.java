@@ -36,4 +36,8 @@ public class ResourceCard extends Card {
 		this.basePoint = basePoint;
 	}
 
+	public boolean checkRequirements(Board board) {
+		return true;
+	}
+
 }

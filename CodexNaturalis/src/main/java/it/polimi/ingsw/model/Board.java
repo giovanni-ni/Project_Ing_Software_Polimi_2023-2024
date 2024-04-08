@@ -56,8 +56,11 @@ public class Board {
 	 * @param input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player; x:the coordinate x of the position desired; y:coordinate y desired
 	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
 	 */
-	public void addCard(ResourceCard input,int x, int y) {
+	public boolean addCard(ResourceCard input,int x, int y) {
 		/* no Exception handle*/
+		if (!input.checkRequirements(this)){
+			return false;
+		}
 		if (input.getIsFront()){
 			addAllElements(input);
 		}else{
@@ -66,6 +69,7 @@ public class Board {
 		deleteCoveredElements(x,y);
 		cardCoordinate.put(input, new Coordinate(x,y));
 		exists.add(input.getCode());
+		return true;
 	}
 
 
