@@ -36,8 +36,4 @@ public class ResourceCard extends Card {
 		this.basePoint = basePoint;
 	}
 
-	public int countPoint() {
-		return 0;
-	}
-
 }
