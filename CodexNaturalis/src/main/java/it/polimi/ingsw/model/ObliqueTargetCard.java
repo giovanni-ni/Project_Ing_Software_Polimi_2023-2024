@@ -1,20 +1,21 @@
 package it.polimi.ingsw.model;
 
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class ObliqueTargetCard extends TargetCard{
 
-    Elements elemRequired;
+    private Elements elemRequired;
 
-    CornerPosition cp;
+    private CornerPosition cornerPosition;
 
     public ObliqueTargetCard() {
 
     }
-    public ObliqueTargetCard(int idCard,int basePoint,boolean ifCommon,Elements elemRequired, CornerPosition cp) {
+    public ObliqueTargetCard(int idCard,int basePoint,boolean ifCommon,Elements elemRequired, CornerPosition cornerPosition) {
         super(idCard,basePoint,ifCommon);
         this.elemRequired = elemRequired;
-        this.cp = cp;
+        this.cornerPosition = cornerPosition;
     }
 
     public Elements getElemRequired() {
@@ -25,12 +26,12 @@ public class ObliqueTargetCard extends TargetCard{
         this.elemRequired = elemRequired;
     }
 
-    public CornerPosition getCp() {
-        return cp;
+    public CornerPosition getcornerPosition() {
+        return cornerPosition;
     }
 
-    public void setCp(CornerPosition cp) {
-        this.cp = cp;
+    public void setcornerPosition(CornerPosition cornerPosition) {
+        this.cornerPosition = cornerPosition;
     }
 
     @Override
@@ -39,7 +40,8 @@ public class ObliqueTargetCard extends TargetCard{
     }
     @Override
     public int checkGoal(Board board) {
-        BiMap<Card,Coordinate> copy = board.getCardCoordinate();
+        BiMap<Card,Coordinate> copy = HashBiMap.create();
+        copy.putAll(board.getCardCoordinate());
         int n = 0;
 
         for(Card c: board.getCardCoordinate().keySet()) {
@@ -55,13 +57,13 @@ public class ObliqueTargetCard extends TargetCard{
 
 
     private boolean isCorrect(Card c, Board board) {
-        if (this.cp == CornerPosition.UPLEFT) {
+        if (this.cornerPosition == CornerPosition.UPLEFT) {
             if (board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() - 1).getKingdom() == this.elemRequired) {
                 if ((board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() + 1).getKingdom() == this.elemRequired)) {
                     return true;
                 }
             }
-        } else if (this.cp == CornerPosition.UPRIGHT) {
+        } else if (this.cornerPosition == CornerPosition.UPRIGHT) {
             if (board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() - 1).getKingdom() == this.elemRequired) {
                 if ((board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() + 1).getKingdom() == this.elemRequired)) {
                     return true;

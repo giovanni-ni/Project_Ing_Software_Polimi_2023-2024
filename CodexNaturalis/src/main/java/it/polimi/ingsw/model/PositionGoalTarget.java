@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 
 public class PositionGoalTarget extends TargetCard{
 
@@ -47,7 +48,8 @@ public class PositionGoalTarget extends TargetCard{
     @Override
     public int checkGoal(Board board) {
 
-        BiMap<Card,Coordinate> copy = board.getCardCoordinate(); //it pass the address or is a copy??
+        BiMap<Card,Coordinate> copy = HashBiMap.create();
+        copy.putAll(board.getCardCoordinate());
         int n = 0;
 
         for(Card c: board.getCardCoordinate().keySet()) {

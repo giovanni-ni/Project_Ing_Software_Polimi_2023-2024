@@ -36,6 +36,27 @@ public class CardParsing {
         });
         return cards;
     }
+    public List<TargetCard> loadTargetCards() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        List<ObliqueTargetCard> cards2;
+        List<PositionGoalTarget> cards3;
+        List<CountTargetCard> cards1;
+        cards1=objectMapper.readValue(new File(FilePath.COUNTTARGETCARDPATH.value), new TypeReference<>() {
+        });
+        cards2 =objectMapper.readValue(new File(FilePath.OBLIQUETARGETCARDPATH.value), new TypeReference<>() {
+        });
+        cards3 =objectMapper.readValue(new File(FilePath.POSITIONGOALTARGETCARDPATH.value), new TypeReference<>() {
+        });
+
+        List<TargetCard> cards = new ArrayList<>();
+        cards.addAll(cards1);
+        cards.addAll(cards2);
+        cards.addAll(cards3);
+
+
+        return cards;
+    }
     public CardParsing() {
     }
 }
