@@ -46,7 +46,6 @@ class GoldCardTest {
         trueCounter.put(Elements.ANIMALS,1);
         playerBoard.setCounterOfElements(trueCounter);
         assertTrue(goldCard78.checkRequirements(playerBoard));
-
     }
     @Test
     public void testOfDifferentConstructor() {
