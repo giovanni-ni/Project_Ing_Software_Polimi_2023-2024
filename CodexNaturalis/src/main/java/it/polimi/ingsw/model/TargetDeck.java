@@ -1,17 +1,22 @@
 package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class TargetDeck {
 
     private ArrayList<TargetCard> targetDeck;
     private int numTargetCards;
-    public TargetDeck(TargetCard [] targetCards){
-        targetDeck= new ArrayList<>();
-        for(int i =0; i<targetCards.length; i++){
+    public  TargetDeck(){
+
+    }
+
+    public TargetDeck(List<TargetCard> targetCards){
+        targetDeck= new ArrayList<>(targetCards);
+        /*for(int i =0; i<targetCards.length; i++){
             targetDeck.add(targetCards[i]);
-        }
-        int num=targetCards.length;
+        }*/
+        int num=targetCards.size();
     }
 
     public void shuffleTargetCards (){

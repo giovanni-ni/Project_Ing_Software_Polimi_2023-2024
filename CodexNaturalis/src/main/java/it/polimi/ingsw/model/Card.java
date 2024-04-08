@@ -13,6 +13,9 @@ public class Card {
 	public Card() {
 
 	}
+	public Card(int code){
+		this.code=code;
+	}
 
 	public Card(int code, boolean isFront, Map<CornerPosition, Elements> corners) {
 		this.code = code;

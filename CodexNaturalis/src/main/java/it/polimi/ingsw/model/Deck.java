@@ -1,19 +1,23 @@
 package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Deck {
 
 	protected int numCards;
-	private ArrayList<Card> deck;
+	private List<Card> deck;
 
-    public Deck (Card[] cards){
+    public Deck (List<Card> cards){
 		deck =new ArrayList<>();
-        for(int i =0; i<cards.length; i++) {
+        for(int i =0; i<cards.size(); i++) {
 			/*method that sets all the cards into backs*/
-			deck.add(cards[i]);
+			deck.add(cards.get(i));
 		}
-		int numCards=cards.length;
+		this.numCards=cards.size();
+	}
+	public Deck (){
+
 	}
 	public void shuffleCards() {
 			Collections.shuffle(deck);
@@ -42,19 +46,20 @@ public class Deck {
 
 		if(numCards>=0) {
 			/*set front card*/
-			return deck.get(numCards - 1);
+			return deck.get(numCards - 2);
 		}else
 			return null;
 	}
 
 	public int getNumCards() {
+
 		return numCards;
 	}
-	public ArrayList<Card> getDeck() {
+	public List<Card> getDeck() {
 		return deck;
 	}
 
-	public void setDeck(ArrayList<Card> deck) {
+	public void setDeck(List<Card> deck) {
 		this.deck = deck;
 	}
 

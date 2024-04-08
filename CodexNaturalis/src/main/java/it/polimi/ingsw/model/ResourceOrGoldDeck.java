@@ -1,12 +1,13 @@
 package it.polimi.ingsw.model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResourceOrGoldDeck extends Deck{
 
     protected int numCards;
     private ArrayList <Card> deck;
-    public ResourceOrGoldDeck(Card[] cards) {
+    public ResourceOrGoldDeck(List<Card> cards) {
         super(cards);
     }
     public Card getFirstFrontCard(){
