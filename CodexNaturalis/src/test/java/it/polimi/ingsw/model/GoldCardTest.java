@@ -7,23 +7,14 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import static com.google.common.collect.HashBiMap.create;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoldCardTest {
 
     public final Map<CornerPosition,Elements> map = new HashMap<>();
-
-    /*set a random initial Card to create a board*/
-    public Elements[] centralElments;
-
-
-
     public CardParsing cp = new CardParsing();
-
     public ArrayList<InitialCard> initialCards = (ArrayList<InitialCard>) cp.loadInitialCards();
     public ArrayList<GoldCard> goldCards = (ArrayList<GoldCard>) cp.loadGoldCards();
     public final InitialCard startCard = initialCards.get(81-TypeOfCard.INITIALCARD.codeCardStart);
@@ -109,8 +100,6 @@ class GoldCardTest {
             Elements e= test52.getCorners().get(cp);
             System.out.println(e);
         }*/
-        InitialCard card = new InitialCard();
-        card=startCard;
         ArrayList<Elements> elements = new ArrayList<>();
         elements.add(Elements.INSECT);
         startCard.setCentralElements(elements);
@@ -184,6 +173,23 @@ class GoldCardTest {
         Card cardInTest= cardCoordinateBiMap.inverse().get(xy);
         assertEquals(test52,cardInTest);
 
+    }
+
+    @Test
+    public void testContructon(){
+        Map<CornerPosition,Elements> corner = new HashMap<>();
+        corner.put(CornerPosition.UPRIGHT,Elements.HIDE);
+        corner.put(CornerPosition.UPLEFT,Elements.EMPTY);
+        corner.put(CornerPosition.DOWNRIGHT,Elements.EMPTY);
+        corner.put(CornerPosition.DOWNLEFT,Elements.PARCHMENT);
+        GoldCard goldTest78 = new GoldCard(78,false,corner,Elements.INSECT,1,2,Elements.ANIMALS,TypeBonus.COUNTELEMENT_P);
+        assertEquals(goldTest78.getBasePoint(),goldCard78.getBasePoint());
+        assertEquals(goldTest78.getCode(),goldCard78.getCode());
+        assertEquals(goldTest78.getKingdom(),goldCard78.getKingdom());
+        assertEquals(goldTest78.getType(),goldCard78.getType());
+        assertTrue(goldTest78.isGoldCard());
+        Card card = new Card();
+        card.getKingdom();
     }
 
 }
