@@ -16,6 +16,12 @@ public class Player {
 	private PlayerColor playerID;
 
 	public int currentScore;
+	public Player(int currentScore){
+		this.currentScore=currentScore;
+	}
+	public Player(TargetCard targetOnHand){
+		this.target=targetOnHand;
+	}
 	public Player (TargetCard[] targetOnHand,PlayerColor playerID, int currentScore){
 		this.targetOnHand=targetOnHand;
 		this.playerID=playerID;

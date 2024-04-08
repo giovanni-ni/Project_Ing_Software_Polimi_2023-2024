@@ -4,6 +4,7 @@ package it.polimi.ingsw.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class PointTable {
 
@@ -70,16 +71,16 @@ public class PointTable {
 
 		return max;
 	}
-	public List<Player> findMaxTargetPlayers(List<Player> players) {
-		return getPlayers(players, targetPoints);
+	public List<Player> findMaxTargetPlayers() {
+		return getPlayers(this.targetPoints.keySet(), targetPoints);
 
 	}
 
-	public List<Player> findMaxPointPlayers(List<Player> players) {
-		return getPlayers(players, playerPoints);
+	public List<Player> findMaxPointPlayers() {
+		return getPlayers(this.playerPoints.keySet(), playerPoints);
 	}
 
-	private List<Player> getPlayers(List<Player> players, Map<Player, Integer> points) {
+	private List<Player> getPlayers(Set<Player> players, Map<Player, Integer> points) {
 		int max=0;
 		int playerPoint;
 		List<Player> maxPlayers = new ArrayList<>();
