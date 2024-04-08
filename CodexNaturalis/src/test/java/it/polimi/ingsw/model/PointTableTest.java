@@ -8,6 +8,7 @@ class PointTableTest {
 
     @Test
     void getMaxPoint() {
+
     }
 
     @Test
