@@ -72,11 +72,6 @@ public class Player {
 		this.targetOnHand = targetOnHand;
 	}
 
-	public void chooseTarget(TargetCard targetCard) {
-		/*input of the card wanted*/
-		setTarget(targetCard);
-	}
-
 	/*public void swap(Card input) {
 	//controller or view method or card methos
 		input.setIsFront(!input.getIsFront);
@@ -92,7 +87,7 @@ public class Player {
 
 	public boolean add(ResourceCard card, int x, int y) {
 		if (!board.check(x,y)){
-			System.out.print("Card can't be placed here");
+			//System.out.print("Card can't be placed here");
 			return false;
 		}
 		//see also if requirement is satisfied

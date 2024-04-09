@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -59,6 +62,43 @@ class PlayerTest {
         assertEquals(card,p.getCardOnHand());
     }
 
+    @Test
+    void getAndSetBoardTest(){
+        Player p = new Player(PlayerColor.RED);
+        Board b = new Board();
+        p.setBoard(b);
+        assertEquals(b,p.getBoard());
+    }
+
+    @Test
+    void getAndSetTargetOnHand(){
+        Player p = new Player(PlayerColor.RED);
+        TargetCard c1 = new CountTargetCard(1,1,false, new Elements[]{Elements.MUSHROOMS, Elements.INSECT});
+        TargetCard c2 = new CountTargetCard(3,3,false, new Elements[]{Elements.VEGETAL, Elements.INSECT});
+        TargetCard[] t = {c1,c2};
+        p.setTargetOnHand(t);
+        assertEquals(t, p.getTargetOnHand());
+    }
+
+    @Test
+    void addTestCheckFalse() {
+        Player p = new Player(PlayerColor.RED);
+
+        Map<CornerPosition, Elements> corners = new HashMap<>();
+        corners.put(CornerPosition.UPLEFT, Elements.EMPTY);
+        corners.put(CornerPosition.UPRIGHT, Elements.VEGETAL);
+        corners.put(CornerPosition.DOWNRIGHT, Elements.EMPTY);
+        corners.put(CornerPosition.DOWNLEFT, Elements.EMPTY);
+        ArrayList<Elements> array = new ArrayList<>();
+        array.add(Elements.INSECT);
+        InitialCard c = new InitialCard(81,true, corners,array);
+        Board b = new Board(c);
+        p.setBoard(b);
+        ResourceCard rc = new ResourceCard();
+        BiMap<Card, Coordinate> biMap = HashBiMap.create();
+        assertFalse(p.add(rc, 2,2));
+
+    }
 
 
 
