@@ -49,11 +49,21 @@ class InitialCardTest {
 
     @Test
     void InitialCard(){
-        InitialCard testCard = new InitialCard(testCard0.getCode(), testCard0.getIsFront(),testCard0.getCorners(),testCard0.getCentralElements(),testCard0.getCornersFront(),testCard0.getCornersBack());
-        assertEquals(testCard.getCode(), testCard0.getCode());
-        assertEquals(testCard.getIsFront(), testCard0.getIsFront());
-        assertEquals(testCard.getCorners(), testCard0.getCorners());
+        InitialCard testCard1 = new InitialCard(testCard0.getCode(), testCard0.getIsFront(),testCard0.getCorners(),testCard0.getCentralElements(),testCard0.getCornersFront(),testCard0.getCornersBack());
+        assertEquals(testCard1.getCode(), testCard0.getCode());
+        assertEquals(testCard1.getIsFront(), testCard0.getIsFront());
+        assertEquals(testCard1.getCorners(), testCard0.getCorners());
 
+        InitialCard testCard2 = new InitialCard(testCard0.getCode(), testCard0.getIsFront());
+
+        InitialCard testCar3= new InitialCard(testCard0.getCode(), testCard0.getIsFront(),testCard0.getCorners(),testCard0.getCentralElements());
     }
+
+    @Test
+    void SetSide(){
+        testCard0.setFront(true);
+        testCard0.setSide();
+    }
+
 
 }
