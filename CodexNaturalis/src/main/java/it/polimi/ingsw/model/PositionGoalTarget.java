@@ -77,18 +77,18 @@ public class PositionGoalTarget extends TargetCard{
                         xy2 = new Coordinate(cardX - 1, cardY + 3);
 
                     }
-                    case UPRIGHT -> {
+                    case DOWNRIGHT -> {
                         xy1 = new Coordinate(cardX + 1, cardY - 1);
                         xy2 = new Coordinate(cardX + 1, cardY - 3);
 
 
                     }
-                    case DOWNLEFT -> {
+                    case DOWNLEFT-> {
                         xy1 = new Coordinate(cardX - 1, cardY - 1);
                         xy2 = new Coordinate(cardX - 1, cardY - 3);
 
                     }
-                    case DOWNRIGHT -> {
+                    case UPRIGHT -> {
                         xy1 = new Coordinate(cardX + 1, cardY + 1);
                         xy2 = new Coordinate(cardX + 1, cardY + 3);
 

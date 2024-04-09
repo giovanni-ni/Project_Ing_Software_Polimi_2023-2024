@@ -83,7 +83,9 @@ public class Board {
 	 */
 	public boolean check(int x, int y) {
 		/* no Exception handle*/
-
+		if (numCardsAbout(x,y)==0){
+			return false;
+		}
 		if (checkCorner(x,y,CornerPosition.UPRIGHT) && !isCardCoordinate(x,y))
 			if (checkCorner(x,y,CornerPosition.UPLEFT))
 				if (checkCorner(x,y,CornerPosition.DOWNRIGHT))
