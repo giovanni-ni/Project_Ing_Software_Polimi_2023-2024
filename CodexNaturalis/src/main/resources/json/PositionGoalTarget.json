@@ -21,7 +21,7 @@
   "ifCommon": false,
   "firstElement":"ANIMALS",
   "secondElement": "MUSHROOMS",
-  "cornerPosition":"DOWNLEFT"
+  "cp":"DOWNLEFT"
 },
 {
   "idCard": 102,
@@ -29,6 +29,6 @@
   "ifCommon": false,
   "firstElement":"VEGETAL",
   "secondElement": "INSECT",
-  "cornerPosition": "UPRIGHT"
+  "cp": "UPRIGHT"
 }
   ]
