@@ -14,7 +14,7 @@ public class Player {
 	private TargetCard target;
 
 	private PlayerColor playerID;
-
+	public String nickname;
 	public int currentScore;
 	public Player(int currentScore){
 		this.currentScore=currentScore;
@@ -30,6 +30,9 @@ public class Player {
 		this.board=new Board();
 		this.target=new CountTargetCard();//********
 
+	}
+
+	public Player(int index, String request) {
 	}
 
 	public Board getBoard() {
@@ -55,6 +58,8 @@ public class Player {
 	public void setPlayerID(PlayerColor playerID) {
 		this.playerID = playerID;
 	}
+
+	public void setNickname(String nickname){this.nickname=nickname;};
 
 	public List<Card> getCardOnHand() {
 		return cardOnHand;
