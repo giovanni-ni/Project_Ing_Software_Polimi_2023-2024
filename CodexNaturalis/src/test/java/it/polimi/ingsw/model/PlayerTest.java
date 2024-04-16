@@ -91,7 +91,7 @@ class PlayerTest {
         corners.put(CornerPosition.DOWNLEFT, Elements.EMPTY);
         ArrayList<Elements> array = new ArrayList<>();
         array.add(Elements.INSECT);
-        InitialCard c = new InitialCard(81,true, corners,array);
+        InitialCard c = new InitialCard(81,true, corners,array,corners,corners);
         Board b = new Board(c);
         p.setBoard(b);
         ResourceCard rc = new ResourceCard();

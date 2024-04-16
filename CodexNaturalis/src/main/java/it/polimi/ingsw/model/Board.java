@@ -116,7 +116,7 @@ public class Board {
             case UPRIGHT -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(+-1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
             }
             case DOWNLEFT -> {
 				if (!isCardCoordinate(x-1,y-1))
