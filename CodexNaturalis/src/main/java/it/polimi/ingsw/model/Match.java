@@ -139,21 +139,26 @@ public class Match {
 		Collections.shuffle(goldDeck);
 	}
 
-	public Player getPlayerInTurn() {
-		return null;
-	}
-
-	public Player[] getWinner() {
-		return null;
-	}
-
-	public Player getNextPlayer() {
-		return null;
-	}
-
-	public int getObjectiveScore(Player p) {
-		return 0;
-	}
+	public ArrayList<Player> getWinners (){
+		ArrayList<Player> winners = new ArrayList<>();
+		ArrayList<Player> possibleWinners= (ArrayList<Player>) pt.findMaxPointPlayers();
+		if(possibleWinners.size()!=1){
+			int maxTargetCount = pt.CountTarget(possibleWinners.getFirst(),commonTarget);
+			winners.add(possibleWinners.getFirst());
+			for(int i=1; i<possibleWinners.size(); i++){
+				int tempTargetCount = pt.CountTarget(possibleWinners.get(i),commonTarget);
+				if(tempTargetCount>maxTargetCount){
+					winners.clear();
+					winners.add(possibleWinners.get(i));
+					maxTargetCount=tempTargetCount;
+				}
+				if(tempTargetCount==maxTargetCount){
+					winners.add(possibleWinners.get(i));
+				}
+			}
+		}else{
+			winners=possibleWinners;
+		}
 
 		return winners;
 	};
