@@ -1,5 +1,8 @@
 package it.polimi.ingsw.model;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Match {
@@ -8,47 +11,132 @@ public class Match {
 
 	private PointTable pt;
 
-	private List<Player> players;
+	private ArrayList<Player> players;
 
-	private Deck initialdeck;
+	private ArrayList<InitialCard> initialDeck;
 
-	private ResourceOrGoldDeck resourceDeck;
+	private ArrayList<ResourceCard> resourceDeck;
 
-	private ResourceOrGoldDeck goldDeck;
+	private ArrayList<GoldCard> goldDeck;
 
-	private List<TargetCard> commonTarget;
+	private ArrayList<TargetCard> targetDeck;
+
+	private ArrayList<TargetCard> commonTarget;
+
+	private boolean isLastRound;
 
 
-	private int numPlayers;
 
 	private Player firstPlayer;
 
-	private Player[] player;
-
-	private PointTable pointTable;
-
-	public void DistributeResourceDeck() {
-
+	public int getIdMatch() {
+		return idMatch;
 	}
 
-	public void DistributeGoldDeck() {
-
+	public void setIdMatch(int idMatch) {
+		this.idMatch = idMatch;
 	}
 
-	public void DistributeInitialDeck() {
-
+	public PointTable getPt() {
+		return pt;
 	}
 
-	public void DistributeObjectiveDeck() {
-
+	public void setPt(PointTable pt) {
+		this.pt = pt;
 	}
 
-	public void ChooseFirstPlayer() {
-
+	public List<Player> getPlayers() {
+		return players;
 	}
+
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
+	}
+
+	public ArrayList<InitialCard> getInitialDeck() {
+		return initialDeck;
+	}
+
+	public void setInitialDeck(ArrayList<InitialCard> initialDeck) {
+		this.initialDeck = initialDeck;
+	}
+
+	public ArrayList<ResourceCard> getResourceDeck() {
+		return resourceDeck;
+	}
+
+	public void setResourceDeck(ArrayList<ResourceCard> resourceDeck) {
+		this.resourceDeck = resourceDeck;
+	}
+
+	public ArrayList<GoldCard> getGoldDeck() {
+		return goldDeck;
+	}
+
+	public void setGoldDeck(ArrayList<GoldCard> goldDeck) {
+		this.goldDeck = goldDeck;
+	}
+
+	public ArrayList<TargetCard> getTargetDeck() {
+		return targetDeck;
+	}
+
+	public void setTargetDeck(ArrayList<TargetCard> targetDeck) {
+		this.targetDeck = targetDeck;
+	}
+
+	public ArrayList<TargetCard> getCommonTarget() {
+		return commonTarget;
+	}
+
+	public void setCommonTarget(ArrayList<TargetCard> commonTarget) {
+		this.commonTarget = commonTarget;
+	}
+
+	public boolean isLastRound() {
+		return isLastRound;
+	}
+
+	public void setLastRound(boolean lastRound) {
+		isLastRound = lastRound;
+	}
+
+
+	public Player getFirstPlayer() {
+		return firstPlayer;
+	}
+
+	public void setFirstPlayer(Player firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
+
+	public Player getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(Player currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
+
+	private Player currentPlayer;
+
+
+	public Match(int idMatch) throws IOException {
+		CardParsing cp= new CardParsing();
+		this.idMatch = idMatch;
+		pt=new PointTable();
+		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
+		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
+		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		shuffleAll();
+	}
+
 
 	public void shuffleAll() {
-
+		Collections.shuffle(targetDeck);
+		Collections.shuffle(resourceDeck);
+		Collections.shuffle(initialDeck);
+		Collections.shuffle(goldDeck);
 	}
 
 	public Player getPlayerInTurn() {
@@ -67,20 +155,20 @@ public class Match {
 		return 0;
 	}
 
-	public void IslLastRound() {
-
+		return winners;
+	};
+	void nextPlayer (){
+		String currPlayerNick = currentPlayer.nickname;
+		for (int i = 0; i < players.size(); i++) {
+			 if(currPlayerNick==players.get(i).nickname){
+				 if(i+1>players.size()){
+					 currentPlayer = players.getFirst();
+				 }else{
+					 currentPlayer = players.get(i+1);
+				 }
+			 }
+		}
 	}
 
-	public int countRound() {
-		return 0;
-	}
-
-	public void update() {
-
-	}
-
-	public void getFirstPlayer() {
-
-	}
 
 }

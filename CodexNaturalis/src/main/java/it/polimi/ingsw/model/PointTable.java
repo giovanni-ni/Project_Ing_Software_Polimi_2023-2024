@@ -1,10 +1,7 @@
 package it.polimi.ingsw.model;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class PointTable {
 
@@ -52,10 +49,6 @@ public class PointTable {
 		playerPoints.put(p,p.currentScore);
 	}
 
-	public void resetPoint() {
-		//why?
-	}
-
 	public int findMaxPoint(List<Player> players) {
 		int max=0;
 		int playerPoint;
@@ -99,17 +92,18 @@ public class PointTable {
 		return maxPlayers;
 	}
 
-	/*public int CountTarget(Player p,Board board, TargetCard[] targetCards) {
-		int countOfTarget=0;
-		if(p.getTarget().checkTarget(board)>0)
+	public int CountTarget(Player p, ArrayList<TargetCard> targetCards) {
+		int countOfTarget = 0;
+		if (p.getTarget().countPoint(p.getBoard()) > 0)
 			countOfTarget++;
-		for (TargetCard tc:targetCards){
-			if (tc.checkTarget(board)>0)
+		for (TargetCard tc : targetCards) {
+			if (tc.countPoint(p.getBoard()) > 0)
 				countOfTarget++;
 		}
 		return countOfTarget;
 
 	}
+	/*
 	public void updateCountTarget(Player p,Board board, TargetCard[] targetCards) {
 		int countOfTarget=0;
 		if(p.getTarget().checkTarget(board)>0)
@@ -121,4 +115,13 @@ public class PointTable {
 		targetPoints.put(p,countOfTarget);
 	}
 */
+
+	public PointTable() {
+		playerPoints = new HashMap<Player, Integer>();
+		targetPoints = new HashMap<Player,Integer>();
+
+		maxPlayerPoint=0;
+		maxPoint=29;
+
+	}
 }
