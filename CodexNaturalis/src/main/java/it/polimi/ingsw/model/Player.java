@@ -11,6 +11,7 @@ public class Player {
 
 	private Board board;
 
+	private boolean isReady =false;
 	private TargetCard target;
 
 	private PlayerColor playerID;
@@ -31,13 +32,13 @@ public class Player {
 		this.target=new CountTargetCard();//********
 
 	}
-
-	public Player(int index, String request) {
+	public Player(String nickname) {
 	}
 
 	public Board getBoard() {
 		return board;
 	}
+
 
 	public void setBoard(Board board) {
 		this.board = board;
@@ -98,6 +99,14 @@ public class Player {
 		//see also if requirement is satisfied
 		board.addCard(card, x,y);
 		return true;
+	}
+
+	public boolean getReady() {
+		return isReady;
+	}
+
+	public void setReady(boolean ready) {
+		isReady = ready;
 	}
 
 	/*public void endRound() {

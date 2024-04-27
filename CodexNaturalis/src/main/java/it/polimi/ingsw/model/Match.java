@@ -130,6 +130,14 @@ public class Match {
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		shuffleAll();
 	}
+	public Match() throws IOException {
+		CardParsing cp= new CardParsing();
+		pt=new PointTable();
+		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
+		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
+		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		shuffleAll();
+	}
 
 
 	public void shuffleAll() {
@@ -174,6 +182,28 @@ public class Match {
 			 }
 		}
 	}
+
+	public void setPlayerReady (String nickname){
+		for(int i =0; i<players.size(); i++)
+			if(players.get(i).nickname.equals(nickname))
+				players.get(i).setReady(true);
+	}
+
+	public void addPlayer (String nickname){
+		Player p = new Player(nickname);
+		players.add(p);
+	}
+
+	public boolean isAllPlayersReady(){
+		boolean allPlayersReady= true;
+		for(Player p :players){
+			if(!p.getReady())
+				return allPlayersReady;
+		}
+		return allPlayersReady;
+	}
+
+
 
 
 }
