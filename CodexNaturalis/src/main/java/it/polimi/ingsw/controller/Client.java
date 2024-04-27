@@ -1,5 +1,6 @@
 package it.polimi.ingsw.controller;
 
+
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -69,7 +70,7 @@ public class Client{
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
-        Socket socket = new Socket("localhost", 1234);
+        Socket socket = new Socket("172.20.10.2", 2234);
         Client client = new Client(socket);
         /*client.listenForMessage();*/
         client.sendMessage();
