@@ -26,7 +26,6 @@ public class Match {
 	private boolean isLastRound;
 
 
-
 	private Player firstPlayer;
 
 	public int getIdMatch() {
@@ -120,7 +119,6 @@ public class Match {
 
 	private Player currentPlayer;
 
-
 	public Match(int idMatch) throws IOException {
 		CardParsing cp= new CardParsing();
 		this.idMatch = idMatch;
@@ -167,7 +165,6 @@ public class Match {
 		}else{
 			winners=possibleWinners;
 		}
-
 		return winners;
 	};
 	void nextPlayer (){
@@ -194,13 +191,35 @@ public class Match {
 		players.add(p);
 	}
 
-	public boolean isAllPlayersReady(){
-		boolean allPlayersReady= true;
-		for(Player p :players){
-			if(!p.getReady())
+	public boolean isAllPlayersReady() {
+		boolean allPlayersReady = true;
+		for (Player p : players) {
+			if (!p.getReady())
 				return allPlayersReady;
 		}
 		return allPlayersReady;
+	}
+	public ResourceCard getFirstResourceCard() {
+		ResourceCard ris= resourceDeck.getFirst();
+		resourceDeck.removeFirst();
+		return ris;
+	}
+	public GoldCard getFirstGoldCard(){
+		GoldCard ris= goldDeck.getFirst();
+		goldDeck.removeFirst();
+		return ris;
+	}
+
+	public TargetCard getFirtTargetCard(){
+		TargetCard ris= targetDeck.getFirst();
+		goldDeck.removeFirst();
+		return ris;
+	}
+
+	public InitialCard getFirstInitialCard(){
+		InitialCard ris= initialDeck.getFirst();
+		initialDeck.removeFirst();
+		return ris;
 	}
 
 
