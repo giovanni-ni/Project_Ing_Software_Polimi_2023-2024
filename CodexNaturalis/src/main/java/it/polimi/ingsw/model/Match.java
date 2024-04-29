@@ -189,14 +189,14 @@ public class Match {
 		}
 		return allPlayersReady;
 	}
-	public ResourceCard getFirstResourceCard() {
-		ResourceCard ris= resourceDeck.getFirst();
-		resourceDeck.removeFirst();
+	public ResourceCard getAResourceCard(int i) {
+		ResourceCard ris= resourceDeck.get(i);
+		resourceDeck.remove(i);
 		return ris;
 	}
-	public GoldCard getFirstGoldCard(){
-		GoldCard ris= goldDeck.getFirst();
-		goldDeck.removeFirst();
+	public GoldCard getAGoldCard(int i){
+		GoldCard ris= goldDeck.get(i);
+		goldDeck.remove(i);
 		return ris;
 	}
 
