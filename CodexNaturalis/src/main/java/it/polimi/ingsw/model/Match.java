@@ -23,8 +23,7 @@ public class Match {
 
 	private ArrayList<TargetCard> commonTarget;
 
-	private boolean isLastRound;
-
+	private MatchStatus status;
 
 	private Player firstPlayer;
 
@@ -91,15 +90,6 @@ public class Match {
 	public void setCommonTarget(ArrayList<TargetCard> commonTarget) {
 		this.commonTarget = commonTarget;
 	}
-
-	public boolean isLastRound() {
-		return isLastRound;
-	}
-
-	public void setLastRound(boolean lastRound) {
-		isLastRound = lastRound;
-	}
-
 
 	public Player getFirstPlayer() {
 		return firstPlayer;
@@ -222,7 +212,12 @@ public class Match {
 		return ris;
 	}
 
+	public MatchStatus getStatus() {
+		return status;
+	}
 
-
+	public void setStatus(MatchStatus status) {
+		this.status = status;
+	}
 
 }
