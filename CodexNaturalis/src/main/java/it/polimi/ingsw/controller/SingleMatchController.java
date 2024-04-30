@@ -1,9 +1,9 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.model.Board;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.TargetCard;
+import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.model.exeptions.EndGameExeption;
+import it.polimi.ingsw.model.exeptions.GoldCardRequirmentsNotSatisfiedExeption;
+import it.polimi.ingsw.model.exeptions.NotValidChoiceToPlayACardExeption;
 
 import java.io.IOException;
 import java.util.Random;
@@ -43,6 +43,7 @@ public class SingleMatchController {
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
             Board b= new Board(match.getFirstInitialCard());
             p.setBoard(b);
+            p.currentScore=0;
         }
     }
     private void extractCommonTargetCard(){
@@ -74,6 +75,35 @@ public class SingleMatchController {
                     }
             }// else throw EndGameExeption();
         }//else throw new NotYourTurnExeption();
+    }
+
+    public void playACardOnHand (String nickname , int indexCardOnHand, int x, int y, boolean isFront) throws GoldCardRequirmentsNotSatisfiedExeption {
+        if(match.getCurrentPlayer().nickname.equals((nickname))){
+
+                if(match.getCurrentPlayer().getBoard().check(x,y)) {
+                    match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand).setFront(isFront);
+                    match.getCurrentPlayer().getBoard().addCard((ResourceCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand), x, y);
+                    match.getCurrentPlayer().getCardOnHand().remove(indexCardOnHand);
+                    //update current score of the player;
+                    if(match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand).isGoldCard()){
+                        match.getCurrentPlayer().currentScore +=((GoldCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand)).goalCount(match.getCurrentPlayer().getBoard());
+                    }
+                    else {
+                        match.getCurrentPlayer().currentScore += ((ResourceCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand)).getBasePoint();
+                    }
+                    if(match.getCurrentPlayer().currentScore>20){
+                        //throw new EndGameExeption();
+                    }
+                    else{
+
+                    }
+                    match.getPt().updatePoint(match.getCurrentPlayer());//update score on point table;
+                }else {
+                    //throw new NotValidChoiceToPlayACardExeption();
+                }
+
+        }//else throw new NotYourTurnExeption();
+
     }
 
 
