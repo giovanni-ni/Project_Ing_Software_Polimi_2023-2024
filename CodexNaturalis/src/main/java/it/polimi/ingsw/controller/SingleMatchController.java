@@ -1,14 +1,21 @@
 package it.polimi.ingsw.controller;
 
+import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.JoinFirstMessage;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exeptions.EndGameExeption;
 import it.polimi.ingsw.model.exeptions.GoldCardRequirmentsNotSatisfiedExeption;
 import it.polimi.ingsw.model.exeptions.NotValidChoiceToPlayACardExeption;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.Random;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
-public class SingleMatchController {
+public class SingleMatchController extends Thread{
+
     private Match match =new Match();
 
     private final int MAX_NUMCARD_ON_HAND= 3;
@@ -16,7 +23,10 @@ public class SingleMatchController {
     private final int SECOND_CARD =1;
     private final int THIRD_CARD =2;
 
+    private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
+
     public SingleMatchController() throws IOException {
+        this.start();
     }
 
     void addPlayer(String nickName){
@@ -104,11 +114,27 @@ public class SingleMatchController {
 
         }//else throw new NotYourTurnExeption();
 
+
     }
 
+    @Override
+    public void run() {
+        GenericClientMessage temp;
 
+        try {
+            while (!this.isInterrupted()) {
+                temp = processingQueue.take();
+                this.execute(temp);
+            }
+        } catch (InterruptedException ignored) {}
+    }
 
+    public void execute(GenericClientMessage msg) {
 
+    }
 
+    public void addInQueue(GenericClientMessage msg) {
+        this.processingQueue.add(msg);
+    }
 
 }

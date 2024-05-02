@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.flow;
 
 import it.polimi.ingsw.model.Card;
 import it.polimi.ingsw.model.Deck;
+import it.polimi.ingsw.model.Message;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
@@ -22,13 +23,11 @@ public interface CommonClientActions {
 
     boolean isMyTurn() throws RemoteException;
 
-    void giocaCarta(Card carta, boolean front, int x, int y);
+    void playCard(Card card, boolean front, int x, int y) throws IOException;
 
-    void pescaCarta(Deck deck, int number);
+    void drawCard(Deck deck, int number) throws IOException;
 
-    void checkTurn(String nickname);
-
-    void sendMessage(/*Message msg*/) throws RemoteException;  //message ancora non creato
+    void sendMessage(Message msg) throws IOException;  //message ancora non creato
 }
 
 
