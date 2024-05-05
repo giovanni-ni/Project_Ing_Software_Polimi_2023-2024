@@ -101,12 +101,6 @@ public class SingleMatchController extends Thread{
                     else {
                         match.getCurrentPlayer().currentScore += ((ResourceCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand)).getBasePoint();
                     }
-                    if(match.getCurrentPlayer().currentScore>20){
-                        //throw new EndGameExeption();
-                    }
-                    else{
-
-                    }
                     match.getPt().updatePoint(match.getCurrentPlayer());//update score on point table;
                 }else {
                     //throw new NotValidChoiceToPlayACardExeption();
@@ -116,6 +110,18 @@ public class SingleMatchController extends Thread{
 
 
     }
+
+
+    public void updateAllTargetPoints (){
+        for(Player p : match.getPlayers()){
+            int countSecretTarget=p.getTarget().checkGoal(p.getBoard());
+            p.currentScore+=countSecretTarget*p.getTarget().getbasePoint();
+            p.currentScore+=match.getCommonTarget().get(FIRST_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(FIRST_CARD).getbasePoint()+
+                    match.getCommonTarget().get(SECOND_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(SECOND_CARD).getbasePoint();
+            match.getPt().updatePoint(match.getCurrentPlayer());
+        }
+    }
+
 
     @Override
     public void run() {
