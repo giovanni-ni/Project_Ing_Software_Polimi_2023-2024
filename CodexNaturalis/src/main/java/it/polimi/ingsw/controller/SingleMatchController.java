@@ -16,7 +16,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class SingleMatchController extends Thread{
 
-    private Match match =new Match();
+    private Match match;
 
     private final int MAX_NUMCARD_ON_HAND= 3;
     private final int FIRST_CARD=0;
@@ -122,6 +122,15 @@ public class SingleMatchController extends Thread{
         }
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+
 
     @Override
     public void run() {
@@ -143,4 +152,7 @@ public class SingleMatchController extends Thread{
         this.processingQueue.add(msg);
     }
 
+    public void addPlayer(Player p) {
+        match.addPlayer(p);
+    }
 }

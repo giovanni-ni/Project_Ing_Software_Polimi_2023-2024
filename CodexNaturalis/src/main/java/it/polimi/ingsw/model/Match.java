@@ -23,7 +23,7 @@ public class Match {
 
 	private ArrayList<TargetCard> commonTarget;
 
-	private MatchStatus status;
+	private MatchStatus status = MatchStatus.Waiting;
 
 	private Player firstPlayer;
 
@@ -220,4 +220,7 @@ public class Match {
 		this.status = status;
 	}
 
+	public void addPlayer(Player p) {
+		//
+	}
 }
