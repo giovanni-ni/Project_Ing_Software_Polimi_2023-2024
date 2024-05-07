@@ -44,11 +44,11 @@ public class SingleMatchController extends Thread{
 
     private void distributeCardsAndSetBoards(){
         for(Player p : match.getPlayers()){
-            for(int i =0; i<MAX_NUMCARD_ON_HAND; i++) {
-                p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
-                p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
-                p.getCardOnHand().add(match.getAGoldCard(FIRST_CARD));
-            }
+
+            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
+            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
+            p.getCardOnHand().add(match.getAGoldCard(FIRST_CARD));
+
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
             Board b= new Board(match.getFirstInitialCard());
@@ -68,7 +68,7 @@ public class SingleMatchController extends Thread{
     }
 
     public void getACard (String nickname , boolean isGoldCard,int whichcard){
-        if(match.getCurrentPlayer().nickname.equals(nickname)||
+        if(match.getCurrentPlayer().nickname.equals(nickname) &&
                 //il numero delle carte in mano del client deve essere minore di 3
                 match.getCurrentPlayer().getCardOnHand().size()<MAX_NUMCARD_ON_HAND){
             if((match.getGoldDeck().isEmpty())&&(match.getResourceDeck().isEmpty())){
@@ -83,8 +83,8 @@ public class SingleMatchController extends Thread{
                     } else if (whichcard <FIRST_CARD || whichcard >THIRD_CARD){ // l'indice della carta che il cliente vuole pesacere non è valido
                         //throw new NotValidChoiceToGetACardExeption;
                     }
-            }// else throw EndGameExeption();
-        }//else throw new NotYourTurnExeption();
+            }// else throw EndGameException();
+        }//else throw new NotYourTurnException();
     }
 
     public void playACardOnHand (String nickname , int indexCardOnHand, int x, int y, boolean isFront) throws GoldCardRequirmentsNotSatisfiedExeption {
@@ -106,7 +106,7 @@ public class SingleMatchController extends Thread{
                     //throw new NotValidChoiceToPlayACardExeption();
                 }
 
-        }//else throw new NotYourTurnExeption();
+        }//else throw new NotYourTurnException();
 
 
     }
@@ -145,7 +145,7 @@ public class SingleMatchController extends Thread{
     }
 
     public void execute(GenericClientMessage msg) {
-
+        //TODO execute method
     }
 
     public void addInQueue(GenericClientMessage msg) {

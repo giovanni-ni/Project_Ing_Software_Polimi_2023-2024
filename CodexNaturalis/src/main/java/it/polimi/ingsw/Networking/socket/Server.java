@@ -13,7 +13,7 @@ public class Server extends Thread{
 
     private List<ClientHandler> handler;
 
-    protected List<SingleMatchController> controllers;
+    protected List<SingleMatchController> controllers;//TODO may be changed to allMatchController
 
     public void start(int port) throws IOException {
         try {
