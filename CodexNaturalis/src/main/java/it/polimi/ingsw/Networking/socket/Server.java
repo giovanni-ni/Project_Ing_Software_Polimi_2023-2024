@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Networking.socket;
 
+import it.polimi.ingsw.controller.AllMatchesController;
 import it.polimi.ingsw.controller.SingleMatchController;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ public class Server extends Thread{
 
     private List<ClientHandler> handler;
 
-    protected List<SingleMatchController> controllers;//TODO may be changed to allMatchController
+    protected AllMatchesController controllers;//TODO may be changed to allMatchController
 
     public void start(int port) throws IOException {
         try {
@@ -49,9 +50,5 @@ public class Server extends Thread{
                 c.interruptThread();
             }
         this.interrupt();
-    }
-
-    public void addController() throws IOException {
-        this.controllers.add(new SingleMatchController());
     }
 }

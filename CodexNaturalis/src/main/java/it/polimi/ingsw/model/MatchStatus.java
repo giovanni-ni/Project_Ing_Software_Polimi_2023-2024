@@ -3,8 +3,8 @@ package it.polimi.ingsw.model;
 public enum MatchStatus {
     Waiting,
     Playing,
-    PutCard,
-    DrawCard,
+    //PutCard,
+    //DrawCard,
     LastRound,
     End
 }

@@ -95,14 +95,14 @@ public class Client extends Thread implements CommonClientActions {
     }
 
     @Override
-    public void playCard(Card card, boolean front, int x, int y) throws IOException {
-        outputStream.writeObject(new playCardMessage(card, front, x, y));
+    public void playCard(int cardIndex, boolean front, int x, int y) throws IOException {
+        outputStream.writeObject(new playCardMessage(cardIndex, front, x, y));
         finishSending();
     }
 
     @Override
-    public void drawCard(Deck deck, int number) throws IOException {
-        outputStream.writeObject(new drawCardMessage(deck, number));
+    public void drawCard(boolean isGolddeck, int number) throws IOException {
+        outputStream.writeObject(new drawCardMessage(isGolddeck, number));
         finishSending();
     }
 

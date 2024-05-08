@@ -43,20 +43,16 @@ public class ClientHandler extends Thread {
         try{
             while (!this.isInterrupted()) {
                 temp = processingQueue.take();
+                //if (temp.isMainControllerMessage()){
+                    this.server.controllers.addInQueue(temp);
+                //}else{
 
-                if(temp instanceof CreateGameMessage) {
-                    this.server.addController();
-                } else if(temp instanceof JoinFirstMessage) {
-                    temp.setGameID(this.server.controllers.size());
-                } else {
-                    this.server.controllers.get(temp.getGameID()-1).addInQueue(temp);
-                }
+                //}
+
             }
-        } catch (RemoteException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException ignored) {} catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        //} catch (RemoteException e) {
+            //throw new RuntimeException(e);
+        } catch (InterruptedException ignored) {}
 
     }
 

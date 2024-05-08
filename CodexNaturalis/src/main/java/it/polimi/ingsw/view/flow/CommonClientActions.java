@@ -23,9 +23,9 @@ public interface CommonClientActions {
 
     boolean isMyTurn() throws RemoteException;
 
-    void playCard(Card card, boolean front, int x, int y) throws IOException;
+    void playCard(int CardIndex, boolean front, int x, int y) throws IOException;
 
-    void drawCard(Deck deck, int number) throws IOException;
+    void drawCard(boolean deck, int number) throws IOException;
 
     void sendMessage(Message msg) throws IOException;  //message ancora non creato
 }

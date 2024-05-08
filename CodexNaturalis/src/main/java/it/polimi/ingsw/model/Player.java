@@ -16,7 +16,9 @@ public class Player {
 
 	private PlayerColor playerID;
 	public String nickname;
+
 	public int currentScore;
+
 	public Player(int currentScore){
 		this.currentScore=currentScore;
 	}
@@ -34,11 +36,14 @@ public class Player {
 	}
 	public Player(String nickname) {
 	}
-
 	public Board getBoard() {
 		return board;
 	}
 
+
+	public String getNickname() {
+		return nickname;
+	}
 
 	public void setBoard(Board board) {
 		this.board = board;

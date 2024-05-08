@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Message.ClientToServerMsg;
 
-public class GenericClientMessage {
-    int gameID;
+import it.polimi.ingsw.Message.Message;
 
-    String nickname;
+public class GenericClientMessage implements Message {
+    private int gameID;
+    private boolean isMainControllerMessage;
+    private String nickname;
 
     public GenericClientMessage(){
 
@@ -28,5 +30,18 @@ public class GenericClientMessage {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public void isMessageForMain(){
+        isMainControllerMessage=true;
+
+    }
+    public void isMessageNotForMain(){
+        isMainControllerMessage=false;
+
+    }
+
+    public boolean isMainControllerMessage() {
+        return isMainControllerMessage;
     }
 }

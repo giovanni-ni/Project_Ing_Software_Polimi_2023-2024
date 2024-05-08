@@ -1,15 +1,13 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.JoinFirstMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exeptions.EndGameExeption;
 import it.polimi.ingsw.model.exeptions.GoldCardRequirmentsNotSatisfiedExeption;
-import it.polimi.ingsw.model.exeptions.NotValidChoiceToPlayACardExeption;
+
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -30,12 +28,25 @@ public class SingleMatchController extends Thread{
     }
 
     void addPlayer(String nickName){
-        match.addPlayer(nickName);
+        if (match.getPlayers().size()>=4){
+            //todo arrived to the max number of players
+        }else {
+            for (Player p : match.getPlayers()) {
+
+                if (Objects.equals(p.getNickname(), nickName)) {
+                    //todo notify that the nickname is invalid because of bounce
+                }
+
+            }
+            match.addPlayer(nickName);
+        }
     }
     public void setPlayerAsReady_StartGameIfAllReady(String p){
+        // todo check the player if is in the match list
         match.setPlayerReady(p);
         /*the game will start automatically if all the players are ready*/
         if(match.isAllPlayersReady()){
+            match.setStatus(MatchStatus.Playing);
             extractCommonTargetCard();
             distributeCardsAndSetBoards();
             extractFirstPlayer();
@@ -87,7 +98,9 @@ public class SingleMatchController extends Thread{
         }//else throw new NotYourTurnException();
     }
 
-    public void playACardOnHand (String nickname , int indexCardOnHand, int x, int y, boolean isFront) throws GoldCardRequirmentsNotSatisfiedExeption {
+    public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront)/* throws GoldCardRequirmentsNotSatisfiedExeption */{
+        int x = coo.getX();
+        int y = coo.getY();
         if(match.getCurrentPlayer().nickname.equals((nickname))){
 
                 if(match.getCurrentPlayer().getBoard().check(x,y)) {
@@ -144,8 +157,17 @@ public class SingleMatchController extends Thread{
         } catch (InterruptedException ignored) {}
     }
 
-    public void execute(GenericClientMessage msg) {
-        //TODO execute method
+    public void execute(GenericClientMessage msg) { //todo more exceptions maybe
+        //TODO execute method leaveMessage, newChatMessage,reconnectMessage
+        if(msg instanceof drawCardMessage && match.getStatus()==MatchStatus.Playing) {
+            getACard(msg.getNickname(),((drawCardMessage) msg).getDeck(),((drawCardMessage) msg).getNumberindex());
+        } else if (msg instanceof playCardMessage && match.getStatus() ==MatchStatus.Playing) {
+            playACardOnHand(msg.getNickname(),((playCardMessage) msg).getIndexOfCardOnHand(),((playCardMessage) msg).getCoo(),((playCardMessage) msg).isFront());
+        } else if (msg instanceof SetReadyMessage && match.getStatus() == MatchStatus.Waiting){
+            setPlayerAsReady_StartGameIfAllReady(msg.getNickname());
+        }else {
+            //todo handle message not recognize
+        }
     }
 
     public void addInQueue(GenericClientMessage msg) {
