@@ -1,6 +1,9 @@
 package it.polimi.ingsw.Message.ServerToClientMsg;
 
-public class joinSuccessMsg extends GenericServerMessage {
-    public joinSuccessMsg() {
+import it.polimi.ingsw.model.Match;
+
+public class joinSuccessMsg extends ActionSuccessMsg {
+    public joinSuccessMsg(Match model) {
+        super(model);
     }
 }

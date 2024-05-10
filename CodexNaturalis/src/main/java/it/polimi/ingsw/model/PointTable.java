@@ -5,9 +5,9 @@ import java.util.*;
 
 public class PointTable {
 
-	private int maxPoint;
+	private final int maxPoint;
 
-	private int maxPlayerPoint;
+	private final int maxPlayerPoint;
 
 	private Map<Player, Integer> playerPoints;
 
@@ -17,16 +17,8 @@ public class PointTable {
 		return maxPoint;
 	}
 
-	public void setMaxPoint(int maxPoint) {
-		this.maxPoint = maxPoint;
-	}
-
 	public int getMaxPlayerPoint() {
 		return maxPlayerPoint;
-	}
-
-	public void setMaxPlayerPoint(int maxPlayerPoint) {
-		this.maxPlayerPoint = maxPlayerPoint;
 	}
 
 	public Map<Player, Integer> getPlayerPoints() {
@@ -46,12 +38,16 @@ public class PointTable {
 	}
 
 	public void updatePoint(Player p){
+		for (Player player : playerPoints.keySet())
+			if (player.getNickname()==p.getNickname())
+				playerPoints.remove(player);
 		playerPoints.put(p,p.currentScore);
 	}
 
-	public int findMaxPoint(List<Player> players) {
+	public int findMaxPoint() {
 		int max=0;
 		int playerPoint;
+		Set<Player> players = playerPoints.keySet();
 
 		for(Player p : players){
 			playerPoint =playerPoints.get(p);
@@ -120,7 +116,7 @@ public class PointTable {
 		playerPoints = new HashMap<Player, Integer>();
 		targetPoints = new HashMap<Player,Integer>();
 
-		maxPlayerPoint=0;
+		maxPlayerPoint=20;
 		maxPoint=29;
 
 	}

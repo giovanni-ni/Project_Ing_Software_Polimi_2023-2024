@@ -92,7 +92,7 @@ public class AllMatchesController extends Thread {
                     return new joinFailMsg("NickNameUsed");
                 }
 
-                return new joinSuccessMsg();
+                return new joinSuccessMsg(ctrl.getMatch());
             }
         }
         return new joinFailMsg("GameId not Found");

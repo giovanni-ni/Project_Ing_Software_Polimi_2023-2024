@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Match {
 
@@ -27,10 +28,13 @@ public class Match {
 
 	private MatchStatus status = MatchStatus.Waiting;
 
-	private Player firstPlayer;
+	private String firstPlayer;
 
 	private List<GameListener> listenerList;
 
+	private int roundCount=0;
+
+	private List<Player> winners;
 
 	public int getIdMatch() {
 		return idMatch;
@@ -96,11 +100,11 @@ public class Match {
 		this.commonTarget = commonTarget;
 	}
 
-	public Player getFirstPlayer() {
+	public String getFirstPlayer() {
 		return firstPlayer;
 	}
 
-	public void setFirstPlayer(Player firstPlayer) {
+	public void setFirstPlayer(String firstPlayer) {
 		this.firstPlayer = firstPlayer;
 	}
 
@@ -123,6 +127,7 @@ public class Match {
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		shuffleAll();
 		status =MatchStatus.Waiting;
+
 	}
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
@@ -131,6 +136,8 @@ public class Match {
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		shuffleAll();
+		firstPlayer = players.getFirst().nickname;
+
 	}
 
 
@@ -141,8 +148,8 @@ public class Match {
 		Collections.shuffle(goldDeck);
 	}
 
-	public ArrayList<Player> getWinners (){
-		ArrayList<Player> winners = new ArrayList<>();
+	public void setWinners (){
+		winners = new ArrayList<>();
 		ArrayList<Player> possibleWinners= (ArrayList<Player>) pt.findMaxPointPlayers();
 		if(possibleWinners.size()!=1){
 			int maxTargetCount = pt.CountTarget(possibleWinners.getFirst(),commonTarget);
@@ -161,19 +168,29 @@ public class Match {
 		}else{
 			winners=possibleWinners;
 		}
-		return winners;
+
 	};
-	void nextPlayer (){
+	public void nextPlayer(){
 		String currPlayerNick = currentPlayer.nickname;
+
 		for (int i = 0; i < players.size(); i++) {
-			 if(currPlayerNick==players.get(i).nickname){
-				 if(i+1>players.size()){
+			 if(Objects.equals(currPlayerNick, players.get(i).nickname)){
+				 if(i+1>=players.size()){
 					 currentPlayer = players.getFirst();
 				 }else{
 					 currentPlayer = players.get(i+1);
 				 }
 			 }
 		}
+		if (status==MatchStatus.LastRound){
+			if (Objects.equals(currentPlayer.nickname, firstPlayer)){
+				roundCount++;
+			}
+		}
+		if (roundCount>2){
+			setStatus(MatchStatus.End);
+		}
+
 	}
 
 	public void setPlayerReady (String nickname){
@@ -182,16 +199,12 @@ public class Match {
 				players.get(i).setReady(true);
 	}
 
-	public void addPlayer (String nickname){
-		Player p = new Player(nickname);
-		players.add(p);
-	}
 
 	public boolean isAllPlayersReady() {
 		boolean allPlayersReady = true;
 		for (Player p : players) {
 			if (!p.getReady())
-				return allPlayersReady;
+				return !allPlayersReady;
 		}
 		return allPlayersReady;
 	}
@@ -228,7 +241,7 @@ public class Match {
 
 	public boolean addPlayer(Player p) {
 		for (Player player : players){
-			if (player.getNickname()==p.getNickname())
+			if (Objects.equals(player.getNickname(), p.getNickname()))
 				return false;
 		}
 		players.add(p);
@@ -241,5 +254,9 @@ public class Match {
 
 	public void setListenerList(List<GameListener> listenerList) {
 		this.listenerList = listenerList;
+	}
+
+	public List<GameListener> getListenerList() {
+		return listenerList;
 	}
 }

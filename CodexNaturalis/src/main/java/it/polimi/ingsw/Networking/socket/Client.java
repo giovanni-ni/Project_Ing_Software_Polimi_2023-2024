@@ -2,9 +2,10 @@ package it.polimi.ingsw.Networking.socket;
 
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
-import it.polimi.ingsw.model.Message;
 import it.polimi.ingsw.view.flow.CommonClientActions;
+
 
 import java.io.*;
 import java.net.Socket;

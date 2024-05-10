@@ -1,8 +1,6 @@
 package it.polimi.ingsw.view.flow;
 
-import it.polimi.ingsw.model.Card;
-import it.polimi.ingsw.model.Deck;
-import it.polimi.ingsw.model.Message;
+import it.polimi.ingsw.Message.Message;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
