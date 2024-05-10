@@ -5,11 +5,10 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.model.exeptions.NotYourTurnException;
 
-
-import javax.xml.stream.events.EndDocument;
 import java.io.IOException;
+import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -45,31 +44,33 @@ public class SingleMatchController extends Thread{
         }
     }
 
-    public void getACard (String nickname , boolean isGoldCard,int whichcard) {
-        if (match.getCurrentPlayer().nickname.equals(nickname) &&
+    public void getACard (String nickname , boolean isGoldCard,int whichCard) {
+        Player currentPlayer = match.getCurrentPlayer();
+
+        if (currentPlayer.nickname.equals(nickname) &&
                 //the number of card on hand should be less than 3
-                match.getCurrentPlayer().getCardOnHand().size() < MAX_NUMCARD_ON_HAND) {
+                currentPlayer.getCardOnHand().size() < MAX_NUMCARD_ON_HAND) {
             if ((match.getGoldDeck().isEmpty()) && (match.getResourceDeck().isEmpty())) {
                 if (isGoldCard && match.getGoldDeck().isEmpty() || // empty deck
                         !isGoldCard && match.getResourceDeck().isEmpty()) {
-                    getListenerof(nickname).update( new ActionNotRecognize("Deck Empty"));
-                } else if (whichcard >= FIRST_CARD && whichcard <= THIRD_CARD) {
+                    getListenerOf(nickname).update( new ActionNotRecognize("Deck Empty"));
+                } else if (whichCard >= FIRST_CARD && whichCard <= THIRD_CARD) {
                     if (isGoldCard)
-                        match.getCurrentPlayer().getCardOnHand().add(match.getAGoldCard(whichcard));
+                        currentPlayer.getCardOnHand().add(match.getAGoldCard(whichCard));
                     else
-                        match.getCurrentPlayer().getCardOnHand().add(match.getAResourceCard(whichcard));
+                        currentPlayer.getCardOnHand().add(match.getAResourceCard(whichCard));
                     ifLastTurn();
                     match.nextPlayer();
                     notifyAllListeners(new drawCardSuccess(match));
                 } else { //wrong deck index
-                    getListenerof(nickname).update( new ActionNotRecognize("Not Valid Choice"));
+                    getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
                 }
             } else {
                 match.setStatus(MatchStatus.LastRound);
-                getListenerof(nickname).update( new ActionNotRecognize("Deck Empty"));
+                getListenerOf(nickname).update( new ActionNotRecognize("Deck Empty"));
             }
         } else {
-            getListenerof(nickname).update( new ActionNotRecognize("Can't draw Card now"));
+            getListenerOf(nickname).update( new ActionNotRecognize("Can't draw Card now"));
         }
     }
 
@@ -83,29 +84,32 @@ public class SingleMatchController extends Thread{
 
 
 
-    public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront)/* throws GoldCardRequirmentsNotSatisfiedExeption */{
+    public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront){
         int x = coo.getX();
         int y = coo.getY();
-        if(match.getCurrentPlayer().nickname.equals((nickname))){
+        Player currentPlayer = match.getCurrentPlayer();
+        ResourceCard card = (ResourceCard) currentPlayer.getCardOnHand().get(indexCardOnHand);
+        Board board= currentPlayer.getBoard();
+        if(currentPlayer.nickname.equals((nickname))){
 
-                if(match.getCurrentPlayer().getBoard().check(x,y)) {
-                    match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand).setFront(isFront);
-                    match.getCurrentPlayer().getBoard().addCard((ResourceCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand), x, y);
-                    match.getCurrentPlayer().getCardOnHand().remove(indexCardOnHand);
+                if(board.check(x,y) &&(!isFront ||card.checkRequirements(board))) {
+                    card.setFront(isFront);
+                    board.addCard(card, x, y);
+                    currentPlayer.getCardOnHand().remove(indexCardOnHand);
                     //update current score of the player;
-                    if(match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand).isGoldCard()){
-                        match.getCurrentPlayer().currentScore +=((GoldCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand)).goalCount(match.getCurrentPlayer().getBoard());
+                    if(card.isGoldCard() && isFront){
+                        currentPlayer.currentScore +=((GoldCard) currentPlayer.getCardOnHand().get(indexCardOnHand)).goalCount(currentPlayer.getBoard());
                     }
-                    else {
-                        match.getCurrentPlayer().currentScore += ((ResourceCard) match.getCurrentPlayer().getCardOnHand().get(indexCardOnHand)).getBasePoint();
+                    else if(isFront){
+                        currentPlayer.currentScore += ((ResourceCard) currentPlayer.getCardOnHand().get(indexCardOnHand)).getBasePoint();
                     }
-                    match.getPt().updatePoint(match.getCurrentPlayer());
+                    match.getPt().updatePoint(currentPlayer);
                     notifyAllListeners( new playCardSuccess(match));
                 }else {
-                     getListenerof(nickname).update( new ActionNotRecognize("Not valid choice"));
+                     getListenerOf(nickname).update( new ActionNotRecognize("Not valid choice"));
                 }
 
-        }else  getListenerof(nickname).update( new ActionNotRecognize("Can't play Card now"));
+        }else  getListenerOf(nickname).update( new ActionNotRecognize("Can't play Card now"));
 
 
     }
@@ -115,7 +119,7 @@ public class SingleMatchController extends Thread{
         for(Player p : match.getPlayers()){
             int countSecretTarget=p.getTarget().checkGoal(p.getBoard());
             p.currentScore+=countSecretTarget*p.getTarget().getbasePoint();
-            p.currentScore+=match.getCommonTarget().get(FIRST_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(FIRST_CARD).getbasePoint()+
+            p.currentScore+=match.getCommonTarget().getFirst().checkGoal(p.getBoard())*match.getCommonTarget().getFirst().getbasePoint()+
                     match.getCommonTarget().get(SECOND_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(SECOND_CARD).getbasePoint();
             match.getPt().updatePoint(match.getCurrentPlayer());
         }
@@ -160,14 +164,17 @@ public class SingleMatchController extends Thread{
 
     public void execute(GenericClientMessage msg) {
 
-        if(msg instanceof drawCardMessage && (match.getStatus()==MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ){
-            getACard(msg.getNickname(),((drawCardMessage) msg).getDeck(),((drawCardMessage) msg).getNumberindex());
-        } else if (msg instanceof playCardMessage &&(match.getStatus() ==MatchStatus.Playing|| match.getStatus() == MatchStatus.LastRound)) {
-            playACardOnHand(msg.getNickname(),((playCardMessage) msg).getIndexOfCardOnHand(),((playCardMessage) msg).getCoo(),((playCardMessage) msg).isFront());
-        } else if (msg instanceof SetReadyMessage && match.getStatus() == MatchStatus.Waiting){
-            setPlayerAsReady_StartGameIfAllReady(msg.getNickname());
-        }else {
-           getListenerof(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
+        switch (msg) {
+            case drawCardMessage drawCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
+                    getACard(msg.getNickname(), drawCardMessage.getDeck(), drawCardMessage.getNumberindex());
+            case playCardMessage playCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
+                    playACardOnHand(msg.getNickname(), playCardMessage.getIndexOfCardOnHand(), playCardMessage.getCoo(), playCardMessage.isFront());
+            case SetReadyMessage setReadyMessage when match.getStatus() == MatchStatus.Waiting ->
+                    setPlayerAsReady_StartGameIfAllReady(msg.getNickname());
+            case null, default -> {
+                assert msg != null;
+                getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
+            }
         }
 
 
@@ -191,9 +198,9 @@ public class SingleMatchController extends Thread{
 
     }
 
-    public GameListener getListenerof(String nickName){
+    public GameListener getListenerOf(String nickName){
         for (GameListener listeners : match.getListenerList()){
-            if (listeners.getNickname()==nickName)
+            if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;
         }
         return null;
@@ -201,9 +208,10 @@ public class SingleMatchController extends Thread{
     private void distributeCardsAndSetBoards(){
         for(Player p : match.getPlayers()){
 
-            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
-            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
-            p.getCardOnHand().add(match.getAGoldCard(FIRST_CARD));
+            List<Card> cardOnHand = p.getCardOnHand();
+            cardOnHand.add(match.getAResourceCard(FIRST_CARD));
+            cardOnHand.add(match.getAResourceCard(FIRST_CARD));
+            cardOnHand.add(match.getAGoldCard(FIRST_CARD));
 
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
