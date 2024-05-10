@@ -1,11 +1,14 @@
 package it.polimi.ingsw.Message.ClientToServerMsg;
 
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Networking.Listeners.GameListener;
 
 public class GenericClientMessage implements Message {
     private int gameID;
-    private boolean isMainControllerMessage;
+    private boolean isMainControllerMessage = false;
     private String nickname;
+    private GameListener listener;
+
 
     public GenericClientMessage(){
 
@@ -43,5 +46,18 @@ public class GenericClientMessage implements Message {
 
     public boolean isMainControllerMessage() {
         return isMainControllerMessage;
+    }
+
+    public void setMainControllerMessage(boolean mainControllerMessage) {
+        isMainControllerMessage = mainControllerMessage;
+    }
+
+    public GameListener getListener() {
+        return listener;
+    }
+
+    public void setListener(GameListener listener) {
+        this.listener=listener;
+
     }
 }

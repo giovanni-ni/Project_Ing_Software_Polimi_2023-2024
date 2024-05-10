@@ -1,6 +1,10 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ServerToClientMsg.*;
+import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 
 import java.io.IOException;
@@ -10,13 +14,17 @@ import java.util.concurrent.BlockingQueue;
 
 public class AllMatchesController extends Thread {
 
-    private static AllMatchesController instance =null;
+    //private static AllMatchesController instance =null;
     private ArrayList<SingleMatchController> runningControllers;
     private BlockingQueue<GenericClientMessage> controllerMessages;
 
 
-    public void addInQueue(GenericClientMessage temp){
+    public void addInQueue(GenericClientMessage temp, GameListener listener){
+        if (temp.isMainControllerMessage()){
+            temp.setListener(listener);
+        }
         controllerMessages.add(temp);
+
     }
     public AllMatchesController() throws IOException {
         this.start();
@@ -33,7 +41,11 @@ public class AllMatchesController extends Thread {
                 if (temp.isMainControllerMessage()) {
                     this.execute(temp);
                 }else{
-                    runningControllers.get(temp.getGameID()).addInQueue(temp);
+                    for (SingleMatchController smc : runningControllers ){
+                        if (smc.getMatch().idMatch==temp.getGameID())
+                            smc.addInQueue(temp);
+                    }
+
                 }
 
             }
@@ -41,19 +53,6 @@ public class AllMatchesController extends Thread {
             throw new RuntimeException(e);
         }
 
-    }
-    public void execute(GenericClientMessage msg) throws IOException {
-        if(msg instanceof CreateGameMessage) {
-            createNewMatch(msg.getNickname());
-        } else if (msg instanceof JoinFirstMessage) {
-            Random ran = new Random();
-            int random = ran.nextInt(runningControllers.size()-1);
-            runningControllers.get(random).addPlayer(msg.getNickname());
-        } else if (msg instanceof JoinGameMessage){
-            runningControllers.get(msg.getGameID()).addPlayer(msg.getNickname());
-        }else {
-            //todo handle message not recognize
-        }
     }
     /**
      * Singleton Pattern
@@ -63,20 +62,62 @@ public class AllMatchesController extends Thread {
      * @return
      */
 
-    public synchronized static AllMatchesController getInstance() throws IOException {
+    /*public synchronized static AllMatchesController getInstance() throws IOException {
         if(instance==null) {
             instance = new AllMatchesController();
         }
         return instance;
-    }
+    }*/
 
 
-    public SingleMatchController createNewMatch(String nickname ) throws IOException {
-        Player p= new Player(nickname);
-        SingleMatchController c= new SingleMatchController();
+    public Message createNewMatch(CreateGameMessage msg ) throws IOException {
+
+        msg.setGameID(runningControllers.size());
+        SingleMatchController c= new SingleMatchController(runningControllers.size());
         runningControllers.add(c);
-        c.addPlayer(p);
-        return c;
+
+        return joinMatch((JoinGameMessage)msg);
+
+    }
+    public Message joinMatch(JoinGameMessage msg ) throws IOException {
+        Player p= new Player(msg.getNickname());
+        msg.getListener().setNickname(p.getNickname());
+        for (SingleMatchController ctrl: runningControllers){
+            if (ctrl.getMatch().idMatch== msg.getGameID()) {
+                if (ctrl.getMatch().getStatus()!= MatchStatus.Waiting)
+                    return new joinFailMsg("Match Started");
+                if (ctrl.isPlayerFull())
+                    return new joinFailMsg("Match Full");
+                if(!ctrl.addPlayer(p,msg.getListener())){
+                    return new joinFailMsg("NickNameUsed");
+                }
+
+                return new joinSuccessMsg();
+            }
+        }
+        return new joinFailMsg("GameId not Found");
+
     }
 
+    public void execute(GenericClientMessage msg) throws IOException {
+        Message message = null;
+        if(msg instanceof CreateGameMessage) {
+            message= createNewMatch((CreateGameMessage) msg);
+        } else if (msg instanceof JoinFirstMessage) {
+
+            for (int i =0 ; i<runningControllers.size()||message instanceof joinSuccessMsg;i++){
+                msg.setGameID(runningControllers.get(i).getMatch().getIdMatch());
+                message= joinMatch((JoinGameMessage) msg);
+            }
+            if (! (message instanceof joinSuccessMsg)){
+                message = new joinFailMsg("No Match available");
+            }
+
+        } else if (msg instanceof JoinGameMessage){
+            message = joinMatch((JoinGameMessage) msg);
+        }else {
+            message= new ActionNotRecognize();
+        }
+        msg.getListener().update(message);
+    }
 }

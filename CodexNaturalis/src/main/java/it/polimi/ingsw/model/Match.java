@@ -1,5 +1,7 @@
 package it.polimi.ingsw.model;
 
+import it.polimi.ingsw.Networking.Listeners.GameListener;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -26,6 +28,9 @@ public class Match {
 	private MatchStatus status = MatchStatus.Waiting;
 
 	private Player firstPlayer;
+
+	private List<GameListener> listenerList;
+
 
 	public int getIdMatch() {
 		return idMatch;
@@ -117,6 +122,7 @@ public class Match {
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		shuffleAll();
+		status =MatchStatus.Waiting;
 	}
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
@@ -220,7 +226,20 @@ public class Match {
 		this.status = status;
 	}
 
-	public void addPlayer(Player p) {
-		//
+	public boolean addPlayer(Player p) {
+		for (Player player : players){
+			if (player.getNickname()==p.getNickname())
+				return false;
+		}
+		players.add(p);
+		return true;
+	}
+
+	public void addListener(GameListener listener) {
+		listenerList.add(listener);
+	}
+
+	public void setListenerList(List<GameListener> listenerList) {
+		this.listenerList = listenerList;
 	}
 }

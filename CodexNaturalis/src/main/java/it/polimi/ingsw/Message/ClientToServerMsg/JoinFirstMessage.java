@@ -1,7 +1,11 @@
 package it.polimi.ingsw.Message.ClientToServerMsg;
 
-public class JoinFirstMessage extends GenericClientMessage{
+import it.polimi.ingsw.Networking.Listeners.GameListener;
+
+public class JoinFirstMessage extends JoinGameMessage{
+
     public JoinFirstMessage(String nickname) {
+        super(nickname,0);
         super.isMessageForMain();
     }
 }
