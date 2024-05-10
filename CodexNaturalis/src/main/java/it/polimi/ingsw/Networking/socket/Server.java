@@ -26,10 +26,11 @@ public class Server extends Thread{
             e.printStackTrace();
         }
     }
-
+    @Override
     public void run() {
         try {
             while (!Thread.interrupted()) {
+
                 handler.add(new ClientHandler(serverSocket.accept(),this));
                 handler.get(handler.size() - 1).start();
                 System.out.println("new connection accepted");
