@@ -1,16 +1,19 @@
 package it.polimi.ingsw.controller;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
+import it.polimi.ingsw.Networking.Listeners.GameListener;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.model.exeptions.GoldCardRequirmentsNotSatisfiedExeption;
 
 
 import java.io.IOException;
 import java.rmi.RemoteException;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
 
 public class SingleMatchController extends Thread{
 
@@ -21,25 +24,12 @@ public class SingleMatchController extends Thread{
     private final int SECOND_CARD =1;
     private final int THIRD_CARD =2;
 
+
     private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
 
-    public SingleMatchController() throws IOException {
+    public SingleMatchController(int GameId) throws IOException {
         this.start();
-    }
-
-    void addPlayer(String nickName){
-        if (match.getPlayers().size()>=4){
-            //todo arrived to the max number of players
-        }else {
-            for (Player p : match.getPlayers()) {
-
-                if (Objects.equals(p.getNickname(), nickName)) {
-                    //todo notify that the nickname is invalid because of bounce
-                }
-
-            }
-            match.addPlayer(nickName);
-        }
+        match =new Match(GameId);
     }
     public void setPlayerAsReady_StartGameIfAllReady(String p){
         // todo check the player if is in the match list
@@ -174,7 +164,21 @@ public class SingleMatchController extends Thread{
         this.processingQueue.add(msg);
     }
 
-    public void addPlayer(Player p) {
-        match.addPlayer(p);
+    public boolean addPlayer(Player p, GameListener listener) {
+
+        if (match.addPlayer(p) && !isPlayerFull()){
+            addListener(listener);
+            return true;
+        }
+        return false;
+    }
+    public boolean isPlayerFull(){
+        return (match.getPlayers().size()>=4);
+    }
+
+    public void addListener(GameListener listener) {
+        listener.setGameID(match.idMatch);
+        match.addListener(listener);
+
     }
 }

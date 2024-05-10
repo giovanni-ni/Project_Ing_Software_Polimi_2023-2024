@@ -2,9 +2,7 @@ package it.polimi.ingsw.Networking.socket;
 
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.GenericServerMessage;
-import it.polimi.ingsw.model.Card;
-import it.polimi.ingsw.model.Deck;
+import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
 import it.polimi.ingsw.model.Message;
 import it.polimi.ingsw.view.flow.CommonClientActions;
 
