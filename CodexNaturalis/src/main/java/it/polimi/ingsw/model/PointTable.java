@@ -39,7 +39,7 @@ public class PointTable {
 
 	public void updatePoint(Player p){
 		for (Player player : playerPoints.keySet())
-			if (player.getNickname()==p.getNickname())
+			if (Objects.equals(player.getNickname(), p.getNickname()))
 				playerPoints.remove(player);
 		playerPoints.put(p,p.currentScore);
 	}

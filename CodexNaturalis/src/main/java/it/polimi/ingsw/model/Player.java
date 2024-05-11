@@ -35,6 +35,7 @@ public class Player {
 
 	}
 	public Player(String nickname) {
+		this.nickname=nickname;
 	}
 	public Board getBoard() {
 		return board;

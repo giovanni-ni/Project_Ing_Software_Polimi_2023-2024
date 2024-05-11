@@ -16,13 +16,13 @@ public class Match {
 
 	private ArrayList<Player> players;
 
-	private ArrayList<InitialCard> initialDeck;
+	private final ArrayList<InitialCard> initialDeck;
 
-	private ArrayList<ResourceCard> resourceDeck;
+	private final ArrayList<ResourceCard> resourceDeck;
 
-	private ArrayList<GoldCard> goldDeck;
+	private final ArrayList<GoldCard> goldDeck;
 
-	private ArrayList<TargetCard> targetDeck;
+	private final ArrayList<TargetCard> targetDeck;
 
 	private ArrayList<TargetCard> commonTarget;
 
@@ -64,33 +64,21 @@ public class Match {
 		return initialDeck;
 	}
 
-	public void setInitialDeck(ArrayList<InitialCard> initialDeck) {
-		this.initialDeck = initialDeck;
-	}
 
 	public ArrayList<ResourceCard> getResourceDeck() {
 		return resourceDeck;
 	}
 
-	public void setResourceDeck(ArrayList<ResourceCard> resourceDeck) {
-		this.resourceDeck = resourceDeck;
-	}
 
 	public ArrayList<GoldCard> getGoldDeck() {
 		return goldDeck;
 	}
 
-	public void setGoldDeck(ArrayList<GoldCard> goldDeck) {
-		this.goldDeck = goldDeck;
-	}
 
 	public ArrayList<TargetCard> getTargetDeck() {
 		return targetDeck;
 	}
 
-	public void setTargetDeck(ArrayList<TargetCard> targetDeck) {
-		this.targetDeck = targetDeck;
-	}
 
 	public ArrayList<TargetCard> getCommonTarget() {
 		return commonTarget;
