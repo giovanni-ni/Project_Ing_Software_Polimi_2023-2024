@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.flow;
+package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.Message.Message;
 

@@ -4,7 +4,7 @@ package it.polimi.ingsw.Networking.socket;
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
-import it.polimi.ingsw.view.flow.CommonClientActions;
+import it.polimi.ingsw.view.CommonClientActions;
 
 
 import java.io.*;
@@ -15,7 +15,7 @@ import java.rmi.RemoteException;
 public class Client extends Thread implements CommonClientActions {
     private Socket socket;
     private ObjectInputStream inputStream;
-    private ObjectOutputStream outputStream;
+    private static ObjectOutputStream outputStream;
     private String serverAddress;
     private int serverPort;
     private String nickname;
@@ -24,6 +24,8 @@ public class Client extends Thread implements CommonClientActions {
         this.serverAddress = address;
         this.serverPort = port;
         socket = new Socket(serverAddress, serverPort);
+        this.inputStream = new ObjectInputStream(socket.getInputStream());
+        this.outputStream = new ObjectOutputStream(socket.getOutputStream());
         this.start();
 
     }
@@ -44,6 +46,15 @@ public class Client extends Thread implements CommonClientActions {
         inputStream.close();
         outputStream.close();
         socket.close();
+    }
+
+    public static void messageToServer(GenericClientMessage message) {
+        try {
+            outputStream.writeObject(message);
+            outputStream.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

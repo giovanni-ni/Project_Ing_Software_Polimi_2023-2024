@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.flow;
+package it.polimi.ingsw.view;
 
 public enum ConnectionSelection {
     RMI,SOCKET
