@@ -34,7 +34,7 @@ public class ClientHandler extends Thread {
         this.gameListener=new GameListener(outputStream);
         this.viewListener = new ViewListener(outputStream);
         this.server = server;
-
+        this.start();
 
 
     }
