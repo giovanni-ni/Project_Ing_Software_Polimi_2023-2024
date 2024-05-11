@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Networking.socket;
 
 import it.polimi.ingsw.controller.AllMatchesController;
-import it.polimi.ingsw.controller.SingleMatchController;
+
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -20,6 +20,7 @@ public class Server extends Thread{
         try {
             serverSocket = new ServerSocket(port);
             handler = new ArrayList<>();
+            controllers=new AllMatchesController();
             this.start();
             System.out.println("Server Socket ready");
         } catch (IOException e) {
@@ -32,8 +33,8 @@ public class Server extends Thread{
             while (!Thread.interrupted()) {
 
                 handler.add(new ClientHandler(serverSocket.accept(),this));
-                handler.get(handler.size() - 1).start();
                 System.out.println("new connection accepted");
+                handler.getLast().start();
             }
         } catch (IOException e) {
             e.printStackTrace();
