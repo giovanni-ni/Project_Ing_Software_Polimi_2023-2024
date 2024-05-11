@@ -16,13 +16,13 @@ public class Match {
 
 	private ArrayList<Player> players;
 
-	private final ArrayList<InitialCard> initialDeck;
+	private ArrayList<InitialCard> initialDeck;
 
-	private final ArrayList<ResourceCard> resourceDeck;
+	private ArrayList<ResourceCard> resourceDeck;
 
-	private final ArrayList<GoldCard> goldDeck;
+	private ArrayList<GoldCard> goldDeck;
 
-	private final ArrayList<TargetCard> targetDeck;
+	private ArrayList<TargetCard> targetDeck;
 
 	private ArrayList<TargetCard> commonTarget;
 
