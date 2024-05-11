@@ -6,6 +6,7 @@ import it.polimi.ingsw.view.View;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.List;
@@ -35,7 +36,11 @@ public class Tui implements View{
         if(isRMI) {
 
         } else {
-            Client c = new Client("localhost",1234);
+            //Client c = new Client("localhost",1234);
+            try (Socket socket = new Socket("localhost", 1234);) //open a socket
+            {
+                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
+            }
         }
 
 
