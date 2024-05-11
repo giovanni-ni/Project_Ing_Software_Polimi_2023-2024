@@ -79,6 +79,7 @@ class BoardTest {
         card2.setFront(false);
         ResourceCard card3 = resourceCards.get(2);
         card3.setFront(false);
+        Card c= new Card(12);
 
         playerBoard.addCard(card1,1,-1);
         playerBoard.addCard(card2,1,1);

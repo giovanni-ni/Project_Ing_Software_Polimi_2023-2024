@@ -45,7 +45,13 @@ public class SingleMatchController extends Thread{
     }
 
     public void getACard (String nickname , boolean isGoldCard,int whichCard) {
-        Player currentPlayer = match.getCurrentPlayer();
+        Player currentPlayer=new Player(nickname);
+        for (Player p :match.getPlayers()){
+            if (p.getNickname()==match.getCurrentPlayer().nickname)
+                currentPlayer=p;
+
+        }
+
 
         if (currentPlayer.nickname.equals(nickname) &&
                 //the number of card on hand should be less than 3
@@ -121,7 +127,7 @@ public class SingleMatchController extends Thread{
             p.currentScore+=countSecretTarget*p.getTarget().getbasePoint();
             p.currentScore+=match.getCommonTarget().getFirst().checkGoal(p.getBoard())*match.getCommonTarget().getFirst().getbasePoint()+
                     match.getCommonTarget().get(SECOND_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(SECOND_CARD).getbasePoint();
-            match.getPt().updatePoint(match.getCurrentPlayer());
+            match.getPt().updatePoint(p);
         }
     }
 
@@ -227,7 +233,8 @@ public class SingleMatchController extends Thread{
     private void extractFirstPlayer(){
         Random random = new Random();
         /*get a random num between 0 and 1 || 0 and 2 ||0 and 3*/
-        int randomNumber = random.nextInt(match.getPlayers().size());
+        int randomNumber = random.nextInt(match.getPlayers().size()-1);
         match.setFirstPlayer(match.getPlayers().get(randomNumber).nickname);
+        match.setCurrentPlayer(match.getPlayers().get(randomNumber));
     }
 }

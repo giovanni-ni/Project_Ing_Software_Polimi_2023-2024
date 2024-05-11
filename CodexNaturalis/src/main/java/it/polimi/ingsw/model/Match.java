@@ -16,13 +16,13 @@ public class Match {
 
 	private ArrayList<Player> players;
 
-	private ArrayList<InitialCard> initialDeck;
+	private final ArrayList<InitialCard> initialDeck;
 
-	private ArrayList<ResourceCard> resourceDeck;
+	private final ArrayList<ResourceCard> resourceDeck;
 
-	private ArrayList<GoldCard> goldDeck;
+	private final ArrayList<GoldCard> goldDeck;
 
-	private ArrayList<TargetCard> targetDeck;
+	private final ArrayList<TargetCard> targetDeck;
 
 	private ArrayList<TargetCard> commonTarget;
 
@@ -56,52 +56,16 @@ public class Match {
 		return players;
 	}
 
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-	public ArrayList<InitialCard> getInitialDeck() {
-		return initialDeck;
-	}
-
-	public void setInitialDeck(ArrayList<InitialCard> initialDeck) {
-		this.initialDeck = initialDeck;
-	}
-
 	public ArrayList<ResourceCard> getResourceDeck() {
 		return resourceDeck;
-	}
-
-	public void setResourceDeck(ArrayList<ResourceCard> resourceDeck) {
-		this.resourceDeck = resourceDeck;
 	}
 
 	public ArrayList<GoldCard> getGoldDeck() {
 		return goldDeck;
 	}
 
-	public void setGoldDeck(ArrayList<GoldCard> goldDeck) {
-		this.goldDeck = goldDeck;
-	}
-
-	public ArrayList<TargetCard> getTargetDeck() {
-		return targetDeck;
-	}
-
-	public void setTargetDeck(ArrayList<TargetCard> targetDeck) {
-		this.targetDeck = targetDeck;
-	}
-
 	public ArrayList<TargetCard> getCommonTarget() {
 		return commonTarget;
-	}
-
-	public void setCommonTarget(ArrayList<TargetCard> commonTarget) {
-		this.commonTarget = commonTarget;
-	}
-
-	public String getFirstPlayer() {
-		return firstPlayer;
 	}
 
 	public void setFirstPlayer(String firstPlayer) {
@@ -122,26 +86,34 @@ public class Match {
 		CardParsing cp= new CardParsing();
 		this.idMatch = idMatch;
 		pt=new PointTable();
+		players = new ArrayList<Player>();
 		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
 		status =MatchStatus.Waiting;
-
+		currentPlayer = null;
+		commonTarget = new ArrayList<TargetCard>();
 	}
+
+
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
+		players = new ArrayList<Player>();
+		commonTarget = new ArrayList<TargetCard>();
 		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
-		firstPlayer = players.getFirst().nickname;
+
 
 	}
 
 
-	public void shuffleAll() {
+	private void shuffleAll() {
 		Collections.shuffle(targetDeck);
 		Collections.shuffle(resourceDeck);
 		Collections.shuffle(initialDeck);
@@ -175,15 +147,15 @@ public class Match {
 
 		for (int i = 0; i < players.size(); i++) {
 			 if(Objects.equals(currPlayerNick, players.get(i).nickname)){
-				 if(i+1>=players.size()){
-					 currentPlayer = players.getFirst();
+				 if(players.get(i)==players.getLast()){
+					 currentPlayer= players.getFirst();
 				 }else{
-					 currentPlayer = players.get(i+1);
+					 currentPlayer= players.get(i+1);
 				 }
 			 }
 		}
 		if (status==MatchStatus.LastRound){
-			if (Objects.equals(currentPlayer.nickname, firstPlayer)){
+			if (Objects.equals(currentPlayer, firstPlayer)){
 				roundCount++;
 			}
 		}
@@ -250,10 +222,6 @@ public class Match {
 
 	public void addListener(GameListener listener) {
 		listenerList.add(listener);
-	}
-
-	public void setListenerList(List<GameListener> listenerList) {
-		this.listenerList = listenerList;
 	}
 
 	public List<GameListener> getListenerList() {
