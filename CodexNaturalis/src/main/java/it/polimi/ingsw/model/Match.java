@@ -122,6 +122,14 @@ public class Match {
 		CardParsing cp= new CardParsing();
 		this.idMatch = idMatch;
 		pt=new PointTable();
+
+		listenerList = new ArrayList<>();
+		players = new ArrayList<>();
+		initialDeck = new ArrayList<>();
+		resourceDeck = new ArrayList<>();
+		goldDeck = new ArrayList<>();
+		targetDeck = new ArrayList<>();
+
 		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();

@@ -13,4 +13,14 @@ public class Print {
             " \\______| \\______/  |_______/ |_______|/__/ \\__\\    |__| \\__| /__/     \\__\\     |__|      \\______/  | _| `._____|/__/     \\__\\ |_______||__| |_______/    \n" +
             "                                                                                                                                                          ";
 
+
+    public static final String menuOption = """
+            -----------------------------------------------------------
+            [Commands] Menu Option:
+              create   --> Create a new match.
+               join    --> Join a match.
+               play    --> Join the first match available
+               exit    --> Exit game.
+         
+            """;
 }

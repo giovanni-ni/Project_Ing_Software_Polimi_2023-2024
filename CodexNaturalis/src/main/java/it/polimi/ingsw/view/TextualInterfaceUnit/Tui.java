@@ -1,7 +1,13 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
+import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.JoinFirstMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
 import it.polimi.ingsw.Networking.Listeners.ViewListener;
 import it.polimi.ingsw.Networking.socket.Client;
+import it.polimi.ingsw.Networking.socket.ClientHandler;
+import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.view.View;
 
 import java.awt.*;
@@ -9,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
+import java.rmi.server.ServerNotActiveException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,19 +24,20 @@ public class Tui implements View{
 
     private String username;
 
+    private PlayerStatus status;
+
     private boolean isRMI = false;
 
     private boolean isSocket = false;
 
     private final Scanner in;
-    private final PrintStream out;
 
     public Tui() {
         in = new Scanner(System.in);
-        out = new PrintStream(System.out, true);
+        this.status = PlayerStatus.MENU;
     }
 
-    public void init() throws IOException {
+    public void init() throws Exception {
         System.out.println(Print.Codex);
         askToContinue();
         askConnectionType();
@@ -36,13 +45,14 @@ public class Tui implements View{
         if(isRMI) {
 
         } else {
-            //Client c = new Client("localhost",1234);
-            try (Socket socket = new Socket("localhost", 1234);) //open a socket
-            {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-            }
+
+            Client socket = new Client("localhost", 1234);
+
+
         }
 
+        askLogin();
+        while(true) redirect();
 
     }
 
@@ -79,28 +89,150 @@ public class Tui implements View{
 
     @Override
     public void askLogin() throws Exception {
+        do{
+
+            System.out.print("Enter the username: ");
+            String username = in.nextLine();
+            if (username.equals("")) {
+                System.out.println(Color.RED + "You didn't choose a username. Try again");
+
+            } else {
+                this.username = username;
+                return;
+            }
+        } while(username.equals(""));
+
+    }
+
+
+    @Override
+    public void askMenuAction() throws Exception {
+        System.out.println(Print.menuOption);
+        System.out.print("-----------------------------------------------------------\n" +
+                "Enter the Command you wish to use: ");
+        String option = in.nextLine();
+        switch (option) {
+            case "" -> {
+            }
+            case "create", "c", "cr" -> askCreateMatch();
+            case "join", "j", "jo" -> askJoinMatch();
+            case "play", "p", "pl" -> askJoinFirst();
+            case "exit", "ex" -> {
+                if (askExitGame()) return;
+            }
+            //case "help", "h", "he" -> askHelp();
+
+            default ->
+                    System.out.println(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
+        }
 
     }
 
     @Override
-    public void askMenuAction() throws Exception {
+    public void askJoinFirst() {
+        GenericClientMessage msg = new JoinFirstMessage(this.username);
 
+        Client.messageToServer(msg);
     }
 
     @Override
     public boolean askCreateMatch() throws Exception {
+        CreateGameMessage message = new CreateGameMessage(this.username);
+        Client.messageToServer(message);
         return false;
     }
 
-    @Override
+    /*@Override
     public int askMaxSeats() throws Exception {
-        return 0;
-    }
+        int playerNumber = 0;
+        do {
 
+                System.out.print("Please select the number of players for this match [2 to 4]: ");
+                playerNumber = Integer.parseInt(in.nextLine());
+                if (playerNumber < 2 || playerNumber > 4) {
+                    System.out.println(Color.RED + "Invalid number! Please try again.");
+                }
+
+        } while (playerNumber < 2 || playerNumber > 4);
+        System.out.println("Selected " + playerNumber + " players.");
+        return playerNumber;
+    }
+*/
     @Override
     public boolean askJoinMatch() throws Exception {
+        String value;
+        do {
+            System.out.println();
+            System.out.println("---------------------------------------------");
+            System.out.print("Please enter the room number: ");
+            value = in.nextLine();
+        } while (value.equals(""));
+        int matchID = Integer.parseInt(value);
+        System.out.println("Selected Room [" + matchID + "].");
+
+        GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
+        Client.messageToServer(msg);
+
         return false;
     }
+
+    @Override
+    public boolean askLeaveMatch() throws RemoteException {
+        return false;
+    }
+
+    @Override
+    public boolean askExitGame() throws RemoteException {
+        System.exit(0);
+        return false;
+    }
+
+    @Override
+    public void showCommonGoals() {
+
+    }
+
+    @Override
+    public void showPersonalGoal() throws RemoteException {
+
+    }
+
+    @Override
+    public void announceCurrentPlayer() throws RemoteException {
+
+    }
+
+    @Override
+    public void showWhoIsPlaying() {
+
+    }
+
+    @Override
+    public void showBoard() {
+
+    }
+
+    @Override
+    public void askPlayerMove(){
+
+    }
+    public void redirect() throws Exception {
+        if(status == PlayerStatus.MENU) {
+            askMenuAction();
+        }
+    }
+
+    /*public void waitingMethodReturn() {
+
+
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+    }*/
 
 
 }

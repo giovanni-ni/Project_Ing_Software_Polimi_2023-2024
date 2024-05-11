@@ -34,6 +34,7 @@ public class AllMatchesController extends Thread {
     @Override
     public void run() {
         GenericClientMessage temp;
+        this.runningControllers = new ArrayList<>();
 
         try {
             while (!this.isInterrupted()) {
@@ -92,7 +93,6 @@ public class AllMatchesController extends Thread {
                 if(!ctrl.addPlayer(p,msg.getListener())){
                     return new joinFailMsg("NickNameUsed");
                 }
-
                 return new joinSuccessMsg(ctrl.getMatch());
             }
         }

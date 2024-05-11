@@ -27,8 +27,9 @@ public class SingleMatchController extends Thread{
     private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
 
     public SingleMatchController(int GameId) throws IOException {
-        this.start();
         match =new Match(GameId);
+        this.start();
+
 
     }
     public void setPlayerAsReady_StartGameIfAllReady(String p){

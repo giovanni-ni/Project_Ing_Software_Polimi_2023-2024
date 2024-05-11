@@ -7,4 +7,7 @@ public class joinFailMsg extends GenericServerMessage{
         this.description=description;
     }
 
+    public String getDescription() {
+        return description;
+    }
 }

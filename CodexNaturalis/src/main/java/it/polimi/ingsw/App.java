@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class App 
 {
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) throws Exception {
         Tui t = new Tui();
         t.init();
 

@@ -21,6 +21,7 @@ public class GameListener implements Listener {
     @Override
     public void update(Message msg) {
         try {
+            System.out.println("1");
             out.writeObject(msg);
         } catch (IOException e) {
 

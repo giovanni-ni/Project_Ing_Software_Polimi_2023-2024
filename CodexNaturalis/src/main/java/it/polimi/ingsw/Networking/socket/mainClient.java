@@ -27,7 +27,7 @@ public class mainClient
             try (Socket socket = new Socket("localhost", 1234);) //open a socket
             {
                 ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                while(true){
+                /*while(true){
                     Scanner scanner = new Scanner(System.in);
                     System.out.print("Enter command: ");
                     String command = scanner.nextLine();
@@ -43,7 +43,7 @@ public class mainClient
                     }
                     outputStream.flush();
                     outputStream.reset();
-                }
+                }*/
 
 
             }
