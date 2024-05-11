@@ -22,7 +22,8 @@ public class drawCardMessage extends GenericClientMessage{
         this.numberindex = numberindex;
     }
 
-    public drawCardMessage(boolean deck, int number) {
+    public drawCardMessage(String nickname,int gameId, boolean deck, int number) {
+        super(gameId, nickname);
         this.deck=deck;
         this.numberindex=number;
         super.isMessageNotForMain();

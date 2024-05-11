@@ -2,7 +2,6 @@ package it.polimi.ingsw.Networking.socket;
 
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
 import it.polimi.ingsw.view.flow.CommonClientActions;
 
@@ -19,6 +18,7 @@ public class Client extends Thread implements CommonClientActions {
     private String serverAddress;
     private int serverPort;
     private String nickname;
+    private int GameId;
 
     public Client(String address, int port) throws IOException {
         this.serverAddress = address;
@@ -101,12 +101,12 @@ public class Client extends Thread implements CommonClientActions {
 
     @Override
     public void drawCard(boolean isGolddeck, int number) throws IOException {
-        outputStream.writeObject(new drawCardMessage(isGolddeck, number));
+        outputStream.writeObject(new drawCardMessage(nickname,GameId,isGolddeck, number));
         finishSending();
     }
 
     @Override
-    public void sendMessage(Message msg) throws IOException {
+    public void sendMessage(String msg) throws IOException {
         outputStream.writeObject(new NewChatMessageMessage(msg));
         finishSending();
     }

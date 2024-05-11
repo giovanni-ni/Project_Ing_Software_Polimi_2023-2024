@@ -3,7 +3,9 @@ package it.polimi.ingsw.Message.ClientToServerMsg;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
 
-public class GenericClientMessage implements Message {
+import java.io.Serializable;
+
+public class GenericClientMessage implements Message, Serializable {
     private int gameID;
     private boolean isMainControllerMessage = false;
     private String nickname;

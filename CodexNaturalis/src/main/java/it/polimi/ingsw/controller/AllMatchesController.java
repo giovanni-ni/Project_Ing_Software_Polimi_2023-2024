@@ -11,12 +11,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class AllMatchesController extends Thread {
 
     //private static AllMatchesController instance =null;
     private ArrayList<SingleMatchController> runningControllers;
-    private BlockingQueue<GenericClientMessage> controllerMessages;
+    private final BlockingQueue<GenericClientMessage> controllerMessages = new LinkedBlockingQueue<>();
 
 
     public void addInQueue(GenericClientMessage temp, GameListener listener){

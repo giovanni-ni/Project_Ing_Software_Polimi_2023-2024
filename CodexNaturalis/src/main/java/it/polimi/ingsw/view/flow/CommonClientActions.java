@@ -25,7 +25,9 @@ public interface CommonClientActions {
 
     void drawCard(boolean deck, int number) throws IOException;
 
-    void sendMessage(Message msg) throws IOException;  //message ancora non creato
+    void sendMessage(String msg) throws IOException;
+
+
 }
 
 
