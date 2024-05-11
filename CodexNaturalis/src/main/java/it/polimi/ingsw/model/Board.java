@@ -105,7 +105,7 @@ public class Board {
 	 */
 
 
-	private boolean checkCorner(int x, int y, CornerPosition corner) {
+	public boolean checkCorner(int x, int y, CornerPosition corner) {
 		/* no Exception handle*/
         switch (corner) {
             case UPLEFT -> {
@@ -116,20 +116,19 @@ public class Board {
             case UPRIGHT -> {
 				if (!isCardCoordinate(x+1,y+1))
 					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
+				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
             }
             case DOWNLEFT -> {
 				if (!isCardCoordinate(x-1,y-1))
 					return true;
 				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
             }
-            case DOWNRIGHT -> {
-				if (!isCardCoordinate(x+1,y-1))
-					return true;
-				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
-            }
+
         }
-        return false;
+		if (!isCardCoordinate(x+1,y-1))
+			return true;
+		return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
+
     }
 
 
@@ -221,9 +220,9 @@ public class Board {
 				Elements element= card.getCorners().get(CornerPosition.DOWNLEFT);
 				addElement(element);
             }
-            case DOWNRIGHT -> {
-				Elements element= card.getCorners().get(CornerPosition.DOWNRIGHT);
-				addElement(element);
+            default -> {
+                Elements element = card.getCorners().get(CornerPosition.DOWNRIGHT);
+                addElement(element);
             }
         }
 
@@ -278,7 +277,7 @@ public class Board {
 					addElement(element,-1);
 				}
 			}
-			case DOWNRIGHT -> {
+			default -> {
 				if (isCardCoordinate( x+1, y-1)){
 					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
 					addElement(element,-1);

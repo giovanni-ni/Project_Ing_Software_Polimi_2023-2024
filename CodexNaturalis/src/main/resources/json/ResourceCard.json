@@ -530,10 +530,10 @@
   "isFront": false,
   "corners":
     {
-      "UPRIGHT": "EMPTY",
-      "UPLEFT": "EMPTY",
-      "DOWNRIGHT": "INSECT",
-      "DOWNLEFT": "HIDE"
+      "UPRIGHT": "INSECT",
+      "UPLEFT": "HIDE",
+      "DOWNRIGHT": "EMPTY",
+      "DOWNLEFT": "EMPTY"
     }
   ,
   "kingdom": "INSECT",

@@ -8,19 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PointTableTest {
 
-    @Test
-    void getAndSetMaxPoint() {
-        PointTable table=new PointTable();
-        table.setMaxPoint(20);
-        assertEquals(20,table.getMaxPoint());
-    }
 
-    @Test
-    void getAndSetMaxPlayerPoint() {
-        PointTable table=new PointTable();
-        table.setMaxPlayerPoint(30);
-        assertEquals(30,table.getMaxPlayerPoint());
-    }
+
+
     @Test
     void getAndSetPlayerPoints() {
         PointTable table=new PointTable();

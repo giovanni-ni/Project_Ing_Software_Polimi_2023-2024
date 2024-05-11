@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Deck {
+public class Deck {//Maybe can be delete
 
 	protected int numCards;
 	private List<Card> deck;
