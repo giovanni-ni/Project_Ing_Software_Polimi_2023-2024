@@ -48,7 +48,7 @@ public class SingleMatchController extends Thread{
     public void getACard (String nickname , boolean isGoldCard,int whichCard) {
         Player currentPlayer=new Player(nickname);
         for (Player p :match.getPlayers()){
-            if (p.getNickname()==match.getCurrentPlayer().nickname)
+            if (p.getNickname().equals(match.getCurrentPlayer().nickname))
                 currentPlayer=p;
 
         }

@@ -322,6 +322,7 @@ public class Tui implements View{
                 for(Player p : myMatch.getPlayers()) {
                     if(p.getNickname().equals(this.username) ) {
                         deck.addAll(p.getCardOnHand());
+                        System.out.println("hhhhhhh");
                         target = p.getTargetOnHand();
                     }
                 }
@@ -329,7 +330,7 @@ public class Tui implements View{
                     System.out.print(c.getCode() + " ");
                 }
                 System.out.println("choose your personal target card from: ");
-                System.out.println(target[0] + "" + target[1]);
+                System.out.println(target[0] + " " + target[1]);
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
                 Client.messageToServer(msg);

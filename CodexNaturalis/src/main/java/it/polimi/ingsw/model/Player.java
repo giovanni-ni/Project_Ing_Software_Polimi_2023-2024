@@ -22,9 +22,13 @@ public class Player implements Serializable {
 
 	public Player(int currentScore){
 		this.currentScore=currentScore;
+		this.cardOnHand=new ArrayList<>();
+		this.board=new Board();
 	}
 	public Player(TargetCard targetOnHand){
 		this.target=targetOnHand;
+		this.cardOnHand=new ArrayList<>();
+		this.board=new Board();
 	}
 	public Player (TargetCard[] targetOnHand,PlayerColor playerID, int currentScore){
 		this.targetOnHand=targetOnHand;
@@ -37,6 +41,10 @@ public class Player implements Serializable {
 	}
 	public Player(String nickname) {
 		this.nickname=nickname;
+		this.cardOnHand=new ArrayList<>();
+		this.board=new Board();
+		this.target=new CountTargetCard();
+		this.targetOnHand = new TargetCard[2];
 	}
 	public Board getBoard() {
 		return board;

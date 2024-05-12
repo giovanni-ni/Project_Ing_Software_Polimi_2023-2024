@@ -152,6 +152,7 @@ public class Client extends Thread implements CommonClientActions {
         } else if(msg instanceof gameStartMsg) {
             System.out.println("the game is starting.. 3.. 2.. 1..");
             Tui.status = PlayerStatus.GamePlay;
+            Tui.myMatch = ((gameStartMsg) msg).getModel();
         }
 
         if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess*/) {
