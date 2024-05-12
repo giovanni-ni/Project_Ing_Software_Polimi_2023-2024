@@ -35,9 +35,15 @@ public interface View {
 
     void askPlayerMove();
 
-     void askJoinFirst();
+     void askJoinFirst() throws InterruptedException;
 
      void askSetReady() throws InterruptedException;
+
+     void askDrawCard() throws InterruptedException;
+
+     void askPlayCard() throws InterruptedException;
+
+
 
 }
 

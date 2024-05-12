@@ -140,7 +140,7 @@ public class Client extends Thread implements CommonClientActions {
         if(msg instanceof joinSuccessMsg) {
             Tui.status = PlayerStatus.MatchStart;
             Tui.myMatch = ((joinSuccessMsg) msg).getModel();
-            //System.out.println(Tui.myMatch.idMatch);
+            System.out.println(Tui.myMatch.idMatch);
         }
     }
 }

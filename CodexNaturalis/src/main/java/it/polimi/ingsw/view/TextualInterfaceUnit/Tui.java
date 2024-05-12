@@ -26,6 +26,8 @@ public class Tui implements View{
 
     public static Match myMatch;
 
+    public static int matchID;
+
     private boolean isRMI = false;
 
     private boolean isSocket = false;
@@ -130,10 +132,10 @@ public class Tui implements View{
     }
 
     @Override
-    public void askJoinFirst() {
+    public void askJoinFirst() throws InterruptedException {
         GenericClientMessage msg = new JoinFirstMessage(this.username);
-
         Client.messageToServer(msg);
+        Thread.sleep(1000);
     }
 
     @Override
@@ -150,6 +152,43 @@ public class Tui implements View{
         } while(!option.equals("y"));
 
 
+    }
+
+    @Override
+    public void askDrawCard() throws InterruptedException {
+        System.out.println("insert number of the deck: ");
+        int option = Integer.parseInt(in.nextLine());
+        boolean deck;
+        if(option == 1) {
+            deck = true;
+        } else {
+            deck = false;
+        }
+        System.out.println("insert number of the card(1/2/3): ");
+        int card = Integer.parseInt(in.nextLine());
+        drawCardMessage msg = new drawCardMessage(this.username, matchID, deck, card );
+        Client.messageToServer(msg);
+        Thread.sleep(1000);
+    }
+
+    @Override
+    public void askPlayCard() throws InterruptedException {
+        System.out.println("choose the card that you want to play: ");
+        int index = Integer.parseInt(in.nextLine());
+        System.out.println("front or back: f/b");
+        String front = in.nextLine();
+        boolean f = false;
+        if(front.equals("f")) {
+            f = true;
+        }
+        System.out.println("position x: ");
+        int x = Integer.parseInt(in.nextLine());
+        System.out.println("position y: ");
+        int y = Integer.parseInt(in.nextLine());
+
+        playCardMessage msg = new playCardMessage(index, f, x, y);
+        Client.messageToServer(msg);
+        Thread.sleep(1000);
     }
 
     @Override
