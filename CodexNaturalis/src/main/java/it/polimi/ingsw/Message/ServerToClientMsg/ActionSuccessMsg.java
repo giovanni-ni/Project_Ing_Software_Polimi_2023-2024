@@ -7,7 +7,7 @@ public class ActionSuccessMsg extends GenericServerMessage{
     private final Match model;
 
     public ActionSuccessMsg(Match match) {
-        this.model=match;
+        this.model = match;
     }
 
     public Match getModel() {

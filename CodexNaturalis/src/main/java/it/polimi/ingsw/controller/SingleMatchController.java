@@ -178,12 +178,22 @@ public class SingleMatchController extends Thread{
                     playACardOnHand(msg.getNickname(), playCardMessage.getIndexOfCardOnHand(), playCardMessage.getCoo(), playCardMessage.isFront());
             case SetReadyMessage setReadyMessage when match.getStatus() == MatchStatus.Waiting ->
                     setPlayerAsReady_StartGameIfAllReady(msg.getNickname());
+            case SetTargetCardMessage SetTargetCardMessage when (match.getStatus() == MatchStatus.Playing) ->
+                    setTargetCard(msg);
             case null, default -> {
                 assert msg != null;
                 getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
             }
         }
+    }
 
+    public void setTargetCard(GenericClientMessage msg) {
+        for(Player p: match.getPlayers()) {
+            if(p.getNickname().equals(msg.getNickname())) {
+                p.setTarget(p.getTargetOnHand()[((SetTargetCardMessage) msg).getChoice()]);
+            }
+        }
+        getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
 
     }
     public void notifyAllListeners(Message msg){

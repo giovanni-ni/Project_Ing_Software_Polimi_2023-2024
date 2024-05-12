@@ -4,8 +4,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Networking.Listeners.ViewListener;
 import it.polimi.ingsw.Networking.socket.Client;
 import it.polimi.ingsw.Networking.socket.ClientHandler;
-import it.polimi.ingsw.model.Match;
-import it.polimi.ingsw.model.PlayerStatus;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.View;
 
 import java.awt.*;
@@ -15,6 +14,7 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,6 +26,8 @@ public class Tui implements View{
 
     public static Match myMatch;
 
+    public static Player myPlayer;
+
     public static int matchID;
 
     private boolean isRMI = false;
@@ -34,10 +36,13 @@ public class Tui implements View{
 
     private final Scanner in;
 
+    private int first;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
         myMatch = new Match(0);
+        this.first = 0;
     }
 
     public void init() throws Exception {
@@ -270,7 +275,11 @@ public class Tui implements View{
 
     @Override
     public void showBoard() {
-
+        System.out.println("[][][][][]\n" +
+                           "[][][][][]\n" +
+                           "[][][1][][]\n" +
+                           "[][][][][]\n" +
+                           "[][][][][]");
     }
 
     @Override
@@ -285,9 +294,11 @@ public class Tui implements View{
         if(status == PlayerStatus.MatchStart) {
 
             askSetReady();
+            //System.out.println("la partita sta per iniziare");
+        }
 
-
-            System.out.println("la partita sta per iniziare");
+        if(status == PlayerStatus.GamePlay) {
+            inGame();
         }
     }
 
@@ -302,6 +313,33 @@ public class Tui implements View{
 
 
     }*/
+
+    public void inGame() throws InterruptedException {
+            if(first == 0) {
+                List<Card> deck = new ArrayList<>();
+                TargetCard[] target = {};
+                System.out.println("your card: ");
+                for(Player p : myMatch.getPlayers()) {
+                    if(p.getNickname().equals(this.username) ) {
+                        deck.addAll(p.getCardOnHand());
+                        target = p.getTargetOnHand();
+                    }
+                }
+                for(Card c: deck) {
+                    System.out.print(c.getCode() + " ");
+                }
+                System.out.println("choose your personal target card from: ");
+                System.out.println(target[0] + "" + target[1]);
+                int choice = Integer.parseInt(in.nextLine());
+                SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
+                Client.messageToServer(msg);
+
+                Thread.sleep(1000);
+
+                showBoard();
+            }
+    }
+
 
     public PlayerStatus getStatus() {
         return status;

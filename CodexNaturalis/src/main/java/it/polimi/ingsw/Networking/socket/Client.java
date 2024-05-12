@@ -3,7 +3,9 @@ package it.polimi.ingsw.Networking.socket;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
+import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerStatus;
+import it.polimi.ingsw.model.exeptions.EndGameExeption;
 import it.polimi.ingsw.view.CommonClientActions;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 
@@ -140,8 +142,23 @@ public class Client extends Thread implements CommonClientActions {
         if(msg instanceof joinSuccessMsg) {
             Tui.status = PlayerStatus.MatchStart;
             Tui.myMatch = ((joinSuccessMsg) msg).getModel();
+            Tui.myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
             System.out.println(Tui.myMatch.idMatch);
+
+        } else if(msg instanceof joinFailMsg) {
+            System.out.println("join fail because" + ((joinFailMsg) msg).getDescription());
+        } else if(msg instanceof newPlayerInMsg) {
+            System.out.println("new player is in");
+        } else if(msg instanceof gameStartMsg) {
+            System.out.println("the game is starting.. 3.. 2.. 1..");
+            Tui.status = PlayerStatus.GamePlay;
         }
+
+        if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess*/) {
+            Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
+
+        }
+
     }
 }
 
