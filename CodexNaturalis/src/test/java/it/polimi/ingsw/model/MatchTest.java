@@ -48,6 +48,9 @@ class MatchTest {
 
         assertTrue(testMatch.isAllPlayersReady());
 
+        assertEquals(testMatch.getListenerList().isEmpty(),true);
+
+
     }
 
 }

@@ -114,35 +114,27 @@ public class Match implements Serializable {
 
 		listenerList = new ArrayList<>();
 		players = new ArrayList<>();
-		initialDeck = new ArrayList<>();
-		resourceDeck = new ArrayList<>();
-		goldDeck = new ArrayList<>();
-		targetDeck = new ArrayList<>();
-
-		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
+        initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
 		status =MatchStatus.Waiting;
+		currentPlayer = null;
 
+		commonTarget = new ArrayList<TargetCard>();
 	}
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
 
 		listenerList = new ArrayList<>();
-		players = new ArrayList<>();
-		initialDeck = new ArrayList<>();
-		resourceDeck = new ArrayList<>();
-		goldDeck = new ArrayList<>();
-		targetDeck = new ArrayList<>();
-
-
+		players = new ArrayList<>();;
 		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
+		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
-		firstPlayer = players.getFirst().nickname;
 
 	}
 
@@ -181,10 +173,10 @@ public class Match implements Serializable {
 
 		for (int i = 0; i < players.size(); i++) {
 			 if(Objects.equals(currPlayerNick, players.get(i).nickname)){
-				 if(i+1>=players.size()){
-					 currentPlayer = players.getFirst();
+				 if(players.get(i)==players.getLast()){
+					 currentPlayer= players.getFirst();
 				 }else{
-					 currentPlayer = players.get(i+1);
+					 currentPlayer= players.get(i+1);
 				 }
 			 }
 		}
