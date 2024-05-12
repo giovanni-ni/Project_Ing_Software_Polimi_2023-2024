@@ -2,6 +2,7 @@ package it.polimi.ingsw.model;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Map;
  * it is initialized with an initial Card, it is unique for each player in the game.
  * @author: Gong, Huang, Ni, Gu
  */
-public class Board {
+public class Board implements Serializable {
 
 	private BiMap<Card,Coordinate> cardCoordinate;
 

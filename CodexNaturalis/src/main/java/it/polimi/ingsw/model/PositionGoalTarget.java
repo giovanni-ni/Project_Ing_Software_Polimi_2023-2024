@@ -3,7 +3,9 @@ package it.polimi.ingsw.model;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
-public class PositionGoalTarget extends TargetCard{
+import java.io.Serializable;
+
+public class PositionGoalTarget extends TargetCard implements Serializable {
 
     Elements firstElement;
 

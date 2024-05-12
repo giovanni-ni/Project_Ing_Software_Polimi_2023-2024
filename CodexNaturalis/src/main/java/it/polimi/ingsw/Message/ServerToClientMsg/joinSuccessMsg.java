@@ -6,4 +6,6 @@ public class joinSuccessMsg extends ActionSuccessMsg {
     public joinSuccessMsg(Match model) {
         super(model);
     }
+
+
 }

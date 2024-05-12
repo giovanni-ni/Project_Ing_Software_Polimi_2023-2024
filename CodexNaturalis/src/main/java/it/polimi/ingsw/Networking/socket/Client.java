@@ -2,15 +2,18 @@ package it.polimi.ingsw.Networking.socket;
 
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
-import it.polimi.ingsw.Message.ServerToClientMsg.joinFailMsg;
+import it.polimi.ingsw.Message.ServerToClientMsg.*;
+import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.view.CommonClientActions;
+import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 
 
 import java.io.*;
 import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Client extends Thread implements CommonClientActions {
     private Socket socket;
@@ -20,6 +23,7 @@ public class Client extends Thread implements CommonClientActions {
     private int serverPort;
     private String nickname;
     private int GameId;
+
 
     public Client(String address, int port) throws IOException {
         this.serverAddress = address;
@@ -35,12 +39,14 @@ public class Client extends Thread implements CommonClientActions {
         while (true) {
             try {
                 GenericServerMessage msg = (GenericServerMessage) inputStream.readObject();
-                if(msg instanceof joinFailMsg) {
-                    System.out.println(((joinFailMsg) msg).getDescription());
-                }
+                System.out.println(msg);
+                handleMessage(msg);
 
-            } catch (IOException | ClassNotFoundException e) {
-                System.out.println("error during running");
+
+            } catch (ClassNotFoundException e) {
+                System.out.println("ClassNotFound");
+            } catch (IOException e) {
+                System.out.println("IOException");
             }
         }
     }
@@ -128,6 +134,14 @@ public class Client extends Thread implements CommonClientActions {
     private void finishSending() throws IOException {
         outputStream.flush();
         outputStream.reset();
+    }
+
+    public void handleMessage(GenericServerMessage msg) {
+        if(msg instanceof joinSuccessMsg) {
+            Tui.status = PlayerStatus.MatchStart;
+            Tui.myMatch = ((joinSuccessMsg) msg).getModel();
+            //System.out.println(Tui.myMatch.idMatch);
+        }
     }
 }
 

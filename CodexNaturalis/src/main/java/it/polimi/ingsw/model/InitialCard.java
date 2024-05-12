@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class InitialCard extends Card {
+public class InitialCard extends Card implements Serializable {
 	private ArrayList<Elements> centralElements;
 
 	public Map<CornerPosition, Elements> getCornersFront() {

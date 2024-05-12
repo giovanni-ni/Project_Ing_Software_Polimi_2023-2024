@@ -35,7 +35,9 @@ public interface View {
 
     void askPlayerMove();
 
-    public void askJoinFirst();
+     void askJoinFirst();
+
+     void askSetReady() throws InterruptedException;
 
 }
 

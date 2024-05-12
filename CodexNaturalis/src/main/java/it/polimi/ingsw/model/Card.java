@@ -1,10 +1,11 @@
 package it.polimi.ingsw.model;
 
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class Card {
+public class Card implements Serializable {
 
 	private int code;
 	private boolean isFront;

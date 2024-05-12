@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.*;
 /*how to add point to the ptmap
  * swipe is a  view control maybe*/
-public class Player {
+public class Player implements Serializable {
 	//attributes
 	private List<Card> cardOnHand;
 

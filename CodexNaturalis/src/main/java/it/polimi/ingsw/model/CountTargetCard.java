@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CountTargetCard extends TargetCard{
+public class CountTargetCard extends TargetCard implements Serializable {
 
     Elements[] elemRequired;
 

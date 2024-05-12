@@ -3,12 +3,13 @@ package it.polimi.ingsw.model;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Match {
+public class Match implements Serializable {
 
 	public int idMatch;
 
@@ -30,7 +31,7 @@ public class Match {
 
 	private String firstPlayer;
 
-	private List<GameListener> listenerList;
+	private transient List<GameListener> listenerList;
 
 	private int roundCount=0;
 
@@ -128,6 +129,15 @@ public class Match {
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
+
+		listenerList = new ArrayList<>();
+		players = new ArrayList<>();
+		initialDeck = new ArrayList<>();
+		resourceDeck = new ArrayList<>();
+		goldDeck = new ArrayList<>();
+		targetDeck = new ArrayList<>();
+
+
 		initialDeck = (ArrayList<InitialCard>) cp.loadInitialCards();
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();

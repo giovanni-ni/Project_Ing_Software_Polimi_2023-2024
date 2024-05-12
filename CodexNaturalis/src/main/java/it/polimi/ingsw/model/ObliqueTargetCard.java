@@ -3,9 +3,10 @@ package it.polimi.ingsw.model;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ObliqueTargetCard extends TargetCard{
+public class ObliqueTargetCard extends TargetCard implements Serializable {
 
     private Elements elemRequired;
 

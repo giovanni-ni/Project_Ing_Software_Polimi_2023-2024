@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class TargetCard {
+public abstract class TargetCard implements Serializable {
 
 	private int idCard;
 

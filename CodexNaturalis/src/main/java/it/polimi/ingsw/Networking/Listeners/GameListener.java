@@ -5,10 +5,11 @@ import it.polimi.ingsw.Message.Message;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 
 public class GameListener implements Listener {
 
-    private final ObjectOutputStream out;
+    private transient final ObjectOutputStream out;
 
     private String nickname;
 

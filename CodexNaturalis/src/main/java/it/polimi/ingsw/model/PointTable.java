@@ -1,9 +1,10 @@
 package it.polimi.ingsw.model;
 
 
+import java.io.Serializable;
 import java.util.*;
 
-public class PointTable {
+public class PointTable implements Serializable {
 
 	private final int maxPoint;
 

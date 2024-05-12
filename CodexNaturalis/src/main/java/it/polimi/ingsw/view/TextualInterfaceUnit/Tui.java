@@ -1,12 +1,10 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
-import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.JoinFirstMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Networking.Listeners.ViewListener;
 import it.polimi.ingsw.Networking.socket.Client;
 import it.polimi.ingsw.Networking.socket.ClientHandler;
+import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.view.View;
 
@@ -24,7 +22,9 @@ public class Tui implements View{
 
     private String username;
 
-    private PlayerStatus status;
+    public static PlayerStatus status;
+
+    public static Match myMatch;
 
     private boolean isRMI = false;
 
@@ -32,9 +32,10 @@ public class Tui implements View{
 
     private final Scanner in;
 
-    public Tui() {
+    public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
+        myMatch = new Match(0);
     }
 
     public void init() throws Exception {
@@ -136,9 +137,30 @@ public class Tui implements View{
     }
 
     @Override
+    public void askSetReady() throws InterruptedException {
+        String option;
+        do {
+            System.out.println("Ready? y/n: ");
+            option = in.nextLine();
+            if(option.equals("y")){
+                SetReadyMessage msg = new SetReadyMessage(this.username);
+                Client.messageToServer(msg);
+            }
+            Thread.sleep(1000);
+        } while(!option.equals("y"));
+
+
+    }
+
+    @Override
     public boolean askCreateMatch() throws Exception {
         CreateGameMessage message = new CreateGameMessage(this.username);
         Client.messageToServer(message);
+
+        //wait(100);
+        Thread.sleep(1000);
+        //System.out.println(myMatch.idMatch);
+
         return false;
     }
 
@@ -220,6 +242,14 @@ public class Tui implements View{
         if(status == PlayerStatus.MENU) {
             askMenuAction();
         }
+
+        if(status == PlayerStatus.MatchStart) {
+
+            askSetReady();
+
+
+            System.out.println("la partita sta per iniziare");
+        }
     }
 
     /*public void waitingMethodReturn() {
@@ -233,6 +263,15 @@ public class Tui implements View{
 
 
     }*/
+
+    public PlayerStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(PlayerStatus status) {
+        this.status = status;
+    }
+
 
 
 }

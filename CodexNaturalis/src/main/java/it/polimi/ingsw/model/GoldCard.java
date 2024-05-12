@@ -1,8 +1,9 @@
 package it.polimi.ingsw.model;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class GoldCard extends ResourceCard {
+public class GoldCard extends ResourceCard implements Serializable {
 
 	private int nReqElement;
 
