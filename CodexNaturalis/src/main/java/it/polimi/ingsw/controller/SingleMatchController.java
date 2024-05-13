@@ -225,10 +225,10 @@ public class SingleMatchController extends Thread{
     private void distributeCardsAndSetBoards(){
         for(Player p : match.getPlayers()){
 
-            List<Card> cardOnHand = p.getCardOnHand();
-            cardOnHand.add(match.getAResourceCard(FIRST_CARD));
-            cardOnHand.add(match.getAResourceCard(FIRST_CARD));
-            cardOnHand.add(match.getAGoldCard(FIRST_CARD));
+            /*List<Card> cardOnHand = p.getCardOnHand();*/
+            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
+            p.getCardOnHand().add(match.getAResourceCard(FIRST_CARD));
+            p.getCardOnHand().add(match.getAGoldCard(FIRST_CARD));
 
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();

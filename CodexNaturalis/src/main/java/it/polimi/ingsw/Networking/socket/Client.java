@@ -155,10 +155,10 @@ public class Client extends Thread implements CommonClientActions {
             Tui.myMatch = ((gameStartMsg) msg).getModel();
         }
 
-        if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess*/) {
+        /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {
             Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
 
-        }
+        }*/
 
     }
 }
