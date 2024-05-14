@@ -1,19 +1,17 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Networking.Listeners.ViewListener;
-import it.polimi.ingsw.Networking.socket.Client;
-import it.polimi.ingsw.Networking.socket.ClientHandler;
+import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
+import it.polimi.ingsw.Networking.rmi.RMIClient;
+import it.polimi.ingsw.Networking.socket.SocketClient;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.View;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.rmi.RemoteException;
-import java.rmi.server.ServerNotActiveException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -40,6 +38,8 @@ public class Tui implements View{
 
     private int first;
 
+    private Client Client;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
@@ -50,17 +50,17 @@ public class Tui implements View{
     }
 
     public void init() throws Exception {
-        print(Print.Codex);
+        System.out.println(Print.Codex);
         askToContinue();
         askConnectionType();
 
         if(isRMI) {
-
+            final String serverName = "AdderServer";
+            Registry registry = LocateRegistry.getRegistry("localhost", 1234);
+            VirtualServer server = (VirtualServer) registry.lookup(serverName);
+            Client = new RMIClient(server);
         } else {
-
-            Client socket = new Client("localhost", 1234);
-
-
+            Client = new SocketClient("172.20.10.2", 1234);
         }
 
         askLogin();
@@ -115,8 +115,6 @@ public class Tui implements View{
         } while(username.equals(""));
 
     }
-
-
     @Override
     public void askMenuAction() throws Exception {
         print(Print.menuOption);

@@ -28,7 +28,6 @@ public class RMIServer implements VirtualServer {
 
     public static void main(String []args) throws IOException {
         final String serverName = "AdderServer";
-        final int i=0;
         VirtualServer server = new RMIServer(AllMatchesController.getInstance());
         VirtualServer stub= (VirtualServer) UnicastRemoteObject.exportObject(server, 0);
         Registry registry= LocateRegistry.createRegistry(1234);

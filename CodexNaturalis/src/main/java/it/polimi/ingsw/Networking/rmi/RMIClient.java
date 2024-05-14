@@ -1,20 +1,17 @@
 package it.polimi.ingsw.Networking.rmi;
 
+import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Networking.Listeners.GameListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
+import it.polimi.ingsw.view.TextualInterfaceUnit.Client;
 
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
-public class RMIClient extends UnicastRemoteObject implements Listener {
+public class RMIClient extends UnicastRemoteObject implements Listener, Client {
 
     final List<String> playersNickname= new ArrayList<>();
 
@@ -25,21 +22,8 @@ public class RMIClient extends UnicastRemoteObject implements Listener {
     public RMIClient(VirtualServer server) throws RemoteException {
         this.server=server;
     }
-    private void run() throws RemoteException{
+    public void run() throws RemoteException{
         this.server.connect(this);
-        this.runCli();
-    }
-
-    private void runCli() throws RemoteException{
-        }
-
-    public static void main(String [] args) throws RemoteException, NotBoundException{
-
-        final String serverName = "AdderServer";
-
-        Registry registry = LocateRegistry.getRegistry("localhost", 1234);
-        VirtualServer server = (VirtualServer) registry.lookup(serverName);
-        new RMIClient(server).run();
     }
 
     @Override
@@ -65,5 +49,10 @@ public class RMIClient extends UnicastRemoteObject implements Listener {
     @Override
     public void setGameID(Integer gameID) {
         this.gameId=gameID;
+    }
+
+    @Override
+    public void messageToServer(GenericClientMessage msg) {
+
     }
 }

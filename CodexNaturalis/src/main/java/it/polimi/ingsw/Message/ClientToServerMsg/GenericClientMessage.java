@@ -10,7 +10,7 @@ public class GenericClientMessage implements Message, Serializable {
     private int gameID;
     private boolean isMainControllerMessage = false;
     private String nickname;
-    private GameListener listener;
+    private Listener listener;
     public GenericClientMessage(){
 
     }
@@ -54,12 +54,12 @@ public class GenericClientMessage implements Message, Serializable {
         isMainControllerMessage = mainControllerMessage;
     }
 
-    public GameListener getListener() {
+    public Listener getListener() {
         return listener;
     }
 
     public void setListener(Listener listener) {
-        this.listener= (GameListener) listener;
+        this.listener=  listener;
 
     }
 }
