@@ -185,6 +185,8 @@ public class SingleMatchController extends Thread{
                     setPlayerAsReady_StartGameIfAllReady(msg.getNickname());
             case SetTargetCardMessage SetTargetCardMessage when (match.getStatus() == MatchStatus.Playing) ->
                     setTargetCard(msg);
+            case FrontOrBackMessage FrontOrBackMessage when (match.getStatus() == MatchStatus.Playing) ->
+                    setInitialCard(msg);
             case null, default -> {
                 assert msg != null;
                 getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
@@ -192,6 +194,14 @@ public class SingleMatchController extends Thread{
         }
     }
 
+    public void setInitialCard(GenericClientMessage msg) {
+        for(Player p: match.getPlayers()) {
+            if(p.getNickname().equals(msg.getNickname())) {
+                p.getInitialCard().setFront(((FrontOrBackMessage) msg).getFrontOrBack());
+            }
+        }
+        getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
+    }
     public void setTargetCard(GenericClientMessage msg) {
         for(Player p: match.getPlayers()) {
             if(p.getNickname().equals(msg.getNickname())) {
@@ -236,8 +246,9 @@ public class SingleMatchController extends Thread{
 
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
-            Board b= new Board(match.getFirstInitialCard());//todo
-            p.setBoard(b);
+            p.setInitialCard(match.getFirstInitialCard()) ;
+            //Board b= new Board(match.getFirstInitialCard());//todo
+            //p.setBoard(b);
             p.currentScore=0;
         }
     }

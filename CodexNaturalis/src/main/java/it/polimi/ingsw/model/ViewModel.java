@@ -30,6 +30,7 @@ public class ViewModel implements Serializable {
     private final int roundCount=0;
 
     private final List<Player> winners;
+    private final Player currentPlayer;
 
     public ViewModel(Match match) {
         this.idMatch = match.idMatch;
@@ -43,6 +44,7 @@ public class ViewModel implements Serializable {
         this.status = match.getStatus();
         this.firstPlayer = match.getFirstPlayer();
         this.winners = match.getWinners();
+        this.currentPlayer = match.getCurrentPlayer();
     }
 
     public int getIdMatch() {
@@ -85,11 +87,24 @@ public class ViewModel implements Serializable {
         return firstPlayer;
     }
 
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
     public int getRoundCount() {
         return roundCount;
     }
 
     public List<Player> getWinners() {
         return winners;
+    }
+
+    public Player getPlayerByNickname(String nickname) {
+        for(Player p: this.players) {
+            if(p.getNickname().equals(nickname)) {
+                return p;
+            }
+        }
+        return null;
     }
 }

@@ -28,6 +28,8 @@ public class Tui implements View{
 
     public static ViewModel myMatch;
 
+    private int[][] myBoard;
+
     public static Player myPlayer;
 
     public static int matchID;
@@ -237,7 +239,6 @@ public class Tui implements View{
         } while (value.equals(""));
         int matchID = Integer.parseInt(value);
         print("Selected Room [" + matchID + "].");
-
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         Client.messageToServer(msg);
 
@@ -277,11 +278,17 @@ public class Tui implements View{
 
     @Override
     public void showBoard() {
-        print("[][][][][]\n" +
-                           "[][][][][]\n" +
-                           "[][][1][][]\n" +
-                           "[][][][][]\n" +
-                           "[][][][][]");
+        int p = 1;
+        System.out.println("1 2 3 4 5 6 7 8 9 10 11");
+        System.out.println("");
+        System.out.println("");
+        for (int i = 0; i < myBoard.length; i++) {
+            for (int j = 0; j < myBoard[0].length; j++) {
+                System.out.print(myBoard[i][j]+" ");
+            }
+            System.out.println("        "+p);
+            p++;
+        }
     }
 
     @Override
@@ -300,7 +307,7 @@ public class Tui implements View{
         }
 
         if(status == PlayerStatus.GamePlay) {
-            print("game status change recognized, method calling...");
+            //print("game status change recognized, method calling...");
             inGame();
         }
     }
@@ -324,31 +331,62 @@ public class Tui implements View{
                 TargetCard[] target = {};
                 print("your card: ");
 
-                for(Player p : myMatch.getPlayers()) {
-                    print("ci sono giocatori n"+myMatch.getPlayers().size());
-                    print(p.nickname);
-                    print("hai in mano "+p.getCardOnHand().size());
+                //for(Player p : myMatch.getPlayers()) {
+                    //print("ci sono giocatori n"+myMatch.getPlayers().size());
+                    //print(p.nickname);
+                    //print("hai in mano "+p.getCardOnHand().size());
 
-                    if(p.getNickname().equals(this.username) ) {
+                //    if(p.getNickname().equals(this.username) ) {
 
-                        deck.addAll(p.getCardOnHand());
-                        print("hhhhhhh");
-                        target = p.getTargetOnHand();
-                    }
-                }
-                for(Card c: deck) {
+                //        deck.addAll(p.getCardOnHand());
+                        //print("hhhhhhh");
+                //        target = p.getTargetOnHand();
+                //    }
+                //}
+                for(Card c: myPlayer.getCardOnHand()) {
                     print(c.getCode() + " ");
                 }
                 print("choose your personal target card from: ");
-                print(target[0].getIdCard() + " " + target[1].getIdCard());
+                print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
                 Client.messageToServer(msg);
 
                 Thread.sleep(1000);
 
+                print("this is your initial card:"+ myPlayer.getInitialCard()+" front(0) or back(1) ");
+                choice = Integer.parseInt(in.nextLine());
+                boolean c;
+                if(choice == 0) {
+                    c = true;
+                } else {
+                    c = false;
+                }
+
+                FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, c);
+                Client.messageToServer(msg1);
+
+                Thread.sleep(1000);
+
+                resetBoard();
+                myBoard[5][5] = myPlayer.getInitialCard().getCode();
+                showBoard();
+                this.first++;
+                System.out.println("Game is Start!");
+            }
+            if(myMatch.getCurrentPlayer().nickname.equals(this.username)) {
+                System.out.println("it's your round!!!");
+                showBoard();
+            } else {
+                System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
+                System.out.println("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
                 showBoard();
             }
+
+            while(true) {
+
+            }
+
     }
 
 
@@ -360,7 +398,19 @@ public class Tui implements View{
         this.status = status;
     }
 
-
-
+    private void resetBoard() {
+        myBoard = new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+        };
+    }
 
 }

@@ -155,11 +155,11 @@ public class Client extends Thread implements CommonClientActions {
             print("new player is in");
         } else if(msg instanceof gameStartMsg) {
             print("the game is starting.. 3.. 2.. 1..");
-            print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
+            //print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
             Tui.myMatch = ((gameStartMsg) msg).getModel();
-
+            Tui.myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             Tui.status = PlayerStatus.GamePlay;
-            print("game status change" );
+            //print("game status change" );
 
         }
 

@@ -16,6 +16,8 @@ public class Player implements Serializable {
 	private TargetCard target;
 
 	private PlayerColor playerID;
+	private InitialCard initialCard;
+
 	public String nickname;
 
 	public int currentScore;
@@ -122,6 +124,14 @@ public class Player implements Serializable {
 
 	public void setReady(boolean ready) {
 		isReady = ready;
+	}
+
+	public InitialCard getInitialCard() {
+		return initialCard;
+	}
+
+	public void setInitialCard(InitialCard initialCard) {
+		this.initialCard = initialCard;
 	}
 
 	/*public void endRound() {
