@@ -26,7 +26,7 @@ public class Tui implements View{
 
     public static PlayerStatus status;
 
-    public static Match myMatch;
+    public static ViewModel myMatch;
 
     public static Player myPlayer;
 
@@ -43,7 +43,7 @@ public class Tui implements View{
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
-        myMatch = new Match(0);
+        myMatch = new ViewModel ( new Match(0));
         this.first = 0;
     }
 
