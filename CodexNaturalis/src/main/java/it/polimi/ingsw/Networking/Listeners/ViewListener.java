@@ -22,4 +22,24 @@ public class ViewListener implements Listener{
 
             }
     }
+
+    @Override
+    public void setNickname(String nickname) {
+
+    }
+
+    @Override
+    public String getNickname() {
+        return null;
+    }
+
+    @Override
+    public Integer getGameID() {
+        return null;
+    }
+
+    @Override
+    public void setGameID(Integer gameID) {
+
+    }
 }
