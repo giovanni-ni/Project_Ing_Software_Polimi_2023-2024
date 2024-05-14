@@ -221,7 +221,7 @@ public class Match implements Serializable {
 	}
 	public TargetCard getFirtTargetCard(){
 		TargetCard ris= targetDeck.getFirst();
-		goldDeck.removeFirst();
+		targetDeck.removeFirst();
 		return ris;
 	}
 
