@@ -1,7 +1,6 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Networking.Listeners.ViewListener;
 
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
@@ -35,13 +34,13 @@ public interface View {
 
     void askPlayerMove();
 
-     void askJoinFirst() throws InterruptedException;
+     void askJoinFirst() throws InterruptedException, RemoteException;
 
-     void askSetReady() throws InterruptedException;
+     void askSetReady() throws InterruptedException, RemoteException;
 
-     void askDrawCard() throws InterruptedException;
+     void askDrawCard() throws InterruptedException, RemoteException;
 
-     void askPlayCard() throws InterruptedException;
+     void askPlayCard() throws InterruptedException, RemoteException;
 
 
 

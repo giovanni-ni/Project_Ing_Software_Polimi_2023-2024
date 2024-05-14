@@ -2,8 +2,8 @@ package it.polimi.ingsw.Networking.socket;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
-import it.polimi.ingsw.Networking.Listeners.GameListener;
-import it.polimi.ingsw.Networking.Listeners.ViewListener;
+import it.polimi.ingsw.Networking.Listeners.SocketListener;
+import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.model.Player;
 
 import java.io.*;
@@ -24,14 +24,13 @@ public class ClientHandler extends Thread {
     private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
 
 
-    private final GameListener gameListener;
-    private ViewListener viewListener;
+    private final SocketListener gameListener;
     private final Server server;
     public ClientHandler(Socket soc, Server server) throws IOException {
         this.clientSocket = soc;
         this.inputStream = new ObjectInputStream(soc.getInputStream());
         this.outputStream = new ObjectOutputStream(soc.getOutputStream());
-        this.gameListener=new GameListener(outputStream);
+        this.gameListener=new SocketListener(outputStream);
         this.server = server;
         //this.start();
 

@@ -4,13 +4,12 @@ package it.polimi.ingsw.Networking.socket;
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.model.PlayerStatus;
-import it.polimi.ingsw.view.TextualInterfaceUnit.Client;
+import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 
 
 import java.io.*;
 import java.net.Socket;
-import java.rmi.NotBoundException;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 

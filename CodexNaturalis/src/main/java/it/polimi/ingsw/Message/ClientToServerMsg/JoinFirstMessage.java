@@ -1,6 +1,6 @@
 package it.polimi.ingsw.Message.ClientToServerMsg;
 
-import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.Networking.Listeners.SocketListener;
 
 public class JoinFirstMessage extends JoinGameMessage{
 

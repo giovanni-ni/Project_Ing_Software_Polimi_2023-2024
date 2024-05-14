@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
+import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
@@ -38,7 +39,7 @@ public class Tui implements View{
 
     private int first;
 
-    private Client Client;
+    private Client client;
 
     public Tui() throws IOException {
         in = new Scanner(System.in);
@@ -56,11 +57,11 @@ public class Tui implements View{
 
         if(isRMI) {
             final String serverName = "AdderServer";
-            Registry registry = LocateRegistry.getRegistry("localhost", 1234);
+            Registry registry = LocateRegistry.getRegistry("localhost", 2234);
             VirtualServer server = (VirtualServer) registry.lookup(serverName);
-            Client = new RMIClient(server);
+            client = new RMIClient(server);
         } else {
-            Client = new SocketClient("172.20.10.2", 1234);
+            client = new SocketClient("localhost", 1234);
         }
 
         askLogin();
@@ -139,14 +140,14 @@ public class Tui implements View{
     }
 
     @Override
-    public void askJoinFirst() throws InterruptedException {
+    public void askJoinFirst() throws InterruptedException, RemoteException {
         GenericClientMessage msg = new JoinFirstMessage(this.username);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
-    public void askSetReady() throws InterruptedException {
+    public void askSetReady() throws InterruptedException, RemoteException {
         String option;
         if (!myPlayer.getReady()) {
             do {
@@ -156,7 +157,7 @@ public class Tui implements View{
                 if(option.equals("y")){
                     SetReadyMessage msg = new SetReadyMessage(this.username);
                     myPlayer.setReady(true);
-                    Client.messageToServer(msg);
+                    client.messageToServer(msg);
                 }
                 Thread.sleep(1000);
             } while(!option.equals("y"));
@@ -167,7 +168,7 @@ public class Tui implements View{
     }
 
     @Override
-    public void askDrawCard() throws InterruptedException {
+    public void askDrawCard() throws InterruptedException, RemoteException {
         print("insert number of the deck: ");
         int option = Integer.parseInt(in.nextLine());
         boolean deck;
@@ -179,12 +180,12 @@ public class Tui implements View{
         print("insert number of the card(1/2/3): ");
         int card = Integer.parseInt(in.nextLine());
         drawCardMessage msg = new drawCardMessage(this.username, matchID, deck, card );
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
-    public void askPlayCard() throws InterruptedException {
+    public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
         int index = Integer.parseInt(in.nextLine());
         print("front or back: f/b");
@@ -199,14 +200,14 @@ public class Tui implements View{
         int y = Integer.parseInt(in.nextLine());
 
         playCardMessage msg = new playCardMessage(index, f, x, y);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
     public boolean askCreateMatch() throws Exception {
         CreateGameMessage message = new CreateGameMessage(this.username);
-        Client.messageToServer(message);
+        client.messageToServer(message);
 
         //wait(100);
         Thread.sleep(1000);
@@ -243,7 +244,7 @@ public class Tui implements View{
         print("Selected Room [" + matchID + "].");
 
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
 
         return false;
     }
@@ -321,7 +322,7 @@ public class Tui implements View{
 
     }*/
 
-    public void inGame() throws InterruptedException {
+    public void inGame() throws InterruptedException, RemoteException {
         print("in game method called");
             if(first == 0) {
                 List<Card> deck = new ArrayList<>();
@@ -347,7 +348,7 @@ public class Tui implements View{
                 print(target[0].getIdCard() + " " + target[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
-                Client.messageToServer(msg);
+                client.messageToServer(msg);
 
                 Thread.sleep(1000);
 
