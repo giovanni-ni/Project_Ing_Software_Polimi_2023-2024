@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 
@@ -15,17 +16,24 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class AllMatchesController extends Thread {
 
+    private static AllMatchesController instance = null;
+
+    public synchronized static AllMatchesController getInstance() throws IOException {
+        if (instance == null) {
+            instance = new AllMatchesController();
+        }
+        return instance;
+    }
     //private static AllMatchesController instance =null;
     private ArrayList<SingleMatchController> runningControllers;
     private final BlockingQueue<GenericClientMessage> controllerMessages = new LinkedBlockingQueue<>();
 
 
-    public void addInQueue(GenericClientMessage temp, GameListener listener){
+    public void addInQueue(GenericClientMessage temp, Listener listener){
         if (temp.isMainControllerMessage()){
             temp.setListener(listener);
         }
         controllerMessages.add(temp);
-
     }
     public AllMatchesController() throws IOException {
         this.start();

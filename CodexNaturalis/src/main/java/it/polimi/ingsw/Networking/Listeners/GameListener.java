@@ -5,7 +5,6 @@ import it.polimi.ingsw.Message.Message;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 
 public class GameListener implements Listener {
 
@@ -29,22 +28,24 @@ public class GameListener implements Listener {
         }
 
     }
+    @Override
     public void setNickname(String nickname) {
     }
 
     public OutputStream getOut() {
         return out;
     }
-
+    @Override
     public String getNickname() {
         return nickname;
-
     }
 
+    @Override
     public Integer getGameID() {
         return GameID;
     }
 
+    @Override
     public void setGameID(Integer gameID) {
         GameID = gameID;
     }

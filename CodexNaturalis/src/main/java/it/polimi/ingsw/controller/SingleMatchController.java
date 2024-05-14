@@ -4,6 +4,8 @@ import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.Networking.Listeners.Listener;
+import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
@@ -17,7 +19,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SingleMatchController extends Thread{
 
     private Match match;
-
     private final int MAX_NUMCARD_ON_HAND= 3;
     private final int FIRST_CARD=0;
     private final int SECOND_CARD =1;
@@ -140,7 +141,7 @@ public class SingleMatchController extends Thread{
         this.match = match;
     }
 
-    public boolean addPlayer(Player p, GameListener listener) {
+    public boolean addPlayer(Player p, Listener listener) {
 
         if (match.addPlayer(p) && !isPlayerFull()){
             notifyAllListeners(new newPlayerInMsg(p.nickname));
@@ -197,7 +198,7 @@ public class SingleMatchController extends Thread{
 
     }
     public void notifyAllListeners(Message msg){
-        for (GameListener listener: match.getListenerList()){
+        for (Listener listener: match.getListenerList()){
             listener.update(msg);
         }
     }
@@ -209,14 +210,13 @@ public class SingleMatchController extends Thread{
     public boolean isPlayerFull(){
         return (match.getPlayers().size()>=4);
     }
-    public void addListener(GameListener listener) {
+    public void addListener(Listener listener) {
         listener.setGameID(match.idMatch);
         match.addListener(listener);
-
     }
 
-    public GameListener getListenerOf(String nickName){
-        for (GameListener listeners : match.getListenerList()){
+    public Listener getListenerOf(String nickName){
+        for (Listener listeners : match.getListenerList()){
             if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;
         }

@@ -2,6 +2,7 @@ package it.polimi.ingsw.Message.ClientToServerMsg;
 
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.Networking.Listeners.Listener;
 
 import java.io.Serializable;
 
@@ -10,11 +11,10 @@ public class GenericClientMessage implements Message, Serializable {
     private boolean isMainControllerMessage = false;
     private String nickname;
     private GameListener listener;
-
-
     public GenericClientMessage(){
 
     }
+
 
     public GenericClientMessage(int gameID, String nickname) {
         this.gameID = gameID;
@@ -58,8 +58,8 @@ public class GenericClientMessage implements Message, Serializable {
         return listener;
     }
 
-    public void setListener(GameListener listener) {
-        this.listener=listener;
+    public void setListener(Listener listener) {
+        this.listener= (GameListener) listener;
 
     }
 }

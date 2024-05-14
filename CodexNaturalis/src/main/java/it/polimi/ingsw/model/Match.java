@@ -1,6 +1,7 @@
 package it.polimi.ingsw.model;
 
 import it.polimi.ingsw.Networking.Listeners.GameListener;
+import it.polimi.ingsw.Networking.Listeners.Listener;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -31,7 +32,7 @@ public class Match implements Serializable {
 
 	private String firstPlayer;
 
-	private transient List<GameListener> listenerList;
+	private transient List<Listener> listenerList;
 
 	private int roundCount=0;
 
@@ -246,15 +247,15 @@ public class Match implements Serializable {
 		return true;
 	}
 
-	public void addListener(GameListener listener) {
+	public void addListener(Listener listener) {
 		listenerList.add(listener);
 	}
 
-	public void setListenerList(List<GameListener> listenerList) {
+	public void setListenerList(List<Listener> listenerList) {
 		this.listenerList = listenerList;
 	}
 
-	public List<GameListener> getListenerList() {
+	public List<Listener> getListenerList() {
 		return listenerList;
 	}
 }
