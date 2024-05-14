@@ -340,7 +340,7 @@ public class Tui implements View{
                     print(c.getCode() + " ");
                 }
                 print("choose your personal target card from: ");
-                print(target[0] + " " + target[1]);
+                print(target[0].getIdCard() + " " + target[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
                 Client.messageToServer(msg);

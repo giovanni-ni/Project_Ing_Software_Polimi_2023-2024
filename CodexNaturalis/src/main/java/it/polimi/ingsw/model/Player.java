@@ -36,7 +36,7 @@ public class Player implements Serializable {
 		this.currentScore=currentScore;
 		this.cardOnHand=new ArrayList<>();
 		this.board=new Board();
-		this.target=new CountTargetCard();//********
+		//this.target=new CountTargetCard();//********
 
 	}
 	public Player(String nickname) {
