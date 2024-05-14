@@ -44,22 +44,9 @@ public class SingleMatchController extends Thread{
             extractCommonTargetCard();
             distributeCardsAndSetBoards();
             extractFirstPlayer();
-            for (ResourceCard card :match.getResourceDeck()){
-                System.out.println(card.getCode());
-            }
-            for (Player player : match.getPlayers()){
-                for (Card card : player.getCardOnHand()){
-                    System.out.println(card.getCode());
-                }
 
-            }
             notifyAllListeners(new gameStartMsg(this.match));
-            for (Player pla: this.match.getPlayers()){
-                print(pla.getNickname());
-                for (Card c:pla.getCardOnHand()){
-                    print(c.getCode());
-                }
-            }
+
         }
     }
 

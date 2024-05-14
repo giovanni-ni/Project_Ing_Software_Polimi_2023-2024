@@ -54,7 +54,7 @@ public class Match implements Serializable {
 		this.pt = pt;
 	}
 
-	public List<Player> getPlayers() {
+	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 
@@ -106,6 +106,7 @@ public class Match implements Serializable {
 		this.currentPlayer = currentPlayer;
 	}
 
+
 	private Player currentPlayer;
 
 	public Match(int idMatch) throws IOException {
@@ -125,6 +126,7 @@ public class Match implements Serializable {
 
 		commonTarget = new ArrayList<TargetCard>();
 	}
+
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
@@ -138,7 +140,6 @@ public class Match implements Serializable {
 		shuffleAll();
 
 	}
-
 
 	public void shuffleAll() {
 		Collections.shuffle(targetDeck);
@@ -169,6 +170,7 @@ public class Match implements Serializable {
 		}
 
 	};
+
 	public void nextPlayer(){
 		String currPlayerNick = currentPlayer.nickname;
 
@@ -191,7 +193,6 @@ public class Match implements Serializable {
 		}
 
 	}
-
 	public void setPlayerReady (String nickname){
 		for(int i =0; i<players.size(); i++)
 			if(players.get(i).nickname.equals(nickname))
@@ -207,6 +208,7 @@ public class Match implements Serializable {
 		}
 		return allPlayersReady;
 	}
+
 	public ResourceCard getAResourceCard(int i) {
 		ResourceCard ris= resourceDeck.get(i);
 		resourceDeck.remove(i);
@@ -217,7 +219,6 @@ public class Match implements Serializable {
 		goldDeck.remove(i);
 		return ris;
 	}
-
 	public TargetCard getFirtTargetCard(){
 		TargetCard ris= targetDeck.getFirst();
 		goldDeck.removeFirst();
@@ -257,5 +258,13 @@ public class Match implements Serializable {
 
 	public List<Listener> getListenerList() {
 		return listenerList;
+	}
+
+	public int getRoundCount() {
+		return roundCount;
+	}
+
+	public List<Player> getWinners() {
+		return winners;
 	}
 }

@@ -23,6 +23,7 @@ public class GameListener implements Listener {
         try {
             System.out.println("1");
             out.writeObject(msg);
+            finishSending();
         } catch (IOException e) {
 
         }
@@ -30,6 +31,10 @@ public class GameListener implements Listener {
     }
     @Override
     public void setNickname(String nickname) {
+    }
+    private void finishSending() throws IOException {
+        out.flush();
+        out.reset();
     }
 
     public OutputStream getOut() {

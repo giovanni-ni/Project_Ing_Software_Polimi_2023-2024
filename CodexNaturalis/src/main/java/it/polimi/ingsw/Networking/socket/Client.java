@@ -51,6 +51,8 @@ public class Client extends Thread implements CommonClientActions {
                 print("ClassNotFound");
             } catch (IOException e) {
                 print("IOException");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -140,7 +142,7 @@ public class Client extends Thread implements CommonClientActions {
         outputStream.reset();
     }
 
-    public void handleMessage(GenericServerMessage msg) {
+    public void handleMessage(GenericServerMessage msg) throws InterruptedException {
         if(msg instanceof joinSuccessMsg) {
             Tui.status = PlayerStatus.MatchStart;
             Tui.myMatch = ((joinSuccessMsg) msg).getModel();
@@ -153,8 +155,12 @@ public class Client extends Thread implements CommonClientActions {
             print("new player is in");
         } else if(msg instanceof gameStartMsg) {
             print("the game is starting.. 3.. 2.. 1..");
+            print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
             Tui.myMatch = ((gameStartMsg) msg).getModel();
+
             Tui.status = PlayerStatus.GamePlay;
+            print("game status change" );
+
         }
 
         /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {

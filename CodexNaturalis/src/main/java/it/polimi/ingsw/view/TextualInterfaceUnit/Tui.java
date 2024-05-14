@@ -148,6 +148,7 @@ public class Tui implements View{
     @Override
     public void askSetReady() throws InterruptedException {
         String option;
+        do {
 
             print("Ready? y/n: ");
             option = in.nextLine();
@@ -155,10 +156,9 @@ public class Tui implements View{
                 SetReadyMessage msg = new SetReadyMessage(this.username);
                 Client.messageToServer(msg);
             }
-            while(status!=PlayerStatus.GamePlay){
-                print("please be ready");
-                Thread.sleep(1000);
-            }
+            Thread.sleep(1000);
+        } while(!option.equals("y"));
+
 
     }
 
@@ -300,6 +300,7 @@ public class Tui implements View{
         }
 
         if(status == PlayerStatus.GamePlay) {
+            print("game status change recognized, method calling...");
             inGame();
         }
     }
@@ -317,15 +318,16 @@ public class Tui implements View{
     }*/
 
     public void inGame() throws InterruptedException {
+        print("in game method called");
             if(first == 0) {
                 List<Card> deck = new ArrayList<>();
                 TargetCard[] target = {};
                 print("your card: ");
 
                 for(Player p : myMatch.getPlayers()) {
-                    print("ci sono"+myMatch.getPlayers().size());
+                    print("ci sono giocatori n"+myMatch.getPlayers().size());
                     print(p.nickname);
-                    print("hai in mano"+p.getCardOnHand().size());
+                    print("hai in mano "+p.getCardOnHand().size());
 
                     if(p.getNickname().equals(this.username) ) {
 
