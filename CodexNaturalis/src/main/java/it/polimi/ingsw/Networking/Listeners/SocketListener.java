@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
-public class GameListener implements Listener {
+public class SocketListener implements Listener {
 
     private transient final ObjectOutputStream out;
 
@@ -14,7 +14,7 @@ public class GameListener implements Listener {
 
     private Integer GameID ;
 
-    public GameListener(ObjectOutputStream outputStream) {
+    public SocketListener(ObjectOutputStream outputStream) {
         this.out = outputStream;
     }
 

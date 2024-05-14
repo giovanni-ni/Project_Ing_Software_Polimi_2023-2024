@@ -1,4 +1,4 @@
-package it.polimi.ingsw.Networking.socket;
+package it.polimi.ingsw.Networking;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;

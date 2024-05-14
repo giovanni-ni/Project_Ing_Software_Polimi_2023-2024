@@ -1,19 +1,18 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Networking.Listeners.ViewListener;
-import it.polimi.ingsw.Networking.socket.Client;
-import it.polimi.ingsw.Networking.socket.ClientHandler;
+import it.polimi.ingsw.Networking.Client;
+import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
+import it.polimi.ingsw.Networking.rmi.RMIClient;
+import it.polimi.ingsw.Networking.socket.SocketClient;
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.View;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.rmi.RemoteException;
-import java.rmi.server.ServerNotActiveException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -42,25 +41,29 @@ public class Tui implements View{
 
     private int first;
 
+    private Client client;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
         myMatch = new ViewModel ( new Match(0));
         this.first = 0;
+        myPlayer = new Player("");
+        myPlayer.setReady(false);
     }
 
     public void init() throws Exception {
-        print(Print.Codex);
+        System.out.println(Print.Codex);
         askToContinue();
         askConnectionType();
 
         if(isRMI) {
-
+            final String serverName = "AdderServer";
+            Registry registry = LocateRegistry.getRegistry("localhost", 2234);
+            VirtualServer server = (VirtualServer) registry.lookup(serverName);
+            client = new RMIClient(server);
         } else {
-
-            Client socket = new Client("localhost", 1234);
-
-
+            client = new SocketClient("localhost", 1234);
         }
 
         askLogin();
@@ -115,8 +118,6 @@ public class Tui implements View{
         } while(username.equals(""));
 
     }
-
-
     @Override
     public void askMenuAction() throws Exception {
         print(Print.menuOption);
@@ -141,31 +142,35 @@ public class Tui implements View{
     }
 
     @Override
-    public void askJoinFirst() throws InterruptedException {
+    public void askJoinFirst() throws InterruptedException, RemoteException {
         GenericClientMessage msg = new JoinFirstMessage(this.username);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
-    public void askSetReady() throws InterruptedException {
+    public void askSetReady() throws InterruptedException, RemoteException {
         String option;
-        do {
+        if (!myPlayer.getReady()) {
+            do {
 
-            print("Ready? y/n: ");
-            option = in.nextLine();
-            if(option.equals("y")){
-                SetReadyMessage msg = new SetReadyMessage(this.username);
-                Client.messageToServer(msg);
-            }
-            Thread.sleep(1000);
-        } while(!option.equals("y"));
+                print("Ready? y/n: ");
+                option = in.nextLine();
+                if(option.equals("y")){
+                    SetReadyMessage msg = new SetReadyMessage(this.username);
+                    myPlayer.setReady(true);
+                    client.messageToServer(msg);
+                }
+                Thread.sleep(1000);
+            } while(!option.equals("y"));
 
+        }
+        print("Waiting other Players");
 
     }
 
     @Override
-    public void askDrawCard() throws InterruptedException {
+    public void askDrawCard() throws InterruptedException, RemoteException {
         print("insert number of the deck: ");
         int option = Integer.parseInt(in.nextLine());
         boolean deck;
@@ -177,12 +182,12 @@ public class Tui implements View{
         print("insert number of the card(1/2/3): ");
         int card = Integer.parseInt(in.nextLine());
         drawCardMessage msg = new drawCardMessage(this.username, matchID, deck, card );
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
-    public void askPlayCard() throws InterruptedException {
+    public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
         int index = Integer.parseInt(in.nextLine());
         print("front or back: f/b");
@@ -197,14 +202,14 @@ public class Tui implements View{
         int y = Integer.parseInt(in.nextLine());
 
         playCardMessage msg = new playCardMessage(index, f, x, y);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
     @Override
     public boolean askCreateMatch() throws Exception {
         CreateGameMessage message = new CreateGameMessage(this.username);
-        Client.messageToServer(message);
+        client.messageToServer(message);
 
         //wait(100);
         Thread.sleep(1000);
@@ -240,7 +245,7 @@ public class Tui implements View{
         int matchID = Integer.parseInt(value);
         print("Selected Room [" + matchID + "].");
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
-        Client.messageToServer(msg);
+        client.messageToServer(msg);
 
         return false;
     }
@@ -324,7 +329,7 @@ public class Tui implements View{
 
     }*/
 
-    public void inGame() throws InterruptedException {
+    public void inGame() throws InterruptedException, RemoteException {
         print("in game method called");
             if(first == 0) {
                 List<Card> deck = new ArrayList<>();
@@ -350,7 +355,7 @@ public class Tui implements View{
                 print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
-                Client.messageToServer(msg);
+                client.messageToServer(msg);
 
                 Thread.sleep(1000);
 
