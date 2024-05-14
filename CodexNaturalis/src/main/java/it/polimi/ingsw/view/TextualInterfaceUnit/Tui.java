@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+
 public class Tui implements View{
 
     private String username;
@@ -46,7 +48,7 @@ public class Tui implements View{
     }
 
     public void init() throws Exception {
-        System.out.println(Print.Codex);
+        print(Print.Codex);
         askToContinue();
         askConnectionType();
 
@@ -67,7 +69,7 @@ public class Tui implements View{
     public void askConnectionType() {
         int option = 0;
         do {
-            System.out.print("""
+            print("""
                     What would you like to use to contact the server? RMI or Socket?
                         1  --> RMI
                         2  --> Socket
@@ -76,7 +78,7 @@ public class Tui implements View{
             try {
                 option = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
-                System.out.println(Color.RED + "Invalid input. Try again. (1 or 2)");
+                print(Color.RED + "Invalid input. Try again. (1 or 2)");
             }
         } while (option != 1 && option != 2);
 
@@ -90,19 +92,19 @@ public class Tui implements View{
 
 
     public void askToContinue() {
-        System.out.print("Press 'Enter' to continue");
+        print("Press 'Enter' to continue");
         in.nextLine();
-        System.out.println("-----------------------------------------------------------");
+        print("-----------------------------------------------------------");
     }
 
     @Override
     public void askLogin() throws Exception {
         do{
 
-            System.out.print("Enter the username: ");
+            print("Enter the username: ");
             String username = in.nextLine();
             if (username.equals("")) {
-                System.out.println(Color.RED + "You didn't choose a username. Try again");
+                print(Color.RED + "You didn't choose a username. Try again");
 
             } else {
                 this.username = username;
@@ -115,8 +117,8 @@ public class Tui implements View{
 
     @Override
     public void askMenuAction() throws Exception {
-        System.out.println(Print.menuOption);
-        System.out.print("-----------------------------------------------------------\n" +
+        print(Print.menuOption);
+        print("-----------------------------------------------------------\n" +
                 "Enter the Command you wish to use: ");
         String option = in.nextLine();
         switch (option) {
@@ -131,7 +133,7 @@ public class Tui implements View{
             //case "help", "h", "he" -> askHelp();
 
             default ->
-                    System.out.println(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
+                    print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
         }
 
     }
@@ -146,22 +148,23 @@ public class Tui implements View{
     @Override
     public void askSetReady() throws InterruptedException {
         String option;
-        do {
-            System.out.println("Ready? y/n: ");
+
+            print("Ready? y/n: ");
             option = in.nextLine();
             if(option.equals("y")){
                 SetReadyMessage msg = new SetReadyMessage(this.username);
                 Client.messageToServer(msg);
             }
-            Thread.sleep(1000);
-        } while(!option.equals("y"));
-
+            while(status!=PlayerStatus.GamePlay){
+                print("please be ready");
+                Thread.sleep(1000);
+            }
 
     }
 
     @Override
     public void askDrawCard() throws InterruptedException {
-        System.out.println("insert number of the deck: ");
+        print("insert number of the deck: ");
         int option = Integer.parseInt(in.nextLine());
         boolean deck;
         if(option == 1) {
@@ -169,7 +172,7 @@ public class Tui implements View{
         } else {
             deck = false;
         }
-        System.out.println("insert number of the card(1/2/3): ");
+        print("insert number of the card(1/2/3): ");
         int card = Integer.parseInt(in.nextLine());
         drawCardMessage msg = new drawCardMessage(this.username, matchID, deck, card );
         Client.messageToServer(msg);
@@ -178,17 +181,17 @@ public class Tui implements View{
 
     @Override
     public void askPlayCard() throws InterruptedException {
-        System.out.println("choose the card that you want to play: ");
+        print("choose the card that you want to play: ");
         int index = Integer.parseInt(in.nextLine());
-        System.out.println("front or back: f/b");
+        print("front or back: f/b");
         String front = in.nextLine();
         boolean f = false;
         if(front.equals("f")) {
             f = true;
         }
-        System.out.println("position x: ");
+        print("position x: ");
         int x = Integer.parseInt(in.nextLine());
-        System.out.println("position y: ");
+        print("position y: ");
         int y = Integer.parseInt(in.nextLine());
 
         playCardMessage msg = new playCardMessage(index, f, x, y);
@@ -203,7 +206,7 @@ public class Tui implements View{
 
         //wait(100);
         Thread.sleep(1000);
-        //System.out.println(myMatch.idMatch);
+        //print(myMatch.idMatch);
 
         return false;
     }
@@ -213,14 +216,14 @@ public class Tui implements View{
         int playerNumber = 0;
         do {
 
-                System.out.print("Please select the number of players for this match [2 to 4]: ");
+                print("Please select the number of players for this match [2 to 4]: ");
                 playerNumber = Integer.parseInt(in.nextLine());
                 if (playerNumber < 2 || playerNumber > 4) {
-                    System.out.println(Color.RED + "Invalid number! Please try again.");
+                    print(Color.RED + "Invalid number! Please try again.");
                 }
 
         } while (playerNumber < 2 || playerNumber > 4);
-        System.out.println("Selected " + playerNumber + " players.");
+        print("Selected " + playerNumber + " players.");
         return playerNumber;
     }
 */
@@ -228,13 +231,12 @@ public class Tui implements View{
     public boolean askJoinMatch() throws Exception {
         String value;
         do {
-            System.out.println();
-            System.out.println("---------------------------------------------");
-            System.out.print("Please enter the room number: ");
+            print("---------------------------------------------");
+            print("Please enter the room number: ");
             value = in.nextLine();
         } while (value.equals(""));
         int matchID = Integer.parseInt(value);
-        System.out.println("Selected Room [" + matchID + "].");
+        print("Selected Room [" + matchID + "].");
 
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         Client.messageToServer(msg);
@@ -275,7 +277,7 @@ public class Tui implements View{
 
     @Override
     public void showBoard() {
-        System.out.println("[][][][][]\n" +
+        print("[][][][][]\n" +
                            "[][][][][]\n" +
                            "[][][1][][]\n" +
                            "[][][][][]\n" +
@@ -294,7 +296,7 @@ public class Tui implements View{
         if(status == PlayerStatus.MatchStart) {
 
             askSetReady();
-            //System.out.println("la partita sta per iniziare");
+            //print("la partita sta per iniziare");
         }
 
         if(status == PlayerStatus.GamePlay) {
@@ -318,19 +320,25 @@ public class Tui implements View{
             if(first == 0) {
                 List<Card> deck = new ArrayList<>();
                 TargetCard[] target = {};
-                System.out.println("your card: ");
+                print("your card: ");
+
                 for(Player p : myMatch.getPlayers()) {
+                    print("ci sono"+myMatch.getPlayers().size());
+                    print(p.nickname);
+                    print("hai in mano"+p.getCardOnHand().size());
+
                     if(p.getNickname().equals(this.username) ) {
+
                         deck.addAll(p.getCardOnHand());
-                        System.out.println("hhhhhhh");
+                        print("hhhhhhh");
                         target = p.getTargetOnHand();
                     }
                 }
                 for(Card c: deck) {
-                    System.out.print(c.getCode() + " ");
+                    print(c.getCode() + " ");
                 }
-                System.out.println("choose your personal target card from: ");
-                System.out.println(target[0] + " " + target[1]);
+                print("choose your personal target card from: ");
+                print(target[0] + " " + target[1]);
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
                 Client.messageToServer(msg);
@@ -349,6 +357,7 @@ public class Tui implements View{
     public void setStatus(PlayerStatus status) {
         this.status = status;
     }
+
 
 
 

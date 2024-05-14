@@ -15,6 +15,8 @@ import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+
 
 public class SingleMatchController extends Thread{
 
@@ -42,7 +44,22 @@ public class SingleMatchController extends Thread{
             extractCommonTargetCard();
             distributeCardsAndSetBoards();
             extractFirstPlayer();
-            notifyAllListeners(new gameStartMsg(match));
+            for (ResourceCard card :match.getResourceDeck()){
+                System.out.println(card.getCode());
+            }
+            for (Player player : match.getPlayers()){
+                for (Card card : player.getCardOnHand()){
+                    System.out.println(card.getCode());
+                }
+
+            }
+            notifyAllListeners(new gameStartMsg(this.match));
+            for (Player pla: this.match.getPlayers()){
+                print(pla.getNickname());
+                for (Card c:pla.getCardOnHand()){
+                    print(c.getCode());
+                }
+            }
         }
     }
 
@@ -232,7 +249,7 @@ public class SingleMatchController extends Thread{
 
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
-            Board b= new Board(match.getFirstInitialCard());
+            Board b= new Board(match.getFirstInitialCard());//todo
             p.setBoard(b);
             p.currentScore=0;
         }

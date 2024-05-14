@@ -17,6 +17,8 @@ import java.rmi.RemoteException;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+
 public class Client extends Thread implements CommonClientActions {
     private Socket socket;
     private static ObjectInputStream inputStream;
@@ -41,14 +43,14 @@ public class Client extends Thread implements CommonClientActions {
         while (true) {
             try {
                 GenericServerMessage msg = (GenericServerMessage) inputStream.readObject();
-                System.out.println(msg);
+                print(msg);
                 handleMessage(msg);
 
 
             } catch (ClassNotFoundException e) {
-                System.out.println("ClassNotFound");
+                print("ClassNotFound");
             } catch (IOException e) {
-                System.out.println("IOException");
+                print("IOException");
             }
         }
     }
@@ -143,16 +145,16 @@ public class Client extends Thread implements CommonClientActions {
             Tui.status = PlayerStatus.MatchStart;
             Tui.myMatch = ((joinSuccessMsg) msg).getModel();
             Tui.myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
-            System.out.println(Tui.myMatch.idMatch);
+            print(Tui.myMatch.idMatch);
 
         } else if(msg instanceof joinFailMsg) {
-            System.out.println("join fail because" + ((joinFailMsg) msg).getDescription());
+            print("join fail because" + ((joinFailMsg) msg).getDescription());
         } else if(msg instanceof newPlayerInMsg) {
-            System.out.println("new player is in");
+            print("new player is in");
         } else if(msg instanceof gameStartMsg) {
-            System.out.println("the game is starting.. 3.. 2.. 1..");
-            Tui.status = PlayerStatus.GamePlay;
+            print("the game is starting.. 3.. 2.. 1..");
             Tui.myMatch = ((gameStartMsg) msg).getModel();
+            Tui.status = PlayerStatus.GamePlay;
         }
 
         /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {

@@ -23,4 +23,9 @@ public class Print {
                exit    --> Exit game.
          
             """;
+    public static void print(Object message){
+        System.out.println(message);
+        System.out.flush();
+    }
+
 }
