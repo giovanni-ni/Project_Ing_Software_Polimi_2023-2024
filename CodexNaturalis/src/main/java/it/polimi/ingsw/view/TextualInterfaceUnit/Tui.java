@@ -45,6 +45,8 @@ public class Tui implements View{
         this.status = PlayerStatus.MENU;
         myMatch = new ViewModel ( new Match(0));
         this.first = 0;
+        myPlayer = new Player("");
+        myPlayer.setReady(false);
     }
 
     public void init() throws Exception {
@@ -148,17 +150,21 @@ public class Tui implements View{
     @Override
     public void askSetReady() throws InterruptedException {
         String option;
-        do {
+        if (!myPlayer.getReady()) {
+            do {
 
-            print("Ready? y/n: ");
-            option = in.nextLine();
-            if(option.equals("y")){
-                SetReadyMessage msg = new SetReadyMessage(this.username);
-                Client.messageToServer(msg);
-            }
-            Thread.sleep(1000);
-        } while(!option.equals("y"));
+                print("Ready? y/n: ");
+                option = in.nextLine();
+                if(option.equals("y")){
+                    SetReadyMessage msg = new SetReadyMessage(this.username);
+                    myPlayer.setReady(true);
+                    Client.messageToServer(msg);
+                }
+                Thread.sleep(1000);
+            } while(!option.equals("y"));
 
+        }
+        print("Waiting other Players");
 
     }
 
@@ -340,7 +346,7 @@ public class Tui implements View{
                     print(c.getCode() + " ");
                 }
                 print("choose your personal target card from: ");
-                print(target[0] + " " + target[1]);
+                print(target[0].getIdCard() + " " + target[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
                 SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
                 Client.messageToServer(msg);

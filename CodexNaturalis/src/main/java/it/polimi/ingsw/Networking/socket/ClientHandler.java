@@ -32,7 +32,6 @@ public class ClientHandler extends Thread {
         this.inputStream = new ObjectInputStream(soc.getInputStream());
         this.outputStream = new ObjectOutputStream(soc.getOutputStream());
         this.gameListener=new GameListener(outputStream);
-        this.viewListener = new ViewListener(outputStream);
         this.server = server;
         //this.start();
 

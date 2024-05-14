@@ -50,7 +50,8 @@ public class Client extends Thread implements CommonClientActions {
             } catch (ClassNotFoundException e) {
                 print("ClassNotFound");
             } catch (IOException e) {
-                print("IOException");
+                print("IOException 服务器炸了");
+                interrupt();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

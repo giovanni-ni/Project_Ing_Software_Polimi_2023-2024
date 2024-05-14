@@ -36,14 +36,14 @@ public class Player implements Serializable {
 		this.currentScore=currentScore;
 		this.cardOnHand=new ArrayList<>();
 		this.board=new Board();
-		this.target=new CountTargetCard();//********
+		this.target=null ;
 
 	}
 	public Player(String nickname) {
 		this.nickname=nickname;
 		this.cardOnHand=new ArrayList<>();
 		this.board=new Board();
-		this.target=new CountTargetCard();
+		this.target=null;
 		this.targetOnHand = new TargetCard[2];
 	}
 	public Board getBoard() {
