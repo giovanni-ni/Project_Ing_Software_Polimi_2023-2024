@@ -9,6 +9,7 @@ import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -35,7 +36,7 @@ public class SingleMatchController extends Thread{
 
 
     }
-    public void setPlayerAsReady_StartGameIfAllReady(String p){
+    public void setPlayerAsReady_StartGameIfAllReady(String p) throws RemoteException {
 
         match.setPlayerReady(p);
         /*the game will start automatically if all the players are ready*/
@@ -50,7 +51,7 @@ public class SingleMatchController extends Thread{
         }
     }
 
-    public void getACard (String nickname , boolean isGoldCard,int whichCard) {
+    public void getACard (String nickname , boolean isGoldCard,int whichCard) throws RemoteException {
         Player currentPlayer=new Player(nickname);
         for (Player p :match.getPlayers()){
             if (p.getNickname().equals(match.getCurrentPlayer().nickname))
@@ -86,7 +87,7 @@ public class SingleMatchController extends Thread{
         }
     }
 
-    private void ifLastTurn() {
+    private void ifLastTurn() throws RemoteException {
         if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint()){
             match.setStatus(MatchStatus.LastRound);
             notifyAllListeners(new LastRoundMessage());
@@ -96,7 +97,7 @@ public class SingleMatchController extends Thread{
 
 
 
-    public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront){
+    public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront) throws RemoteException {
         int x = coo.getX();
         int y = coo.getY();
         Player currentPlayer = match.getCurrentPlayer();
@@ -145,7 +146,7 @@ public class SingleMatchController extends Thread{
         this.match = match;
     }
 
-    public boolean addPlayer(Player p, Listener listener) {
+    public boolean addPlayer(Player p, Listener listener) throws RemoteException {
 
         if (match.addPlayer(p) && !isPlayerFull()){
             notifyAllListeners(new newPlayerInMsg(p.nickname));
@@ -158,7 +159,7 @@ public class SingleMatchController extends Thread{
 
 
     @Override
-    public void run() {
+    public void run(){
         GenericClientMessage temp;
 
         try {
@@ -166,15 +167,19 @@ public class SingleMatchController extends Thread{
                 temp = processingQueue.take();
                 this.execute(temp);
             }
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException | RemoteException ignored) {}
         if (match.getStatus()== MatchStatus.End){
             updateAllTargetPoints();
             match.setWinners();
-            notifyAllListeners(new endGameMessage(match));
+            try {
+                notifyAllListeners(new endGameMessage(match));
+            } catch (RemoteException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
-    public void execute(GenericClientMessage msg) {
+    public void execute(GenericClientMessage msg) throws RemoteException {
 
         switch (msg) {
             case drawCardMessage drawCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
@@ -194,7 +199,7 @@ public class SingleMatchController extends Thread{
         }
     }
 
-    public void setInitialCard(GenericClientMessage msg) {
+    public void setInitialCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
             if(p.getNickname().equals(msg.getNickname())) {
                 p.getInitialCard().setFront(((FrontOrBackMessage) msg).getFrontOrBack());
@@ -211,7 +216,7 @@ public class SingleMatchController extends Thread{
         getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
 
     }
-    public void notifyAllListeners(Message msg){
+    public void notifyAllListeners(Message msg)throws RemoteException{
         for (Listener listener: match.getListenerList()){
             listener.update(msg);
         }
@@ -224,12 +229,12 @@ public class SingleMatchController extends Thread{
     public boolean isPlayerFull(){
         return (match.getPlayers().size()>=4);
     }
-    public void addListener(Listener listener) {
+    public void addListener(Listener listener) throws RemoteException {
         listener.setGameID(match.idMatch);
         match.addListener(listener);
     }
 
-    public Listener getListenerOf(String nickName){
+    public Listener getListenerOf(String nickName) throws RemoteException {
         for (Listener listeners : match.getListenerList()){
             if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;

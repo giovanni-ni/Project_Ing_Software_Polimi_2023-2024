@@ -35,7 +35,7 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     }
 
     @Override
-    public void update(Message msg) {
+    public void update(Message msg) throws RemoteException{
         if(msg instanceof joinSuccessMsg) {
             Tui.status = PlayerStatus.MatchStart;
             Tui.myMatch = ((joinSuccessMsg) msg).getModel();
@@ -53,27 +53,26 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
 
             Tui.status = PlayerStatus.GamePlay;
             print("game status change" );
-
         }
     }
 
     @Override
-    public void setNickname(String nickname) {
+    public void setNickname(String nickname) throws RemoteException{
         this.nickname=nickname;
     }
 
     @Override
-    public String getNickname() {
+    public String getNickname() throws RemoteException {
         return this.nickname;
     }
 
     @Override
-    public Integer getGameID() {
+    public Integer getGameID() throws RemoteException {
         return this.gameId;
     }
 
     @Override
-    public void setGameID(Integer gameID) {
+    public void setGameID(Integer gameID) throws RemoteException {
         this.gameId=gameID;
     }
 

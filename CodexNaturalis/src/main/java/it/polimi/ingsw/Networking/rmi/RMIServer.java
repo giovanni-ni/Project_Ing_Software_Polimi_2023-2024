@@ -26,15 +26,6 @@ public class RMIServer implements VirtualServer {
         this.mainController=mainController;
     }
 
-    public static void main(String []args) throws IOException {
-        final String serverName = "AdderServer";
-        VirtualServer server = new RMIServer(AllMatchesController.getInstance());
-        VirtualServer stub= (VirtualServer) UnicastRemoteObject.exportObject(server, 0);
-        Registry registry= LocateRegistry.createRegistry(1234);
-
-        registry.rebind (serverName, stub);
-        System.out.println("server bound");
-    }
     @Override
     public void connect(Listener client) throws RemoteException {
         synchronized (this.clients){
@@ -42,8 +33,7 @@ public class RMIServer implements VirtualServer {
         }
     }
     @Override
-    public void addInQueue(GenericClientMessage msg, Listener client) {
+    public void addInQueue(GenericClientMessage msg, Listener client) throws RemoteException {
         mainController.addInQueue(msg,client);
     }
-
 }

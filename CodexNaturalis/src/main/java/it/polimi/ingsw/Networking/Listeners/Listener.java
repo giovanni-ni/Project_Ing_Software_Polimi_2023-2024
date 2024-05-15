@@ -3,16 +3,17 @@ package it.polimi.ingsw.Networking.Listeners;
 import it.polimi.ingsw.Message.Message;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 public interface Listener extends Remote {
 
-    void update(Message msg);
+    void update(Message msg) throws RemoteException;
 
-    void setNickname(String nickname);
+    void setNickname(String nickname) throws RemoteException;
 
-    String getNickname();
+    String getNickname() throws RemoteException;
 
-    Integer getGameID();
+    Integer getGameID() throws RemoteException;
 
-    void setGameID(Integer gameID);
+    void setGameID(Integer gameID) throws RemoteException;
 }

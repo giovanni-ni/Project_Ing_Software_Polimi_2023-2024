@@ -15,12 +15,12 @@ import java.rmi.server.UnicastRemoteObject;
 public class mainServer{
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Server Socketserver = new Server();
-        Socketserver.start(1234);
+        Socketserver.start(4234);
 
         final String serverName = "AdderServer";
         VirtualServer server = new RMIServer(AllMatchesController.getInstance());
         VirtualServer stub= (VirtualServer) UnicastRemoteObject.exportObject(server, 0);
-        Registry registry= LocateRegistry.createRegistry(2234);
+        Registry registry= LocateRegistry.createRegistry(2334);
         registry.rebind (serverName, stub);
         System.out.println("server bound");
     }
