@@ -59,11 +59,11 @@ public class Tui implements View{
 
         if(isRMI) {
             final String serverName = "AdderServer";
-            Registry registry = LocateRegistry.getRegistry("localhost", 2234);
+            Registry registry = LocateRegistry.getRegistry("localhost", 2334);
             VirtualServer server = (VirtualServer) registry.lookup(serverName);
             client = new RMIClient(server);
         } else {
-            client = new SocketClient("localhost", 1234);
+            client = new SocketClient("localhost", 4234);
         }
 
         askLogin();
@@ -369,7 +369,7 @@ public class Tui implements View{
                 }
 
                 FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, c);
-                Client.messageToServer(msg1);
+                client.messageToServer(msg1);
 
                 Thread.sleep(1000);
 

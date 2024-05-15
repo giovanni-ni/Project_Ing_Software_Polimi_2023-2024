@@ -29,8 +29,6 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     final VirtualServer server;
     public RMIClient(VirtualServer server) throws RemoteException {
         this.server=server;
-    }
-    public void run() throws RemoteException{
         this.server.connect(this);
     }
 
