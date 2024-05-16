@@ -192,10 +192,21 @@ public class SingleMatchController extends Thread{
                     setTargetCard(msg);
             case FrontOrBackMessage FrontOrBackMessage when (match.getStatus() == MatchStatus.Playing) ->
                     setInitialCard(msg);
+            case ClientChatMessage clientChatMessage ->
+                    sendChatMsg(msg);
             case null, default -> {
                 assert msg != null;
                 getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
             }
+        }
+    }
+
+    private void sendChatMsg(GenericClientMessage msg) throws RemoteException {
+        ClientChatMessage clientChatMessage = (ClientChatMessage) msg;
+        if( clientChatMessage.isForAll() ){
+            notifyAllListeners(new ServerChatMessage(clientChatMessage));
+        }else {
+            getListenerOf(clientChatMessage.getToPlayer()).update(new ServerChatMessage(clientChatMessage));
         }
     }
 

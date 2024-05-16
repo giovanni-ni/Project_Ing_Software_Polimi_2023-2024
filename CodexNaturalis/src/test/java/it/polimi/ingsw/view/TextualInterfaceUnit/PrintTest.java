@@ -22,6 +22,9 @@ class PrintTest {
 
     @Test
     public void PrintTest() throws IOException {
+        for (GoldCard gc :goldCards){
+            Print.printCard(gc);
+        }
         for (TargetCard tc :targetCards){
 
                 Print.printCard(tc);
@@ -33,6 +36,9 @@ class PrintTest {
             Print.printCard(tc);
 
 
+        }
+        for (ResourceCard rc: resourceCards){
+            Print.printCard(rc);
         }
     }
 }
