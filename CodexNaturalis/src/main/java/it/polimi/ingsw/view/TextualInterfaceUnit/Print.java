@@ -248,13 +248,12 @@ public class Print {
     public static void showNewChatMessage(GenericServerMessage msg) {
         ServerChatMessage chatMessage = (ServerChatMessage) msg;
         String channel;
-        print("New chat Message:");
         if (chatMessage.isForAll()){
-            channel ="[Public]";
+            channel =ANSI_GOLD+"[Public]";
         }else {
-            channel ="[Private]";
+            channel =ANSI_CYAN+"[Private]";
         }
-        print("\"\\u001B[33m\""+channel+"["+chatMessage.getFromPlayer()+"]:"+chatMessage.getChatMsg());
+        print(channel+"["+chatMessage.getFromPlayer()+"]:"+ANSI_RESET+chatMessage.getChatMsg());
 
     }
 

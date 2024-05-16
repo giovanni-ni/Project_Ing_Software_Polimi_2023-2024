@@ -82,6 +82,7 @@ public class SocketClient extends Thread implements Client {
         } else if(msg instanceof joinFailMsg) {
             print("join fail because" + ((joinFailMsg) msg).getDescription());
         }else if(msg instanceof ServerChatMessage) {
+            print("New chat Message:");
             showNewChatMessage(msg);
             //store the chat for historical chat view
             Tui.chat.add((ServerChatMessage)msg);
