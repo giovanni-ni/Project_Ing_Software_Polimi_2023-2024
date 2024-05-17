@@ -186,8 +186,9 @@ public class Tui extends Thread implements View{
             } while(!option.equals("y"));
 
         }
-        print("Waiting other Players");
 
+
+        print("Waiting other Players");
     }
 
     @Override
@@ -222,7 +223,7 @@ public class Tui extends Thread implements View{
         print("position y: ");
         int y = Integer.parseInt(in.nextLine());
 
-        playCardMessage msg = new playCardMessage(index, f, x, y);
+        playCardMessage msg = new playCardMessage(this.username, index, f, x, y);
         client.messageToServer(msg);
         Thread.sleep(1000);
     }
@@ -383,7 +384,7 @@ public class Tui extends Thread implements View{
 
                 Thread.sleep(1000);
 
-                print("this is your initial card:"+ myPlayer.getInitialCard()+" front(0) or back(1) ");
+                print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
                 choice = Integer.parseInt(in.nextLine());
                 boolean c;
                 if(choice == 0) {
@@ -432,10 +433,6 @@ public class Tui extends Thread implements View{
 
                 default ->
                         print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
-            }
-
-            while(true) {
-
             }
 
     }
