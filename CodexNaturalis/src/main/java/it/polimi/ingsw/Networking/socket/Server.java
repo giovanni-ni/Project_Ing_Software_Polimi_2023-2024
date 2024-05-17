@@ -20,7 +20,7 @@ public class Server extends Thread{
         try {
             serverSocket = new ServerSocket(port);
             handler = new ArrayList<>();
-            controllers=new AllMatchesController();
+            controllers= AllMatchesController.getInstance();
             this.start();
             System.out.println("Server Socket ready");
         } catch (IOException e) {

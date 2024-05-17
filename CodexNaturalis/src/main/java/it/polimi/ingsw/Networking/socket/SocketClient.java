@@ -12,6 +12,7 @@ import java.io.*;
 import java.net.Socket;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
 
 public class SocketClient extends Thread implements Client {
     private Socket socket;
@@ -80,6 +81,11 @@ public class SocketClient extends Thread implements Client {
 
         } else if(msg instanceof joinFailMsg) {
             print("join fail because" + ((joinFailMsg) msg).getDescription());
+        }else if(msg instanceof ServerChatMessage) {
+            print("New chat Message:");
+            showNewChatMessage(msg);
+            //store the chat for historical chat view
+            Tui.chat.add((ServerChatMessage)msg);
         } else if(msg instanceof newPlayerInMsg) {
             print("new player is in");
         } else if(msg instanceof gameStartMsg) {
@@ -102,5 +108,7 @@ public class SocketClient extends Thread implements Client {
         }*/
 
     }
+
+
 }
 

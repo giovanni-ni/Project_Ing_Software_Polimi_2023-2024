@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
+import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
 
 public class Tui extends Thread implements View{
 
@@ -45,6 +47,8 @@ public class Tui extends Thread implements View{
 
     private Client client;
 
+    public static ArrayList<ServerChatMessage> chat;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
@@ -52,6 +56,7 @@ public class Tui extends Thread implements View{
         this.first = 0;
         myPlayer = new Player("");
         myPlayer.setReady(false);
+        chat = new ArrayList<>();
     }
 
     @Override
@@ -497,4 +502,10 @@ public class Tui extends Thread implements View{
 
     }
 
+    //someWhere to create a ChatMessage
+    private void showAllChatMessage() {
+        for (ServerChatMessage msg :Tui.chat){
+            showNewChatMessage(msg);
+        }
+    }
 }

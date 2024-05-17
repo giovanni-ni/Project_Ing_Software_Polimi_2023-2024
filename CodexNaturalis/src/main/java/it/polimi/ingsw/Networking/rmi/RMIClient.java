@@ -2,10 +2,7 @@ package it.polimi.ingsw.Networking.rmi;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.Message;
-import it.polimi.ingsw.Message.ServerToClientMsg.gameStartMsg;
-import it.polimi.ingsw.Message.ServerToClientMsg.joinFailMsg;
-import it.polimi.ingsw.Message.ServerToClientMsg.joinSuccessMsg;
-import it.polimi.ingsw.Message.ServerToClientMsg.newPlayerInMsg;
+import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.model.PlayerStatus;
@@ -18,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
 
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
 
@@ -42,16 +40,23 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
 
         } else if(msg instanceof joinFailMsg) {
             print("join fail because" + ((joinFailMsg) msg).getDescription());
+        }else if(msg instanceof ServerChatMessage) {
+            print("New chat Message:");
+            showNewChatMessage((GenericServerMessage) msg);
+            //store the chat for historical chat view
+            Tui.chat.add((ServerChatMessage)msg);
         } else if(msg instanceof newPlayerInMsg) {
             print("new player is in");
         } else if(msg instanceof gameStartMsg) {
             print("the game is starting.. 3.. 2.. 1..");
-            print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
-            Tui.myMatch = ((gameStartMsg) msg).getModel();
 
+            Tui.myMatch = ((gameStartMsg) msg).getModel();
+            Tui.myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             Tui.status = PlayerStatus.GamePlay;
-            print("game status change" );
+
+
         }
+
     }
 
     @Override

@@ -1,8 +1,12 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
+import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
+import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 import it.polimi.ingsw.model.*;
 
 import java.util.Map;
+
+
 
 public class Print {
 
@@ -72,7 +76,7 @@ public class Print {
             String color=getColorSecond(elements);
             print("Target : Card Position");
             print("Base Point: "+card.getbasePoint());
-            if (((ObliqueTargetCard) card).getcornerPosition()==CornerPosition.UPLEFT){
+            if (((ObliqueTargetCard) card).getcornerPosition()== CornerPosition.UPLEFT){
                 print(color+
                         "|#| | |\n" +
                         "| |#| |\n" +
@@ -126,7 +130,8 @@ public class Print {
             case VEGETAL -> colorSecond = ANSI_LEAF;
             case INSECT -> colorSecond = ANSI_INSECT;
             case ANIMALS -> colorSecond = ANSI_ANIMAL;
-            case EMPTY -> colorSecond = ANSI_WHITE;
+            case EMPTY -> colorSecond = ANSI_BLACK;
+            case HIDE -> colorSecond = ANSI_WHITE;
             default -> colorSecond = ANSI_GOLD;
         }
         return colorSecond;
@@ -134,7 +139,7 @@ public class Print {
 
 
     private static void printInitialCard(InitialCard card) {
-        print("The initial card has");
+        print("The initial card "+card.getCode()+" has");
         print("--------------------");
             print("[Front]");
             printCorners(card.getCornersFront());
@@ -150,15 +155,106 @@ public class Print {
     }
 
     private static void printResourceCard(ResourceCard card) {
-    }
-
-    private static void printGoldCard(GoldCard goldCard) {
-
-    }
-    private static void printCorners(Map<CornerPosition, Elements> map){
-        for (CornerPosition cp:map.keySet()){
-            print("["+cp.toString()+":"+getColorSecond(map.get(cp))+map.get(cp).toString()+ANSI_RESET+"]");
+        print(getColorSecond(card.getKingdom())+"The Resource card "+card.getCode()+" has"+ANSI_RESET);
+        print("--------------------");
+        print("[Front]");
+        print("Base Point: "+card.getBasePoint());
+        printCorners(card.getCorners());
+        print("--------------------");
+        print("[Back]");
+        printCornersEmpty();
+        print("Central Element: "+getColorSecond(card.getKingdom())+card.getKingdom().toString()+ANSI_RESET);
+        print("--------------------");
+        String isFront;
+        if (card.getIsFront()){
+            isFront="[Front]";
+        }else {
+            isFront="[Back]";
         }
+        print("The current face is set "+isFront);
+
+
+    }
+
+    private static void printGoldCard(GoldCard card) {
+        print(getColorSecond(card.getKingdom())+ANSI_GOLD+"The Gold card "+getColorSecond(card.getKingdom())+card.getCode()+ANSI_RESET+" has");
+        print("--------------------");
+        print("[Front]");
+        printGoldCardPointType(card);
+        printGoldCardRequirement(card);
+        printCorners(card.getCorners());
+        print("--------------------");
+        print("[Back]");
+        printCornersEmpty();
+        print("Central Element: "+getColorSecond(card.getKingdom())+card.getKingdom().toString()+ANSI_RESET);
+        print("--------------------");
+        String isFront;
+        if (card.getIsFront()){
+            isFront="[Front]";
+        }else {
+            isFront="[Back]";
+        }
+        print("The current face is set "+isFront);
+
+    }
+
+    private static void printGoldCardPointType(GoldCard card) {
+        TypeBonus type =card.getType();
+        switch (type) {
+            case HIDECORNER -> {
+                print("For each corner that this card hides you'll get "+ANSI_GOLD+card.getBasePoint()+" Points"+ANSI_RESET);
+            }
+            case DIRECTPOINT -> {
+                print("If you place this card you'll get "+ANSI_GOLD+card.getBasePoint()+" Points"+ANSI_RESET);
+            }
+            default -> {
+                String item;
+                switch (type){
+                    case COUNTELEMENT_P -> item = Elements.PARCHMENT.toString();
+                    case COUNTELEMENT_F -> item = Elements.FEATHER.toString();
+                    case COUNTELEMENT_I -> item = Elements.INK.toString();
+                }
+
+                print("For each "+ANSI_GOLD+"item"+ANSI_RESET +" you'll get "+ANSI_GOLD+card.getBasePoint()+" Points"+ANSI_RESET);
+            }
+        }
+
+    }
+
+    private static void printGoldCardRequirement(GoldCard card) {
+        String mainElement;
+        String secondElement ="";
+        if (card.getSecondElement()!=Elements.EMPTY){
+            secondElement = " + "+getColorSecond(card.getSecondElement())+card.getSecondElement().toString()+"x1"+ANSI_RESET;
+        }
+        print("Requirement :"+getColorSecond(card.getKingdom())+card.getKingdom().toString()+"x"+card.getNreqElement()+ANSI_RESET+secondElement);
+
+    }
+
+    private static void printCorners(Map<CornerPosition, Elements> map){
+
+        print(  "["+CornerPosition.UPLEFT.toString()+":"+getColorSecond(map.get(CornerPosition.UPLEFT))+map.get(CornerPosition.UPLEFT).toString()+ANSI_RESET+"]"+
+                "["+CornerPosition.UPRIGHT.toString()+":"+getColorSecond(map.get(CornerPosition.UPRIGHT))+map.get(CornerPosition.UPRIGHT).toString()+ANSI_RESET+"]");
+        print(  "["+CornerPosition.DOWNLEFT.toString()+":"+getColorSecond(map.get(CornerPosition.DOWNLEFT))+map.get(CornerPosition.DOWNLEFT).toString()+ANSI_RESET+"]"+
+                "["+CornerPosition.DOWNRIGHT.toString()+":"+getColorSecond(map.get(CornerPosition.DOWNRIGHT))+map.get(CornerPosition.DOWNRIGHT).toString()+ANSI_RESET+"]");
+    }
+    private static void printCornersEmpty(){
+
+        print( "["+CornerPosition.UPLEFT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]"+
+                "["+CornerPosition.UPRIGHT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]");
+        print(  "["+CornerPosition.DOWNLEFT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]"+
+                "["+CornerPosition.DOWNRIGHT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]");
+    }
+    public static void showNewChatMessage(GenericServerMessage msg) {
+        ServerChatMessage chatMessage = (ServerChatMessage) msg;
+        String channel;
+        if (chatMessage.isForAll()){
+            channel =ANSI_GOLD+"[Public]";
+        }else {
+            channel =ANSI_CYAN+"[Private]";
+        }
+        print(channel+"["+chatMessage.getFromPlayer()+"]:"+ANSI_RESET+chatMessage.getChatMsg());
+
     }
 
     public static final String menuOperations = """
