@@ -270,7 +270,7 @@ public class SingleMatchController extends Thread{
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
             p.setInitialCard(match.getFirstInitialCard()) ;
-            //Board b= new Board(match.getFirstInitialCard());//todo
+            //Board b= new Board(match.getFirstInitialCard());
             //p.setBoard(b);
             p.currentScore=0;
         }
