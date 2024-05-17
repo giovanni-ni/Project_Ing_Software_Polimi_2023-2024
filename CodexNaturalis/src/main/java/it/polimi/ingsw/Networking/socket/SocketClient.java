@@ -35,7 +35,8 @@ public class SocketClient extends Thread implements Client {
     }
 
     public void run() {
-        while (true) {
+        boolean Server_ok=true;
+        while (Server_ok) {
             try {
                 GenericServerMessage msg = (GenericServerMessage) inputStream.readObject();
                 print(msg);
@@ -44,7 +45,7 @@ public class SocketClient extends Thread implements Client {
                 print("ClassNotFound");
             } catch (IOException e) {
                 print("IOException 服务器炸了");
-                interrupt();
+                Server_ok=false;
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -60,7 +61,7 @@ public class SocketClient extends Thread implements Client {
     public void messageToServer(GenericClientMessage message) {
         try {
             outputStream.writeObject(message);
-            outputStream.flush();
+            finishSending();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

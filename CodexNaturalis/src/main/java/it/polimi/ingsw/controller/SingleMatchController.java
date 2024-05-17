@@ -150,6 +150,7 @@ public class SingleMatchController extends Thread{
 
         if (match.addPlayer(p) && !isPlayerFull()){
             notifyAllListeners(new newPlayerInMsg(p.nickname));
+            listener.setNickname(p.nickname);
             addListener(listener);
             return true;
         }
@@ -246,7 +247,10 @@ public class SingleMatchController extends Thread{
     }
 
     public Listener getListenerOf(String nickName) throws RemoteException {
+        print("this is nickname "+nickName);
+
         for (Listener listeners : match.getListenerList()){
+            print("this is "+listeners.getNickname());
             if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;
         }

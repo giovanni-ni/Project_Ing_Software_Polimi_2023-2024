@@ -31,6 +31,7 @@ public class SocketListener implements Listener {
     }
     @Override
     public void setNickname(String nickname) {
+        this.nickname =nickname;
     }
     private void finishSending() throws IOException {
         out.flush();
