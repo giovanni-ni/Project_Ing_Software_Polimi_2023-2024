@@ -90,6 +90,10 @@ public class SocketClient extends Thread implements Client {
             Tui.status = PlayerStatus.GamePlay;
             //print("game status change" );
 
+        } else if(msg instanceof playCardSuccess) {
+            Tui.myMatch = ((gameStartMsg) msg).getModel();
+            Tui.myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            Tui.hasChange = 1;
         }
 
         /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {

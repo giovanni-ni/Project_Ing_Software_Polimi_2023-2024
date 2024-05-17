@@ -19,11 +19,13 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
-public class Tui implements View{
+public class Tui extends Thread implements View{
 
     private String username;
 
     public static PlayerStatus status;
+
+    public static int hasChange;
 
     public static ViewModel myMatch;
 
@@ -52,6 +54,20 @@ public class Tui implements View{
         myPlayer.setReady(false);
     }
 
+    @Override
+    public void run() {
+        while(true) {
+            if(hasChange == 1) {
+                try {
+                    hasChange = 0;
+                    redirect();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
     public void init() throws Exception {
         System.out.println(Print.Codex);
         askToContinue();
@@ -67,6 +83,7 @@ public class Tui implements View{
         }
 
         askLogin();
+        this.start();
         while(true) redirect();
 
     }
@@ -94,8 +111,6 @@ public class Tui implements View{
         }
     }
 
-
-
     public void askToContinue() {
         print("Press 'Enter' to continue");
         in.nextLine();
@@ -113,6 +128,7 @@ public class Tui implements View{
 
             } else {
                 this.username = username;
+
                 return;
             }
         } while(username.equals(""));
@@ -204,6 +220,11 @@ public class Tui implements View{
         playCardMessage msg = new playCardMessage(index, f, x, y);
         client.messageToServer(msg);
         Thread.sleep(1000);
+    }
+
+    @Override
+    public void askChat() {
+        System.out.println("no non puoi"); //TODO
     }
 
     @Override
@@ -334,7 +355,8 @@ public class Tui implements View{
             if(first == 0) {
                 List<Card> deck = new ArrayList<>();
                 TargetCard[] target = {};
-                print("your card: ");
+
+                showMyCard();
 
                 //for(Player p : myMatch.getPlayers()) {
                     //print("ci sono giocatori n"+myMatch.getPlayers().size());
@@ -348,9 +370,6 @@ public class Tui implements View{
                 //        target = p.getTargetOnHand();
                 //    }
                 //}
-                for(Card c: myPlayer.getCardOnHand()) {
-                    print(c.getCode() + " ");
-                }
                 print("choose your personal target card from: ");
                 print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
                 int choice = Integer.parseInt(in.nextLine());
@@ -381,11 +400,33 @@ public class Tui implements View{
             }
             if(myMatch.getCurrentPlayer().nickname.equals(this.username)) {
                 System.out.println("it's your round!!!");
-                showBoard();
+
             } else {
                 System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
                 System.out.println("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
-                showBoard();
+            }
+
+            showBoard();
+            showMyCard();
+            showElements();
+            print("-----------------------------------------------------------\n");
+            System.out.println("你想干啥:");
+            print(Print.menuOperations);
+            print("-----------------------------------------------------------\n" +
+                    "Enter the Command you wish to use: ");
+            String option = in.nextLine();
+
+            switch (option) {
+                case "" -> {
+                }
+                case "p" -> askPlayCard();
+                case "c" -> askChat();
+                case "sc" -> askShowCommonTarget();
+                case "sp" -> askShowPersonalTarget();
+                case "s"  -> askShowCard();
+
+                default ->
+                        print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
             }
 
             while(true) {
@@ -394,7 +435,21 @@ public class Tui implements View{
 
     }
 
+    private void askShowCommonTarget() {
+        print("common targets");
+        for(TargetCard c: myMatch.getCommonTarget()) {
+            print(c.getIdCard());
+        }
+    }
 
+    private void askShowPersonalTarget() {
+        print("your target card");
+        print(myPlayer.getTarget().getIdCard());
+    }
+
+    private void askShowCard() {
+
+    }
     public PlayerStatus getStatus() {
         return status;
     }
@@ -416,6 +471,30 @@ public class Tui implements View{
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
+    }
+
+    private void showElements() {
+        System.out.println("now you have: ");
+        System.out.print("MUSHROOMS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.MUSHROOMS) +
+                        "VEGETAL: " + myPlayer.getBoard().getCounterOfElements().get(Elements.VEGETAL) +
+                        "ANIMALS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.ANIMALS) +
+                        "INSECT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INSECT) +
+                        "FEATHER: " + myPlayer.getBoard().getCounterOfElements().get(Elements.FEATHER) +
+                        "INK: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INK) +
+                        "PARCHMENT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.PARCHMENT)
+                         );
+        System.out.println("");
+    }
+
+    private void showMyCard() {
+        print("your card: ");
+        for(Card c: myPlayer.getCardOnHand()) {
+            print(c.getCode() + " ");
+        }
+    }
+
+    public static void refresh() {
+
     }
 
 }

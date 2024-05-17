@@ -42,7 +42,7 @@ public interface View {
 
      void askPlayCard() throws InterruptedException, RemoteException;
 
-
+     void askChat();
 
 }
 

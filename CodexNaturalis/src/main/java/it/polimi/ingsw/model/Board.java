@@ -37,6 +37,7 @@ public class Board implements Serializable {
 		/*no Exception handle*/
 		Map<Elements, Integer> counter = new HashMap<>();
 		setCounterOfElements(counter);
+		inizialize();
 		/*put the initial card*/
 		i.setSide();
 		addAllElements(i);
@@ -365,5 +366,15 @@ public class Board implements Serializable {
 		}
 		return cardCoordinate.get(theCard);
 
+	}
+
+	private void inizialize() {
+		this.counterOfElements.put(Elements.MUSHROOMS,0);
+		this.counterOfElements.put(Elements.VEGETAL,0);
+		this.counterOfElements.put(Elements.ANIMALS,0);
+		this.counterOfElements.put(Elements.INSECT,0);
+		this.counterOfElements.put(Elements.FEATHER,0);
+		this.counterOfElements.put(Elements.INK,0);
+		this.counterOfElements.put(Elements.PARCHMENT,0);
 	}
 }

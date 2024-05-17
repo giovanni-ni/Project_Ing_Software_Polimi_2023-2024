@@ -161,4 +161,15 @@ public class Print {
         }
     }
 
+    public static final String menuOperations = """
+            -----------------------------------------------------------
+            [Commands] Menu Operations:
+              p   --> play a card
+              c   --> chat
+              sc  --> show common target card
+              sp  --> show personal target card
+              s   --> show a card
+              
+         
+            """;
 }

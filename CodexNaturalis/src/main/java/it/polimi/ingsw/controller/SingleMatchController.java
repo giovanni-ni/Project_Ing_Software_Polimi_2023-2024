@@ -202,7 +202,10 @@ public class SingleMatchController extends Thread{
     public void setInitialCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
             if(p.getNickname().equals(msg.getNickname())) {
+                System.out.println("ci sono");
                 p.getInitialCard().setFront(((FrontOrBackMessage) msg).getFrontOrBack());
+                Board board = new Board(p.getInitialCard());
+                p.setBoard(board);
             }
         }
         getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
@@ -252,8 +255,8 @@ public class SingleMatchController extends Thread{
             p.getTargetOnHand() [FIRST_CARD]= match.getFirtTargetCard();
             p.getTargetOnHand() [SECOND_CARD] = match.getFirtTargetCard();
             p.setInitialCard(match.getFirstInitialCard()) ;
-            //Board b= new Board(match.getFirstInitialCard());//todo
-            //p.setBoard(b);
+            /*Board b= new Board(match.getFirstInitialCard());//todo
+            p.setBoard(b);*/
             p.currentScore=0;
         }
     }
