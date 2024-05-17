@@ -296,4 +296,14 @@ public class Print {
               
          
             """;
+
+    public static final String drawCard = """
+            -----------------------------------------------------------
+            [Commands] Menu Operations:
+              chat   --> chat
+              s   --> show a card
+              c --> choose a card
+              
+         
+            """;
 }

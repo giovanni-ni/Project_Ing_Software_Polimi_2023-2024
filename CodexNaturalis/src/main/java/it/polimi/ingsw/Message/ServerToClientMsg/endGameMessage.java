@@ -10,4 +10,8 @@ public class endGameMessage extends GenericServerMessage implements Message {
     public endGameMessage(Match match) {
         this.model=new ViewModel(match);
     }
+
+    public ViewModel getModel() {
+        return this.model;
+    }
 }

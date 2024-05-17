@@ -15,6 +15,9 @@ public class GenericClientMessage implements Message, Serializable {
 
     }
 
+    public GenericClientMessage(String nickname) {
+        this.nickname = nickname;
+    }
 
     public GenericClientMessage(int gameID, String nickname) {
         this.gameID = gameID;

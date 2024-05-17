@@ -6,6 +6,12 @@ public enum PlayerStatus {
 
     MatchStart,
 
-    GamePlay
+    GamePlay,
+
+    Draw,
+
+    END,
+
+    Preparing
 
 }

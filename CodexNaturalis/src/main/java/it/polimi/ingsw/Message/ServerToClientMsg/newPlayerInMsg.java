@@ -10,4 +10,8 @@ public class newPlayerInMsg extends GenericServerMessage implements Message, Ser
     public newPlayerInMsg(String nicknameNewPlayer) {
         NicknameNewPlayer = nicknameNewPlayer;
     }
+
+    public String getNicknameNewPlayer() {
+        return this.NicknameNewPlayer;
+    }
 }

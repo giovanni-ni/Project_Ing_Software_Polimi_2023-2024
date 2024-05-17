@@ -9,4 +9,8 @@ public class ActionNotRecognize extends GenericServerMessage{
 
     public ActionNotRecognize() {
     }
+
+    public String getDescription() {
+        return this.description;
+    }
 }

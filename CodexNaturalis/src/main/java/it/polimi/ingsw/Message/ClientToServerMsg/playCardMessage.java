@@ -33,7 +33,9 @@ public class playCardMessage extends GenericClientMessage{
     }
 
     public playCardMessage(String name, int indexOfCardOnHand, boolean front, int x, int y) {
+        super(name);
         super.isMessageNotForMain();
+
         this.indexOfCardOnHand=indexOfCardOnHand;
         coo = new Coordinate(x,y);
         this.front=front;

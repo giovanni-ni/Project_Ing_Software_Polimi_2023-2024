@@ -63,9 +63,9 @@ public class SingleMatchController extends Thread{
         if (currentPlayer.nickname.equals(nickname) &&
                 //the number of card on hand should be less than 3
                 currentPlayer.getCardOnHand().size() < MAX_NUMCARD_ON_HAND) {
-            if ((match.getGoldDeck().isEmpty()) && (match.getResourceDeck().isEmpty())) {
-                if (isGoldCard && match.getGoldDeck().isEmpty() || // empty deck
-                        !isGoldCard && match.getResourceDeck().isEmpty()) {
+            if ((!(match.getGoldDeck().isEmpty())) || (!(match.getResourceDeck().isEmpty()))) {
+                if ((isGoldCard && match.getGoldDeck().isEmpty()) || // empty deck
+                        (!isGoldCard && match.getResourceDeck().isEmpty())) {
                     getListenerOf(nickname).update( new ActionNotRecognize("Deck Empty"));
                 } else if (whichCard >= FIRST_CARD && whichCard <= THIRD_CARD) {
                     if (isGoldCard)
@@ -75,6 +75,7 @@ public class SingleMatchController extends Thread{
                     ifLastTurn();
                     match.nextPlayer();
                     notifyAllListeners(new drawCardSuccess(match));
+                    getListenerOf(match.getCurrentPlayer().nickname).update(new NowIsYourRoundMsg());
                 } else { //wrong deck index
                     getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
                 }

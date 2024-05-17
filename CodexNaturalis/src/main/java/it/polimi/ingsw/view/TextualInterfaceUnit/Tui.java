@@ -18,16 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 
-public class Tui extends Thread implements View{
+public class Tui /*extends Thread*/ implements View{
 
     private String username;
 
     public static PlayerStatus status;
 
     public static int hasChange;
+
+    public static boolean hasPlayed;
 
     public static ViewModel myMatch;
 
@@ -59,7 +60,7 @@ public class Tui extends Thread implements View{
         chat = new ArrayList<>();
     }
 
-    @Override
+    /*@Override
     public void run() {
         while(true) {
             if(hasChange == 1) {
@@ -71,7 +72,7 @@ public class Tui extends Thread implements View{
                 }
             }
         }
-    }
+    }*/
 
     public void init() throws Exception {
         print(Print.Codex);
@@ -88,7 +89,7 @@ public class Tui extends Thread implements View{
         }
 
         askLogin();
-        this.start();
+        //this.start();
         while(true) redirect();
 
     }
@@ -144,10 +145,15 @@ public class Tui extends Thread implements View{
         print(Print.menuOption);
         print("-----------------------------------------------------------\n" +
                 "Enter the Command you wish to use: ");
-        String option = in.nextLine();
+        String option;
+        do {
+             option = in.nextLine();
+             if(!(option.equals("create") || option.equals("join") || option.equals("play") || option.equals("exit") || option.equals("c") || option.equals("j") || option.equals("p") || option.equals("ex") || option.equals("cr") || option.equals("jo") || option.equals("pl"))){
+                 System.out.println("error");
+             }
+        }while(!(option.equals("create") || option.equals("join") || option.equals("play") || option.equals("exit") || option.equals("c") || option.equals("j") || option.equals("p") || option.equals("ex") || option.equals("cr") || option.equals("jo") || option.equals("pl")));
+
         switch (option) {
-            case "" -> {
-            }
             case "create", "c", "cr" -> askCreateMatch();
             case "join", "j", "jo" -> askJoinMatch();
             case "play", "p", "pl" -> askJoinFirst();
@@ -226,11 +232,31 @@ public class Tui extends Thread implements View{
         playCardMessage msg = new playCardMessage(this.username, index, f, x, y);
         client.messageToServer(msg);
         Thread.sleep(1000);
+
+        if(status == PlayerStatus.Draw) {
+            myBoard[x+10][y+10] = myPlayer.getCardOnHand().get(index).getCode();
+        }
     }
 
     @Override
-    public void askChat() {
-        System.out.println("no non puoi"); //TODO
+    public void askChat() throws RemoteException, InterruptedException {
+
+        print("who do you want to send the message to: (BROADCAST for all players)");
+        String toPlayer = in.nextLine();
+        print("your message: ");
+        String chatMsg = in.nextLine();
+
+        if(toPlayer.equalsIgnoreCase("BROADCAST")) {
+            ClientChatMessage msg = new ClientChatMessage(myMatch.getIdMatch(), this.username, true, "", chatMsg);
+            client.messageToServer(msg);
+        } else {
+            ClientChatMessage msg = new ClientChatMessage(myMatch.getIdMatch(), this.username, false, toPlayer, chatMsg);
+            client.messageToServer(msg);
+        }
+
+        Thread.sleep(1000);
+
+
     }
 
     @Override
@@ -273,7 +299,7 @@ public class Tui extends Thread implements View{
         print("Selected Room [" + matchID + "].");
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         client.messageToServer(msg);
-
+        Thread.sleep(1000);
         return false;
     }
 
@@ -290,12 +316,16 @@ public class Tui extends Thread implements View{
 
     @Override
     public void showCommonGoals() {
-
+        print("common targets");
+        for(TargetCard c: myMatch.getCommonTarget()) {
+            print(c.getIdCard());
+        }
     }
 
     @Override
     public void showPersonalGoal() throws RemoteException {
-
+        print("your target card");
+        print(myPlayer.getTarget().getIdCard());
     }
 
     @Override
@@ -304,29 +334,20 @@ public class Tui extends Thread implements View{
     }
 
     @Override
-    public void showWhoIsPlaying() {
-
-    }
-
-    @Override
     public void showBoard() {
         int p = 1;
-        print("1 2 3 4 5 6 7 8 9 10 11");
+        print("-9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9");
         print("");
         print("");
         for (int i = 0; i < myBoard.length; i++) {
             for (int j = 0; j < myBoard[0].length; j++) {
-                System.out.print(myBoard[i][j]+" ");
+                System.out.print( myBoard[i][j]+" ");
             }
             print("        "+p);
             p++;
         }
     }
 
-    @Override
-    public void askPlayerMove(){
-
-    }
     public void redirect() throws Exception {
         if(status == PlayerStatus.MENU) {
             askMenuAction();
@@ -338,10 +359,136 @@ public class Tui extends Thread implements View{
             //print("la partita sta per iniziare");
         }
 
+        if(status == PlayerStatus.Preparing) {
+            prepareGame();
+        }
+
         if(status == PlayerStatus.GamePlay) {
             //print("game status change recognized, method calling...");
             inGame();
+
         }
+
+        if(status == PlayerStatus.Draw) {
+            if(hasPlayed) {
+                drawCard();
+            }
+        }
+
+        if(status == PlayerStatus.END) {
+            endGame();
+        }
+    }
+
+    public void prepareGame() throws RemoteException, InterruptedException {
+        List<Card> deck = new ArrayList<>();
+        TargetCard[] target = {};
+
+        showMyCard();
+
+        //for(Player p : myMatch.getPlayers()) {
+        //print("ci sono giocatori n"+myMatch.getPlayers().size());
+        //print(p.nickname);
+        //print("hai in mano "+p.getCardOnHand().size());
+
+        //    if(p.getNickname().equals(this.username) ) {
+
+        //        deck.addAll(p.getCardOnHand());
+        //print("hhhhhhh");
+        //        target = p.getTargetOnHand();
+        //    }
+        //}
+        print("choose your personal target card from: ");
+        print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
+        int choice;
+        do {
+            choice = Integer.parseInt(in.nextLine());
+            if(choice != 0 && choice != 1) {
+                System.out.println("error");
+            }
+        } while(choice != 0 && choice != 1);
+
+        SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
+        client.messageToServer(msg);
+
+        Thread.sleep(1000);
+
+        print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
+        do {
+            choice = Integer.parseInt(in.nextLine());
+            if(choice != 0 && choice != 1) {
+                System.out.println("error");
+            }
+        } while(choice != 0 && choice != 1);
+        boolean c;
+        if(choice == 0) {
+            c = true;
+        } else {
+            c = false;
+        }
+
+        FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, c);
+        client.messageToServer(msg1);
+
+        Thread.sleep(1000);
+
+        resetBoard();
+        myBoard[10][10] = myPlayer.getInitialCard().getCode();
+        showBoard();
+        this.first++;
+        print("Game is Start!");
+        status = PlayerStatus.GamePlay;
+    }
+    @Override
+    public void endGame() {
+        print("GAME END");
+        print("Point table: ");
+        for(Player p: myMatch.getPlayers()) {
+            print(p.getNickname() + ": " + p.currentScore + " points");
+        }
+        print("WINNER IS/ARE .... ");
+        for(Player p: myMatch.getWinners()) {
+            print(p.getNickname() + ": " + p.currentScore + " points");
+        }
+        print("!!!!!!!");
+    }
+
+    @Override
+    public void drawCard() throws IOException, InterruptedException {
+        print("draw a card:\n" +
+                "first resource card: " + myMatch.getResourceDeck().get(0).getCode() +
+                " second recource card: " + myMatch.getResourceDeck().get(1).getCode() +
+                " kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
+                "\n first gold card: " + myMatch.getGoldDeck().get(0).getCode() +
+                " second gold card: " + myMatch.getGoldDeck().get(1).getCode() +
+                " kingdom of the third card: " + myMatch.getGoldDeck().get(2).getKingdom());
+        String option;
+        do{
+            print(drawCard);
+            option = in.nextLine();
+            if(option.equals("chat")) {
+                askChat();
+            } else if(option.equals("s")) {
+                askShowCard();
+            } else if(option.equals("c")) {
+                print("resource card: first(0) second(1) third(2)");
+                print("gold card: first(3) second(4) third(5)");
+                int choice = Integer.parseInt(in.nextLine());
+                boolean isGoldDeck = false;
+                if(choice > 2) {
+                    isGoldDeck = true;
+                    choice -= 3;
+                }
+
+                drawCardMessage msg = new drawCardMessage(this.username, myMatch.getIdMatch(), isGoldDeck, choice);
+                client.messageToServer(msg);
+
+            } else {
+                print("errore");
+            }
+        } while(!option.equals("c"));
+
+        Thread.sleep(1000);
     }
 
     /*public void waitingMethodReturn() {
@@ -356,58 +503,12 @@ public class Tui extends Thread implements View{
 
     }*/
 
-    public void inGame() throws InterruptedException, RemoteException {
-        print("in game method called");
-            if(first == 0) {
-                List<Card> deck = new ArrayList<>();
-                TargetCard[] target = {};
+    public void inGame() throws InterruptedException, IOException {
+        //print("in game method called");
 
-                showMyCard();
-
-                //for(Player p : myMatch.getPlayers()) {
-                    //print("ci sono giocatori n"+myMatch.getPlayers().size());
-                    //print(p.nickname);
-                    //print("hai in mano "+p.getCardOnHand().size());
-
-                //    if(p.getNickname().equals(this.username) ) {
-
-                //        deck.addAll(p.getCardOnHand());
-                        //print("hhhhhhh");
-                //        target = p.getTargetOnHand();
-                //    }
-                //}
-                print("choose your personal target card from: ");
-                print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
-                int choice = Integer.parseInt(in.nextLine());
-                SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
-                client.messageToServer(msg);
-
-                Thread.sleep(1000);
-
-                print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
-                choice = Integer.parseInt(in.nextLine());
-                boolean c;
-                if(choice == 0) {
-                    c = true;
-                } else {
-                    c = false;
-                }
-
-                FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, c);
-                client.messageToServer(msg1);
-
-                Thread.sleep(1000);
-
-                resetBoard();
-                myBoard[5][5] = myPlayer.getInitialCard().getCode();
-                showBoard();
-                this.first++;
-                print("Game is Start!");
-            }
             if(myMatch.getCurrentPlayer().nickname.equals(this.username)) {
-                System.out.println("it's your round!!!");
-
                 print("it's your round!!!");
+                hasPlayed = false;
                 showBoard();
             } else {
                 System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
@@ -422,40 +523,35 @@ public class Tui extends Thread implements View{
             print(Print.menuOperations);
             print("-----------------------------------------------------------\n" +
                     "Enter the Command you wish to use: ");
-            String option = in.nextLine();
+            String option;
+            do {
+                option = in.nextLine();
+                if(!(option.equals("p") || option.equals("c") || option.equals("sc") || option.equals("sp") || option.equals("s"))) {
+                    System.out.println("error");
+                }
+            } while(!(option.equals("p") || option.equals("c") || option.equals("sc") || option.equals("sp") || option.equals("s")));
+
 
             switch (option) {
-                case "" -> {
-                }
                 case "p" -> askPlayCard();
                 case "c" -> askChat();
-                case "sc" -> askShowCommonTarget();
-                case "sp" -> askShowPersonalTarget();
+                case "sc" -> showCommonGoals();
+                case "sp" -> showPersonalGoal();
                 case "s"  -> askShowCard();
 
-                default ->
-                        print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
-                print(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
-                print("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
-                showBoard();
+                default -> {
+                    print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
+                    print(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
+                    print("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
+                    showBoard();
+                }
             }
-
+        Thread.sleep(1000);
     }
 
-    private void askShowCommonTarget() {
-        print("common targets");
-        for(TargetCard c: myMatch.getCommonTarget()) {
-            print(c.getIdCard());
-        }
-    }
-
-    private void askShowPersonalTarget() {
-        print("your target card");
-        print(myPlayer.getTarget().getIdCard());
-    }
-
-    private void askShowCard() {
-
+    private void askShowCard() throws IOException {
+        print("which card do you want:");
+        printCardById(Integer.parseInt(in.nextLine()));
     }
     public PlayerStatus getStatus() {
         return status;
@@ -467,16 +563,25 @@ public class Tui extends Thread implements View{
 
     private void resetBoard() {
         myBoard = new int[][]{
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
         };
     }
 
@@ -500,14 +605,14 @@ public class Tui extends Thread implements View{
         }
     }
 
-    public static void refresh() {
-
-    }
-
     //someWhere to create a ChatMessage
     private void showAllChatMessage() {
         for (ServerChatMessage msg :Tui.chat){
             showNewChatMessage(msg);
         }
+    }
+
+    public static void printMessage(String message) {
+        print(message);
     }
 }

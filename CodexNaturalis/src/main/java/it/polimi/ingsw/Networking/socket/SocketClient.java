@@ -88,22 +88,39 @@ public class SocketClient extends Thread implements Client {
             //store the chat for historical chat view
             Tui.chat.add((ServerChatMessage)msg);
         } else if(msg instanceof newPlayerInMsg) {
-            print("new player is in");
+            print("new player is in" + ((newPlayerInMsg) msg).getNicknameNewPlayer());
         } else if(msg instanceof gameStartMsg) {
-            print("the game is starting.. 3.. 2.. 1..");
+            //print("the game is starting.. 3.. 2.. 1..");
             //print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
             Tui.myMatch = ((gameStartMsg) msg).getModel();
             Tui.myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
-            Tui.status = PlayerStatus.GamePlay;
-            print("game status change" );
+            Tui.status = PlayerStatus.Preparing;
+            //print("game status change" );
 
         } else if(msg instanceof playCardSuccess) {
             Tui.myMatch = ((playCardSuccess) msg).getModel();
             Tui.myPlayer = ((playCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             Tui.hasChange = 1;
-        } else if(msg instanceof ActionSuccessMsg) {
+            Tui.hasPlayed = true;
+            Tui.status = PlayerStatus.Draw;
+        } else if(msg instanceof drawCardSuccess) {
+            Tui.status = PlayerStatus.GamePlay;
+            Tui.myMatch = ((drawCardSuccess) msg).getModel();
+            Tui.myPlayer = ((drawCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        }
+        else if(msg instanceof ActionSuccessMsg) {
             Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
             Tui.myPlayer = ((ActionSuccessMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        } else if(msg instanceof ActionNotRecognize) {
+            Tui.printMessage(((ActionNotRecognize) msg).getDescription());
+        } else if(msg instanceof NowIsYourRoundMsg) {
+            Tui.printMessage(((NowIsYourRoundMsg) msg).getDescription());
+        } else if(msg instanceof LastRoundMessage) {
+            Tui.printMessage("ATTENTION !! it's the last round");
+        } else if(msg instanceof endGameMessage) {
+            Tui.status = PlayerStatus.END;
+            Tui.myMatch = ((endGameMessage) msg).getModel();
+            Tui.myPlayer = ((endGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
         }
 
         /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {

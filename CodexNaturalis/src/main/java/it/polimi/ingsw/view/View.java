@@ -1,9 +1,12 @@
 package it.polimi.ingsw.view;
 
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.model.Coordinate;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.ServerNotActiveException;
+import java.util.Collections;
 import java.util.List;
 
 public interface View {
@@ -28,11 +31,9 @@ public interface View {
 
     void announceCurrentPlayer() throws RemoteException;
 
-    void showWhoIsPlaying();
-
     void showBoard();
 
-    void askPlayerMove();
+    void drawCard() throws IOException, InterruptedException;
 
      void askJoinFirst() throws InterruptedException, RemoteException;
 
@@ -42,7 +43,9 @@ public interface View {
 
      void askPlayCard() throws InterruptedException, RemoteException;
 
-     void askChat();
+     void askChat() throws RemoteException, InterruptedException;
+
+     void endGame();
 
 }
 
