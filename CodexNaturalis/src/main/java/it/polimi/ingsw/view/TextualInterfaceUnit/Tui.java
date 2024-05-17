@@ -74,7 +74,7 @@ public class Tui extends Thread implements View{
     }
 
     public void init() throws Exception {
-        System.out.println(Print.Codex);
+        print(Print.Codex);
         askToContinue();
         askConnectionType();
 
@@ -311,14 +311,14 @@ public class Tui extends Thread implements View{
     @Override
     public void showBoard() {
         int p = 1;
-        System.out.println("1 2 3 4 5 6 7 8 9 10 11");
-        System.out.println("");
-        System.out.println("");
+        print("1 2 3 4 5 6 7 8 9 10 11");
+        print("");
+        print("");
         for (int i = 0; i < myBoard.length; i++) {
             for (int j = 0; j < myBoard[0].length; j++) {
                 System.out.print(myBoard[i][j]+" ");
             }
-            System.out.println("        "+p);
+            print("        "+p);
             p++;
         }
     }
@@ -402,11 +402,13 @@ public class Tui extends Thread implements View{
                 myBoard[5][5] = myPlayer.getInitialCard().getCode();
                 showBoard();
                 this.first++;
-                System.out.println("Game is Start!");
+                print("Game is Start!");
             }
             if(myMatch.getCurrentPlayer().nickname.equals(this.username)) {
                 System.out.println("it's your round!!!");
 
+                print("it's your round!!!");
+                showBoard();
             } else {
                 System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
                 System.out.println("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
@@ -433,6 +435,9 @@ public class Tui extends Thread implements View{
 
                 default ->
                         print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
+                print(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
+                print("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
+                showBoard();
             }
 
     }

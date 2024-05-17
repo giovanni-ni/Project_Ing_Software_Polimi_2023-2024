@@ -17,4 +17,16 @@ public enum TypeOfCard {
         this.codeCardStart=codeCardStart;
         this.codeCardEnd=codeCardEnd;
     }
+
+    public int getCodeCardEnd() {
+        return codeCardEnd;
+    }
+
+    public int getCodeCardStart() {
+        return codeCardStart;
+    }
+
+    public int getNumOfCards() {
+        return numOfCards;
+    }
 }

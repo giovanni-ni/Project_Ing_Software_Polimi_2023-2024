@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 import it.polimi.ingsw.model.*;
 
+import java.io.IOException;
 import java.util.Map;
 
 
@@ -45,6 +46,34 @@ public class Print {
     public static final String ANSI_CYAN = "\u001B[36m";
     public static final String ANSI_WHITE = "\u001B[37m";
 
+
+    public static void printCardById(int cardId) throws IOException {
+        Object card = findCardById(cardId);
+        if (card!=null){
+            printCard(card);
+        }else {
+            print("Card number not exist");
+        }
+    }
+
+    private static Object findCardById(int cardId) throws IOException {
+        Object card = null;
+        CardParsing cp = new CardParsing();
+        if (cardId>=TypeOfCard.RESOURCECARD.getCodeCardStart()){
+            if (cardId<=TypeOfCard.RESOURCECARD.getCodeCardEnd()){
+                card=cp.loadResourceCards().get(cardId-1);
+            }else if(cardId<= TypeOfCard.GOLDCARD.getCodeCardEnd()){
+                card=cp.loadGoldCards().get(cardId-1);
+            } else if (cardId <= TypeOfCard.INITIALCARD.getCodeCardEnd()) {
+                card=cp.loadInitialCards().get(cardId-1);
+            } else if(cardId <= TypeOfCard.TARGETCARD.getCodeCardStart()){
+                card=cp.loadTargetCards().get(cardId-1);
+            }
+        }
+        return card;
+    }
+
+
     public static void printCard(Object card){
         switch (card){
             case GoldCard GoldCard -> printGoldCard((it.polimi.ingsw.model.GoldCard) card);
@@ -61,7 +90,6 @@ public class Print {
     private static void printTargetCard(TargetCard card) {
         if (card instanceof CountTargetCard) {
 
-            card = (CountTargetCard) card;
             String color;
 
             print("Target: Collect \n" +
