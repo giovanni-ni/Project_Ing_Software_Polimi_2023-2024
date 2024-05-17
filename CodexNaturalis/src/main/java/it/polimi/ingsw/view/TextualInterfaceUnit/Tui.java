@@ -135,6 +135,9 @@ public class Tui /*extends Thread*/ implements View{
             } else {
                 this.username = username;
 
+                if(username.equals("nuge")) {
+                    print("nu哥yyds");
+                }
                 return;
             }
         } while(username.equals(""));
@@ -242,6 +245,11 @@ public class Tui /*extends Thread*/ implements View{
     public void askChat() throws RemoteException, InterruptedException {
 
         print("who do you want to send the message to: (BROADCAST for all players)");
+        for(Player p: myMatch.getPlayers()){
+            if(!p.getNickname().equals(myPlayer.nickname)) {
+                print(p.getNickname());
+            }
+        }
         String toPlayer = in.nextLine();
         print("your message: ");
         String chatMsg = in.nextLine();
@@ -456,11 +464,9 @@ public class Tui /*extends Thread*/ implements View{
     @Override
     public void drawCard() throws IOException, InterruptedException {
         print("draw a card:\n" +
-                "first resource card: " + myMatch.getResourceDeck().get(0).getCode() +
-                " second recource card: " + myMatch.getResourceDeck().get(1).getCode() +
+                "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + myMatch.getResourceDeck().get(1).getCode() +
                 " kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
-                "\n first gold card: " + myMatch.getGoldDeck().get(0).getCode() +
-                " second gold card: " + myMatch.getGoldDeck().get(1).getCode() +
+                "\n gold cards: " + myMatch.getGoldDeck().get(0).getCode() + myMatch.getGoldDeck().get(1).getCode() +
                 " kingdom of the third card: " + myMatch.getGoldDeck().get(2).getKingdom());
         String option;
         do{
@@ -509,17 +515,14 @@ public class Tui /*extends Thread*/ implements View{
             if(myMatch.getCurrentPlayer().nickname.equals(this.username)) {
                 print("it's your round!!!");
                 hasPlayed = false;
-                showBoard();
             } else {
-                System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
+                //System.out.println(myMatch.getCurrentPlayer().nickname + " " + this.username + " " + myPlayer.nickname);
                 System.out.println("it's " + myMatch.getCurrentPlayer().nickname + "'s turn");
             }
 
             showBoard();
             showMyCard();
             showElements();
-            print("-----------------------------------------------------------\n");
-            System.out.println("你想干啥:");
             print(Print.menuOperations);
             print("-----------------------------------------------------------\n" +
                     "Enter the Command you wish to use: ");
@@ -586,23 +589,23 @@ public class Tui /*extends Thread*/ implements View{
     }
 
     private void showElements() {
-        System.out.println("now you have: ");
-        System.out.print("MUSHROOMS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.MUSHROOMS) +
-                        "VEGETAL: " + myPlayer.getBoard().getCounterOfElements().get(Elements.VEGETAL) +
-                        "ANIMALS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.ANIMALS) +
-                        "INSECT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INSECT) +
-                        "FEATHER: " + myPlayer.getBoard().getCounterOfElements().get(Elements.FEATHER) +
-                        "INK: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INK) +
-                        "PARCHMENT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.PARCHMENT)
+        System.out.print("now you have: ");
+        System.out.println("MUSHROOMS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.MUSHROOMS) +
+                        " VEGETAL: " + myPlayer.getBoard().getCounterOfElements().get(Elements.VEGETAL) +
+                        " ANIMALS: " + myPlayer.getBoard().getCounterOfElements().get(Elements.ANIMALS) +
+                        " INSECT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INSECT) +
+                        " FEATHER: " + myPlayer.getBoard().getCounterOfElements().get(Elements.FEATHER) +
+                        " INK: " + myPlayer.getBoard().getCounterOfElements().get(Elements.INK) +
+                        " PARCHMENT: " + myPlayer.getBoard().getCounterOfElements().get(Elements.PARCHMENT)
                          );
-        System.out.println("");
     }
 
     private void showMyCard() {
-        print("your card: ");
+        System.out.print("your cards: ");
         for(Card c: myPlayer.getCardOnHand()) {
-            print(c.getCode() + " ");
+            System.out.print(c.getCode() + " ");
         }
+        System.out.println("");
     }
 
     //someWhere to create a ChatMessage
