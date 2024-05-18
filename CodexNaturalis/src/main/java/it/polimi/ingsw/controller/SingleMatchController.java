@@ -182,8 +182,11 @@ public class SingleMatchController extends Thread{
                 assert msg != null;
 
                 print(msg);
+                try {
+                    getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
+                }catch (NullPointerException e){
 
-                getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
+                }
             }
         }
     }
@@ -193,7 +196,17 @@ public class SingleMatchController extends Thread{
         if( clientChatMessage.isForAll() ){
             notifyAllListeners(new ServerChatMessage(clientChatMessage));
         }else {
-            getListenerOf(clientChatMessage.getToPlayer()).update(new ServerChatMessage(clientChatMessage));
+            boolean findPlayer = false;
+            for(Player p : match.getPlayers()){
+                if (Objects.equals(p.getNickname(), clientChatMessage.getNickname()))
+                    findPlayer= true;
+            }
+            if (findPlayer){
+                getListenerOf(clientChatMessage.getToPlayer()).update(new ServerChatMessage(clientChatMessage));
+
+            }else {
+                getListenerOf(clientChatMessage.getFromPlayer()).update(new ActionNotRecognize("Player name not recognize"));
+            }
         }
     }
 
@@ -239,14 +252,14 @@ public class SingleMatchController extends Thread{
     }
 
     public Listener getListenerOf(String nickName) throws RemoteException {
-        print("this is nickname "+nickName);
 
         for (Listener listeners : match.getListenerList()){
-            print("this is "+listeners.getNickname());
+
             if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;
         }
-        return null;
+        throw new NullPointerException() ;
+
     }
     private void distributeCardsAndSetBoards(){
         for(Player p : match.getPlayers()){
