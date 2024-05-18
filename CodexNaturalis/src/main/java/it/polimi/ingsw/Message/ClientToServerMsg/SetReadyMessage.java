@@ -1,8 +1,8 @@
 package it.polimi.ingsw.Message.ClientToServerMsg;
 
 public class SetReadyMessage extends GenericClientMessage {
-    public SetReadyMessage(String nickname) {
-        super.setNickname(nickname);
+    public SetReadyMessage(int id, String nickname) {
+        super(id,nickname);
         //super.isMessageForMain();
     }
 }

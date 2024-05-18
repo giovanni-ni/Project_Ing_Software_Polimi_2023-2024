@@ -152,7 +152,7 @@ public class Match implements Serializable {
 		updateAllTargetPoints();
 		winners = new ArrayList<>();
 		ArrayList<Player> possibleWinners= (ArrayList<Player>) pt.findMaxPointPlayers();
-		if(possibleWinners.size()!=1){
+		if(possibleWinners.size()>=2){
 			int maxTargetCount = pt.CountTarget(possibleWinners.getFirst(),commonTarget);
 			winners.add(possibleWinners.getFirst());
 			for(int i=1; i<possibleWinners.size(); i++){
@@ -275,7 +275,7 @@ public class Match implements Serializable {
 	}
 
 	public List<Player> getWinners() {
-		setWinners();
+		//setWinners();
 		return winners;
 	}
 

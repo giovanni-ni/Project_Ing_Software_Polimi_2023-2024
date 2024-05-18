@@ -85,7 +85,7 @@ public class Tui /*extends Thread*/ implements View{
             VirtualServer server = (VirtualServer) registry.lookup(serverName);
             client = new RMIClient(server);
         } else {
-            client = new SocketClient("localhost", 4234);
+            client = new SocketClient(/*"192.168.1.113"*/"localhost", 4234);
         }
 
         askLogin();
@@ -183,11 +183,15 @@ public class Tui /*extends Thread*/ implements View{
         String option;
         if (!myPlayer.getReady()) {
             do {
+                print("playing with:"+ myMatch.getPlayers().size());
 
+                for(Player p : myMatch.getPlayers()) {
+                    print(p.getNickname() + " ");
+                }
                 print("Ready? y/n: ");
                 option = in.nextLine();
                 if(option.equals("y")){
-                    SetReadyMessage msg = new SetReadyMessage(this.username);
+                    SetReadyMessage msg = new SetReadyMessage(myMatch.getIdMatch(),this.username);
                     myPlayer.setReady(true);
                     client.messageToServer(msg);
                 }
@@ -196,8 +200,7 @@ public class Tui /*extends Thread*/ implements View{
 
         }
 
-
-        print("Waiting other Players");
+        System.out.flush();
     }
 
     @Override
@@ -366,6 +369,7 @@ public class Tui /*extends Thread*/ implements View{
             askSetReady();
             //print("la partita sta per iniziare");
         }
+
 
         if(status == PlayerStatus.Preparing) {
             prepareGame();

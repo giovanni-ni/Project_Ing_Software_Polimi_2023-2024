@@ -50,7 +50,7 @@ public class ClientHandler extends Thread {
                 try {
 
                     temp = (GenericClientMessage) inputStream.readObject();
-                    System.out.println("ricevuto messaggio");
+                    System.out.println("ricevuto messaggio" + temp);
                     server.controllers.addInQueue(temp,gameListener);
 
                 } catch (IOException | ClassNotFoundException e) {
