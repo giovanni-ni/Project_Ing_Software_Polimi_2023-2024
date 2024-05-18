@@ -196,9 +196,9 @@ public class SingleMatchController extends Thread{
 
     public void setInitialCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
-            System.out.println(p.getNickname());
+
             if(p.getNickname().equals(msg.getNickname())) {
-                System.out.println("ci sono");
+
                 p.getInitialCard().setFront(((FrontOrBackMessage) msg).getFrontOrBack());
                 Board board = new Board(p.getInitialCard());
                 p.setBoard(board);

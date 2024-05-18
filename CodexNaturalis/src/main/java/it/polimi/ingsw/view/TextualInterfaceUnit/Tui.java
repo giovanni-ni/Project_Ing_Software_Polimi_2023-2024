@@ -190,14 +190,13 @@ public class Tui /*extends Thread*/ implements View{
                     SetReadyMessage msg = new SetReadyMessage(this.username);
                     myPlayer.setReady(true);
                     client.messageToServer(msg);
+                    print("Waiting");
                 }
                 Thread.sleep(1000);
             } while(!option.equals("y"));
 
         }
-
-
-        print("Waiting other Players");
+        System.out.flush();
     }
 
     @Override

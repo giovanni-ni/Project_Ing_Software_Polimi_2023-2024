@@ -138,6 +138,7 @@ public class Match implements Serializable {
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
+		winners= null;
 
 	}
 
