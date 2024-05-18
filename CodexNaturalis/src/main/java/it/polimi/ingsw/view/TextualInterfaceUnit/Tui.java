@@ -85,12 +85,16 @@ public class Tui /*extends Thread*/ implements View{
             VirtualServer server = (VirtualServer) registry.lookup(serverName);
             client = new RMIClient(server);
         } else {
-            client = new SocketClient("localhost", 4234);
+            client = new SocketClient("192.168.1.113", 4234);
         }
 
         askLogin();
         //this.start();
-        while(true) redirect();
+        while(true) {
+            redirect();
+            System.out.flush();
+        }
+
 
     }
 
@@ -541,6 +545,7 @@ public class Tui /*extends Thread*/ implements View{
             showBoard();
             showMyCard();
             showElements();
+
             print(Print.menuOperations);
             print("-----------------------------------------------------------\n" +
                     "Enter the Command you wish to use: ");
