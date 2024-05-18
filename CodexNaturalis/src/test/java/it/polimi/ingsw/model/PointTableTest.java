@@ -42,8 +42,7 @@ class PointTableTest {
 
         map.put(a,a.getTarget().getbasePoint());
         map.put(b,b.getTarget().getbasePoint());
-        table.setTargetPoints(map);
-        assertEquals(map,table.getTargetPoints());
+
     }
 
     @Test

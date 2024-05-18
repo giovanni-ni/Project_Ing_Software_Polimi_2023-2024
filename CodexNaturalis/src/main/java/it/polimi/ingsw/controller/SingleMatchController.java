@@ -111,13 +111,7 @@ public class SingleMatchController extends Thread{
                     board.addCard(card, x, y);
                     currentPlayer.getCardOnHand().remove(indexCardOnHand);
                     //update current score of the player;
-                    if(card.isGoldCard() && isFront){
-                        currentPlayer.currentScore +=((GoldCard) currentPlayer.getCardOnHand().get(indexCardOnHand)).goalCount(currentPlayer.getBoard());
-                    }
-                    else if(isFront){
-                        currentPlayer.currentScore += ((ResourceCard) currentPlayer.getCardOnHand().get(indexCardOnHand)).getBasePoint();
-                    }
-                    match.getPt().updatePoint(currentPlayer);
+                    match.updatePoint(card,currentPlayer);
                     notifyAllListeners( new playCardSuccess(match));
                 }else {
                      getListenerOf(nickname).update( new ActionNotRecognize("Not valid choice"));
@@ -126,17 +120,6 @@ public class SingleMatchController extends Thread{
         }else  getListenerOf(nickname).update( new ActionNotRecognize("Can't play Card now"));
 
 
-    }
-
-
-    public void updateAllTargetPoints (){
-        for(Player p : match.getPlayers()){
-            int countSecretTarget=p.getTarget().checkGoal(p.getBoard());
-            p.currentScore+=countSecretTarget*p.getTarget().getbasePoint();
-            p.currentScore+=match.getCommonTarget().getFirst().checkGoal(p.getBoard())*match.getCommonTarget().getFirst().getbasePoint()+
-                    match.getCommonTarget().get(SECOND_CARD).checkGoal(p.getBoard())*match.getCommonTarget().get(SECOND_CARD).getbasePoint();
-            match.getPt().updatePoint(p);
-        }
     }
 
     public Match getMatch() {

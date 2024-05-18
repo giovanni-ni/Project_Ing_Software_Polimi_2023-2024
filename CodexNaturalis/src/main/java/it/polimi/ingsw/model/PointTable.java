@@ -5,14 +5,13 @@ import java.io.Serializable;
 import java.util.*;
 
 public class PointTable implements Serializable {
-
+	//max point that a player can reach
 	private final int maxPoint;
-
+	//end Point
 	private final int maxPlayerPoint;
 
 	private Map<Player, Integer> playerPoints;
 
-	private Map<Player, Integer> targetPoints;
 
 	public int getMaxPoint() {
 		return maxPoint;
@@ -30,18 +29,12 @@ public class PointTable implements Serializable {
 		this.playerPoints = playerPoints;
 	}
 
-	public Map<Player, Integer> getTargetPoints() {
-		return targetPoints;
-	}
-
-	public void setTargetPoints(Map<Player, Integer> targetPoints) {
-		this.targetPoints = targetPoints;
-	}
-
 	public void updatePoint(Player p){
+		Player playerToRemove = null;
 		for (Player player : playerPoints.keySet())
 			if (Objects.equals(player.getNickname(), p.getNickname()))
-				playerPoints.remove(player);
+				playerToRemove=player;
+		playerPoints.remove(playerToRemove);
 		playerPoints.put(p,p.currentScore);
 	}
 
@@ -61,22 +54,18 @@ public class PointTable implements Serializable {
 
 		return max;
 	}
-	public List<Player> findMaxTargetPlayers() {
-		return getPlayers(this.targetPoints.keySet(), targetPoints);
-
-	}
 
 	public List<Player> findMaxPointPlayers() {
-		return getPlayers(this.playerPoints.keySet(), playerPoints);
+		return getPlayers(this.playerPoints.keySet());
 	}
 
-	private List<Player> getPlayers(Set<Player> players, Map<Player, Integer> points) {
+	private List<Player> getPlayers(Set<Player> players) {
 		int max=0;
 		int playerPoint;
 		List<Player> maxPlayers = new ArrayList<>();
 
 		for(Player p : players){
-			playerPoint = points.get(p);
+			playerPoint = playerPoints.get(p);
 			if(playerPoint == max){
 				maxPlayers.add(p);
 			}else if (playerPoint > max){
@@ -100,22 +89,9 @@ public class PointTable implements Serializable {
 		return countOfTarget;
 
 	}
-	/*
-	public void updateCountTarget(Player p,Board board, TargetCard[] targetCards) {
-		int countOfTarget=0;
-		if(p.getTarget().checkTarget(board)>0)
-			countOfTarget++;
-		for (TargetCard tc:targetCards){
-			if (tc.checkTarget(board)>0)
-				countOfTarget++;
-		}
-		targetPoints.put(p,countOfTarget);
-	}
-*/
 
 	public PointTable() {
 		playerPoints = new HashMap<Player, Integer>();
-		targetPoints = new HashMap<Player,Integer>();
 
 		maxPlayerPoint=20;
 		maxPoint=29;

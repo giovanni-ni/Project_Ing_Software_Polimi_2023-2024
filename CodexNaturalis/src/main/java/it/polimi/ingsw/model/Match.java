@@ -160,8 +160,7 @@ public class Match implements Serializable {
 					winners.clear();
 					winners.add(possibleWinners.get(i));
 					maxTargetCount=tempTargetCount;
-				}
-				if(tempTargetCount==maxTargetCount){
+				}else if(tempTargetCount==maxTargetCount){
 					winners.add(possibleWinners.get(i));
 				}
 			}
@@ -170,6 +169,14 @@ public class Match implements Serializable {
 		}
 
 	};
+	public void updateAllTargetPoints (){
+		for(Player p : players){
+			p.currentScore+=p.getTarget().countPoint(p.getBoard());
+			p.currentScore+=getCommonTarget().getFirst().countPoint(p.getBoard())+
+					commonTarget.get(1).countPoint(p.getBoard());
+			pt.updatePoint(p);
+		}
+	}
 
 	public void nextPlayer(){
 		String currPlayerNick = currentPlayer.nickname;
@@ -245,6 +252,8 @@ public class Match implements Serializable {
 				return false;
 		}
 		players.add(p);
+		pt.getPlayerPoints().put(p,0);
+
 		return true;
 	}
 
@@ -265,6 +274,17 @@ public class Match implements Serializable {
 	}
 
 	public List<Player> getWinners() {
+		setWinners();
 		return winners;
+	}
+
+	public void updatePoint(ResourceCard card, Player currentPlayer) {
+		if(card.isGoldCard() && card.getIsFront()){
+			currentPlayer.currentScore +=((GoldCard) card).goalCount(currentPlayer.getBoard());
+		}
+		else if(card.getIsFront()){
+			currentPlayer.currentScore += card.getBasePoint();
+		}
+		getPt().updatePoint(currentPlayer);
 	}
 }
