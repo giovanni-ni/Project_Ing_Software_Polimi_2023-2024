@@ -202,7 +202,10 @@ public class Tui /*extends Thread*/ implements View{
     @Override
     public void askDrawCard() throws InterruptedException, RemoteException {
         print("insert number of the deck: ");
-        int option = Integer.parseInt(in.nextLine());
+
+        int option;
+
+        option = Integer.parseInt(in.nextLine());
         boolean deck;
         if(option == 1) {
             deck = true;
@@ -219,15 +222,31 @@ public class Tui /*extends Thread*/ implements View{
     @Override
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
-        int index = Integer.parseInt(in.nextLine());
+        int index;
+        do {
+            index = Integer.parseInt(in.nextLine());
+            if(index != 0 && index != 1 && index != 2) {
+                print("error");
+            }
+        }while(index != 0 && index != 1 && index != 2);
+
         print("front or back: f/b");
-        String front = in.nextLine();
+        String front;
+        do {
+            front = in.nextLine();
+            if(!(front.equals("f")) && !(front.equals("b"))) {
+                print("error");
+            }
+        }while(!(front.equals("f")) && !(front.equals("b")));
+
         boolean f = false;
         if(front.equals("f")) {
             f = true;
         }
         print("position x: ");
+
         int x = Integer.parseInt(in.nextLine());
+
         print("position y: ");
         int y = Integer.parseInt(in.nextLine());
 
