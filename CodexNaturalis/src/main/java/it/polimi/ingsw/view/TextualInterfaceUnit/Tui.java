@@ -544,6 +544,7 @@ public class Tui /*extends Thread*/ implements View{
 
             showBoard();
             showMyCard();
+            showPoints();
             showElements();
 
             print(Print.menuOperations);
@@ -573,6 +574,12 @@ public class Tui /*extends Thread*/ implements View{
                 }
             }
         Thread.sleep(1000);
+    }
+
+    private void showPoints() {
+        for(Player p : myMatch.getPlayers()) {
+            print(p.getNickname() + ": " + p.currentScore + "points");
+        }
     }
 
     private void askShowCard() throws IOException {
