@@ -213,7 +213,6 @@ public class SingleMatchController extends Thread{
     public void setTargetCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
             if(p.getNickname().equals(msg.getNickname())) {
-                print("sono qui");
                 p.setTarget(p.getTargetOnHand()[((SetTargetCardMessage) msg).getChoice()]);
             }
         }

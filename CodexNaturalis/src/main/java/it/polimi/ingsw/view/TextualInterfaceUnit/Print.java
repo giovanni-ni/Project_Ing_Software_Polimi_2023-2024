@@ -61,13 +61,13 @@ public class Print {
         CardParsing cp = new CardParsing();
         if (cardId>=TypeOfCard.RESOURCECARD.getCodeCardStart()){
             if (cardId<=TypeOfCard.RESOURCECARD.getCodeCardEnd()){
-                card=cp.loadResourceCards().get(cardId-1);
+                card=cp.loadResourceCards().get(cardId-TypeOfCard.RESOURCECARD.getCodeCardStart());
             }else if(cardId<= TypeOfCard.GOLDCARD.getCodeCardEnd()){
-                card=cp.loadGoldCards().get(cardId-1);
+                card=cp.loadGoldCards().get(cardId-TypeOfCard.GOLDCARD.getCodeCardStart());
             } else if (cardId <= TypeOfCard.INITIALCARD.getCodeCardEnd()) {
-                card=cp.loadInitialCards().get(cardId-1);
+                card=cp.loadInitialCards().get(cardId-TypeOfCard.INITIALCARD.getCodeCardStart());
             } else if(cardId <= TypeOfCard.TARGETCARD.getCodeCardStart()){
-                card=cp.loadTargetCards().get(cardId-1);
+                card=cp.loadTargetCards().get(cardId-TypeOfCard.TARGETCARD.getCodeCardStart());
             }
         }
         return card;

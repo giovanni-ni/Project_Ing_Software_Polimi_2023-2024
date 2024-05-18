@@ -276,7 +276,6 @@ public class Match implements Serializable {
 	}
 
 	public List<Player> getWinners() {
-		//setWinners();
 		return winners;
 	}
 
