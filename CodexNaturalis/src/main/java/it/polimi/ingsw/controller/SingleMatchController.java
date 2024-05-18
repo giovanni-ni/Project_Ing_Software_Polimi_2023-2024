@@ -180,6 +180,9 @@ public class SingleMatchController extends Thread{
                     sendChatMsg(msg);
             case null, default -> {
                 assert msg != null;
+
+                print(msg);
+
                 getListenerOf(msg.getNickname()).update(new ActionNotRecognize("Action not recognize"));
             }
         }

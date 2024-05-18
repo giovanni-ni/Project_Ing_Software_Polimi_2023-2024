@@ -187,15 +187,15 @@ public class Tui /*extends Thread*/ implements View{
                 print("Ready? y/n: ");
                 option = in.nextLine();
                 if(option.equals("y")){
-                    SetReadyMessage msg = new SetReadyMessage(this.username);
+                    SetReadyMessage msg = new SetReadyMessage(myMatch.getIdMatch(),this.username);
                     myPlayer.setReady(true);
                     client.messageToServer(msg);
-                    print("Waiting");
                 }
                 Thread.sleep(1000);
             } while(!option.equals("y"));
 
         }
+
         System.out.flush();
     }
 

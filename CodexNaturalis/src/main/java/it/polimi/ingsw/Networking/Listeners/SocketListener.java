@@ -21,7 +21,6 @@ public class SocketListener implements Listener {
     @Override
     public void update(Message msg) {
         try {
-
             out.writeObject(msg);
             finishSending();
         } catch (IOException e) {
