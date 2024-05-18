@@ -154,7 +154,6 @@ public class SingleMatchController extends Thread{
             }
         } catch (InterruptedException | RemoteException ignored) {}
         if (match.getStatus()== MatchStatus.End){
-            updateAllTargetPoints();
             match.setWinners();
             try {
                 notifyAllListeners(new endGameMessage(match));

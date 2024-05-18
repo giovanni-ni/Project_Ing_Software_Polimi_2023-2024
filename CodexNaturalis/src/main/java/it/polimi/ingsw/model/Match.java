@@ -149,6 +149,7 @@ public class Match implements Serializable {
 	}
 
 	public void setWinners (){
+		updateAllTargetPoints();
 		winners = new ArrayList<>();
 		ArrayList<Player> possibleWinners= (ArrayList<Player>) pt.findMaxPointPlayers();
 		if(possibleWinners.size()!=1){
