@@ -11,6 +11,8 @@
   <url>http://maven.apache.org</url>
 
   <properties>
+    <javafx.version>21</javafx.version>
+    <javafx.maven.plugin.version>0.0.8</javafx.maven.plugin.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
@@ -53,8 +55,13 @@
       <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-controls</artifactId>
-        <version>11</version>
+        <version>22.0.1</version>
       </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>22.0.1</version>
+    </dependency>
 
 
   </dependencies>
@@ -105,10 +112,17 @@
         <plugin>
           <groupId>org.openjfx</groupId>
           <artifactId>javafx-maven-plugin</artifactId>
-          <version>0.0.1</version>
-          <configuration>
-            <mainClass>HelloFX</mainClass>
-          </configuration>
+          <version>0.0.8</version>
+          <executions>
+            <execution>
+              <!-- Default configuration for running-->
+              <!-- Usage: mvn clean javafx:run-->
+              <id>default-cli</id>
+              <configuration>
+                <mainClass>it.polimi.ingsw.view.Gui.GUI</mainClass>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
       </plugins>
