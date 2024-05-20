@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.GuiController">
+    <children>
+        <StackPane alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1280.0">
+            <children>
+                <ImageView fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../../images/view/initialTab.JPG" />
+                    </image>
+                </ImageView>
+                <ImageView fitHeight="500.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                    <image>
+                        <Image url="@../../../../../images/view/whiteTab.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets top="100.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                    <image>
+                        <Image url="@../../../../../images/view/insert.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets top="350.0" />
+                    </StackPane.margin>
+                </ImageView>
+                <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+                    <image>
+                        <Image url="@../../../../../images/view/confirmBottom.png" />
+                    </image>
+                    <StackPane.margin>
+                        <Insets top="450.0" />
+                    </StackPane.margin>
+                    <cursor>
+                        <Cursor fx:constant="HAND" />
+                    </cursor>
+                </ImageView>
+                <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" text="ErrorMessage" StackPane.alignment="TOP_CENTER">
+                    <font>
+                        <Font size="28.0" />
+                    </font>
+                    <StackPane.margin>
+                        <Insets top="550.0" />
+                    </StackPane.margin>
+                </Text>
+            <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/insert.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="250.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fitHeight="106.0" fitWidth="566.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/joinGameOption.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="150.0" />
+               </StackPane.margin>
+            </ImageView>
+            </children>
+        </StackPane>
+        <TextField layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="RoomId" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="355.0">
+            <font>
+                <Font size="22.0" />
+            </font>
+        </TextField>
+      <TextField layoutX="10.0" layoutY="359.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="Nickname" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="255.0">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </TextField>
+    </children>
+</AnchorPane>
