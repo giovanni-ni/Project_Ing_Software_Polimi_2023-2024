@@ -1,4 +1,4 @@
-package it.polimi.ingsw.view.Gui.controllers;
+package it.polimi.ingsw.view.Gui.SceneControllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
