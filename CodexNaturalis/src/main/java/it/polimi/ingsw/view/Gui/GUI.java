@@ -1,36 +1,56 @@
 package it.polimi.ingsw.view.Gui;
 
-import javafx.application.Application;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ServerToClientMsg.ActionNotRecognize;
+import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
+import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
+import it.polimi.ingsw.Networking.Client;
+import it.polimi.ingsw.Networking.rmi.RMIClient;
+import it.polimi.ingsw.Networking.socket.SocketClient;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.PlayerStatus;
+import it.polimi.ingsw.model.ViewModel;
+import it.polimi.ingsw.view.Ui;
 
 import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
 
+public class GUI implements Ui {
+    private GUIApplication guiApplication;
 
-public class GUI extends Application {
-    @Override
-    public void start(Stage primaryStage) throws IOException {
+    private String username;
 
-        Image icon = new Image("icon.png");
+    public static PlayerStatus status;
 
-        // Set the title of the stage
-        Parent root = FXMLLoader.load((getClass().getResource("AskNickname.fxml")));
-        primaryStage.setTitle("Codex Naturalis");
-        root.setStyle("-fx-background-color: black;");
-        primaryStage.getIcons().add(icon);
-        // Set the scene with the loaded FXML
-        primaryStage.setScene(new Scene(root,1280,720));
+    public static ViewModel myMatch;
 
-        primaryStage.setResizable(false);
-        // Show the stage
-        primaryStage.show();
+    public static Player myPlayer;
 
+    public static int matchID;
+
+    private Client client;
+
+    public static ArrayList<ServerChatMessage> chat;
+
+    public GUI(GUIApplication guiApplication) {
+        this.guiApplication =guiApplication;
     }
 
-    public static void main(String[] args) {
-        launch(args);
+    @Override
+    public void handleMessage(Message msg) {
+        if (msg instanceof ActionNotRecognize && guiApplication.getActualScene()==ScenesName.ASKCONNECTION){
+            guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription());
+        }
+
+    }
+    public void connect(Boolean isRmi, String ip, String port) throws IOException, NotBoundException {
+        Integer pt = Integer.parseInt(port);
+        if (isRmi){
+            client = new RMIClient(ip,pt,this);
+        }else {
+            client = new SocketClient(ip,pt,this);
+        }
     }
 }

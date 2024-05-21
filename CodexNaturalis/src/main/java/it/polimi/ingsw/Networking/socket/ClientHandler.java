@@ -2,6 +2,7 @@ package it.polimi.ingsw.Networking.socket;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
+import it.polimi.ingsw.Message.ServerToClientMsg.ActionSuccessMsg;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.model.Player;
@@ -48,7 +49,6 @@ public class ClientHandler extends Thread {
             GenericClientMessage temp;
             while (!this.isInterrupted()) {
                 try {
-
                     temp = (GenericClientMessage) inputStream.readObject();
                     System.out.println("ricevuto messaggio" + temp);
                     server.controllers.addInQueue(temp,gameListener);

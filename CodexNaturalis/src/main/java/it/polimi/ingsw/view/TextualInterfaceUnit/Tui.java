@@ -1,13 +1,14 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
+import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.view.View;
+import it.polimi.ingsw.view.Ui;
 
 import java.awt.*;
 import java.io.IOException;
@@ -20,7 +21,7 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 
-public class Tui /*extends Thread*/ implements View{
+public class Tui  implements Ui {
 
     private String username;
 
@@ -80,12 +81,9 @@ public class Tui /*extends Thread*/ implements View{
         askConnectionType();
 
         if(isRMI) {
-            final String serverName = "AdderServer";
-            Registry registry = LocateRegistry.getRegistry("localhost", 2334);
-            VirtualServer server = (VirtualServer) registry.lookup(serverName);
-            client = new RMIClient(server);
+            client = new RMIClient("localhost",1234,this);
         } else {
-            client = new SocketClient("192.168.1.113", 4234);
+            client = new SocketClient("localhost", 4234, this);
         }
 
         askLogin();
@@ -127,7 +125,7 @@ public class Tui /*extends Thread*/ implements View{
         print("-----------------------------------------------------------");
     }
 
-    @Override
+
     public void askLogin() throws Exception {
         do{
 
@@ -147,7 +145,7 @@ public class Tui /*extends Thread*/ implements View{
         } while(username.equals(""));
 
     }
-    @Override
+
     public void askMenuAction() throws Exception {
         print(Print.menuOption);
         print("-----------------------------------------------------------\n" +
@@ -175,14 +173,14 @@ public class Tui /*extends Thread*/ implements View{
 
     }
 
-    @Override
+
     public void askJoinFirst() throws InterruptedException, RemoteException {
         GenericClientMessage msg = new JoinFirstMessage(this.username);
         client.messageToServer(msg);
         Thread.sleep(1000);
     }
 
-    @Override
+
     public void askSetReady() throws InterruptedException, RemoteException {
         String option;
         if (!myPlayer.getReady()) {
@@ -203,7 +201,7 @@ public class Tui /*extends Thread*/ implements View{
         System.out.flush();
     }
 
-    @Override
+
     public void askDrawCard() throws InterruptedException, RemoteException {
         print("insert number of the deck: ");
 
@@ -223,7 +221,7 @@ public class Tui /*extends Thread*/ implements View{
         Thread.sleep(1000);
     }
 
-    @Override
+
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
         int index;
@@ -263,7 +261,7 @@ public class Tui /*extends Thread*/ implements View{
         }
     }
 
-    @Override
+
     public void askChat() throws RemoteException, InterruptedException {
 
         print("who do you want to send the message to: (BROADCAST for all players)");
@@ -289,7 +287,7 @@ public class Tui /*extends Thread*/ implements View{
 
     }
 
-    @Override
+
     public boolean askCreateMatch() throws Exception {
         CreateGameMessage message = new CreateGameMessage(this.username);
         client.messageToServer(message);
@@ -317,7 +315,7 @@ public class Tui /*extends Thread*/ implements View{
         return playerNumber;
     }
 */
-    @Override
+
     public boolean askJoinMatch() throws Exception {
         String value;
         do {
@@ -333,18 +331,18 @@ public class Tui /*extends Thread*/ implements View{
         return false;
     }
 
-    @Override
+
     public boolean askLeaveMatch() throws RemoteException {
         return false;
     }
 
-    @Override
+
     public boolean askExitGame() throws RemoteException {
         System.exit(0);
         return false;
     }
 
-    @Override
+
     public void showCommonGoals() {
         print("common targets");
         for(TargetCard c: myMatch.getCommonTarget()) {
@@ -352,18 +350,18 @@ public class Tui /*extends Thread*/ implements View{
         }
     }
 
-    @Override
+
     public void showPersonalGoal() throws RemoteException {
         print("your target card");
         print(myPlayer.getTarget().getIdCard());
     }
 
-    @Override
+
     public void announceCurrentPlayer() throws RemoteException {
 
     }
 
-    @Override
+
     public void showBoard() {
         int p = 1;
         print("-9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9");
@@ -469,7 +467,7 @@ public class Tui /*extends Thread*/ implements View{
         print("Game is Start!");
         status = PlayerStatus.GamePlay;
     }
-    @Override
+
     public void endGame() {
         print("GAME END");
         print("Point table: ");
@@ -483,7 +481,7 @@ public class Tui /*extends Thread*/ implements View{
         print("!!!!!!!");
     }
 
-    @Override
+
     public void drawCard() throws IOException, InterruptedException {
         print("draw a card:\n" +
                 "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + myMatch.getResourceDeck().get(1).getCode() +
@@ -647,5 +645,66 @@ public class Tui /*extends Thread*/ implements View{
 
     public static void printMessage(String message) {
         print(message);
+    }
+
+    @Override
+    public void handleMessage(Message msg)  {
+        if(msg instanceof joinSuccessMsg) {
+            status = PlayerStatus.MatchStart;
+            myMatch = ((joinSuccessMsg) msg).getModel();
+            myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
+            print(myMatch.idMatch);
+
+        } else if(msg instanceof joinFailMsg) {
+            print("join fail because" + ((joinFailMsg) msg).getDescription());
+        }else if(msg instanceof ServerChatMessage) {
+            print("New chat Message:");
+            showNewChatMessage(msg);
+            //store the chat for historical chat view
+            chat.add((ServerChatMessage)msg);
+        } else if(msg instanceof newPlayerInMsg) {
+            print("new player is in" + ((newPlayerInMsg) msg).getNicknameNewPlayer());
+        } else if(msg instanceof gameStartMsg) {
+            //print("the game is starting.. 3.. 2.. 1..");
+            //print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
+            myMatch = ((gameStartMsg) msg).getModel();
+            myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            status = PlayerStatus.Preparing;
+            //print("game status change" );
+
+        } else if(msg instanceof playCardSuccess) {
+            Tui.myMatch = ((playCardSuccess) msg).getModel();
+            Tui.myPlayer = ((playCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            Tui.hasChange = 1;
+            Tui.hasPlayed = true;
+            if(((playCardSuccess) msg).getModel().getCurrentPlayer().getNickname().equals(Tui.myPlayer.nickname)) {
+                Tui.status = PlayerStatus.Draw;
+            }
+
+        } else if(msg instanceof drawCardSuccess) {
+            Tui.status = PlayerStatus.GamePlay;
+            Tui.myMatch = ((drawCardSuccess) msg).getModel();
+            Tui.myPlayer = ((drawCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        }
+        else if(msg instanceof ActionSuccessMsg) {
+            Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
+            Tui.myPlayer = ((ActionSuccessMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        } else if(msg instanceof ActionNotRecognize) {
+            Tui.printMessage(((ActionNotRecognize) msg).getDescription());
+        } else if(msg instanceof NowIsYourRoundMsg) {
+            Tui.printMessage(((NowIsYourRoundMsg) msg).getDescription());
+        } else if(msg instanceof LastRoundMessage) {
+            Tui.printMessage("ATTENTION !! it's the last round");
+        } else if(msg instanceof endGameMessage) {
+            Tui.status = PlayerStatus.END;
+            Tui.myMatch = ((endGameMessage) msg).getModel();
+            Tui.myPlayer = ((endGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        }
+
+        /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {
+            Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
+
+        }*/
+
     }
 }

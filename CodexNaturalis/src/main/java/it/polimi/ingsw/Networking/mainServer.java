@@ -19,8 +19,8 @@ public class mainServer{
 
         final String serverName = "AdderServer";
         VirtualServer server = new RMIServer(AllMatchesController.getInstance());
-        VirtualServer stub= (VirtualServer) UnicastRemoteObject.exportObject(server, 0);
-        Registry registry= LocateRegistry.createRegistry(2334);
+        VirtualServer stub= (VirtualServer) UnicastRemoteObject.exportObject(server, 1234);
+        Registry registry= LocateRegistry.createRegistry(1234);
         registry.rebind (serverName, stub);
         System.out.println("server bound");
     }
