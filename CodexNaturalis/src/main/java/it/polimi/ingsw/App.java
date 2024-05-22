@@ -38,6 +38,7 @@ public class App
             Tui tui  = new Tui();
             tui.init();
         } else {
+            print("Starting Gui.....");
             GUIApplication guiApplication = new GUIApplication();
             guiApplication.main(null);
 

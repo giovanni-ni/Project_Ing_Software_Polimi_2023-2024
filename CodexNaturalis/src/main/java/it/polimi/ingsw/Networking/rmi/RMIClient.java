@@ -10,6 +10,7 @@ import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 import it.polimi.ingsw.view.Ui;
 
+import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -39,14 +40,16 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
             this.server = (VirtualServer) registry.lookup(serverName);
         }catch (RemoteException | NotBoundException e){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         this.ui = ui;
     }
 
     @Override
     public void update(Message msg) throws RemoteException{
-        ui.handleMessage(msg);
 
+        ui.handleMessage((GenericServerMessage) msg);
     }
 
     @Override

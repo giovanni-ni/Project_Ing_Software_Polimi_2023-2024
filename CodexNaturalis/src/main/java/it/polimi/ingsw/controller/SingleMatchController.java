@@ -39,6 +39,7 @@ public class SingleMatchController extends Thread{
     public void setPlayerAsReady_StartGameIfAllReady(String p) throws RemoteException {
 
         match.setPlayerReady(p);
+
         /*the game will start automatically if all the players are ready*/
         if(match.isAllPlayersReady()&& match.getPlayers().size()>=2){
             match.setStatus(MatchStatus.Playing);
@@ -47,7 +48,8 @@ public class SingleMatchController extends Thread{
             extractFirstPlayer();
 
             notifyAllListeners(new gameStartMsg(this.match));
-
+        }else {
+            notifyAllListeners(new ActionSuccessMsg(this.match));
         }
     }
 

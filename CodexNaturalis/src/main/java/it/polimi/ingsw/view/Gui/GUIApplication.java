@@ -2,6 +2,7 @@ package it.polimi.ingsw.view.Gui;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.view.Gui.SceneControllers.GenericSceneController;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -12,6 +13,8 @@ import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.util.concurrent.BlockingQueue;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
@@ -21,6 +24,7 @@ public class GUIApplication extends Application{
     private Stage stage;
     private BiMap<Scene, ScenesName> scenesList;
     private BiMap<GenericSceneController, ScenesName> controllerList;
+
 
 
     @Override
@@ -86,5 +90,8 @@ public class GUIApplication extends Application{
         ScenesName scenesName =getActualScene();
         controllerList.inverse().get(scenesName).ShowErrorMessage(description);
 
+    }
+    public void notify(Message msg) throws RemoteException {
+        Gui.notify(msg);
     }
 }

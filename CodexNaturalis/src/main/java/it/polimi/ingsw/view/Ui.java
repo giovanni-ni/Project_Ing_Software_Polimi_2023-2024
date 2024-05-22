@@ -8,9 +8,7 @@ import java.rmi.RemoteException;
 
 public interface Ui {
 
-   public void handleMessage(Message msg);
-
-
+   public void handleMessage(GenericServerMessage msg);
 
 }
 

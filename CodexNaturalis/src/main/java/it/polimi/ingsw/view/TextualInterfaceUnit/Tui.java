@@ -648,7 +648,7 @@ public class Tui  implements Ui {
     }
 
     @Override
-    public void handleMessage(Message msg)  {
+    public void handleMessage(GenericServerMessage msg)  {
         if(msg instanceof joinSuccessMsg) {
             status = PlayerStatus.MatchStart;
             myMatch = ((joinSuccessMsg) msg).getModel();

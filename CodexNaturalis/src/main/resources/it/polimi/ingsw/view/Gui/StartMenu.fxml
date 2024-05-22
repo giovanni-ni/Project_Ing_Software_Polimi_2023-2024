@@ -8,59 +8,87 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.GenericSceneController">
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.MenuController">
    <children>
-      <StackPane alignment="TOP_CENTER" prefHeight="800.0" prefWidth="1280.0">
+      <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
          <children>
-            <ImageView fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView blendMode="SRC_ATOP" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../images/view/initialTab.JPG" />
                </image>
             </ImageView>
-            <ImageView accessibleRole="BUTTON" depthTest="ENABLE" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-               <image>
-                  <Image url="@../../../../../images/view/CreateLobbyBottom.png" />
-               </image>
+            <Button mnemonicParsing="false" onAction="#goReconnect" StackPane.alignment="TOP_CENTER">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/RecconectBottom.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+               <StackPane.margin>
+                  <Insets top="550.0" />
+               </StackPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-               <StackPane.margin>
-                  <Insets top="250.0" />
-               </StackPane.margin>
-            </ImageView>
-            <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            </Button>
+            <Button mnemonicParsing="false" onAction="#goJoinGame" StackPane.alignment="TOP_CENTER">
+               <graphic>
+                  <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/JoinSpecificBottom.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
                <StackPane.margin>
                   <Insets top="350.0" />
                </StackPane.margin>
-               <image>
-                  <Image url="@../../../../../images/view/JoinSpecificBottom.png" />
-               </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </ImageView>
-            <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-               <image>
-                  <Image url="@../../../../../images/view/JoinRandomBottom.png" />
-               </image>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#goJoinFirst" StackPane.alignment="TOP_CENTER">
+               <graphic>
+                  <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/JoinRandomBottom.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
                <StackPane.margin>
                   <Insets top="450.0" />
                </StackPane.margin>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+            </Button>
+            <Button alignment="CENTER" graphicTextGap="0.0" mnemonicParsing="false" onAction="#goCreateGame" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
-                  <Insets top="550.0" />
+                  <Insets top="250.0" />
                </StackPane.margin>
-               <image>
-                  <Image url="@../../../../../images/view/RecconectBottom.png" />
-               </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
-            </ImageView>
+               <graphic>
+                  <ImageView accessibleRole="BUTTON" blendMode="SRC_ATOP" depthTest="ENABLE" fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/CreateLobbyBottom.png" />
+                     </image>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </StackPane>
    </children>

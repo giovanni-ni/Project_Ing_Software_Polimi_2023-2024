@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ActionSuccessMsg;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
+import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.Player;
 
 import java.io.*;
@@ -46,6 +47,7 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
         try {
+            gameListener.update(new ActionSuccessMsg(new Match(0)));
             GenericClientMessage temp;
             while (!this.isInterrupted()) {
                 try {

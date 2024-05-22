@@ -6,8 +6,7 @@ public enum ScenesName {
     EASYJOIN("easyJoin.fxml"),
     START("Start.fxml"),
     STARTMENU("StartMenu.fxml"),
-    INGAME("Board.fxml");
-
+    BOARD("Board.fxml");
 
 
     private final String path;

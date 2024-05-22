@@ -1,9 +1,11 @@
 package it.polimi.ingsw.Networking.rmi;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
+import it.polimi.ingsw.Message.ServerToClientMsg.ActionSuccessMsg;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.controller.AllMatchesController;
+import it.polimi.ingsw.model.Match;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -27,8 +29,9 @@ public class RMIServer implements VirtualServer {
     }
 
     @Override
-    public void connect(Listener client) throws RemoteException {
+    public void connect(Listener client) throws IOException {
         synchronized (this.clients){
+            client.update(new ActionSuccessMsg(new Match(0)));
             this.clients.add(client);
         }
     }
