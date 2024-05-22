@@ -6,6 +6,7 @@ import it.polimi.ingsw.model.PlayerColor;
 import it.polimi.ingsw.view.Gui.GUIApplication;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.rmi.RemoteException;
@@ -20,6 +21,7 @@ public class WaitingController extends GenericSceneController {
     private  HashMap<PlayerColor,ImageView> tickList;
     private  HashMap<PlayerColor, Text> nickList;
     boolean isInitialized = false;
+    boolean isReady = false;
 
 
     @FXML
@@ -30,7 +32,10 @@ public class WaitingController extends GenericSceneController {
 
     @FXML
     void setPlayerReady() throws RemoteException {
-        getGuiApplication().getGui().notify(new SetReadyMessage());
+        if (!isReady){
+            getGuiApplication().getGui().notify(new SetReadyMessage());
+            isReady=true;
+        }
     }
 
 
@@ -45,7 +50,6 @@ public class WaitingController extends GenericSceneController {
 
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
         for (Player p : players){
-
             ballList.get(p.getPlayerID()).setVisible(true);
             nickList.get(p.getPlayerID()).setText(p.nickname);
             tickList.get(p.getPlayerID()).setVisible(p.getReady());
@@ -78,6 +82,12 @@ public class WaitingController extends GenericSceneController {
         nickList.put(PlayerColor.YELLOW, nickYellow);
         nickList.put(PlayerColor.GREEN, nickGreen);
         return nickList;
+    }
+    @Override
+    public void ShowErrorMessage(String string){
+        ErrorMessage.setText(string);
+        ErrorMessage.setFill(Color.RED);
+        isReady=false;
     }
 }
 

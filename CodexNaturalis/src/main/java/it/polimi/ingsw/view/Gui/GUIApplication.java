@@ -35,7 +35,8 @@ public class GUIApplication extends Application{
         loadStage(primaryStage);
         stage.setOnCloseRequest(we -> System.exit(0));
         showScene(ScenesName.START);
-        stage.alwaysOnTopProperty();
+        stage.setAlwaysOnTop(true);
+        stage.setAlwaysOnTop(false);
     }
 
     public static void main(String[] args) {

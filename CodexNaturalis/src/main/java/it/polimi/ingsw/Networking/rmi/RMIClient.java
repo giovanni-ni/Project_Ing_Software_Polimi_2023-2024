@@ -32,23 +32,21 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     private VirtualServer server;
     private Ui ui;
 
-    public RMIClient(String ip, int port, Ui ui) throws RemoteException, NotBoundException {
+    public RMIClient(String ip, int port, Ui ui) throws RemoteException {
         try{
+            this.ui = ui;
             String serverName = "AdderServer";
             Registry registry = LocateRegistry.getRegistry(ip, port);
-            this.server.connect(this);
             this.server = (VirtualServer) registry.lookup(serverName);
-        }catch (RemoteException | NotBoundException e){
+            this.server.connect(this);
+        }catch (Exception e){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-        this.ui = ui;
+
     }
 
     @Override
     public void update(Message msg) throws RemoteException{
-
         ui.handleMessage((GenericServerMessage) msg);
     }
 

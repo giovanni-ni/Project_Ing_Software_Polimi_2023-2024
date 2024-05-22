@@ -34,7 +34,7 @@
                         <Image url="@../../../../../images/view/selectConnection.png" />
                     </image>
                     <StackPane.margin>
-                        <Insets top="100.0" />
+                        <Insets top="150.0" />
                     </StackPane.margin>
                 </ImageView>
                 <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
@@ -42,17 +42,9 @@
                         <Image url="@../../../../../images/view/insert.png" />
                     </image>
                     <StackPane.margin>
-                        <Insets top="250.0" />
+                        <Insets top="300.0" />
                     </StackPane.margin>
                 </ImageView>
-            <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
-               <image>
-                  <Image url="@../../../../../images/view/insert.png" />
-               </image>
-               <StackPane.margin>
-                  <Insets top="350.0" />
-               </StackPane.margin>
-            </ImageView>
                 <Text fx:id="ErrorMessage" fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER">
                     <StackPane.margin>
                         <Insets top="600.0" />
@@ -70,30 +62,25 @@
                       </ImageView>
                </graphic>
                <StackPane.margin>
-                  <Insets top="500.0" />
+                  <Insets top="450.0" />
                </StackPane.margin>
             </Button>
             <CheckBox fx:id="RMIcheckBox" mnemonicParsing="false" text="RMI" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
-                  <Insets right="300.0" top="450.0" />
+                  <Insets right="300.0" top="400.0" />
                </StackPane.margin>
             </CheckBox>
             <CheckBox fx:id="SocketcheckBox" mnemonicParsing="false" text="Socket" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
-                  <Insets top="450.0" />
+                  <Insets top="400.0" />
                </StackPane.margin>
             </CheckBox>
             </children>
         </StackPane>
-        <TextField fx:id="IpTextField" layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="ServerIP (empty for localhost)" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="255.0">
+        <TextField fx:id="IpTextField" layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="ServerIP (empty for localhost)" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="305.0">
             <font>
                 <Font size="22.0" />
             </font>
         </TextField>
-      <TextField fx:id="PortTextField" layoutX="10.0" layoutY="359.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="Port" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="355.0">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </TextField>
     </children>
 </AnchorPane>

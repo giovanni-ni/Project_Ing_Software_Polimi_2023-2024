@@ -6,6 +6,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Client;
+import it.polimi.ingsw.Networking.DefaultPort;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
 import it.polimi.ingsw.model.MatchStatus;
@@ -60,12 +61,11 @@ public class GUI extends Thread implements Ui {
     public void handleMessage(GenericServerMessage msg) {
         processQueue.add(msg);
     }
-    public void connect(Boolean isRmi, String ip, String port) throws IOException, NotBoundException {
-        Integer pt = Integer.parseInt(port);
+    public void connect(Boolean isRmi, String ip) throws IOException {
         if (isRmi){
-            client = new RMIClient(ip,pt,this);
+            client = new RMIClient(ip, DefaultPort.RMIPORT.getNumber(),this);
         }else {
-            client = new SocketClient(ip,pt,this);
+            client = new SocketClient(ip,DefaultPort.SOCKETPORT.getNumber(), this);
         }
     }
     @Override
@@ -112,7 +112,7 @@ public class GUI extends Thread implements Ui {
             ((GenericClientMessage)msg).setNickname(username);
             ((GenericClientMessage) msg).setGameID(matchID);
         }
-        
+
         client.messageToServer((GenericClientMessage) msg);
     }
 

@@ -21,8 +21,6 @@ public class StartController extends GenericSceneController {
     @FXML
     TextField IpTextField;
 
-    @FXML
-    TextField PortTextField;
 
     @FXML
     CheckBox RMIcheckBox;
@@ -49,23 +47,14 @@ public class StartController extends GenericSceneController {
         }else if (!RMIcheckBox.isSelected() && !SocketcheckBox.isSelected()){
             ErrorMessage.setText("Please Select a type of connection");
             ErrorMessage.setFill(Color.RED);
-        }else if (PortTextField.getText().equals("")){
-            ErrorMessage.setText("Please Select a Port");
-            ErrorMessage.setFill(Color.RED);
-        }else if (!PortTextField.getText().matches("\\d+")){
-            ErrorMessage.setText("Please type only numbers");
-            ErrorMessage.setFill(Color.RED);
+
         }else if (!IpTextField.getText().equals("") && !isValidIPAddress(IpTextField.getText())){
             ErrorMessage.setText("Not valid IP");
-            ErrorMessage.setFill(Color.RED);
-        }
-        else if (!isValidPort(PortTextField.getText())){
-            ErrorMessage.setText("Not valid Port");
             ErrorMessage.setFill(Color.RED);
         }else{
             ErrorMessage.setText("Connecting......");
             ErrorMessage.setFill(Color.GREEN);
-            getGuiApplication().getGui().connect(RMIcheckBox.isSelected(),IpTextField.getText(),PortTextField.getText());
+            getGuiApplication().getGui().connect(RMIcheckBox.isSelected(),IpTextField.getText());
 
         }
     }
@@ -91,17 +80,6 @@ public class StartController extends GenericSceneController {
         }
         Matcher m = p.matcher(ip);
         return m.matches();
-    }
-    public static boolean isValidPort(String port){
-        try{
-            int portNumber = Integer.parseInt(port);
-            if(portNumber < 0 || portNumber > 65535){
-                return false;
-            }
-        }catch(NumberFormatException e){
-            return false;
-        }
-        return true;
     }
     @Override
     public void ShowErrorMessage(String string){

@@ -4,6 +4,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Client;
+import it.polimi.ingsw.Networking.DefaultPort;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
@@ -81,9 +82,9 @@ public class Tui  implements Ui {
         askConnectionType();
 
         if(isRMI) {
-            client = new RMIClient("localhost",1234,this);
+            client = new RMIClient("localhost", DefaultPort.RMIPORT.getNumber(), this);
         } else {
-            client = new SocketClient("localhost", 4234, this);
+            client = new SocketClient("localhost", DefaultPort.SOCKETPORT.getNumber(), this);
         }
 
         askLogin();

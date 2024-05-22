@@ -20,5 +20,7 @@ module it.polimi.ingsw {
     opens it.polimi.ingsw.Networking.remoteInterface to java.rmi;
     exports it.polimi.ingsw.view.Gui.SceneControllers;
     opens it.polimi.ingsw.view.Gui.SceneControllers to javafx.fxml;
+    exports it.polimi.ingsw.Networking.Listeners to java.rmi;
+
 
 }
