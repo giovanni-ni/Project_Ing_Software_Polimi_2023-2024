@@ -5,10 +5,7 @@ import it.polimi.ingsw.Networking.Listeners.Listener;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Match implements Serializable {
 
@@ -125,6 +122,7 @@ public class Match implements Serializable {
 		currentPlayer = null;
 
 		commonTarget = new ArrayList<TargetCard>();
+
 	}
 
 	public Match() throws IOException {
@@ -254,6 +252,8 @@ public class Match implements Serializable {
 				return false;
 		}
 		players.add(p);
+        ArrayList<PlayerColor> playerColors = new ArrayList<>(List.of(PlayerColor.values()));
+		p.setPlayerID(playerColors.get(players.size()-1));
 		pt.getPlayerPoints().put(p,0);
 
 		return true;

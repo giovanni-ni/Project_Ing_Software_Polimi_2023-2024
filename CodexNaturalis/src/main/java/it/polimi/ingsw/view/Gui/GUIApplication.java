@@ -3,8 +3,10 @@ package it.polimi.ingsw.view.Gui;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.model.ViewModel;
 import it.polimi.ingsw.view.Gui.SceneControllers.GenericSceneController;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -33,6 +35,7 @@ public class GUIApplication extends Application{
         loadStage(primaryStage);
         stage.setOnCloseRequest(we -> System.exit(0));
         showScene(ScenesName.START);
+        stage.alwaysOnTopProperty();
     }
 
     public static void main(String[] args) {
@@ -75,11 +78,8 @@ public class GUIApplication extends Application{
        if(scenesName==ScenesName.START)
            stage.centerOnScreen();
        stage.show();
+       updateCurrentSceneModel();
 
-
-    }
-    public void Connection(Boolean isRMI, String ip, String port) throws IOException, NotBoundException {
-        Gui.connect(isRMI,ip,port);
     }
      public ScenesName getActualScene(){
         return  scenesList.get(stage.getScene());
@@ -89,9 +89,17 @@ public class GUIApplication extends Application{
     public void showErrorMessage(String description) {
         ScenesName scenesName =getActualScene();
         controllerList.inverse().get(scenesName).ShowErrorMessage(description);
+    }
+
+    public void updateCurrentSceneModel(){
+
+        controllerList.inverse().get(getActualScene()).updateModel();
 
     }
-    public void notify(Message msg) throws RemoteException {
-        Gui.notify(msg);
+
+    public GUI getGui() {
+        return Gui;
     }
+
+
 }

@@ -135,7 +135,7 @@ public class SingleMatchController extends Thread{
     public boolean addPlayer(Player p, Listener listener) throws RemoteException {
 
         if (match.addPlayer(p) && !isPlayerFull()){
-            notifyAllListeners(new newPlayerInMsg(p.nickname));
+            notifyAllListeners(new newPlayerInMsg(this.match));
             listener.setNickname(p.nickname);
             addListener(listener);
             return true;

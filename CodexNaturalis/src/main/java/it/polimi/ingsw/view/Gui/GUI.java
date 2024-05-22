@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -51,6 +52,7 @@ public class GUI extends Thread implements Ui {
         chat = new ArrayList<>();
         this.start();
         matchID =0;
+        username = null;
 
     }
 
@@ -82,27 +84,43 @@ public class GUI extends Thread implements Ui {
     public void handle(Message msg){
         if (msg instanceof ActionNotRecognize){
             guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription());
-        }
-        if (guiApplication.getActualScene()==ScenesName.ASKCONNECTION){
+        }else if (guiApplication.getActualScene()==ScenesName.ASKCONNECTION){
             if (msg instanceof ActionSuccessMsg){
                 Platform.runLater(()->guiApplication.showScene(ScenesName.STARTMENU));
             }
         } else if(guiApplication.getActualScene() == ScenesName.ASKNICKNAME || guiApplication.getActualScene() == ScenesName.EASYJOIN) {
             if (msg instanceof joinSuccessMsg){
-
                 myMatch =((joinSuccessMsg)msg).getModel();
                 matchID=myMatch.getIdMatch();
                 myPlayer = myMatch.getPlayerByNickname(username);
-                Platform.runLater(()->guiApplication.showScene(ScenesName.BOARD));
+                Platform.runLater(()->guiApplication.showScene(ScenesName.WAITING));
+
             }
 
+        } else if (msg instanceof ActionSuccessMsg) {
+            myMatch =((ActionSuccessMsg)msg).getModel();
+            matchID=myMatch.getIdMatch();
+            guiApplication.updateCurrentSceneModel();
         }
     }
 
     public void notify(Message msg) throws RemoteException {
-        ((GenericClientMessage) msg).setGameID(matchID);
-        if (msg instanceof JoinGameMessage)
+
+        if (msg instanceof JoinGameMessage){
             username =((GenericClientMessage)msg).getNickname();
+        } else if (username!=null) {
+            ((GenericClientMessage)msg).setNickname(username);
+            ((GenericClientMessage) msg).setGameID(matchID);
+        }
+        
         client.messageToServer((GenericClientMessage) msg);
+    }
+
+    public ViewModel getMyMatch() {
+        return myMatch;
+    }
+
+    public String getMatchID() {
+        return new String(String.valueOf(matchID));
     }
 }

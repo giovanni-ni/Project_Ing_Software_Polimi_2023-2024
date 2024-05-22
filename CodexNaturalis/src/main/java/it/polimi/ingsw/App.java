@@ -8,7 +8,7 @@ import javafx.application.Application;
 import java.awt.*;
 import java.util.*;
 
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 
 /**
  * Hello world!
@@ -30,7 +30,7 @@ public class App
             try {
                 option = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
-                print(Color.RED + "Invalid input. Try again. (1 or 2)");
+                print(ANSI_MUSHROOM + "Invalid input. Try again. (1 or 2)"+ANSI_RESET);
             }
         } while (option != 1 && option != 2);
 

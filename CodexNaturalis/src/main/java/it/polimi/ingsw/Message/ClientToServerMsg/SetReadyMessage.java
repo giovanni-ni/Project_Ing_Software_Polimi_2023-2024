@@ -5,4 +5,6 @@ public class SetReadyMessage extends GenericClientMessage {
         super(id,nickname);
         //super.isMessageForMain();
     }
+    public SetReadyMessage() {
+    }
 }

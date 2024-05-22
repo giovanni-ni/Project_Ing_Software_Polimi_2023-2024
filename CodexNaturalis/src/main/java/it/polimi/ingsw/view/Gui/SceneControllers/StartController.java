@@ -65,7 +65,7 @@ public class StartController extends GenericSceneController {
         }else{
             ErrorMessage.setText("Connecting......");
             ErrorMessage.setFill(Color.GREEN);
-            getGuiApplication().Connection(RMIcheckBox.isSelected(),IpTextField.getText(),PortTextField.getText());
+            getGuiApplication().getGui().connect(RMIcheckBox.isSelected(),IpTextField.getText(),PortTextField.getText());
 
         }
     }

@@ -24,18 +24,18 @@ public class MenuController extends GenericSceneController{
     @FXML
     void sendNickName(ActionEvent event) throws RemoteException {
         if (isCreateGame){
-            getGuiApplication().notify(new CreateGameMessage(nickName.getText()));
+            getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText()));
         }else {
-            getGuiApplication().notify(new CreateGameMessage(nickName.getText())); //ToDO if we do join first method
+            getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText())); //ToDO if we do join first method
         }
 
     }
     @FXML
     void sendAll(ActionEvent event) throws RemoteException {
         if (isJoinGame){
-            getGuiApplication().notify(new JoinGameMessage(nickName.getText(), Integer.parseInt(gameId.getText())));
+            getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(), Integer.parseInt(gameId.getText())));
         }else {
-            getGuiApplication().notify(new JoinGameMessage(nickName.getText(),Integer.parseInt(gameId.getText())));
+            getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(),Integer.parseInt(gameId.getText())));
             //todo reconnect if we do that
         }
 
