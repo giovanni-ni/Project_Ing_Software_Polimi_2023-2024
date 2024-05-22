@@ -93,9 +93,7 @@ public class GUIApplication extends Application{
     }
 
     public void updateCurrentSceneModel(){
-
         controllerList.inverse().get(getActualScene()).updateModel();
-
     }
 
     public GUI getGui() {

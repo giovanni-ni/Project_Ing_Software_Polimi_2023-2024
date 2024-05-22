@@ -119,7 +119,11 @@ public class BoardController extends GenericSceneController {
             }
         }
     }
-
+    @Override
+    public void updateModel(){
+        ViewModel model = getGuiApplication().getGui().getMyMatch();
+        //todo update all the scene with the information of the model
+    }
 
 
 
