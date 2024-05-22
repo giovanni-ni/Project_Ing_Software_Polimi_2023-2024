@@ -23,39 +23,101 @@ public class BoardController extends GenericSceneController {
 
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
-            deckBackground, pointTable;
+            deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
+    firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard ;
     @FXML
     Label gameStatus;
 
-
-    public void setUpBoard()
+    public void setUpBoard(ArrayList<TargetCard> commonTarget)
     {
         Image myImage1 = new Image("playGround.png");
         Image myImage2 =new Image("transparentTabCoh.png");
         Image myImage3 =new Image("transparentTabDeck.png");
         Image myImage4 =new Image("pointTableBottom.png");
-
+        Image myImage6= new Image("TargetCardFront ("+commonTarget.get(0).getIdCard()+").jpg");
+        Image myImage7= new Image("TargetCardFront ("+commonTarget.get(1).getIdCard()+").jpg");
+        Image myImage8= new Image("TargetBack.jpg");
         boardBrown.setImage(myImage1);
         cardOnHandBackground.setImage(myImage2);
         deckBackground.setImage(myImage3);
         pointTable.setImage(myImage4);
+        firstTargetCard.setImage(myImage6);
+        secondTargetCard.setImage(myImage7);
+        backTargetCard.setImage(myImage8);
     }
-
-
+    private void resetCardOnHand (){
+        firstCardOnHand.setImage(null);
+        secondCardOnHand.setImage(null);
+        thirdCardOnHand.setImage(null);
+    }
 
     private void showCardOnHand(ArrayList<Card> cardOnHand){
+        Image myImage5;
+        int numCard =1;
         for(Card c : cardOnHand) {
             if(c.isGoldCard()) {
-                Image myImage5 = new Image("GoldCardFront (" + c.getCode() + ").png");
+                myImage5 = new Image("GoldCardFront (" + c.getCode() + ").jpg");
             }
             else {
-                Image myImage5 = new Image("ResourceCardFront (" + c.getCode() + ").png");
+                myImage5 = new Image("ResourceCardFront (" + c.getCode() + ").jpg");
             }
+            if(numCard==1){
+                firstCardOnHand.setImage(myImage5);
+            }else if(numCard==2){
+                secondCardOnHand.setImage(myImage5);
+            } else if (numCard==3){
+                thirdCardOnHand.setImage(myImage5);
+            }
+            numCard++;
         }
     }
-    private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck,
-                           ArrayList<TargetCard> commonTarget){
+    private void resetDeck(){
+        firstResourceCard.setImage(null);
+        secondResourceCard.setImage(null);
+        kingdomResourceDeck.setImage(null);
+        firstGoldCard.setImage(null);
+        secondGoldCard.setImage(null);
+        kingdomGoldDeck.setImage(null);
 
+    }
+    private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck){
+
+        for(int i=0; i<3; i++){
+            Image image9 = null;
+            Image image10=null;
+            if(i==0 ||i ==1) {
+                image9 = new Image("GoldCardFront (" + goldDeck.get(i).getCode() + ").jpg");
+                image10 = new Image("ResourceCardFront (" + resourceDeck.get(i).getCode() + ").jpg");
+            }else{
+                if(goldDeck.get(i).getKingdom().equals(Elements.INSECT))
+                    image9= new Image("InsectBackGold.jpg");
+                else if (goldDeck.get(i).getKingdom().equals(Elements.ANIMALS))
+                    image9= new Image("AnimalsBackGold.jpg");
+                else if (goldDeck.get(i).getKingdom().equals(Elements.MUSHROOMS))
+                    image9=new Image("AnimalsBackGold.jpg");
+                else if(goldDeck.get(i).getKingdom().equals(Elements.VEGETAL))
+                    image9 =new Image("AnimalsBackGold.jpg");
+
+                if(resourceDeck.get(i).getKingdom().equals(Elements.INSECT))
+                    image10= new Image("InsectBack.jpg");
+                else if (resourceDeck.get(i).getKingdom().equals(Elements.ANIMALS))
+                    image10= new Image("AnimalsBack.jpg");
+                else if (resourceDeck.get(i).getKingdom().equals(Elements.MUSHROOMS))
+                    image10=new Image("AnimalsBack.jpg");
+                else if(resourceDeck.get(i).getKingdom().equals(Elements.VEGETAL))
+                    image10 =new Image("AnimalsBack.jpg");
+            }
+            if(i==0){
+                firstGoldCard.setImage(image9);
+                firstResourceCard.setImage(image10);
+            }else if(i==1){
+                secondGoldCard.setImage(image9);
+                secondResourceCard.setImage(image10);
+            }else if(i==2){
+                kingdomGoldDeck.setImage(image9);
+                kingdomResourceDeck.setImage(image10);
+            }
+        }
     }
 
 
