@@ -10,8 +10,8 @@ public class BoardController {
 
     public void displayImage()
     {
-        Image myImage = new Image("boardBrown.png");
-        Image myImage2 =new Image("CardOnHandBackGround.png");
+        Image myImage = new Image("playGround.png");
+        Image myImage2 =new Image(".png");
         boardBrown.setImage(myImage);
         cardOnHandBackground.setImage(myImage2);
 

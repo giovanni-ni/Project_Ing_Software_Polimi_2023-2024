@@ -5,7 +5,8 @@ public enum ScenesName {
     ASKNICKNAME("AskNickname.fxml"),
     EASYJOIN("easyJoin.fxml"),
     START("Start.fxml"),
-    STARTMENU("StartMenu.fxml");
+    STARTMENU("StartMenu.fxml"),
+    INGAME("Board.fxml");
 
 
 
