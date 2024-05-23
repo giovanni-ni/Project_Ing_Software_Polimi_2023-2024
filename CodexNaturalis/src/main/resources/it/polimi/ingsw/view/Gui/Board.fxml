@@ -19,19 +19,19 @@
                 <Image url="@../../../../../images/view/transparentTabCoh.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="27.0">
+        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0">
             <image>
-                <Image url="@../../../../../images/cards/GoldCardFront (61).jpg" />
+                <Image url="@../../../../../images/cards/GoldCardFront(61).jpg" />
             </image></ImageView>
-        <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="157.0" layoutX="18.0" layoutY="582.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="1105.0">
+        <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="157.0" layoutX="18.0" layoutY="595.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="18.0" AnchorPane.rightAnchor="1117.7142791748047">
             <image>
-                <Image url="@../../../../../images/cards/ResourceCardFront (5).jpg" />
+                <Image url="@../../../../../images/cards/ResourceCardFront(5).jpg" />
             </image></ImageView>
-        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="592.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="28.0">
+        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="27.0">
             <image>
-                <Image url="@../../../../../images/cards/ResourceCardFront (1).jpg" />
+                <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
             </image></ImageView>
-        <Button layoutX="27.0" layoutY="327.0" mnemonicParsing="false" opacity="0.0" prefHeight="52.0" prefWidth="160.0" text="Button" />
+        <Button fx:id="button" layoutX="607.0" layoutY="456.0" mnemonicParsing="false" onAction="#init" prefHeight="52.0" prefWidth="160.0" text="Button" />
         <ImageView fx:id="deckBackground" fitHeight="268.0" fitWidth="367.0" layoutX="9.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../../../images/view/transparentTabDeck.png" />
@@ -47,5 +47,14 @@
             <Font name="Al Bayan Bold" size="20.0" />
          </font>
       </Label>
+      <ImageView fx:id="kingdomResourceDeck" fitHeight="67.0" fitWidth="97.0" layoutX="29.0" layoutY="29.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="secondResourceCard" fitHeight="67.0" fitWidth="127.0" layoutX="118.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="firstResourceCard" fitHeight="86.0" fitWidth="134.0" layoutX="274.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="kingdomGoldDeck" fitHeight="67.0" fitWidth="128.0" layoutX="-5.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="secondGoldCard" fitHeight="84.0" fitWidth="128.0" layoutX="128.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="firstGoldCard" fitHeight="84.0" fitWidth="128.0" layoutX="272.0" layoutY="104.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="backTargetCard" fitHeight="67.0" fitWidth="126.0" layoutX="27.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="secondTargetCard" fitHeight="80.0" fitWidth="100.0" layoutX="131.0" layoutY="174.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="firstTargetCard" fitHeight="67.0" fitWidth="110.0" layoutX="225.0" layoutY="210.0" pickOnBounds="true" preserveRatio="true" />
     </children>
 </AnchorPane>
