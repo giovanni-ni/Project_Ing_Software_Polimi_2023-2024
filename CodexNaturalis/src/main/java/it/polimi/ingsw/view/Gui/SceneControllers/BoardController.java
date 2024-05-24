@@ -23,6 +23,7 @@ import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
@@ -37,10 +38,12 @@ public class BoardController extends GenericSceneController {
     private ArrayList<TargetCard> commonTarget =new ArrayList<>();
 
     private ArrayList<ImageView> cardsOnHand= new ArrayList<>();
+    Boolean isClickedCardOnHand=false;
+    Boolean isClickedBoard= false;
+    Boolean toggle1= false, toggle2=false, toggle3= false;
+    Integer cardOnHandIndex_ToServer=null, getResourceCardIndex_toServer=null, getGoldCardIndex_toServer=null, putACardX_toServer=null,putACardY_toServer=null;
 
-    private boolean isClickedCardOnHand=false;
-    private boolean isClickedBoard= false;
-    private boolean deckCardClicked= false;
+    private HashMap<ImageView,Coordinate > boardMap= new HashMap<>();
 
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
@@ -93,6 +96,11 @@ public class BoardController extends GenericSceneController {
         setUpGridPane();
     }
 
+    @FXML
+    public void playCardBotton(ActionEvent e){
+        //sendmessageToserver
+    }
+
     private void showCardOnHand(ArrayList<Card> cardOnHand){
         Image myImage5;
         int numCard =1;
@@ -110,7 +118,21 @@ public class BoardController extends GenericSceneController {
                         @Override
                         public void handle(MouseEvent event) {
                             if (event.getButton() == MouseButton.PRIMARY) {
-                                isClickedCardOnHand=true;
+                                if(toggle1) {
+                                    isClickedCardOnHand = true;
+                                    cardOnHandIndex_ToServer = 0;
+                                    secondCardOnHand.setDisable(true);
+                                    thirdCardOnHand.setDisable(true);
+                                    //illumino
+                                }
+                                else{
+                                    isClickedCardOnHand = false;
+                                    cardOnHandIndex_ToServer = null;
+                                    secondCardOnHand.setDisable(false);
+                                    thirdCardOnHand.setDisable(false);
+                                    //disillumino
+                                }
+                                toggle1 =!toggle1 ;
                             }
                         }
 
@@ -122,7 +144,20 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
+                            if(toggle2) {
+                                isClickedCardOnHand = true;
+                                cardOnHandIndex_ToServer = 1;
+                                thirdCardOnHand.setDisable(true);
+                                firstCardOnHand.setDisable(true);
+                                //illumino
+                            }else{
+                                isClickedCardOnHand = false;
+                                cardOnHandIndex_ToServer = null;
+                                thirdCardOnHand.setDisable(false);
+                                firstCardOnHand.setDisable(false);
+                                //disillumino
+                            }
+                            toggle2=!toggle2;
                         }
                     }
 
@@ -134,7 +169,19 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
+                            if(toggle3) {
+                                isClickedCardOnHand = true;
+                                firstCardOnHand.setDisable(true);
+                                secondCardOnHand.setDisable(true);
+                                cardOnHandIndex_ToServer = 2;
+                                //illumino
+                            }else{
+                                isClickedCardOnHand = false;
+                                firstCardOnHand.setDisable(false);
+                                secondCardOnHand.setDisable(false);
+                                cardOnHandIndex_ToServer = null;
+                                //disillumino
+                            }
                         }
                     }
 
@@ -189,6 +236,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getGoldCardIndex_toServer=0;
                         }
                     }
 
@@ -200,6 +248,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getResourceCardIndex_toServer=0;
                         }
                     }
 
@@ -212,6 +261,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getGoldCardIndex_toServer=1;
                         }
                     }
 
@@ -222,6 +272,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getResourceCardIndex_toServer=1;
                         }
                     }
 
@@ -233,6 +284,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getGoldCardIndex_toServer=2;
                         }
                     }
 
@@ -243,6 +295,7 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedCardOnHand=true;
+                            getGoldCardIndex_toServer=2;
                         }
                     }
 
@@ -263,6 +316,15 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedBoard=true;
+                            ImageView imageClicked = (ImageView) event.getSource();
+                            StackPane stackPane= (StackPane) imageClicked.getParent();
+
+                            Integer columnIndex = GridPane.getColumnIndex(stackPane);
+                            Integer rowIndex = GridPane.getRowIndex(stackPane);
+
+                            // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
+                            putACardX_toServer = columnIndex == null ? 0 : columnIndex;
+                            putACardY_toServer = rowIndex == null ? 0 : rowIndex;
                         }
                     }
 
@@ -326,7 +388,5 @@ public class BoardController extends GenericSceneController {
         ViewModel model = getGuiApplication().getGui().getMyMatch();
         //todo update all the scene with the information of the model
     }
-
-
 
 }
