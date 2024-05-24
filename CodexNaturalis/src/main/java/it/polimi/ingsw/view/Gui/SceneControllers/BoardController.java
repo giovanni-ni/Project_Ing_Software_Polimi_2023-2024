@@ -332,17 +332,29 @@ public class BoardController extends GenericSceneController {
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
                             isClickedBoard=true;
+                            //get Index
                             ImageView imageClicked = (ImageView) event.getSource();
                             StackPane stackPane= (StackPane) imageClicked.getParent();
-
                             Integer columnIndex = GridPane.getColumnIndex(stackPane);
                             Integer rowIndex = GridPane.getRowIndex(stackPane);
 
                             // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
                             putACardX_toServer = columnIndex == null ? 0 : columnIndex;
                             putACardY_toServer = rowIndex == null ? 0 : rowIndex;
+                            // create message to server
                             coo_toServer.setX(putACardX_toServer);
                             coo_toServer.setY(putACardY_toServer);
+
+                            //add cardOnhand pic
+                            /*
+                            if(isClickedCardOnHand){
+                                gridPane.add()
+                            }
+
+                             */
+
+                            //gridPane.add();
+
                         }
                     }
 
