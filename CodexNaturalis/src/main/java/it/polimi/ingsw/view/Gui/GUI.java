@@ -101,6 +101,10 @@ public class GUI extends Thread implements Ui {
             if (msg instanceof gameStartMsg){
                 myMatch =((gameStartMsg)msg).getModel();
                 Platform.runLater(()->guiApplication.showScene(ScenesName.BOARD));
+            }else if (msg instanceof ActionSuccessMsg) {
+                myMatch = ((ActionSuccessMsg) msg).getModel();
+                matchID = myMatch.getIdMatch();
+                guiApplication.updateCurrentSceneModel();
             }
         } else if (msg instanceof ActionSuccessMsg) {
             myMatch =((ActionSuccessMsg)msg).getModel();

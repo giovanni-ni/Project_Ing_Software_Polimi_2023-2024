@@ -1,7 +1,7 @@
 package it.polimi.ingsw.Networking;
 
 public enum DefaultPort {
-    SOCKETPORT(4123),
+    SOCKETPORT(4234),
     RMIPORT(1234);
 
     private final int number;

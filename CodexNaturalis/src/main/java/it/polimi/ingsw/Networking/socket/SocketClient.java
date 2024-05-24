@@ -29,10 +29,10 @@ public class SocketClient extends Thread implements Client {
         this.serverAddress = address;
         this.serverPort = port;
         try{
+            this.ui =ui;
             socket = new Socket(serverAddress, serverPort);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
-            this.ui =ui;
             this.start();
         }catch (IOException e){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
