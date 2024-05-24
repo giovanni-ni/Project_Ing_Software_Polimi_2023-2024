@@ -34,7 +34,7 @@ public class SocketClient extends Thread implements Client {
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
             this.start();
-        }catch (IOException e){
+        }catch (IOException | RuntimeException e ){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
         }
 
