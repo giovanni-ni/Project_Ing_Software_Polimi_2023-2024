@@ -91,7 +91,6 @@ public class BoardController extends GenericSceneController {
         commonTarget=(ArrayList<TargetCard>) cp.loadTargetCards();
         setUpBoard(commonTarget);
         showDecks(goldDeck,resourceDeck);
-        setUpGridPane();
     }
 
     @FXML
@@ -322,34 +321,37 @@ public class BoardController extends GenericSceneController {
     private void setUpGridPane() {
         for(int i= 0; i<82; i++)
             for(int j=0; j<82; j++) {
-                ImageView imageView = new ImageView();
-                imageView.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
-                imageView.setCursor(Cursor.HAND);
-                imageView.setFitWidth(10);
-                imageView.setFitHeight(10);
-                imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedBoard=true;
-                            ImageView imageClicked = (ImageView) event.getSource();
-                            StackPane stackPane= (StackPane) imageClicked.getParent();
+                if ((i+j)%2 == 0){
 
-                            Integer columnIndex = GridPane.getColumnIndex(stackPane);
-                            Integer rowIndex = GridPane.getRowIndex(stackPane);
+                    ImageView imageView = new ImageView();
+                    imageView.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
+                    imageView.setCursor(Cursor.HAND);
+                    imageView.setFitWidth(10);
+                    imageView.setFitHeight(10);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getButton() == MouseButton.PRIMARY) {
+                                isClickedBoard=true;
+                                ImageView imageClicked = (ImageView) event.getSource();
+                                StackPane stackPane= (StackPane) imageClicked.getParent();
 
-                            // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
-                            putACardX_toServer = columnIndex == null ? 0 : columnIndex;
-                            putACardY_toServer = rowIndex == null ? 0 : rowIndex;
-                            coo_toServer.setX(putACardX_toServer);
-                            coo_toServer.setY(putACardY_toServer);
+                                Integer columnIndex = GridPane.getColumnIndex(stackPane);
+                                Integer rowIndex = GridPane.getRowIndex(stackPane);
+
+                                // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
+                                putACardX_toServer = columnIndex == null ? 0 : columnIndex;
+                                putACardY_toServer = rowIndex == null ? 0 : rowIndex;
+                                coo_toServer.setX(putACardX_toServer);
+                                coo_toServer.setY(putACardY_toServer);
+                            }
                         }
-                    }
 
-                });
-                StackPane stackPane= new StackPane(imageView);
-                stackPane.setAlignment(Pos.CENTER);
-                gridPane.add(stackPane, i, j);
+                    });
+                    StackPane stackPane= new StackPane(imageView);
+                    stackPane.setAlignment(Pos.CENTER);
+                    gridPane.add(stackPane, i, j);
+                }
             }
     }
     private void clickCardOnHand(){
@@ -401,6 +403,7 @@ public class BoardController extends GenericSceneController {
     public void updateModel(){
         ViewModel model = getGuiApplication().getGui().getMyMatch();
         //todo update all the scene with the information of the model
+        setUpGridPane();
     }
 
 }
