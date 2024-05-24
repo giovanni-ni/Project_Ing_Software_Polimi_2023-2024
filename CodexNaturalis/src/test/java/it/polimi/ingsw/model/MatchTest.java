@@ -107,7 +107,7 @@ class MatchTest {
 
 
         assertEquals(testMatch.getPt().findMaxPointPlayers().size(), testMatch.getPlayers().size());
-
+        testMatch.setWinners();
         assertEquals(testMatch.getWinners().size(),testMatch.getPlayers().size());
 
         resourceCards.get(7).setFront(true);

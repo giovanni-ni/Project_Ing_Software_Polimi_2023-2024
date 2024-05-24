@@ -119,7 +119,7 @@
               <!-- Usage: mvn clean javafx:run-->
               <id>default-cli</id>
               <configuration>
-                <mainClass>it.polimi.ingsw.view.Gui.GUI</mainClass>
+                <mainClass>it.polimi.ingsw.view.Gui.GUIApplication</mainClass>
               </configuration>
             </execution>
           </executions>

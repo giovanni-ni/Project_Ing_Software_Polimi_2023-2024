@@ -1,15 +1,14 @@
 package it.polimi.ingsw;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import it.polimi.ingsw.model.*;
+import it.polimi.ingsw.view.Gui.GUIApplication;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
+import it.polimi.ingsw.view.Ui;
+import javafx.application.Application;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.awt.*;
+import java.util.*;
+
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 
 /**
  * Hello world!
@@ -18,8 +17,33 @@ import java.util.Map;
 public class App 
 {
     public static void main( String[] args ) throws Exception {
-        Tui t = new Tui();
-        t.init();
+        Ui ui;
+        int option = 0;
+        Scanner in = new Scanner(System.in);
+        do {
+            print("""
+                    Please choose UI
+                        1  --> TUI
+                        2  --> GUI
+                    Enter your choice.
+                    >\040""");
+            try {
+                option = Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Invalid input. Try again. (1 or 2)"+ANSI_RESET);
+            }
+        } while (option != 1 && option != 2);
+
+        if(option == 1) {
+            Tui tui  = new Tui();
+            tui.init();
+        } else {
+            print("Starting Gui.....");
+            GUIApplication guiApplication = new GUIApplication();
+            guiApplication.main(null);
+
+        }
+
     }
 
 }

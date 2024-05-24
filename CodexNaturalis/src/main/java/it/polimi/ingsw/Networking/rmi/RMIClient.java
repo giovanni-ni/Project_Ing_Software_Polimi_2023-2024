@@ -8,8 +8,13 @@ import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
+import it.polimi.ingsw.view.Ui;
 
+import java.io.IOException;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,39 +29,25 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     private String nickname;
 
     private Integer gameId;
-    final VirtualServer server;
-    public RMIClient(VirtualServer server) throws RemoteException {
-        this.server=server;
-        this.server.connect(this);
+    private VirtualServer server;
+    private Ui ui;
+
+    public RMIClient(String ip, int port, Ui ui) throws RemoteException {
+        try{
+            this.ui = ui;
+            String serverName = "AdderServer";
+            Registry registry = LocateRegistry.getRegistry(ip, port);
+            this.server = (VirtualServer) registry.lookup(serverName);
+            this.server.connect(this);
+        }catch (Exception e){
+            ui.handleMessage(new ActionNotRecognize("Connection failed"));
+        }
+
     }
 
     @Override
     public void update(Message msg) throws RemoteException{
-        if(msg instanceof joinSuccessMsg) {
-            Tui.status = PlayerStatus.MatchStart;
-            Tui.myMatch = ((joinSuccessMsg) msg).getModel();
-            Tui.myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
-            print(Tui.myMatch.idMatch);
-
-        } else if(msg instanceof joinFailMsg) {
-            print("join fail because" + ((joinFailMsg) msg).getDescription());
-        }else if(msg instanceof ServerChatMessage) {
-            print("New chat Message:");
-            showNewChatMessage((GenericServerMessage) msg);
-            //store the chat for historical chat view
-            Tui.chat.add((ServerChatMessage)msg);
-        } else if(msg instanceof newPlayerInMsg) {
-            print("new player is in");
-        } else if(msg instanceof gameStartMsg) {
-            print("the game is starting.. 3.. 2.. 1..");
-
-            Tui.myMatch = ((gameStartMsg) msg).getModel();
-            Tui.myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
-            Tui.status = PlayerStatus.GamePlay;
-
-
-        }
-
+        ui.handleMessage((GenericServerMessage) msg);
     }
 
     @Override

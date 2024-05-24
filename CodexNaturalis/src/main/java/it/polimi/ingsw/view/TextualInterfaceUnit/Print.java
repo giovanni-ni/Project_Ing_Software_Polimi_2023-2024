@@ -1,5 +1,6 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
+import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.GenericServerMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 import it.polimi.ingsw.model.*;
@@ -273,7 +274,7 @@ public class Print {
         print(  "["+CornerPosition.DOWNLEFT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]"+
                 "["+CornerPosition.DOWNRIGHT.toString()+":"+getColorSecond(Elements.EMPTY)+"EMPTY"+ANSI_RESET+"]");
     }
-    public static void showNewChatMessage(GenericServerMessage msg) {
+    public static void showNewChatMessage(Message msg) {
         ServerChatMessage chatMessage = (ServerChatMessage) msg;
         String channel;
         if (chatMessage.isForAll()){

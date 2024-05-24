@@ -37,12 +37,13 @@ public class AllMatchesController extends Thread {
     }
     public AllMatchesController() throws IOException {
         this.start();
+        this.runningControllers = new ArrayList<>();
     }
 
     @Override
     public void run() {
         GenericClientMessage temp;
-        this.runningControllers = new ArrayList<>();
+        //this.runningControllers = new ArrayList<>();
 
         try {
             while (!this.isInterrupted()) {
@@ -114,9 +115,12 @@ public class AllMatchesController extends Thread {
             message= createNewMatch((CreateGameMessage) msg);
         } else if (msg instanceof JoinFirstMessage) {
 
-            for (int i =0 ; i<runningControllers.size()||message instanceof joinSuccessMsg;i++){
+            for (int i =0 ; i<runningControllers.size();i++){
                 msg.setGameID(runningControllers.get(i).getMatch().getIdMatch());
                 message= joinMatch((JoinGameMessage) msg);
+                if(message instanceof joinSuccessMsg) {
+                    break;
+                }
             }
             if (! (message instanceof joinSuccessMsg)){
                 message = new joinFailMsg("No Match available");
