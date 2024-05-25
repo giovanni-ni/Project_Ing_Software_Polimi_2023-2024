@@ -12,11 +12,13 @@
 }
 
 .button {
-
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-padding: 5px;
     /* Add any other styles you want */
+
+}
+.normalButton{
 
 }
 .text-field {

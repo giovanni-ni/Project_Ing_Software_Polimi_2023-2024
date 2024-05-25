@@ -52,7 +52,6 @@ public class GUI extends Thread implements Ui {
         username = null;
 
     }
-
     @Override
     public void handleMessage(GenericServerMessage msg) {
         processQueue.add(msg);
@@ -103,7 +102,14 @@ public class GUI extends Thread implements Ui {
                 matchID = myMatch.getIdMatch();
                 guiApplication.updateCurrentSceneModel();
             }
-        } else if (msg instanceof ActionSuccessMsg) {
+        }else if(guiApplication.getActualScene() == ScenesName.BOARD){
+            if(msg instanceof playCardSuccess) {
+                myMatch = ((playCardSuccess) msg).getModel();
+                matchID = myMatch.getIdMatch();
+                guiApplication.updateCurrentSceneModel();
+            }
+        }
+        else if (msg instanceof ActionSuccessMsg) {
             myMatch =((ActionSuccessMsg)msg).getModel();
             matchID=myMatch.getIdMatch();
             guiApplication.updateCurrentSceneModel();

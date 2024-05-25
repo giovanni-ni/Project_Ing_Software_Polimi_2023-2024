@@ -133,6 +133,10 @@ public class BoardController extends GenericSceneController {
         cardsOnHand.add(thirdCardOnHand);
         code_toServer=searchCode.get(cardsOnHand.get(cardOnHandIndex_toServer));
         getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, coo_toServer.getX(), coo_toServer.getY()));
+        playACard.setDisable(true);
+    }
+    public void setGetACardButton_toServer(ActionEvent e){
+
     }
 
     @FXML

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" stylesheets="@Style.css" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.BoardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.BoardController">
     <children>
         <ImageView fx:id="boardBrown" fitWidth="1280.0" layoutX="4.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
             <image>
@@ -32,7 +32,10 @@
             <image>
                 <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
             </image></ImageView>
-        <Button fx:id="button" layoutX="565.0" layoutY="611.0" mnemonicParsing="false" onAction="#init" prefHeight="65.0" prefWidth="112.0" text="Button" />
+        <Button fx:id="button" layoutX="565.0" layoutY="611.0" mnemonicParsing="false" onAction="#init" prefHeight="65.0" prefWidth="112.0" styleClass="normalButton" text="Button" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
         <ImageView fx:id="deckBackground" fitHeight="261.0" fitWidth="332.0" layoutX="9.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="30.0">
             <image>
                 <Image url="@../../../../../images/view/transparentTabDeck.png" />
@@ -59,7 +62,7 @@
       <ImageView fx:id="firstTargetCard" fitHeight="65.0" fitWidth="95.0" layoutX="249.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="207.0" />
       <ScrollPane hvalue="0.51" layoutX="369.0" layoutY="56.0" prefHeight="510.0" prefWidth="852.0" vvalue="0.5">
          <content>
-            <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0">
+            <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -241,8 +244,14 @@
             <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
          </image>
       </ImageView>
-      <Button disable="true" layoutX="735.0" layoutY="613.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="106.0" text="PlayCard" />
-      <Button disable="true" layoutX="846.0" layoutY="615.0" mnemonicParsing="false" prefHeight="59.0" prefWidth="104.0" text="GetACard" />
+      <Button fx:id="playACard" disable="true" layoutX="735.0" layoutY="613.0" mnemonicParsing="false" onAction="#playCardButton_toServer" prefHeight="60.0" prefWidth="106.0" styleClass="normalButton" text="PlayCard" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
+      <Button fx:id="getACard" disable="true" layoutX="846.0" layoutY="615.0" mnemonicParsing="false" onAction="#setGetACardButton_toServer" prefHeight="59.0" prefWidth="104.0" styleClass="normalButton" text="GetACard" textFill="WHITE">
+         <font>
+            <Font size="19.0" />
+         </font></Button>
       <CheckBox fx:id="setBack" layoutX="565.0" layoutY="585.0" mnemonicParsing="false" onAction="#setBackCard" prefHeight="18.0" prefWidth="104.0" text="SET BACK" textFill="WHITE" />
     </children>
 </AnchorPane>
