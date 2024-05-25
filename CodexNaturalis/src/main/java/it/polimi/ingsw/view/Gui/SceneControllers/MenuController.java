@@ -32,11 +32,16 @@ public class MenuController extends GenericSceneController{
     }
     @FXML
     void sendAll(ActionEvent event) throws RemoteException {
-        if (isJoinGame){
-            getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(), Integer.parseInt(gameId.getText())));
+        if (gameId.getText().matches("\\d+")){
+            if (isJoinGame){
+                getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(), Integer.parseInt(gameId.getText())));
+            }else {
+                getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(),Integer.parseInt(gameId.getText())));
+                //todo reconnect if we do that
+            }
+
         }else {
-            getGuiApplication().getGui().notify(new JoinGameMessage(nickName.getText(),Integer.parseInt(gameId.getText())));
-            //todo reconnect if we do that
+            ShowErrorMessage("Game Id should be a number");
         }
 
     }

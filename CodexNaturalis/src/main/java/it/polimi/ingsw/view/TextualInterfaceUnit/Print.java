@@ -57,7 +57,7 @@ public class Print {
         }
     }
 
-    private static Object findCardById(int cardId) throws IOException {
+    public static Object findCardById(int cardId) throws IOException {
         Object card = null;
         CardParsing cp = new CardParsing();
         if (cardId>=TypeOfCard.RESOURCECARD.getCodeCardStart()){

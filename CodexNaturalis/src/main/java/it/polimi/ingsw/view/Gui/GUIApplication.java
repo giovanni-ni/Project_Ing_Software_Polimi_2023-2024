@@ -81,6 +81,7 @@ public class GUIApplication extends Application{
        stage.show();
        updateCurrentSceneModel();
 
+
     }
      public ScenesName getActualScene(){
         return  scenesList.get(stage.getScene());
@@ -92,13 +93,19 @@ public class GUIApplication extends Application{
         controllerList.inverse().get(scenesName).ShowErrorMessage(description);
     }
 
-    public void updateCurrentSceneModel(){
-        controllerList.inverse().get(getActualScene()).updateModel();
+    public void updateCurrentSceneModel() {
+        try {
+            controllerList.inverse().get(getActualScene()).updateModel();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public GUI getGui() {
         return Gui;
     }
+
+
 
 
 }

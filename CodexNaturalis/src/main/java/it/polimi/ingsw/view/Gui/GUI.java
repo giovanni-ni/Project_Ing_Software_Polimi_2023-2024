@@ -33,11 +33,7 @@ public class GUI extends Thread implements Ui {
 
     private String username;
 
-    private   PlayerStatus status;
-
     private   ViewModel myMatch;
-
-    private   Player myPlayer;
 
     private   int matchID;
 
@@ -75,13 +71,13 @@ public class GUI extends Thread implements Ui {
             try {
                 temp = processQueue.take();
                 handle(temp);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException | IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    public void handle(Message msg){
+    public void handle(Message msg) throws IOException {
         if (msg instanceof ActionNotRecognize){
             guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription());
         }else if (guiApplication.getActualScene()==ScenesName.ASKCONNECTION){
@@ -92,7 +88,7 @@ public class GUI extends Thread implements Ui {
             if (msg instanceof joinSuccessMsg){
                 myMatch =((joinSuccessMsg)msg).getModel();
                 matchID=myMatch.getIdMatch();
-                myPlayer = myMatch.getPlayerByNickname(username);
+
                 Platform.runLater(()->guiApplication.showScene(ScenesName.WAITING));
 
             }
@@ -110,7 +106,10 @@ public class GUI extends Thread implements Ui {
             myMatch =((ActionSuccessMsg)msg).getModel();
             matchID=myMatch.getIdMatch();
             guiApplication.updateCurrentSceneModel();
+        }else if (msg instanceof joinFailMsg) {
+            guiApplication.showErrorMessage(((joinFailMsg) msg).getDescription());
         }
+
     }
 
     public void notify(Message msg) throws RemoteException {

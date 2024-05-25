@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXCheckBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.PrepareController">
+    <children>
+        <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
+            <children>
+                <ImageView blendMode="SRC_ATOP" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../../../../../images/view/codexNaturalisdark.png" />
+                    </image>
+                </ImageView>
+            <ImageView fitHeight="900.0" fitWidth="900.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/bigTab.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fitHeight="150.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/targetSelect.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="100.0" />
+               </StackPane.margin>
+            </ImageView>
+            <Text fx:id="ErrorMessage" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Arial Bold" size="12.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="600.0" />
+               </StackPane.margin>
+            </Text>
+            <ImageView fx:id="targetOneImg" fitHeight="200.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets left="300.0" />
+               </StackPane.margin>
+               <image>
+                  <Image url="@../../../../../images/cards/TargetCardFront%20(5).jpg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="targetTwoImg" fitHeight="200.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_RIGHT">
+               <image>
+                  <Image url="@../../../../../images/cards/TargetCardFront%20(5).jpg" />
+               </image>
+               <StackPane.margin>
+                  <Insets right="300.0" />
+               </StackPane.margin>
+            </ImageView>
+            <JFXCheckBox />
+            <CheckBox fx:id="targetOneCheck" mnemonicParsing="false" StackPane.alignment="CENTER_LEFT">
+               <StackPane.margin>
+                  <Insets bottom="250.0" left="430.0" />
+               </StackPane.margin>
+            </CheckBox>
+            <CheckBox fx:id="targetTwoCheck" mnemonicParsing="false" StackPane.alignment="CENTER_RIGHT">
+               <StackPane.margin>
+                  <Insets bottom="250.0" right="430.0" />
+               </StackPane.margin>
+            </CheckBox>
+            <JFXButton buttonType="RAISED" onAction="#confirmSelectTarget" ripplerFill="WHITE" text=" " StackPane.alignment="CENTER">
+               <graphic>
+                  <ImageView fitHeight="115.0" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" styleClass="imageview">
+                     <image>
+                        <Image url="@../../../../../images/view/confirmBottom.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <StackPane.margin>
+                  <Insets top="300.0" />
+               </StackPane.margin>
+            </JFXButton>
+            </children>
+        </StackPane>
+    </children>
+</AnchorPane>

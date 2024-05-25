@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.WaitingController">
+<AnchorPane stylesheets="@Style.css" fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.WaitingController">
     <children>
         <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
             <children>
@@ -181,9 +181,9 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#setPlayerReady" StackPane.alignment="BOTTOM_RIGHT">
+            <Button mnemonicParsing="false" onAction="#setPlayerReady" StackPane.alignment="BOTTOM_RIGHT" styleClass="button">
                <graphic>
-                  <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="imageview">
                      <image>
                         <Image url="@../../../../../images/view/ready.png" />
                      </image>

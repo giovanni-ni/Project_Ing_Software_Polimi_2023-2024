@@ -7,7 +7,9 @@ public enum ScenesName {
     START("Start.fxml"),
     STARTMENU("StartMenu.fxml"),
     BOARD("Board.fxml"),
-    WAITING("Waiting.fxml");
+    WAITING("Waiting.fxml"),
+    PREPARE("Prepare.fxml");
+
 
     private final String path;
 

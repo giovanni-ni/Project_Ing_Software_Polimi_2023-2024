@@ -8,6 +8,9 @@ public class SetTargetCardMessage extends GenericClientMessage {
         super(gameID, nickname);
         this.choice = choice;
     }
+    public SetTargetCardMessage(int choice) {
+        this.choice =choice;
+    }
 
     public int getChoice() {
         return choice;

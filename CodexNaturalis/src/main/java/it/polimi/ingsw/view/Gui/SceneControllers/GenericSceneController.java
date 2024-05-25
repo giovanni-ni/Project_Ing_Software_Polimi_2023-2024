@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import javax.swing.text.View;
+import java.io.IOException;
 
 public class GenericSceneController {
 
@@ -29,7 +30,7 @@ public class GenericSceneController {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
     }
-    public void updateModel(){
+    public void updateModel() throws IOException {
     }
 
 }

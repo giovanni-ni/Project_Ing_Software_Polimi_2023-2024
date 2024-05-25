@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.MenuController">
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.MenuController">
     <children>
         <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
             <children>
@@ -44,9 +44,9 @@
                   <Insets top="300.0" />
                </StackPane.margin>
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#sendNickName" StackPane.alignment="TOP_CENTER">
+            <Button mnemonicParsing="false" onAction="#sendNickName" styleClass="button" StackPane.alignment="TOP_CENTER">
                <graphic>
-                  <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView accessibleRole="BUTTON" fitHeight="150.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="imageview">
                      <image>
                         <Image url="@../../../../../images/view/confirmBottom.png" />
                      </image>
@@ -69,7 +69,7 @@
             </Text>
             </children>
         </StackPane>
-      <TextField fx:id="nickName" layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="nuge77, maku, jo ,greta" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="305.0">
+      <TextField fx:id="nickName" layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="nuge77, maku, jo ,greta" styleClass="text-field" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="305.0">
          <font>
             <Font size="22.0" />
          </font>
