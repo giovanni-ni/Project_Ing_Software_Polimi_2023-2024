@@ -3,13 +3,18 @@ package it.polimi.ingsw.view.Gui.SceneControllers;
 import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.playCardMessage;
 import it.polimi.ingsw.model.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -18,6 +23,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 public class BoardController extends GenericSceneController {
@@ -28,13 +34,17 @@ public class BoardController extends GenericSceneController {
 
     private ArrayList<TargetCard> targetDeck= new ArrayList<>();
 
+    private Match match = new Match(0);
+
     private ArrayList<TargetCard> commonTarget =new ArrayList<>();
 
-    private ArrayList<ImageView> cardsOnHand;
-    private HashMap<ImageView, Integer> searchCode;
+    private ArrayList<ImageView> cardsOnHand = new ArrayList<>();
+    private ArrayList<Card> cardOnHand= new ArrayList<>();
+    private HashMap<ImageView, Integer> searchCode= new HashMap<>();
     Boolean isClickedCardOnHand=false;
     Boolean isClickedBoard= false;
-    Boolean toggle1= false, toggle2=false, toggle3= false;
+    Boolean toggle1= true, toggle2=true, toggle3= true, toggle4=true;
+    Boolean isFront_toServer;
     Integer cardOnHandIndex_toServer=null,
             getResourceCardIndex_toServer=null,
             getGoldCardIndex_toServer=null,
@@ -46,18 +56,35 @@ public class BoardController extends GenericSceneController {
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
-            firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard ;
+            firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack;
     @FXML
     Label gameStatus;
     @FXML
     Button button, playACard, getACard;
     @FXML
     GridPane gridPane;
+    @FXML
+    CheckBox setBack;
+
+    public BoardController() throws IOException {
+    }
+
+    private void light(ImageView imageView) {
+        Light.Distant light = new Light.Distant();
+        light.setAzimuth(45); // Angolo della luce
+        light.setElevation(30); // Elevazione della luce
+
+        // Applica l'effetto di illuminazione
+        Lighting lighting = new Lighting();
+        lighting.setLight(light);
+
+        // Applica l'effetto all'immagine
+        imageView.setEffect(lighting);
+    }
 
     private void setUpBoard(ArrayList<TargetCard> commonTarget)
     {
         Image myImage1 = new Image(getClass().getResourceAsStream("/images/view/playGround.jpg"));
-        System.out.println("clicked");
         Image myImage2 =new Image(getClass().getResourceAsStream("/images/view/transparentTabCoh.png"));
         Image myImage3 =new Image(getClass().getResourceAsStream("/images/view/transparentTabDeck.png"));
         Image myImage4 =new Image(getClass().getResourceAsStream("/images/view/pointTableBottom.png"));
@@ -65,7 +92,6 @@ public class BoardController extends GenericSceneController {
         System.out.println(i);
         Image myImage6= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(0).getIdCard()+").jpg"));
         Image myImage7= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(1).getIdCard()+").jpg"));
-        System.out.println("clicked");
         Image myImage8= new Image(getClass().getResourceAsStream("/images/cards/TargetBack.jpg"));
         boardBrown.setImage(myImage1);
         cardOnHandBackground.setImage(myImage2);
@@ -75,13 +101,15 @@ public class BoardController extends GenericSceneController {
         firstTargetCard.setImage(myImage6);
         secondTargetCard.setImage(myImage7);
         backTargetCard.setImage(myImage8);
-
+        boardTmpImageBack = new ImageView();
+        boardTmpImage= new ImageView();
     }
     private void resetCardOnHand (){
         firstCardOnHand.setImage(null);
         secondCardOnHand.setImage(null);
         thirdCardOnHand.setImage(null);
     }
+
     @FXML
     public void init(ActionEvent e) throws IOException {
         CardParsing cp= new CardParsing();
@@ -89,23 +117,64 @@ public class BoardController extends GenericSceneController {
         targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
         resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
         commonTarget=(ArrayList<TargetCard>) cp.loadTargetCards();
+        cardOnHand.add(goldDeck.get(0));
+        cardOnHand.add(goldDeck.get(1));
+        cardOnHand.add(goldDeck.get(2));
+        setUpGridPane();
         setUpBoard(commonTarget);
         showDecks(goldDeck,resourceDeck);
+        showCardOnHand(cardOnHand);
     }
 
     @FXML
-   /* public void playCardBotton_toServer(ActionEvent e){
+   public void playCardBotton_toServer(ActionEvent e) throws RemoteException {
         String nickname=getGuiApplication().getGui().getMyMatch().getCurrentPlayer().getNickname();
         cardsOnHand.add(firstCardOnHand);
         cardsOnHand.add(secondCardOnHand);
         cardsOnHand.add(thirdCardOnHand);
         if(isClickedCardOnHand&&isClickedBoard){
             code_toServer=searchCode.get(cardsOnHand.get(cardOnHandIndex_toServer));
-            getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront, coo_toServer.getX(), coo_toServer.getY());
+            getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,true, coo_toServer.getX(), coo_toServer.getY()));
         }
     }
 
-    */
+    @FXML
+    public void setBackCard(){
+        if(setBack.isSelected()){
+            if(toggle4) {
+                isFront_toServer = true;
+                Image image = null;
+                switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
+                    case Elements.ANIMALS:
+                        image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
+                        break;
+                    case Elements.MUSHROOMS:
+                        image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
+                        break;
+                    case Elements.INSECT:
+                        image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
+                        break;
+                    case Elements.VEGETAL:
+                        image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
+                        break;
+                }
+                boardTmpImageBack.setImage(image);
+                boardTmpImageBack.setFitHeight(100);
+                boardTmpImageBack.setFitWidth(146);
+                gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                toggle4 =!toggle4;
+            }
+            isFront_toServer = true;
+            boardTmpImage.setVisible(false);
+            boardTmpImageBack.setVisible(true);
+        }else{
+            System.out.println("clicked");
+            boardTmpImageBack.setVisible(false);
+            boardTmpImage.setVisible(true);
+            isFront_toServer= false;
+        }
+    }
+
 
     private void showCardOnHand(ArrayList<Card> cardOnHand){
         Image myImage5;
@@ -130,15 +199,20 @@ public class BoardController extends GenericSceneController {
                                 if(toggle1) {
                                     isClickedCardOnHand = true;
                                     cardOnHandIndex_toServer = 0;
+                                    System.out.println(cardOnHandIndex_toServer);
                                     secondCardOnHand.setDisable(true);
                                     thirdCardOnHand.setDisable(true);
+                                    light(firstCardOnHand);
                                     //illumino
+
                                 }
                                 else{
                                     isClickedCardOnHand = false;
                                     cardOnHandIndex_toServer = null;
+                                    System.out.println(cardOnHandIndex_toServer);
                                     secondCardOnHand.setDisable(false);
                                     thirdCardOnHand.setDisable(false);
+                                    firstCardOnHand.setEffect(null);
                                     //disillumino
                                 }
                                 toggle1 =!toggle1 ;
@@ -159,12 +233,13 @@ public class BoardController extends GenericSceneController {
                                 cardOnHandIndex_toServer = 1;
                                 thirdCardOnHand.setDisable(true);
                                 firstCardOnHand.setDisable(true);
-                                //illumino
+                                light(secondCardOnHand);
                             }else{
                                 isClickedCardOnHand = false;
                                 cardOnHandIndex_toServer = null;
                                 thirdCardOnHand.setDisable(false);
                                 firstCardOnHand.setDisable(false);
+                                secondCardOnHand.setEffect(null);
                                 //disillumino
                             }
                             toggle2=!toggle2;
@@ -185,14 +260,16 @@ public class BoardController extends GenericSceneController {
                                 firstCardOnHand.setDisable(true);
                                 secondCardOnHand.setDisable(true);
                                 cardOnHandIndex_toServer = 2;
-                                //illumino
+                                light(thirdCardOnHand);
                             }else{
                                 isClickedCardOnHand = false;
                                 firstCardOnHand.setDisable(false);
                                 secondCardOnHand.setDisable(false);
                                 cardOnHandIndex_toServer = null;
+                                thirdCardOnHand.setEffect(null);
                                 //disillumino
                             }
+                            toggle3=!toggle3;
                         }
                     }
 
@@ -331,22 +408,45 @@ public class BoardController extends GenericSceneController {
                     imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
-                            if (event.getButton() == MouseButton.PRIMARY) {
+                            if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand){
+                                cardsOnHand.add(firstCardOnHand);
+                                cardsOnHand.add(secondCardOnHand);
+                                cardsOnHand.add(thirdCardOnHand);
                                 isClickedBoard=true;
                                 ImageView imageClicked = (ImageView) event.getSource();
                                 StackPane stackPane= (StackPane) imageClicked.getParent();
-
                                 Integer columnIndex = GridPane.getColumnIndex(stackPane);
                                 Integer rowIndex = GridPane.getRowIndex(stackPane);
-
                                 // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
                                 putACardX_toServer = columnIndex == null ? 0 : columnIndex;
                                 putACardY_toServer = rowIndex == null ? 0 : rowIndex;
-                                coo_toServer.setX(putACardX_toServer);
-                                coo_toServer.setY(putACardY_toServer);
+
+                                boardTmpImage.setImage(cardsOnHand.get(cardOnHandIndex_toServer).getImage());
+                                boardTmpImage.setFitWidth(146);
+                                boardTmpImage.setFitHeight(100);
+                                boardTmpImage.setCursor(Cursor.HAND);
+                                gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+                                cardsOnHand.get(cardOnHandIndex_toServer).setDisable(true);
+                                cardsOnHand.get(cardOnHandIndex_toServer).setVisible(false);
+                                boardTmpImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
+                                            for (ImageView c : cardsOnHand) {
+                                                c.setVisible(true);
+                                                c.setDisable(false);
+                                            }
+                                            boardTmpImage.setVisible(false);
+                                            isClickedCardOnHand=false;
+                                            cardOnHandIndex_toServer=null;
+                                            gridPane.getChildren().remove(putACardX_toServer,putACardY_toServer);
+                                            boardTmpImage = new ImageView();
+                                        }
+
+                                    }
+                                });
                             }
                         }
-
                     });
                     StackPane stackPane= new StackPane(imageView);
                     stackPane.setAlignment(Pos.CENTER);
@@ -364,6 +464,7 @@ public class BoardController extends GenericSceneController {
                     if (event.getButton() == MouseButton.PRIMARY) {
                         isClickedBoard=true;
                     }
+
                 }
 
             });
