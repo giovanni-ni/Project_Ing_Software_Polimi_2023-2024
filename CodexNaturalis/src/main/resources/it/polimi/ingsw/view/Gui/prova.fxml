@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.GuiController">
+   <children>
+      <ImageView fitHeight="400.0" fitWidth="600.0" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../images/view/CodexNaturalislightjpg.jpg" />
+         </image>
+      </ImageView>
+      <Button fx:id="draw" layoutX="222.0" layoutY="70.0" mnemonicParsing="false" onAction="#drawCard" prefHeight="79.0" prefWidth="156.0" text="Draw" />
+      <ImageView fx:id="img_one" fitHeight="101.0" fitWidth="174.0" layoutX="14.0" layoutY="251.0">
+         <image>
+            <Image url="@../../../../../images/view/CodexNaturalislightjpg.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="img_two" fitHeight="101.0" fitWidth="174.0" layoutX="204.0" layoutY="251.0">
+         <image>
+            <Image url="@../../../../../images/view/CodexNaturalislightjpg.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="img_three" fitHeight="101.0" fitWidth="174.0" layoutX="402.0" layoutY="251.0">
+         <image>
+            <Image url="@../../../../../images/view/CodexNaturalislightjpg.jpg" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
