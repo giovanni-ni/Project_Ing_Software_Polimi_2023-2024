@@ -96,7 +96,7 @@ public class GUI extends Thread implements Ui {
         }else if (guiApplication.getActualScene() == ScenesName.WAITING) {
             if (msg instanceof gameStartMsg){
                 myMatch =((gameStartMsg)msg).getModel();
-                Platform.runLater(()->guiApplication.showScene(ScenesName.BOARD));
+                Platform.runLater(()->guiApplication.showScene(ScenesName.PREPARE));
             }else if (msg instanceof ActionSuccessMsg) {
                 myMatch = ((ActionSuccessMsg) msg).getModel();
                 matchID = myMatch.getIdMatch();

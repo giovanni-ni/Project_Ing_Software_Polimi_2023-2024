@@ -5,9 +5,10 @@
     -fx-border-color: transparent;
     -fx-padding: 5px;
 
+
 }
 .button:hover .imageview {
-    -fx-opacity: 0.5;
+    -fx-opacity: 1.0;
 }
 
 .button {
