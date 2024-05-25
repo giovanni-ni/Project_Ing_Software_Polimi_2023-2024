@@ -88,8 +88,6 @@ public class BoardController extends GenericSceneController {
         Image myImage2 =new Image(getClass().getResourceAsStream("/images/view/transparentTabCoh.png"));
         Image myImage3 =new Image(getClass().getResourceAsStream("/images/view/transparentTabDeck.png"));
         Image myImage4 =new Image(getClass().getResourceAsStream("/images/view/pointTableBottom.png"));
-        int i = commonTarget.get(0).getIdCard();
-        System.out.println(i);
         Image myImage6= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(0).getIdCard()+").jpg"));
         Image myImage7= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(1).getIdCard()+").jpg"));
         Image myImage8= new Image(getClass().getResourceAsStream("/images/cards/TargetBack.jpg"));
@@ -124,54 +122,52 @@ public class BoardController extends GenericSceneController {
         setUpBoard(commonTarget);
         showDecks(goldDeck,resourceDeck);
         showCardOnHand(cardOnHand);
+        setBack.setDisable(true);
     }
 
     @FXML
-   public void playCardBotton_toServer(ActionEvent e) throws RemoteException {
+   public void playCardButton_toServer(ActionEvent e) throws RemoteException {
         String nickname=getGuiApplication().getGui().getMyMatch().getCurrentPlayer().getNickname();
         cardsOnHand.add(firstCardOnHand);
         cardsOnHand.add(secondCardOnHand);
         cardsOnHand.add(thirdCardOnHand);
-        if(isClickedCardOnHand&&isClickedBoard){
-            code_toServer=searchCode.get(cardsOnHand.get(cardOnHandIndex_toServer));
-            getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,true, coo_toServer.getX(), coo_toServer.getY()));
-        }
+        code_toServer=searchCode.get(cardsOnHand.get(cardOnHandIndex_toServer));
+        getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, coo_toServer.getX(), coo_toServer.getY()));
     }
 
     @FXML
     public void setBackCard(){
-        if(setBack.isSelected()){
-            if(toggle4) {
-                isFront_toServer = true;
-                Image image = null;
-                switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
-                    case Elements.ANIMALS:
-                        image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
-                        break;
-                    case Elements.MUSHROOMS:
-                        image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
-                        break;
-                    case Elements.INSECT:
-                        image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
-                        break;
-                    case Elements.VEGETAL:
-                        image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
-                        break;
-                }
-                boardTmpImageBack.setImage(image);
-                boardTmpImageBack.setFitHeight(100);
-                boardTmpImageBack.setFitWidth(146);
-                gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
-                toggle4 =!toggle4;
+        if(cardOnHandIndex_toServer!=null) {
+            if (setBack.isSelected()) {
+                    isFront_toServer = true;
+                    Image image = null;
+                    switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
+                        case Elements.ANIMALS:
+                            image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
+                            break;
+                        case Elements.MUSHROOMS:
+                            image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
+                            break;
+                        case Elements.INSECT:
+                            image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
+                            break;
+                        case Elements.VEGETAL:
+                            image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
+                            break;
+                    }
+                    boardTmpImageBack.setImage(image);
+                    boardTmpImageBack.setFitHeight(100);
+                    boardTmpImageBack.setFitWidth(146);
+                    gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                boardTmpImage.setVisible(false);
+                boardTmpImageBack.setVisible(true);
+            } else {
+                gridPane.getChildren().remove(boardTmpImageBack);
+                System.out.println("clicked");
+                boardTmpImageBack.setVisible(false);
+                boardTmpImage.setVisible(true);
+                isFront_toServer = false;
             }
-            isFront_toServer = true;
-            boardTmpImage.setVisible(false);
-            boardTmpImageBack.setVisible(true);
-        }else{
-            System.out.println("clicked");
-            boardTmpImageBack.setVisible(false);
-            boardTmpImage.setVisible(true);
-            isFront_toServer= false;
         }
     }
 
@@ -409,6 +405,7 @@ public class BoardController extends GenericSceneController {
                         @Override
                         public void handle(MouseEvent event) {
                             if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand){
+                                setBack.setDisable(false);
                                 cardsOnHand.add(firstCardOnHand);
                                 cardsOnHand.add(secondCardOnHand);
                                 cardsOnHand.add(thirdCardOnHand);
@@ -428,6 +425,7 @@ public class BoardController extends GenericSceneController {
                                 gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
                                 cardsOnHand.get(cardOnHandIndex_toServer).setDisable(true);
                                 cardsOnHand.get(cardOnHandIndex_toServer).setVisible(false);
+                                playACard.setDisable(false);
                                 boardTmpImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
@@ -436,11 +434,24 @@ public class BoardController extends GenericSceneController {
                                                 c.setVisible(true);
                                                 c.setDisable(false);
                                             }
-                                            boardTmpImage.setVisible(false);
+                                            cardsOnHand.get(cardOnHandIndex_toServer).setEffect(null);
+                                            switch (cardOnHandIndex_toServer){
+                                                case 0:
+                                                    toggle1=!toggle1;
+                                                    break;
+                                                case 1:
+                                                    toggle2=! toggle2;
+                                                    break;
+                                                case 2:
+                                                    toggle3=! toggle3;
+                                                    break;
+                                            }
                                             isClickedCardOnHand=false;
                                             cardOnHandIndex_toServer=null;
-                                            gridPane.getChildren().remove(putACardX_toServer,putACardY_toServer);
+                                            gridPane.getChildren().remove(boardTmpImage);
+                                            gridPane.getChildren().remove(boardTmpImageBack);
                                             boardTmpImage = new ImageView();
+                                            setBack.setDisable(true);
                                         }
 
                                     }
