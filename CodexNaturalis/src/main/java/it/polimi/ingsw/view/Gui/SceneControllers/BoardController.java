@@ -13,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -21,6 +22,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -37,13 +39,15 @@ public class BoardController extends GenericSceneController {
     private Match match = new Match(0);
 
     private ArrayList<TargetCard> commonTarget =new ArrayList<>();
-
-    private ArrayList<ImageView> cardsOnHand = new ArrayList<>();
+    private ArrayList<ImageView> decksImages = new ArrayList<>();
+    private ArrayList<ImageView> cardsOnHandImages = new ArrayList<>();
     private ArrayList<Card> cardOnHand= new ArrayList<>();
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
     Boolean isClickedCardOnHand=false;
     Boolean isClickedBoard= false;
-    Boolean toggle1= true, toggle2=true, toggle3= true, toggle4=true;
+    Boolean isClickedPlayACard= false;
+    Boolean isClickedDeck =false;
+    Boolean toggle1= true, toggle2=true, toggle3= true, toggleR1=true , toggleG1=true , toggleR2= true, toggleG2 =true,toggleR3= true, toggleG3 = true;
     Boolean isFront_toServer;
     Integer cardOnHandIndex_toServer=null,
             getResourceCardIndex_toServer=null,
@@ -51,6 +55,8 @@ public class BoardController extends GenericSceneController {
             putACardX_toServer=null,
             putACardY_toServer=null,
             code_toServer=null;
+
+    Boolean isError_fromServer= false;
     Coordinate coo_toServer;
 
     @FXML
@@ -65,7 +71,6 @@ public class BoardController extends GenericSceneController {
     GridPane gridPane;
     @FXML
     CheckBox setBack;
-
     public BoardController() throws IOException {
     }
 
@@ -101,11 +106,45 @@ public class BoardController extends GenericSceneController {
         backTargetCard.setImage(myImage8);
         boardTmpImageBack = new ImageView();
         boardTmpImage= new ImageView();
+        decksImages.add(firstGoldCard);
+        decksImages.add(firstResourceCard);
+        decksImages.add(secondGoldCard);
+        decksImages.add(secondResourceCard);
+        decksImages.add(kingdomGoldDeck);
+        decksImages.add(kingdomResourceDeck);
+
     }
     private void resetCardOnHand (){
         firstCardOnHand.setImage(null);
         secondCardOnHand.setImage(null);
         thirdCardOnHand.setImage(null);
+    }
+    private void ableDecks(){
+        firstResourceCard.setDisable(false);
+        secondResourceCard.setDisable(false);
+        kingdomResourceDeck.setDisable(false);
+        firstGoldCard.setDisable(false);
+        secondGoldCard.setDisable(false);
+        kingdomGoldDeck.setDisable(false);
+
+    }
+    private void disableDecks(){
+        firstResourceCard.setDisable(true);
+        secondResourceCard.setDisable(true);
+        kingdomResourceDeck.setDisable(true);
+        firstGoldCard.setDisable(true);
+        secondGoldCard.setDisable(true);
+        kingdomGoldDeck.setDisable(true);
+
+    }
+
+    private void disableDecksEXCEPTone(ImageView imageView){
+        for(ImageView c: decksImages){
+            if(!c.equals(imageView)){
+                c.setDisable(true);
+            }
+        }
+
     }
 
     @FXML
@@ -118,20 +157,23 @@ public class BoardController extends GenericSceneController {
         cardOnHand.add(goldDeck.get(0));
         cardOnHand.add(goldDeck.get(1));
         cardOnHand.add(goldDeck.get(2));
+        cardsOnHandImages.add(firstCardOnHand);
+        cardsOnHandImages.add(secondCardOnHand);
+        cardsOnHandImages.add(thirdCardOnHand);
         setUpGridPane();
         setUpBoard(commonTarget);
         showDecks(goldDeck,resourceDeck);
         showCardOnHand(cardOnHand);
         setBack.setDisable(true);
+        gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
+        //disableDecks();
     }
 
     @FXML
    public void playCardButton_toServer(ActionEvent e) throws RemoteException {
+        isClickedPlayACard=true;
         String nickname=getGuiApplication().getGui().getMyMatch().getCurrentPlayer().getNickname();
-        cardsOnHand.add(firstCardOnHand);
-        cardsOnHand.add(secondCardOnHand);
-        cardsOnHand.add(thirdCardOnHand);
-        code_toServer=searchCode.get(cardsOnHand.get(cardOnHandIndex_toServer));
+        code_toServer=searchCode.get(cardsOnHandImages.get(cardOnHandIndex_toServer));
         getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, coo_toServer.getX(), coo_toServer.getY()));
         playACard.setDisable(true);
     }
@@ -143,40 +185,20 @@ public class BoardController extends GenericSceneController {
     public void setBackCard(){
         if(cardOnHandIndex_toServer!=null) {
             if (setBack.isSelected()) {
-                    isFront_toServer = true;
-                    Image image = null;
-                    switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
-                        case Elements.ANIMALS:
-                            image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
-                            break;
-                        case Elements.MUSHROOMS:
-                            image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
-                            break;
-                        case Elements.INSECT:
-                            image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
-                            break;
-                        case Elements.VEGETAL:
-                            image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
-                            break;
-                    }
-                    boardTmpImageBack.setImage(image);
-                    boardTmpImageBack.setFitHeight(100);
-                    boardTmpImageBack.setFitWidth(146);
-                    gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
                 boardTmpImage.setVisible(false);
                 boardTmpImageBack.setVisible(true);
+                isFront_toServer = false;
             } else {
-                gridPane.getChildren().remove(boardTmpImageBack);
-                System.out.println("clicked");
                 boardTmpImageBack.setVisible(false);
                 boardTmpImage.setVisible(true);
-                isFront_toServer = false;
+                isFront_toServer = true;
             }
         }
     }
 
 
     private void showCardOnHand(ArrayList<Card> cardOnHand){
+
         Image myImage5;
         Integer code;
         int numCard =1;
@@ -203,8 +225,7 @@ public class BoardController extends GenericSceneController {
                                     secondCardOnHand.setDisable(true);
                                     thirdCardOnHand.setDisable(true);
                                     light(firstCardOnHand);
-                                    //illumino
-
+                                    gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
                                 }
                                 else{
                                     isClickedCardOnHand = false;
@@ -213,7 +234,7 @@ public class BoardController extends GenericSceneController {
                                     secondCardOnHand.setDisable(false);
                                     thirdCardOnHand.setDisable(false);
                                     firstCardOnHand.setEffect(null);
-                                    //disillumino
+                                    gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                                 }
                                 toggle1 =!toggle1 ;
                             }
@@ -234,12 +255,14 @@ public class BoardController extends GenericSceneController {
                                 thirdCardOnHand.setDisable(true);
                                 firstCardOnHand.setDisable(true);
                                 light(secondCardOnHand);
+                                gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
                             }else{
                                 isClickedCardOnHand = false;
                                 cardOnHandIndex_toServer = null;
                                 thirdCardOnHand.setDisable(false);
                                 firstCardOnHand.setDisable(false);
                                 secondCardOnHand.setEffect(null);
+                                gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                                 //disillumino
                             }
                             toggle2=!toggle2;
@@ -261,13 +284,14 @@ public class BoardController extends GenericSceneController {
                                 secondCardOnHand.setDisable(true);
                                 cardOnHandIndex_toServer = 2;
                                 light(thirdCardOnHand);
+                                gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
                             }else{
                                 isClickedCardOnHand = false;
                                 firstCardOnHand.setDisable(false);
                                 secondCardOnHand.setDisable(false);
                                 cardOnHandIndex_toServer = null;
                                 thirdCardOnHand.setEffect(null);
-                                //disillumino
+                                gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                             }
                             toggle3=!toggle3;
                         }
@@ -278,6 +302,130 @@ public class BoardController extends GenericSceneController {
             numCard++;
         }
     }
+
+    private void setUpGridPane() {
+        for(int i= 0; i<82; i++)
+            for(int j=0; j<82; j++) {
+                if ((i+j)%2 == 0){
+
+                    ImageView imageView = new ImageView();
+                    imageView.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
+                    imageView.setCursor(Cursor.HAND);
+                    imageView.setFitWidth(10);
+                    imageView.setFitHeight(10);
+                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand){
+                                setBack.setDisable(false);
+                                ImageView imageClicked = (ImageView) event.getSource();
+                                StackPane stackPane= (StackPane) imageClicked.getParent();
+                                Integer columnIndex = GridPane.getColumnIndex(stackPane);
+                                Integer rowIndex = GridPane.getRowIndex(stackPane);
+                                gameStatus.setText("CLICK THE BUTTON -PLAY CARD- or MOVE THE CARD ON THE BOARD");
+                                if(putACardY_toServer!=rowIndex || putACardX_toServer !=columnIndex ){
+                                    gridPane.getChildren().remove(boardTmpImage);
+                                    gridPane.getChildren().remove(boardTmpImageBack);
+                                }
+                                //add frontCard
+                                isClickedBoard=true;
+                                putACardX_toServer= columnIndex == null ? 0 : columnIndex;
+                                putACardY_toServer = rowIndex == null ? 0 : rowIndex;
+                                boardTmpImage.setImage(cardsOnHandImages.get(cardOnHandIndex_toServer).getImage());
+                                boardTmpImage.setFitWidth(146);
+                                boardTmpImage.setFitHeight(100);
+                                boardTmpImage.setCursor(Cursor.HAND);
+                                gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+                                cardsOnHandImages.get(cardOnHandIndex_toServer).setDisable(true);
+                                cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(false);
+                                playACard.setDisable(false);
+
+                                // add back card
+                                Image image = null;
+                                switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
+                                    case Elements.ANIMALS:
+                                        if(cardOnHand.get(cardOnHandIndex_toServer)instanceof GoldCard)
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBackGold.jpg"));
+                                        else
+                                            image=  new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
+                                        break;
+                                    case Elements.MUSHROOMS:
+                                        if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
+                                        else
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
+                                        break;
+                                    case Elements.INSECT:
+                                        if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/InsectBackGold.jpg"));
+                                        else
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
+                                        break;
+                                    case Elements.VEGETAL:
+                                        if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                            image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBackGold.jpg"));
+                                        else
+                                            image=  new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
+                                        break;
+                                }
+                                boardTmpImageBack.setImage(image);
+                                boardTmpImageBack.setFitHeight(100);
+                                boardTmpImageBack.setFitWidth(146);
+                                gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                                if(!setBack.isSelected()) {
+                                    boardTmpImageBack.setVisible(false);
+                                    boardTmpImage.setVisible(true);
+                                    isFront_toServer=true;
+                                }
+                                else {
+                                    boardTmpImageBack.setVisible(true);
+                                    boardTmpImage.setVisible(false);
+                                    isFront_toServer=false;
+                                }
+
+                                boardTmpImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                                    @Override
+                                    public void handle(MouseEvent event) {
+                                        gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
+                                        if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
+                                            for (ImageView ima : cardsOnHandImages){
+                                                ima.setVisible(true);
+                                                ima.setDisable(false);
+                                            }
+                                            cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
+                                            switch (cardOnHandIndex_toServer){
+                                                case 0:
+                                                    toggle1=!toggle1;
+                                                    break;
+                                                case 1:
+                                                    toggle2=! toggle2;
+                                                    break;
+                                                case 2:
+                                                    toggle3=! toggle3;
+                                                    break;
+                                            }
+                                            isFront_toServer=null;
+                                            isClickedCardOnHand=false;
+                                            cardOnHandIndex_toServer=null;
+                                            gridPane.getChildren().remove(boardTmpImage);
+                                            gridPane.getChildren().remove(boardTmpImageBack);
+                                            boardTmpImage = new ImageView();
+                                            setBack.setDisable(true);
+                                            playACard.setDisable(true);
+                                        }
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    StackPane stackPane= new StackPane(imageView);
+                    stackPane.setAlignment(Pos.CENTER);
+                    gridPane.add(stackPane, i, j);
+                }
+            }
+    }
+
     private void resetDeck(){
         firstResourceCard.setImage(null);
         secondResourceCard.setImage(null);
@@ -301,7 +449,7 @@ public class BoardController extends GenericSceneController {
                     image9= new Image(getClass().getResourceAsStream("/images/cards/AnimalsBackGold.jpg"));
                 else if (goldDeck.get(i).getKingdom().equals(Elements.MUSHROOMS)) {
                     System.out.println("entrato");
-                  image9= new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
+                    image9= new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
                 }
                 else if(goldDeck.get(i).getKingdom().equals(Elements.VEGETAL))
                     image9 =new Image(getClass().getResourceAsStream("/images/cards/VegetalBackGold.jpg"));
@@ -323,8 +471,18 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getGoldCardIndex_toServer=0;
+                            if(toggleG1) {
+                                getGoldCardIndex_toServer = 0;
+                                isClickedDeck = true;
+                                disableDecksEXCEPTone(firstGoldCard);
+                                light(firstGoldCard);
+                            }else{
+                                getGoldCardIndex_toServer = null;
+                                isClickedDeck = false ;
+                                ableDecks();
+                                firstGoldCard.setEffect(null);
+                            }
+                            toggleG1= !toggleG1;
                         }
                     }
 
@@ -335,8 +493,18 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getResourceCardIndex_toServer=0;
+                            if(toggleR1) {
+                                isClickedDeck = true;
+                                getResourceCardIndex_toServer = 0;
+                                disableDecksEXCEPTone(firstResourceCard);
+                                light(firstResourceCard);
+                            }else {
+                                getResourceCardIndex_toServer = null;
+                                isClickedDeck = false;
+                                ableDecks();
+                                firstResourceCard.setEffect(null);
+                            }
+                            toggleR1 =! toggleR1 ;
                         }
                     }
 
@@ -349,8 +517,18 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getGoldCardIndex_toServer=1;
+                            if(toggleG2) {
+                                isClickedDeck = true;
+                                getGoldCardIndex_toServer = 1;
+                                disableDecksEXCEPTone(secondGoldCard);
+                                light(secondGoldCard);
+                            }else{
+                                isClickedDeck=false;
+                                getGoldCardIndex_toServer= null;
+                                ableDecks();
+                                secondGoldCard.setEffect(null);
+                            }
+                            toggleG2=!toggleG2;
                         }
                     }
 
@@ -360,9 +538,20 @@ public class BoardController extends GenericSceneController {
                 secondResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
+
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getResourceCardIndex_toServer=1;
+                            if(toggleR2) {
+                                isClickedDeck = true;
+                                getResourceCardIndex_toServer = 1;
+                                disableDecksEXCEPTone(secondResourceCard);
+                                light(secondResourceCard);
+                            }else {
+                                isClickedDeck = false;
+                                getResourceCardIndex_toServer = null;
+                                ableDecks();
+                                secondResourceCard.setEffect(null);
+                            }
+                            toggleR2=!toggleR2;
                         }
                     }
 
@@ -374,151 +563,62 @@ public class BoardController extends GenericSceneController {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getGoldCardIndex_toServer=2;
+                            if(toggleG3) {
+                                isClickedDeck = true;
+                                getGoldCardIndex_toServer = 2;
+                                disableDecksEXCEPTone(kingdomGoldDeck);
+                                light(kingdomGoldDeck);
+                            }else{
+                                isClickedDeck=false;
+                                getGoldCardIndex_toServer=null;
+                                ableDecks();
+                                kingdomGoldDeck.setEffect(null);
+                            }
+                            toggleG3=! toggleG3;
                         }
                     }
 
                 });
                 kingdomResourceDeck.setImage(image10);
                 kingdomResourceDeck.setCursor(Cursor.HAND);
-                kingdomGoldDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                kingdomResourceDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         if (event.getButton() == MouseButton.PRIMARY) {
-                            isClickedCardOnHand=true;
-                            getGoldCardIndex_toServer=2;
+                            if(toggleR2) {
+                                isClickedDeck = true;
+                                getGoldCardIndex_toServer = 2;
+                                disableDecksEXCEPTone(kingdomResourceDeck);
+                                light(kingdomResourceDeck);
+                            }else{
+                                isClickedDeck=false;
+                                getGoldCardIndex_toServer =null;
+                                ableDecks();
+                                kingdomResourceDeck.setEffect(null);
+                            }
+                            toggleR2=!toggleR2;
                         }
                     }
 
                 });
             }
         }
-    }
-    private void setUpGridPane() {
-        for(int i= 0; i<82; i++)
-            for(int j=0; j<82; j++) {
-                if ((i+j)%2 == 0){
-
-                    ImageView imageView = new ImageView();
-                    imageView.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
-                    imageView.setCursor(Cursor.HAND);
-                    imageView.setFitWidth(10);
-                    imageView.setFitHeight(10);
-                    imageView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand){
-                                setBack.setDisable(false);
-                                cardsOnHand.add(firstCardOnHand);
-                                cardsOnHand.add(secondCardOnHand);
-                                cardsOnHand.add(thirdCardOnHand);
-                                isClickedBoard=true;
-                                ImageView imageClicked = (ImageView) event.getSource();
-                                StackPane stackPane= (StackPane) imageClicked.getParent();
-                                Integer columnIndex = GridPane.getColumnIndex(stackPane);
-                                Integer rowIndex = GridPane.getRowIndex(stackPane);
-                                // Convertire gli indici null in 0 (in caso di celle in posizione 0,0)
-                                putACardX_toServer = columnIndex == null ? 0 : columnIndex;
-                                putACardY_toServer = rowIndex == null ? 0 : rowIndex;
-
-                                boardTmpImage.setImage(cardsOnHand.get(cardOnHandIndex_toServer).getImage());
-                                boardTmpImage.setFitWidth(146);
-                                boardTmpImage.setFitHeight(100);
-                                boardTmpImage.setCursor(Cursor.HAND);
-                                gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
-                                cardsOnHand.get(cardOnHandIndex_toServer).setDisable(true);
-                                cardsOnHand.get(cardOnHandIndex_toServer).setVisible(false);
-                                playACard.setDisable(false);
-                                boardTmpImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                                    @Override
-                                    public void handle(MouseEvent event) {
-                                        if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
-                                            for (ImageView c : cardsOnHand) {
-                                                c.setVisible(true);
-                                                c.setDisable(false);
-                                            }
-                                            cardsOnHand.get(cardOnHandIndex_toServer).setEffect(null);
-                                            switch (cardOnHandIndex_toServer){
-                                                case 0:
-                                                    toggle1=!toggle1;
-                                                    break;
-                                                case 1:
-                                                    toggle2=! toggle2;
-                                                    break;
-                                                case 2:
-                                                    toggle3=! toggle3;
-                                                    break;
-                                            }
-                                            isClickedCardOnHand=false;
-                                            cardOnHandIndex_toServer=null;
-                                            gridPane.getChildren().remove(boardTmpImage);
-                                            gridPane.getChildren().remove(boardTmpImageBack);
-                                            boardTmpImage = new ImageView();
-                                            setBack.setDisable(true);
-                                        }
-
-                                    }
-                                });
-                            }
-                        }
-                    });
-                    StackPane stackPane= new StackPane(imageView);
-                    stackPane.setAlignment(Pos.CENTER);
-                    gridPane.add(stackPane, i, j);
-                }
-            }
-    }
-    private void clickCardOnHand(){
-        boolean ok=true, player=false;
-        for(int i = 0; i<cardsOnHand.size(); i++){
-            ImageView im=cardsOnHand.get(i);
-            im.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent event) {
-                    if (event.getButton() == MouseButton.PRIMARY) {
-                        isClickedBoard=true;
-                    }
-
-                }
-
-            });
-        }
-        // please choose where to put it
-    }
-
-    private void clickBoard(){
-
-    }
-
-    private void chooseFrontOrBack(){
-
-    }
-
-    private void RemovePreviousImageview(){
-        /*
-        public Node removeNodeByRowColumnIndex(final int row,final int column,GridPane gridPane) {
-
-            ObservableList<Node> childrens = gridPane.getChildren();
-            for(Node node : childrens) {
-                if(node instanceof ImageView && gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-                    ImageView imageView=ImageView(node); // use what you want to remove
-                    gridPane.getChildren().remove(imageView);
-                    break;
-                }
-            }
-        }
-        */
-    }
-
-    private void askServerIfPossiblePutCard(){
 
     }
 
     @Override
     public void updateModel(){
+        isError_fromServer=false;
         ViewModel model = getGuiApplication().getGui().getMyMatch();
         //todo update all the scene with the information of the model
     }
+
+    public void ShowErrorMessage(String string){
+        gameStatus.setText(string);
+        gameStatus.setTextFill(Color.RED);
+        isError_fromServer= true;
+        isClickedPlayACard=false;
+    }
+
 
 }

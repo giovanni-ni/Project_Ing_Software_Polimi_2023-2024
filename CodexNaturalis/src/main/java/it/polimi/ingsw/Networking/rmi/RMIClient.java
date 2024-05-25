@@ -23,9 +23,6 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
 
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
-
-    final List<String> playersNickname= new ArrayList<>();
-
     private String nickname;
 
     private Integer gameId;
