@@ -33,9 +33,9 @@ public class GUI extends Thread implements Ui {
 
     private String username;
 
-    private   ViewModel myMatch;
+    private ViewModel myMatch;
 
-    private   int matchID;
+    private int matchID;
 
     private Client client;
 
@@ -57,6 +57,7 @@ public class GUI extends Thread implements Ui {
     public void handleMessage(GenericServerMessage msg) {
         processQueue.add(msg);
     }
+
     public void connect(Boolean isRmi, String ip) throws IOException {
         if (isRmi){
             client = new RMIClient(ip, DefaultPort.RMIPORT.getNumber(),this);
@@ -130,5 +131,9 @@ public class GUI extends Thread implements Ui {
 
     public String getMatchID() {
         return new String(String.valueOf(matchID));
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

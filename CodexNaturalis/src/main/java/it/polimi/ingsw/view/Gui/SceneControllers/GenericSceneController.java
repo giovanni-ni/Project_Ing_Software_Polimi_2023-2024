@@ -1,14 +1,8 @@
 package it.polimi.ingsw.view.Gui.SceneControllers;
-
-import it.polimi.ingsw.model.ViewModel;
-import it.polimi.ingsw.view.Gui.GUI;
 import it.polimi.ingsw.view.Gui.GUIApplication;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-
-import javax.swing.text.View;
 import java.io.IOException;
 
 public class GenericSceneController {

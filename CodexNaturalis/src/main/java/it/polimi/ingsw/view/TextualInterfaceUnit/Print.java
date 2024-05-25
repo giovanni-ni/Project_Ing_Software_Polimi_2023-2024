@@ -67,7 +67,7 @@ public class Print {
                 card=cp.loadGoldCards().get(cardId-TypeOfCard.GOLDCARD.getCodeCardStart());
             } else if (cardId <= TypeOfCard.INITIALCARD.getCodeCardEnd()) {
                 card=cp.loadInitialCards().get(cardId-TypeOfCard.INITIALCARD.getCodeCardStart());
-            } else if(cardId <= TypeOfCard.TARGETCARD.getCodeCardStart()){
+            } else if(cardId <= TypeOfCard.TARGETCARD.getCodeCardEnd()){
                 card=cp.loadTargetCards().get(cardId-TypeOfCard.TARGETCARD.getCodeCardStart());
             }
         }

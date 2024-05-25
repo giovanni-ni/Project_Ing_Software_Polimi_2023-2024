@@ -7,6 +7,9 @@ public class FrontOrBackMessage extends GenericClientMessage {
         super(gameID, nickname);
         this.frontOrBack = choice;
     }
+    public FrontOrBackMessage(boolean choice) {
+        this.frontOrBack = choice;
+    }
 
     public boolean getFrontOrBack() {
         return frontOrBack;
