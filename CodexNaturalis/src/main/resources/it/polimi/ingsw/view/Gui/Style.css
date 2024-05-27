@@ -40,3 +40,26 @@
 .scroll-pane .scroll-bar .decrement-button {
     -fx-background-color: blue;
 }*/
+.chatPane{
+    -fx-background-color: rgba(255,255,255,0.2);
+    -fx-border-color: transparent;
+    -fx-padding: 10px;
+    -fx-background-radius: 15px;
+    -fx-background: 15px;
+
+}
+.chatPane .scroll-bar:horizontal .track,
+.chatPane .scroll-bar:vertical .track {
+    -fx-background-color: rgba(0,0,0,0.5);
+}
+
+.chatPane .scroll-bar:horizontal .thumb,
+.chatPane .scroll-bar:vertical .thumb {
+
+    -fx-background-color: rgba(255,255,255,0.2);
+}
+
+.chatPane .scroll-bar .increment-button,
+.chatPane .scroll-bar .decrement-button {
+    -fx-opacity: 0.0;
+}
