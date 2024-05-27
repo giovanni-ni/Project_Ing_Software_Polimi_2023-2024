@@ -13,6 +13,7 @@ import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.model.ViewModel;
+import it.polimi.ingsw.view.Gui.SceneControllers.BoardController;
 import it.polimi.ingsw.view.Ui;
 import javafx.application.Platform;
 
@@ -50,7 +51,6 @@ public class GUI extends Thread implements Ui {
         this.start();
         matchID =0;
         username = null;
-
     }
     @Override
     public void handleMessage(GenericServerMessage msg) {
@@ -106,7 +106,16 @@ public class GUI extends Thread implements Ui {
             if(msg instanceof playCardSuccess) {
                 myMatch = ((playCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel());
+            }else if(msg instanceof drawCardSuccess){
+                myMatch = ((drawCardSuccess) msg).getModel();
+                matchID = myMatch.getIdMatch();
                 guiApplication.updateCurrentSceneModel();
+                Platform.runLater(()->guiApplication.showScene(ScenesName.BOARD));
+            }else if(msg instanceof LastRoundMessage){
+
+            }else if(msg instanceof  endGameMessage){
+
             }
         }
         else if (msg instanceof ActionSuccessMsg) {
@@ -135,8 +144,8 @@ public class GUI extends Thread implements Ui {
         return myMatch;
     }
 
-    public String getMatchID() {
-        return new String(String.valueOf(matchID));
+    public Integer getMatchID() {
+        return matchID;
     }
 
     public String getUsername() {

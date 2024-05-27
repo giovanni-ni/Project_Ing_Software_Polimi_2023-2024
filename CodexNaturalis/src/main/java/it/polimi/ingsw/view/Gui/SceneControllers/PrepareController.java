@@ -36,7 +36,7 @@ public class PrepareController extends GenericSceneController {
 
     @FXML
     void confirmSelectTarget(ActionEvent event) throws IOException {
-        if (!clicked){
+
             if (step ==0){
                 step=1;
                 updateModel();
@@ -64,8 +64,8 @@ public class PrepareController extends GenericSceneController {
                         step=3;
                     }
                 }
-            }
-            clicked=true;
+
+
 
         }
 
@@ -74,7 +74,7 @@ public class PrepareController extends GenericSceneController {
 
     @Override
     public void updateModel() throws IOException {
-        clicked =false;
+
         if (!initialized){
             Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
             List<TargetCard> targetCards = List.of(myPlayer.getTargetOnHand());

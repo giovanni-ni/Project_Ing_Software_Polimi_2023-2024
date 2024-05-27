@@ -32,10 +32,6 @@
             <image>
                 <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
             </image></ImageView>
-        <Button fx:id="button" layoutX="565.0" layoutY="611.0" mnemonicParsing="false" onAction="#init" prefHeight="65.0" prefWidth="112.0" styleClass="normalButton" text="Button" textFill="WHITE">
-         <font>
-            <Font size="19.0" />
-         </font></Button>
         <ImageView fx:id="deckBackground" fitHeight="261.0" fitWidth="332.0" layoutX="9.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="30.0">
             <image>
                 <Image url="@../../../../../images/view/transparentTabDeck.png" />
@@ -60,7 +56,7 @@
       <ImageView fx:id="backTargetCard" fitHeight="65.0" fitWidth="95.0" layoutX="28.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="207.0" />
       <ImageView fx:id="secondTargetCard" fitHeight="65.0" fitWidth="95.0" layoutX="132.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="207.0" />
       <ImageView fx:id="firstTargetCard" fitHeight="65.0" fitWidth="95.0" layoutX="249.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="207.0" />
-      <ScrollPane hvalue="0.51" layoutX="369.0" layoutY="56.0" prefHeight="510.0" prefWidth="852.0" vvalue="0.5">
+      <ScrollPane hvalue="0.51" layoutX="369.0" layoutY="56.0" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5">
          <content>
             <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
               <columnConstraints>
@@ -248,7 +244,7 @@
          <font>
             <Font size="19.0" />
          </font></Button>
-      <Button fx:id="getACard" disable="true" layoutX="846.0" layoutY="615.0" mnemonicParsing="false" onAction="#setGetACardButton_toServer" prefHeight="59.0" prefWidth="104.0" styleClass="normalButton" text="GetACard" textFill="WHITE">
+      <Button fx:id="getACard" disable="true" layoutX="846.0" layoutY="615.0" mnemonicParsing="false" onAction="#getACardButton_toServer" prefHeight="59.0" prefWidth="104.0" styleClass="normalButton" text="GetACard" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font></Button>
