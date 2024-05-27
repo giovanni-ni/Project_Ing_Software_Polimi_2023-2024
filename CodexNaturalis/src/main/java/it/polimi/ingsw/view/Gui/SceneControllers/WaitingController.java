@@ -5,22 +5,24 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerColor;
 import it.polimi.ingsw.view.Gui.GUIApplication;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
-public class WaitingController extends GenericSceneController {
+public class WaitingController extends GenericSceneController implements Initializable {
 
     private  HashMap<PlayerColor,ImageView> ballList;
     private  HashMap<PlayerColor,ImageView> tickList;
     private  HashMap<PlayerColor, Text> nickList;
-    boolean isInitialized = false;
     boolean isReady = false;
 
 
@@ -41,12 +43,6 @@ public class WaitingController extends GenericSceneController {
 
     @Override
     public void updateModel(){
-        if (!isInitialized){
-            tickList = getTickList();
-            ballList = getBallList();
-            nickList = getNickList();
-            isInitialized =true;
-        }
 
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
         for (Player p : players){
@@ -88,6 +84,13 @@ public class WaitingController extends GenericSceneController {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
         isReady=false;
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+            tickList = getTickList();
+            ballList = getBallList();
+            nickList = getNickList();
     }
 }
 
