@@ -26,7 +26,7 @@ public class PrepareController extends GenericSceneController {
     private  int step = 0;
     private boolean initialized = false;
     private String variableText;
-    private boolean clicked = false;
+
 
     @FXML
     CheckBox targetOneCheck, targetTwoCheck;
@@ -125,7 +125,7 @@ public class PrepareController extends GenericSceneController {
     public void ShowErrorMessage(String string){
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
-        clicked=false;
+
     }
 
 
