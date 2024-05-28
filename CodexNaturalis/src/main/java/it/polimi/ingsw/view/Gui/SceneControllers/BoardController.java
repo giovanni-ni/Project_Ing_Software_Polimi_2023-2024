@@ -168,7 +168,7 @@ public class BoardController extends GenericSceneController {
         isClickedPlayACard=true;
         String nickname=getGuiApplication().getGui().getUsername();
         code_toServer=searchCode.get(cardsOnHandImages.get(cardOnHandIndex_toServer));
-        getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, putACardX_toServer-40, putACardY_toServer-40));
+        getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, putACardX_toServer-40,-(putACardY_toServer-40)));
         playACard.setDisable(true);
     }
     public void getACardButton_toServer(ActionEvent e) throws RemoteException {
@@ -202,7 +202,6 @@ public class BoardController extends GenericSceneController {
             System.out.println("ok");
             thirdCardOnHand.setVisible(false);
         }
-
         Image myImage5;
         Integer code;
         int numCard =1;
@@ -500,7 +499,7 @@ public class BoardController extends GenericSceneController {
 
             Platform.runLater(()-> {
                 try {
-                    gridPane.add(createImageView(card), coo.getX()+40, coo.getY()+40);
+                    gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -534,27 +533,13 @@ public class BoardController extends GenericSceneController {
         showDecks(goldDeck,resourceDeck);
         showCardOnHand(cardOnHand);
         showBoard(myPlayer.getBoard());
-        if(!isError_playCard&&initialized&& tooggleMain){
-            cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(false);
-            cardOnHandIndex_toServer=null ;
-            isFront_toServer= null;
-            putACardX_toServer=null;
-            putACardY_toServer=null;
-            playACard.setDisable(true);
-            ableDecks();
-            disableCardOnHand();
-            getACard.setDisable(false);
-            gridPane.setDisable(true);
-
-            firstCardOnHand.setVisible(true);
-            tooggleMain= false;
-        }
-        if(!isError_getCard&&!tooggleMain&&initialized){
-            thirdCardOnHand.setVisible(true);
-            tooggleMain=true;
-        }
 
         if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
+            if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
+                thirdCardOnHand.setVisible(true);
+                tooggleMain=true;
+                isClickedGetACard=false;
+            }
             // disabilito gioco carta
             gridPane.setDisable(true);
             playACard.setDisable(true);
@@ -564,11 +549,26 @@ public class BoardController extends GenericSceneController {
             // disabilito pesca carta
             disableDecks();
             getACard.setDisable(true);
-
         }else{
             //abilito gioco carta
             gridPane.setDisable(false);
             ableCardOnHand();
+            if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
+                cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(false);
+                cardOnHandIndex_toServer=null ;
+                isFront_toServer= null;
+                putACardX_toServer=null;
+                putACardY_toServer=null;
+                playACard.setDisable(true);
+                ableDecks();
+                disableCardOnHand();
+                getACard.setDisable(false);
+                gridPane.setDisable(true);
+                firstCardOnHand.setVisible(true);
+                tooggleMain= false;
+
+                isClickedPlayACard=false;
+            }
 
             // abilito  pesca carta
         }

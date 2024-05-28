@@ -74,7 +74,6 @@ public class Board implements Serializable {
 		return true;
 	}
 
-
 	/**
 	 * Check about the coordinates and the coordinate, if there are all free empty corners it returns true, otherwise false
 	 * This method is used by the player class to check the availability of the board
@@ -301,7 +300,6 @@ public class Board implements Serializable {
 
 	public int numCardsAbout(int x, int y){
 		int count=0;
-
 		if (isCardCoordinate(x+1,y+1))
 			count++;
 		if (isCardCoordinate(x+1,y-1))
@@ -310,7 +308,6 @@ public class Board implements Serializable {
 			count++;
 		if (isCardCoordinate(x-1,y-1))
 			count++;
-
 		return count;
 	}
 
@@ -327,9 +324,7 @@ public class Board implements Serializable {
 
 	public void setCounterOfElements(Map<Elements, Integer> counterOfElements) {
 		this.counterOfElements = counterOfElements;
-
 	}
-
 	public Map<Elements, Integer> getCounterOfElements() {
 		return counterOfElements;
 	}

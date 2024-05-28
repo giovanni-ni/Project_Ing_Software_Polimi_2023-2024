@@ -79,7 +79,7 @@ public class GUI extends Thread implements Ui {
 
     public void handle(Message msg) throws IOException {
         if (msg instanceof ActionNotRecognize){
-            guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription());
+            Platform.runLater(()->guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription()));
         }else if (guiApplication.getActualScene()==ScenesName.ASKCONNECTION){
             if (msg instanceof ActionSuccessMsg){
                 Platform.runLater(()->guiApplication.showScene(ScenesName.STARTMENU));
@@ -110,8 +110,7 @@ public class GUI extends Thread implements Ui {
             }else if(msg instanceof drawCardSuccess){
                 myMatch = ((drawCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
-                guiApplication.updateCurrentSceneModel();
-                Platform.runLater(()->guiApplication.showScene(ScenesName.BOARD));
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel());
             }else if(msg instanceof LastRoundMessage){
 
             }else if(msg instanceof  endGameMessage){
