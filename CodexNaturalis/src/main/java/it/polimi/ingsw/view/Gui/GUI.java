@@ -78,6 +78,9 @@ public class GUI extends Thread implements Ui {
     }
 
     public void handle(Message msg) throws IOException {
+        if (msg instanceof ServerChatMessage){
+
+        }
         if (msg instanceof ActionNotRecognize){
             Platform.runLater(()->guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription()));
         }else if (guiApplication.getActualScene()==ScenesName.ASKCONNECTION){

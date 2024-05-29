@@ -780,11 +780,13 @@ public class BoardController extends GenericSceneController implements Initializ
             chatChoice.getItems().addAll(p.nickname);
         }
         chatChoice.getItems().add("Public");
+        chatChoice.setValue("Public");
     }
 
 
     private void sendChatMessage() throws RemoteException {
         boolean isForAll = false;
+
         chatDestination =chatChoice.getValue();
 
         if (chatDestination!=null && !chatTextField.getText().isEmpty()){
