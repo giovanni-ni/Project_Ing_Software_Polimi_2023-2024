@@ -59,7 +59,7 @@
                   <Insets top="400.0" />
                </StackPane.margin>
             </Button>
-            <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER">
+            <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER" fx:id="ErrorMessage">
                <font>
                   <Font size="14.0" />
                </font>

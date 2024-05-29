@@ -19,7 +19,7 @@ public class ClientChatMessage extends GenericClientMessage {
     }
 
     public String getFromPlayer() {
-        return fromPlayer;
+        return super.getNickname();
     }
 
     public void setFromPlayer(String fromPlayer) {

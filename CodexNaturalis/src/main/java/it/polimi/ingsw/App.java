@@ -39,8 +39,7 @@ public class App
             tui.init();
         } else {
             print("Starting Gui.....");
-            GUIApplication guiApplication = new GUIApplication();
-            guiApplication.main(null);
+            GUIApplication.main(null);
 
         }
 

@@ -36,7 +36,7 @@
                         <Insets top="350.0" />
                     </StackPane.margin>
                 </ImageView>
-                <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER">
+                <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER" fx:id="ErrorMessage">
                     <StackPane.margin>
                         <Insets top="550.0" />
                     </StackPane.margin>

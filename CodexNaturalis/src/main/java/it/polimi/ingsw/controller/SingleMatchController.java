@@ -60,8 +60,6 @@ public class SingleMatchController extends Thread{
                 currentPlayer=p;
 
         }
-
-
         if (currentPlayer.nickname.equals(nickname) &&
                 //the number of card on hand should be less than 3
                 currentPlayer.getCardOnHand().size() < MAX_NUMCARD_ON_HAND) {

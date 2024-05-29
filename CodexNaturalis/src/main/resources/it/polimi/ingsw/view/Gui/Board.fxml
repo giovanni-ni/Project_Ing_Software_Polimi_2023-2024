@@ -17,7 +17,6 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.BoardController">
     <children>
@@ -268,11 +267,6 @@
                      <content>
                         <VBox fx:id="chatVBox" prefHeight="213.0" prefWidth="295.0">
                            <children>
-                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[Public][nuge77]:Mako好帅" wrappingWidth="294.9069538116455">
-                                 <font>
-                                    <Font name="Arial Bold" size="15.0" />
-                                 </font>
-                              </Text>
                            </children>
                         </VBox>
                      </content>
@@ -284,7 +278,7 @@
                               <Cursor fx:constant="TEXT" />
                            </cursor>
                         </TextField>
-                        <ChoiceBox id="chatChoice" prefHeight="23.0" prefWidth="43.0" StackPane.alignment="CENTER_RIGHT" />
+                        <ChoiceBox fx:id="chatChoice" prefHeight="23.0" prefWidth="43.0" StackPane.alignment="CENTER_RIGHT" />
                      </children>
                      <VBox.margin>
                         <Insets top="10.0" />

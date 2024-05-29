@@ -6,6 +6,8 @@ import com.google.common.collect.HashBiMap;
 import it.polimi.ingsw.Message.ClientToServerMsg.ClientChatMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.drawCardMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.playCardMessage;
+import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
+import it.polimi.ingsw.Networking.socket.Server;
 import it.polimi.ingsw.model.*;
 import javafx.application.Platform;
 
@@ -26,7 +28,9 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 
 import java.io.IOException;
@@ -38,6 +42,7 @@ import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
 
 public class BoardController extends GenericSceneController implements Initializable {
 
+    public VBox chatVBox;
     private Match match = new Match(0);
 
     private HashBiMap<PlayerColor, String> nickList;
@@ -61,6 +66,7 @@ public class BoardController extends GenericSceneController implements Initializ
     code_toServer=null;
     Boolean isError_playCard= false, isError_getCard=false;
     Coordinate coo_toServer;
+
 
 
     @FXML
@@ -532,7 +538,11 @@ public class BoardController extends GenericSceneController implements Initializ
 
     @Override
     public void updateModel(UPDATE update) throws IOException {
-
+        switch (update){
+            case CHATMESSAGE ->{
+                showNewMessage();
+            }
+        }
         ViewModel model = getGuiApplication().getGui().getMyMatch();
         Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
         ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
@@ -740,10 +750,42 @@ public class BoardController extends GenericSceneController implements Initializ
                     }
                 }
             initializeChatChoice(model.getPlayers());
+            if (!getGuiApplication().getGui().getChat().isEmpty()){
+                showAllChat();
+            }
             initialized =true;
         }
         //todo update all the scene with the information of the model
     }
+
+    private void showAllChat() {
+        for(ServerChatMessage msg : getGuiApplication().getGui().getChat()){
+            showChatMessage(msg);
+        }
+    }
+
+    private void showNewMessage() {
+        showChatMessage(getGuiApplication().getGui().getChat().getLast());
+    }
+    private void showChatMessage(ServerChatMessage msg){
+        Color color = Color.WHITE;
+        String channel;
+        if (msg.isForAll()){
+            channel ="[Public]";
+        }else {
+            channel ="[Private]";
+            color = Color.LIGHTGREEN;
+        }
+        String fromPlayer = msg.getFromPlayer();
+        if (Objects.equals(fromPlayer, getGuiApplication().getGui().getUsername())){
+            fromPlayer = "YOU";
+        }
+        Text chatMessage = new Text(channel+"["+fromPlayer+"]:"+msg.getChatMsg());
+        chatMessage.setFill(color);
+        chatMessage.getStyleClass().add("chatText");
+       Platform.runLater(()->chatVBox.getChildren().add(chatMessage));
+    }
+
     @Override
     public void ShowErrorMessage(String string){
         gameStatus.setText(string);
@@ -792,8 +834,11 @@ public class BoardController extends GenericSceneController implements Initializ
         if (chatDestination!=null && !chatTextField.getText().isEmpty()){
             if(chatDestination.equals("Public"))
                 isForAll=true;
+            else{
+                showChatMessage(new ServerChatMessage(new ClientChatMessage(0,"You",isForAll,chatDestination,chatTextField.getText())));
+            }
             getGuiApplication().getGui().notify(new ClientChatMessage(0,"",isForAll,chatDestination,chatTextField.getText()));
-            chatTextField.setText("");
+            chatTextField.clear();
         }
     }
 }

@@ -41,7 +41,7 @@ public class GUI extends Thread implements Ui {
 
     private Client client;
 
-    private static ArrayList<ServerChatMessage> chat;
+    private ArrayList<ServerChatMessage> chat;
 
     private BlockingQueue<Message> processQueue;
 
@@ -153,5 +153,9 @@ public class GUI extends Thread implements Ui {
 
     public String getUsername() {
         return username;
+    }
+
+    public ArrayList<ServerChatMessage> getChat() {
+        return chat;
     }
 }
