@@ -24,11 +24,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class PrepareController extends GenericSceneController implements Initializable {
+public class PrepareController extends GenericSceneController {
 
     Image target1, target2,common1,common2,frontInitial, backInitial, textCommon, textTarget, textInitial;
     private  int step = 0;
-        private String variableText;
+    private boolean initialized = false;
+    private String variableText;
 
 
     @FXML
@@ -77,6 +78,23 @@ public class PrepareController extends GenericSceneController implements Initial
 
     @Override
     public void updateModel() throws IOException {
+
+        if (!initialized){
+            Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+            List<TargetCard> targetCards = List.of(myPlayer.getTargetOnHand());
+            ArrayList<TargetCard> commonTargets = getGuiApplication().getGui().getMyMatch().getCommonTarget();
+            InitialCard initialCard = myPlayer.getInitialCard();
+            target1 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getFirst().getIdCard(), true))));
+            target2 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getLast().getIdCard(), true))));
+            frontInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), true))));
+            backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), false))));
+            common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
+            common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
+            textCommon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/commonTarget.png")));
+            textInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/setInitial.png")));
+            textTarget =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/targetSelect.png")));
+            initialized =true;
+        }
         switch (step){
             case 0 ->{
                 maintext.setImage(textCommon);
@@ -107,54 +125,5 @@ public class PrepareController extends GenericSceneController implements Initial
             }
         }
     }
-    @Override
-    public void ShowErrorMessage(String string){
-        ErrorMessage.setText(string);
-        ErrorMessage.setFill(Color.RED);
 
-    }
-
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
-        List<TargetCard> targetCards = List.of(myPlayer.getTargetOnHand());
-        ArrayList<TargetCard> commonTargets = getGuiApplication().getGui().getMyMatch().getCommonTarget();
-        InitialCard initialCard = myPlayer.getInitialCard();
-        try {
-            target1 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getFirst().getIdCard(), true))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            target2 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getLast().getIdCard(), true))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            frontInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), true))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), false))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        textCommon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/commonTarget.png")));
-        textInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/setInitial.png")));
-        textTarget =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/targetSelect.png")));
-
-
-    }
 }

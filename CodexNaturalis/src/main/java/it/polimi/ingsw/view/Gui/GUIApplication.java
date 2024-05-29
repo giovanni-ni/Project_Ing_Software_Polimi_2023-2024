@@ -63,8 +63,8 @@ public class GUIApplication extends Application{
         for (ScenesName scenesName : ScenesName.values()){
             loader  = new FXMLLoader(getClass().getResource(scenesName.getPath()));
             root = loader.load();
-            controllerList.put(loader.getController(),scenesName);
             ((GenericSceneController)loader.getController()).setGuiApplication(this);
+            controllerList.put(loader.getController(),scenesName);
             scenesList.put(new Scene(root, 1280,720), scenesName);
 
         }

@@ -266,7 +266,7 @@
                <children>
                   <ScrollPane prefHeight="278.0" prefWidth="332.0" styleClass="chatPane">
                      <content>
-                        <VBox id="chatVBox" prefHeight="213.0" prefWidth="295.0">
+                        <VBox fx:id="chatVBox" prefHeight="213.0" prefWidth="295.0">
                            <children>
                               <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="[Public][nuge77]:Mako好帅" wrappingWidth="294.9069538116455">
                                  <font>
@@ -279,7 +279,7 @@
                   </ScrollPane>
                   <StackPane prefHeight="10.0" prefWidth="332.0" styleClass="chatPane">
                      <children>
-                        <TextField id="chatTextField" alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="310.0" promptText="Chat here" StackPane.alignment="BOTTOM_LEFT">
+                        <TextField fx:id="chatTextField" alignment="BOTTOM_LEFT" prefHeight="0.0" prefWidth="310.0" promptText="Chat here" StackPane.alignment="BOTTOM_LEFT">
                            <cursor>
                               <Cursor fx:constant="TEXT" />
                            </cursor>

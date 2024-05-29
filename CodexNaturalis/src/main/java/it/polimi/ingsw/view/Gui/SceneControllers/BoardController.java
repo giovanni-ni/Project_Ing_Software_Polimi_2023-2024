@@ -1,44 +1,47 @@
 package it.polimi.ingsw.view.Gui.SceneControllers;
 
 import com.google.common.collect.BiMap;
-import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
+import com.google.common.collect.HashBiMap;
+
+import it.polimi.ingsw.Message.ClientToServerMsg.ClientChatMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.drawCardMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.playCardMessage;
 import it.polimi.ingsw.model.*;
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+
+import javafx.scene.control.*;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
+
 import java.io.IOException;
+import java.net.URL;
 import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
 
-public class BoardController extends GenericSceneController {
+public class BoardController extends GenericSceneController implements Initializable {
 
     private Match match = new Match(0);
 
+    private HashBiMap<PlayerColor, String> nickList;
+    private String chatDestination;
     private ArrayList<ImageView> decksImages = new ArrayList<>();
     private ArrayList<ImageView> cardsOnHandImages = new ArrayList<>();
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
@@ -51,14 +54,14 @@ public class BoardController extends GenericSceneController {
     Boolean toggle1= true, toggle2=true, toggle3= true, toggleR1=true , toggleG1=true , toggleR2= true, toggleG2 =true,toggleR3= true, toggleG3 = true, tooggleMain= true;
     Boolean isFront_toServer;
     Integer cardOnHandIndex_toServer=null,
-            getResourceCardIndex_toServer=null,
-            getGoldCardIndex_toServer=null,
-            putACardX_toServer=null,
-            putACardY_toServer=null,
-            code_toServer=null;
-
+    getResourceCardIndex_toServer=null,
+    getGoldCardIndex_toServer=null,
+    putACardX_toServer=null,
+    putACardY_toServer=null,
+    code_toServer=null;
     Boolean isError_playCard= false, isError_getCard=false;
     Coordinate coo_toServer;
+
 
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
@@ -72,6 +75,11 @@ public class BoardController extends GenericSceneController {
     GridPane gridPane;
     @FXML
     CheckBox setBack;
+    @FXML
+    ChoiceBox<String> chatChoice;
+    @FXML
+    TextField chatTextField;
+
     public BoardController() throws IOException {
     }
 
@@ -731,6 +739,7 @@ public class BoardController extends GenericSceneController {
 
                     }
                 }
+            initializeChatChoice(model.getPlayers());
             initialized =true;
         }
         //todo update all the scene with the information of the model
@@ -751,5 +760,38 @@ public class BoardController extends GenericSceneController {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatDestination=null;
+        chatTextField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER){
+                try {
+                    sendChatMessage();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+    }
 
+    //chat methods
+    private void initializeChatChoice(List<Player> players){
+        for (Player p :players){
+            chatChoice.getItems().addAll(p.nickname);
+        }
+        chatChoice.getItems().add("Public");
+    }
+
+
+    private void sendChatMessage() throws RemoteException {
+        boolean isForAll = false;
+        chatDestination =chatChoice.getValue();
+
+        if (chatDestination!=null && !chatTextField.getText().isEmpty()){
+            if(chatDestination.equals("Public"))
+                isForAll=true;
+            getGuiApplication().getGui().notify(new ClientChatMessage(0,"",isForAll,chatDestination,chatTextField.getText()));
+            chatTextField.setText("");
+        }
+    }
 }
