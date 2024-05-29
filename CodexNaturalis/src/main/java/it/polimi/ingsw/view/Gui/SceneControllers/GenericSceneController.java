@@ -24,7 +24,7 @@ public class GenericSceneController {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
     }
-    public void updateModel() throws IOException {
+    public void updateModel(UPDATE update) throws IOException {
     }
 
 }

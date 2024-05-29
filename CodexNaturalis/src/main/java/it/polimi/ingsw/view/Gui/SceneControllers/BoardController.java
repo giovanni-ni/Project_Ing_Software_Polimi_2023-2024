@@ -531,7 +531,7 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
     @Override
-    public void updateModel() throws IOException {
+    public void updateModel(UPDATE update) throws IOException {
 
         ViewModel model = getGuiApplication().getGui().getMyMatch();
         Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());

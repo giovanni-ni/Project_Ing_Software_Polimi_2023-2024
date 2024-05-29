@@ -14,6 +14,7 @@ import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.model.ViewModel;
 import it.polimi.ingsw.view.Gui.SceneControllers.BoardController;
+import it.polimi.ingsw.view.Gui.SceneControllers.UPDATE;
 import it.polimi.ingsw.view.Ui;
 import javafx.application.Platform;
 
@@ -79,7 +80,8 @@ public class GUI extends Thread implements Ui {
 
     public void handle(Message msg) throws IOException {
         if (msg instanceof ServerChatMessage){
-
+            chat.add((ServerChatMessage) msg);
+            guiApplication.updateCurrentSceneModel(UPDATE.CHATMESSAGE);
         }
         if (msg instanceof ActionNotRecognize){
             Platform.runLater(()->guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription()));
@@ -91,7 +93,6 @@ public class GUI extends Thread implements Ui {
             if (msg instanceof joinSuccessMsg){
                 myMatch =((joinSuccessMsg)msg).getModel();
                 matchID=myMatch.getIdMatch();
-
                 Platform.runLater(()->guiApplication.showScene(ScenesName.WAITING));
 
             }
@@ -103,17 +104,17 @@ public class GUI extends Thread implements Ui {
             }else if (msg instanceof ActionSuccessMsg) {
                 myMatch = ((ActionSuccessMsg) msg).getModel();
                 matchID = myMatch.getIdMatch();
-                guiApplication.updateCurrentSceneModel();
+                guiApplication.updateCurrentSceneModel(UPDATE.GENERAL);
             }
         }else if(guiApplication.getActualScene() == ScenesName.BOARD){
             if(msg instanceof playCardSuccess) {
                 myMatch = ((playCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
-                Platform.runLater(()->guiApplication.updateCurrentSceneModel());
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.PLAYCARD));
             }else if(msg instanceof drawCardSuccess){
                 myMatch = ((drawCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
-                Platform.runLater(()->guiApplication.updateCurrentSceneModel());
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.DRAWCARD));
             }else if(msg instanceof LastRoundMessage){
 
             }else if(msg instanceof  endGameMessage){
@@ -123,7 +124,7 @@ public class GUI extends Thread implements Ui {
         else if (msg instanceof ActionSuccessMsg) {
             myMatch =((ActionSuccessMsg)msg).getModel();
             matchID=myMatch.getIdMatch();
-            guiApplication.updateCurrentSceneModel();
+            guiApplication.updateCurrentSceneModel(UPDATE.GENERAL);
         }else if (msg instanceof joinFailMsg) {
             guiApplication.showErrorMessage(((joinFailMsg) msg).getDescription());
         }

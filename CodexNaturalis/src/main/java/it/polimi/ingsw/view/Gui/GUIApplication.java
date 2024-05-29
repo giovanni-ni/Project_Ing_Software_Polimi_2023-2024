@@ -5,6 +5,7 @@ import com.google.common.collect.HashBiMap;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.model.ViewModel;
 import it.polimi.ingsw.view.Gui.SceneControllers.GenericSceneController;
+import it.polimi.ingsw.view.Gui.SceneControllers.UPDATE;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -79,7 +80,7 @@ public class GUIApplication extends Application{
        if(scenesName==ScenesName.START)
            stage.centerOnScreen();
        stage.show();
-       updateCurrentSceneModel();
+       updateCurrentSceneModel(UPDATE.GENERAL);
 
 
     }
@@ -93,9 +94,9 @@ public class GUIApplication extends Application{
         controllerList.inverse().get(scenesName).ShowErrorMessage(description);
     }
 
-    public void updateCurrentSceneModel() {
+    public void updateCurrentSceneModel(UPDATE update) {
         try {
-            controllerList.inverse().get(getActualScene()).updateModel();
+            controllerList.inverse().get(getActualScene()).updateModel(update);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

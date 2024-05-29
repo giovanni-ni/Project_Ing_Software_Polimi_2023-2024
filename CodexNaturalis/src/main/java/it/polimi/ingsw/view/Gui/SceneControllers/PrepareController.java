@@ -10,19 +10,14 @@ import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.ResourceBundle;
 
 public class PrepareController extends GenericSceneController {
 
@@ -43,7 +38,7 @@ public class PrepareController extends GenericSceneController {
 
             if (step ==0){
                 step=1;
-                updateModel();
+                updateModel(UPDATE.GENERAL);
             }else{
                 if (targetOneCheck.isSelected() && targetTwoCheck.isSelected()){
                     super.ShowErrorMessage("Please select only one "+variableText);
@@ -77,7 +72,7 @@ public class PrepareController extends GenericSceneController {
 
 
     @Override
-    public void updateModel() throws IOException {
+    public void updateModel(UPDATE update) throws IOException {
 
         if (!initialized){
             Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());

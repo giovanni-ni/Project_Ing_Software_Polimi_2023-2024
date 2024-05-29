@@ -3,7 +3,6 @@ package it.polimi.ingsw.view.Gui.SceneControllers;
 import it.polimi.ingsw.Message.ClientToServerMsg.SetReadyMessage;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerColor;
-import it.polimi.ingsw.view.Gui.GUIApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
@@ -15,8 +14,6 @@ import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
 public class WaitingController extends GenericSceneController implements Initializable {
 
@@ -42,7 +39,7 @@ public class WaitingController extends GenericSceneController implements Initial
 
 
     @Override
-    public void updateModel(){
+    public void updateModel(UPDATE update){
 
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
         for (Player p : players){
