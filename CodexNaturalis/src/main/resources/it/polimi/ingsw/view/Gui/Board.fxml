@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -30,20 +31,14 @@
                 <Image url="@../../../../../images/view/transparentTabCoh.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0">
-            <image>
-                <Image url="@../../../../../images/cards/GoldCardFront(61).jpg" />
-            </image></ImageView>
-        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0">
-            <image>
-                <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
-            </image></ImageView>
-        <ImageView fx:id="deckBackground" fitHeight="261.0" fitWidth="332.0" layoutX="9.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="9.0" AnchorPane.topAnchor="20.0">
+        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" />
+        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" />
+        <ImageView fx:id="deckBackground" fitHeight="261.0" fitWidth="332.0" layoutX="10.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="22.0">
             <image>
                 <Image url="@../../../../../images/view/transparentTabDeck.png" />
             </image>
         </ImageView>
-      <Button id="pointTableButton" mnemonicParsing="false" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="285.0">
+      <Button id="pointTableButton" fx:id="pointTableB" mnemonicParsing="false" onAction="#openPt" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="285.0">
          <graphic>
               <ImageView fx:id="pointTable" fitHeight="58.0" fitWidth="326.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -58,8 +53,8 @@
          </font>
       </Label>
       <ImageView fx:id="kingdomResourceDeck" fitHeight="65.0" fitWidth="95.0" layoutX="28.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="40.0" />
-      <ImageView fx:id="secondResourceCard" fitHeight="65.0" fitWidth="95.0" layoutX="132.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="46.0" />
-      <ImageView fx:id="firstResourceCard" fitHeight="65.0" fitWidth="95.0" layoutX="227.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="40.0" />
+      <ImageView fx:id="secondResourceCard" fitHeight="65.0" fitWidth="95.0" layoutX="132.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="40.0" />
+      <ImageView fx:id="firstResourceCard" fitHeight="65.0" fitWidth="95.0" layoutX="131.0" layoutY="41.333333333333336" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="40.0" />
       <ImageView fx:id="kingdomGoldDeck" fitHeight="65.0" fitWidth="95.0" layoutX="28.0" layoutY="46.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="28.0" AnchorPane.topAnchor="120.0" />
       <ImageView fx:id="secondGoldCard" fitHeight="65.0" fitWidth="95.0" layoutX="128.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="130.0" AnchorPane.topAnchor="120.0" />
       <ImageView fx:id="firstGoldCard" fitHeight="65.0" fitWidth="95.0" layoutX="249.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="232.0" AnchorPane.topAnchor="120.0" />
@@ -245,11 +240,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-      <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0">
-         <image>
-            <Image url="@../../../../../images/cards/ResourceCardFront(1).jpg" />
-         </image>
-      </ImageView>
+      <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" />
       <Button fx:id="playACard" disable="true" layoutX="735.0" layoutY="613.0" mnemonicParsing="false" onAction="#playCardButton_toServer" prefHeight="60.0" prefWidth="106.0" styleClass="normalButton" text="PlayCard" textFill="WHITE">
          <font>
             <Font size="19.0" />
@@ -286,6 +277,139 @@
                   </StackPane>
                </children>
             </VBox>
+         </children>
+      </StackPane>
+      <TextField fx:id="rCard1" alignment="CENTER" editable="false" layoutX="97.0" layoutY="1.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Resource Card" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="rCard2" alignment="CENTER" editable="false" layoutX="197.0" layoutY="1.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Resource Card" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="rDeckText" alignment="CENTER" editable="false" layoutX="-7.0" layoutY="1.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Resource Deck" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="gDeckText" alignment="CENTER" editable="false" layoutX="-7.0" layoutY="90.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Gold Deck" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="gCard1" alignment="CENTER" editable="false" layoutX="96.0" layoutY="90.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Gold Card" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="gCard2" alignment="CENTER" editable="false" layoutX="197.0" layoutY="90.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Gold Card" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="pTarget" alignment="CENTER" editable="false" layoutX="-7.0" layoutY="172.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Private target" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="cTarget1" alignment="CENTER" editable="false" layoutX="97.0" layoutY="172.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Common target" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <TextField fx:id="cTarget2" alignment="CENTER" editable="false" layoutX="197.0" layoutY="172.0" opacity="0.7" style="-fx-background-color: white; -fx-background-radius: 15px;" text="Common target" visible="false">
+         <font>
+            <Font name="Arial Bold" size="13.0" />
+         </font>
+      </TextField>
+      <StackPane fx:id="ptPane" disable="true" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <HBox prefHeight="595.0" prefWidth="1154.0">
+               <children>
+                  <AnchorPane fx:id="ptAnchor" prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="595.0" fitWidth="537.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <image>
+                              <Image url="@../../../../../images/view/pointTable.png" />
+                           </image>
+                        </ImageView>
+                        <StackPane fx:id="bluePane" disable="true" prefHeight="70.0" prefWidth="70.0" visible="false" AnchorPane.leftAnchor="222.0" AnchorPane.topAnchor="392.0">
+                           <children>
+                              <ImageView fx:id="blueBall" fitHeight="60.0" fitWidth="85.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);">
+                                 <image>
+                                    <Image url="@../../../../../images/view/blue.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="redPane" disable="true" prefHeight="70.0" prefWidth="70.0" visible="false" AnchorPane.leftAnchor="222.0" AnchorPane.topAnchor="452.0">
+                           <children>
+                              <ImageView fx:id="redBall" fitHeight="50.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);" StackPane.alignment="CENTER">
+                                 <image>
+                                    <Image url="@../../../../../images/view/red.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="yellowPane" disable="true" prefHeight="70.0" prefWidth="70.0" visible="false" AnchorPane.leftAnchor="222.0" AnchorPane.topAnchor="452.0">
+                           <children>
+                              <ImageView fx:id="yellowBall" fitHeight="40.0" fitWidth="69.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);">
+                                 <image>
+                                    <Image url="@../../../../../images/view/yellow.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane fx:id="greenPane" disable="true" prefHeight="70.0" prefWidth="70.0" visible="false" AnchorPane.leftAnchor="222.0" AnchorPane.topAnchor="452.0">
+                           <children>
+                              <ImageView fx:id="greenBall" fitHeight="50.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" style="-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 10, 0.5, 0, 0);">
+                                 <image>
+                                    <Image url="@../../../../../images/view/green.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                     </children>
+                     <HBox.margin>
+                        <Insets left="15.0" top="12.0" />
+                     </HBox.margin>
+                  </AnchorPane>
+                  <TextField text="TO BE CONTINUED....">
+                     <HBox.margin>
+                        <Insets top="300.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="ptEsc" mnemonicParsing="false" onAction="#closePt">
+                     <graphic>
+                        <ImageView fitHeight="31.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../images/view/esc.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets left="340.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </StackPane>
+      <StackPane fx:id="loadPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="285.0">
+         <children>
+            <ImageView fitHeight="292.0" fitWidth="743.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/loadingTxt.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="20.0" />
+               </StackPane.margin>
+            </ImageView>
          </children>
       </StackPane>
     </children>
