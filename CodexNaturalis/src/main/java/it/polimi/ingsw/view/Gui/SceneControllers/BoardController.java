@@ -44,8 +44,6 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 public class BoardController extends GenericSceneController implements Initializable {
 
     public VBox chatVBox;
-    private Match match = new Match(0);
-
     private HashBiMap<PlayerColor, String> nickList;
     private String chatDestination;
     private ArrayList<ImageView> decksImages = new ArrayList<>();
@@ -745,9 +743,10 @@ public class BoardController extends GenericSceneController implements Initializ
             }
             initialized =true;
         }}
-        }
+
+
         //todo update all the scene with the information of the model
-    }
+
 
     private void showAllChat() {
         for(ServerChatMessage msg : getGuiApplication().getGui().getChat()){
@@ -925,3 +924,4 @@ public class BoardController extends GenericSceneController implements Initializ
         }
     }
 }
+
