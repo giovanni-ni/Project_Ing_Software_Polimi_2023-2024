@@ -88,6 +88,8 @@ public class BoardController extends GenericSceneController implements Initializ
     TextField chatTextField;
     @FXML
     TextField rCard1, rCard2, gCard1, gCard2, rDeckText, gDeckText, cTarget1, cTarget2, pTarget;
+    @FXML
+    Text p1nick,p2nick,p3nick,p4nick,p1nick1,p2nick1,p3nick1,p4nick1;
 
     @FXML
     StackPane ptPane,loadPane, bluePane,redPane, yellowPane, greenPane;
@@ -769,6 +771,29 @@ public class BoardController extends GenericSceneController implements Initializ
         paneMap.put(PlayerColor.BLUE,bluePane);
         paneMap.put(PlayerColor.GREEN,greenPane);
         paneMap.put(PlayerColor.YELLOW,yellowPane);
+        ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
+        for (Player p : players){
+            PlayerColor playerColor = p.getPlayerID();
+            String nick = p.nickname;
+            switch (playerColor){
+                case RED -> {
+                    p2nick.setText(nick);
+                    p2nick.setVisible(true);
+                }
+                case GREEN -> {
+                    p4nick.setText(nick);
+                    p4nick.setVisible(true);
+                }
+                case BLUE -> {
+                    p1nick.setText(nick);
+                    p1nick.setVisible(true);
+                }
+                default -> {
+                    p3nick.setText(nick);
+                    p3nick.setVisible(true);
+                }
+            }
+        }
 
     }
 
@@ -887,7 +912,30 @@ public class BoardController extends GenericSceneController implements Initializ
     private void updatePt(){
         for (Player p  : getGuiApplication().getGui().getMyMatch().getPlayers()){
             setStackPt(paneMap.get(p.getPlayerID()), p.currentScore);
+
+            PlayerColor playerColor = p.getPlayerID();
+            String point = String.valueOf(p.currentScore) + "Pt";
+            switch (playerColor){
+                case RED -> {
+                    p2nick1.setText(point);
+                    p2nick1.setVisible(true);
+                }
+                case GREEN -> {
+                    p4nick1.setText(point);
+                    p4nick1.setVisible(true);
+                }
+                case BLUE -> {
+                    p1nick1.setText(point);
+                    p1nick1.setVisible(true);
+                }
+                default -> {
+                    p3nick1.setText(point);
+                    p3nick1.setVisible(true);
+                }
+            }
+
         }
+
     }
 
     private void ableDecks(){

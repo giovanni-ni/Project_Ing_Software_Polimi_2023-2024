@@ -18,6 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.BoardController">
     <children>
@@ -324,7 +325,7 @@
             <Font name="Arial Bold" size="13.0" />
          </font>
       </TextField>
-      <StackPane fx:id="ptPane" disable="true" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="50.0">
+      <StackPane fx:id="ptPane" disable="true" prefHeight="620.0" prefWidth="685.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="50.0">
          <children>
             <HBox prefHeight="595.0" prefWidth="1154.0">
                <children>
@@ -376,28 +377,118 @@
                         <Insets left="15.0" top="12.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <TextField text="TO BE CONTINUED....">
+                  <VBox prefHeight="573.0" prefWidth="747.0">
+                     <children>
+                        <StackPane prefHeight="150.0" prefWidth="320.0">
+                           <children>
+                              <ImageView fitHeight="119.0" fitWidth="301.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../../../../images/view/ptText.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="309.0" prefWidth="342.0">
+                           <children>
+                              <HBox prefHeight="299.0" prefWidth="363.0">
+                                 <children>
+                                    <VBox layoutX="10.0" layoutY="10.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="274.0" prefWidth="209.0">
+                                       <children>
+                                          <Text fx:id="p1nick" disable="true" fill="#4874cb" layoutX="10.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player1" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="60.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p2nick" disable="true" fill="#d32622" strokeType="OUTSIDE" strokeWidth="0.0" text="Player2" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="60.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p3nick" disable="true" fill="#f2ba02" layoutX="10.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player3" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="60.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p4nick" disable="true" fill="#75bd42" layoutX="10.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player4" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="60.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                       </children>
+                                    </VBox>
+                                    <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="309.0" prefWidth="122.0">
+                                       <children>
+                                          <Text fx:id="p1nick1" disable="true" fill="#4874cb" strokeType="OUTSIDE" strokeWidth="0.0" text="1pt" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p2nick1" disable="true" fill="#d32622" strokeType="OUTSIDE" strokeWidth="0.0" text="2pt" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p3nick1" disable="true" fill="#f2ba02" strokeType="OUTSIDE" strokeWidth="0.0" text="3pt" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                          <Text fx:id="p4nick1" disable="true" fill="#75bd42" strokeType="OUTSIDE" strokeWidth="0.0" text="4pt" visible="false" wrappingWidth="124.61395263671875">
+                                             <font>
+                                                <Font name="Arial Bold" size="32.0" />
+                                             </font>
+                                             <VBox.margin>
+                                                <Insets left="30.0" top="30.0" />
+                                             </VBox.margin>
+                                          </Text>
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </StackPane>
+                        <StackPane prefHeight="21.0" prefWidth="363.0" />
+                        <StackPane prefHeight="26.0" prefWidth="363.0" />
+                     </children>
                      <HBox.margin>
-                        <Insets top="300.0" />
+                        <Insets top="10.0" />
                      </HBox.margin>
-                     <font>
-                        <Font size="35.0" />
-                     </font>
-                  </TextField>
-                  <Button fx:id="ptEsc" mnemonicParsing="false" onAction="#closePt">
-                     <graphic>
-                        <ImageView fitHeight="31.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../images/view/esc.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                     <HBox.margin>
-                        <Insets left="340.0" top="10.0" />
-                     </HBox.margin>
-                  </Button>
+                  </VBox>
                </children>
             </HBox>
+            <Button fx:id="ptEsc" mnemonicParsing="false" onAction="#closePt" StackPane.alignment="TOP_RIGHT">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/esc.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <StackPane.margin>
+                  <Insets right="20.0" top="20.0" />
+               </StackPane.margin>
+            </Button>
          </children>
       </StackPane>
       <StackPane fx:id="loadPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="285.0">
