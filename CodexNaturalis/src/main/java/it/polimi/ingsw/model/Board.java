@@ -60,7 +60,7 @@ public class Board implements Serializable {
 	 */
 	public boolean addCard(ResourceCard input,int x, int y) {
 		/* no Exception handle*/
-		if (!input.checkRequirements(this)){
+		if (!input.checkRequirements(this) && input.getIsFront()){
 			return false;
 		}
 		if (input.getIsFront()){
@@ -69,6 +69,7 @@ public class Board implements Serializable {
 			addElement(input.getKingdom());
 		}
 		deleteCoveredElements(x,y);
+		System.out.println("ModelBoard :code:"+ input.getCode()+"isFront:"+input.getIsFront()+"x:"+x+ "y:"+y);
 		cardCoordinate.put(input, new Coordinate(x,y));
 		exists.add(input.getCode());
 		return true;
