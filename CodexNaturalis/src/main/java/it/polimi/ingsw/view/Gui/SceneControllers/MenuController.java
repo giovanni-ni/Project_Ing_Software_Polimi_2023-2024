@@ -83,6 +83,7 @@ public class MenuController extends GenericSceneController{
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
         numOfError++;
+        nickName.clear();
     }
     public void ShowJoiningMessage(){
         ErrorMessage.setText("Joining");

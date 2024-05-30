@@ -778,7 +778,7 @@ public class BoardController extends GenericSceneController implements Initializ
         }
         String fromPlayer = msg.getFromPlayer();
         if (Objects.equals(fromPlayer, getGuiApplication().getGui().getUsername())){
-            fromPlayer = "YOU";
+            fromPlayer = "You";
         }
         Text chatMessage = new Text(channel+"["+fromPlayer+"]:"+msg.getChatMsg());
         chatMessage.setFill(color);
@@ -818,8 +818,11 @@ public class BoardController extends GenericSceneController implements Initializ
 
     //chat methods
     private void initializeChatChoice(List<Player> players){
+        String client = getGuiApplication().getGui().getUsername();
         for (Player p :players){
-            chatChoice.getItems().addAll(p.nickname);
+            if (!Objects.equals(p.nickname, client)){
+                chatChoice.getItems().addAll(p.nickname);
+            }
         }
         chatChoice.getItems().add("Public");
         chatChoice.setValue("Public");

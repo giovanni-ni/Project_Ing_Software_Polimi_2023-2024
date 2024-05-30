@@ -95,6 +95,8 @@ public class GUI extends Thread implements Ui {
                 matchID=myMatch.getIdMatch();
                 Platform.runLater(()->guiApplication.showScene(ScenesName.WAITING));
 
+            }else if (msg instanceof joinFailMsg){
+                Platform.runLater(()->guiApplication.showErrorMessage("Joined Failed"));
             }
 
         }else if (guiApplication.getActualScene() == ScenesName.WAITING) {
