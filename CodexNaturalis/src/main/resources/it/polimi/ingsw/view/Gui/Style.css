@@ -52,17 +52,17 @@
 .chatPane .scroll-bar:horizontal .track,
 .chatPane .scroll-bar:vertical .track {
     -fx-background-color:rgba(0,0,0,0.5);
+
 }
 
 .chatPane .scroll-bar:horizontal .thumb,
 .chatPane .scroll-bar:vertical .thumb {
-
     -fx-background-color:rgba(255,255,255,0.2);
 }
 
 .chatPane .scroll-bar .increment-button,
 .chatPane .scroll-bar .decrement-button {
-    -fx-opacity: 0.0;
+    -fx-background-color: transparent;
 }
 .chatText{
     -fx-font-family:"Arial";

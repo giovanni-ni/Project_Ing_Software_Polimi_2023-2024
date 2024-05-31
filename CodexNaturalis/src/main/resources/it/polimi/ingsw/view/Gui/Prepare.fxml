@@ -55,12 +55,12 @@
                   <Insets right="300.0" />
                </StackPane.margin>
             </ImageView>
-            <CheckBox fx:id="targetOneCheck" mnemonicParsing="false" StackPane.alignment="CENTER_LEFT">
+            <CheckBox fx:id="targetOneCheck" mnemonicParsing="false" visible="false" StackPane.alignment="CENTER_LEFT">
                <StackPane.margin>
                   <Insets bottom="250.0" left="440.0" />
                </StackPane.margin>
             </CheckBox>
-            <CheckBox fx:id="targetTwoCheck" mnemonicParsing="false" StackPane.alignment="CENTER_RIGHT">
+            <CheckBox fx:id="targetTwoCheck" mnemonicParsing="false" visible="false" StackPane.alignment="CENTER_RIGHT">
                <StackPane.margin>
                   <Insets bottom="250.0" right="440.0" />
                </StackPane.margin>

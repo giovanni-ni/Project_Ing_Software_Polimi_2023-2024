@@ -21,6 +21,8 @@ module it.polimi.ingsw {
     exports it.polimi.ingsw.view.Gui.SceneControllers;
     opens it.polimi.ingsw.view.Gui.SceneControllers to javafx.fxml;
     exports it.polimi.ingsw.Networking.Listeners to java.rmi;
+    exports it.polimi.ingsw.view.Gui.SceneControllers.ptPositions;
+    opens it.polimi.ingsw.view.Gui.SceneControllers.ptPositions to javafx.fxml;
 
 
 }
