@@ -1,11 +1,9 @@
 package it.polimi.ingsw.view.TextualInterfaceUnit;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.Networking.DefaultPort;
-import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
 import it.polimi.ingsw.model.*;
@@ -14,8 +12,6 @@ import it.polimi.ingsw.view.Ui;
 import java.awt.*;
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -109,7 +105,7 @@ public class Tui  implements Ui {
             try {
                 option = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
-                print(Color.RED + "Invalid input. Try again. (1 or 2)");
+                print("Invalid input. Try again. (1 or 2)");
             }
         } while (option != 1 && option != 2);
 
@@ -128,22 +124,23 @@ public class Tui  implements Ui {
 
 
     public void askLogin() throws Exception {
+        String user;
         do{
 
             print("Enter the username: ");
-            String username = in.nextLine();
-            if (username.equals("")) {
-                print(Color.RED + "You didn't choose a username. Try again");
+            user = in.nextLine();
+            if (user.isEmpty()) {
+                print("You didn't choose a username. Try again");
 
             } else {
-                this.username = username;
+                this.username = user;
 
                 if(username.equals("nuge")) {
                     print("nu哥yyds");
                 }
                 return;
             }
-        } while(username.equals(""));
+        } while(user.isEmpty());
 
     }
 
@@ -156,6 +153,7 @@ public class Tui  implements Ui {
              option = in.nextLine();
              if(!(option.equals("create") || option.equals("join") || option.equals("play") || option.equals("exit") || option.equals("c") || option.equals("j") || option.equals("p") || option.equals("ex") || option.equals("cr") || option.equals("jo") || option.equals("pl"))){
                  System.out.println("error");
+                 System.out.println("Enter the Command you wish to use: ");
              }
         }while(!(option.equals("create") || option.equals("join") || option.equals("play") || option.equals("exit") || option.equals("c") || option.equals("j") || option.equals("p") || option.equals("ex") || option.equals("cr") || option.equals("jo") || option.equals("pl")));
 
@@ -202,27 +200,6 @@ public class Tui  implements Ui {
         System.out.flush();
     }
 
-
-    public void askDrawCard() throws InterruptedException, RemoteException {
-        print("insert number of the deck: ");
-
-        int option;
-
-        option = Integer.parseInt(in.nextLine());
-        boolean deck;
-        if(option == 1) {
-            deck = true;
-        } else {
-            deck = false;
-        }
-        print("insert number of the card(1/2/3): ");
-        int card = Integer.parseInt(in.nextLine());
-        drawCardMessage msg = new drawCardMessage(this.username, matchID, deck, card );
-        client.messageToServer(msg);
-        Thread.sleep(1000);
-    }
-
-
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
         int index;
@@ -230,6 +207,7 @@ public class Tui  implements Ui {
             index = Integer.parseInt(in.nextLine());
             if(index != 0 && index != 1 && index != 2) {
                 print("error");
+                print("choose the card that you want to play: ");
             }
         }while(index != 0 && index != 1 && index != 2);
 
@@ -241,6 +219,7 @@ public class Tui  implements Ui {
             front = in.nextLine();
             if(!(front.equals("f")) && !(front.equals("b"))) {
                 print("error");
+                print("front or back: f/b");
             }
         }while(!(front.equals("f")) && !(front.equals("b")));
 
@@ -249,11 +228,25 @@ public class Tui  implements Ui {
             f = true;
         }
         print("position x: ");
+        String s;
+        do {
+            s = in.nextLine();
+            if(s.isEmpty())
+                print("position x: ");
+        } while(s.isEmpty());
 
-        int x = Integer.parseInt(in.nextLine());
+        int x = Integer.parseInt(s);
+
 
         print("position y: ");
-        int y = Integer.parseInt(in.nextLine());
+
+        do {
+            s = in.nextLine();
+            if(s.isEmpty())
+                print("position y: ");
+        } while(s.isEmpty());
+
+        int y = Integer.parseInt(s);
 
         playCardMessage msg = new playCardMessage(this.username, index, f, x, y);
         client.messageToServer(msg);
@@ -291,7 +284,7 @@ public class Tui  implements Ui {
     }
 
 
-    public boolean askCreateMatch() throws Exception {
+    public void askCreateMatch() throws Exception {
         CreateGameMessage message = new CreateGameMessage(this.username);
         client.messageToServer(message);
 
@@ -299,7 +292,6 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
         //print(myMatch.idMatch);
 
-        return false;
     }
 
     /*@Override
@@ -319,7 +311,7 @@ public class Tui  implements Ui {
     }
 */
 
-    public boolean askJoinMatch() throws Exception {
+    public void askJoinMatch() throws Exception {
         String value;
         do {
             print("---------------------------------------------");
@@ -331,7 +323,6 @@ public class Tui  implements Ui {
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         client.messageToServer(msg);
         Thread.sleep(1000);
-        return false;
     }
 
 
@@ -411,7 +402,7 @@ public class Tui  implements Ui {
         }
     }
 
-    public void prepareGame() throws RemoteException, InterruptedException {
+    public void prepareGame() throws IOException, InterruptedException {
         List<Card> deck = new ArrayList<>();
         TargetCard[] target = {};
 
@@ -429,6 +420,9 @@ public class Tui  implements Ui {
         //        target = p.getTargetOnHand();
         //    }
         //}
+        for(Card c: myPlayer.getCardOnHand()) {
+            printCardById(c.getCode());
+        }
         print("choose your personal target card from: ");
         print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
         int choice;
@@ -436,6 +430,7 @@ public class Tui  implements Ui {
             choice = Integer.parseInt(in.nextLine());
             if(choice != 0 && choice != 1) {
                 System.out.println("error");
+                print("choose your personal target card from: ");
             }
         } while(choice != 0 && choice != 1);
 
@@ -448,7 +443,8 @@ public class Tui  implements Ui {
         do {
             choice = Integer.parseInt(in.nextLine());
             if(choice != 0 && choice != 1) {
-                System.out.println("error");
+                print("error");
+                print(" front(0) or back(1) ");
             }
         } while(choice != 0 && choice != 1);
         boolean c;
@@ -487,9 +483,9 @@ public class Tui  implements Ui {
 
     public void drawCard() throws IOException, InterruptedException {
         print("draw a card:\n" +
-                "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + myMatch.getResourceDeck().get(1).getCode() +
-                " kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
-                "\n gold cards: " + myMatch.getGoldDeck().get(0).getCode() + myMatch.getGoldDeck().get(1).getCode() +
+                "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + " " + myMatch.getResourceDeck().get(1).getCode() +
+                "kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
+                "\ngold cards: " + myMatch.getGoldDeck().get(0).getCode() + " " + myMatch.getGoldDeck().get(1).getCode() +
                 " kingdom of the third card: " + myMatch.getGoldDeck().get(2).getKingdom());
         String option;
         do{
@@ -500,8 +496,8 @@ public class Tui  implements Ui {
             } else if(option.equals("s")) {
                 askShowCard();
             } else if(option.equals("c")) {
-                print("resource card: first(0) second(1) third(2)");
-                print("gold card: first(3) second(4) third(5)");
+                print(" resource card: first(0) second(1) third(2) ");
+                print(" gold card: first(3) second(4) third(5) ");
                 int choice = Integer.parseInt(in.nextLine());
                 boolean isGoldDeck = false;
                 if(choice > 2) {
@@ -579,7 +575,7 @@ public class Tui  implements Ui {
 
     private void showPoints() {
         for(Player p : myMatch.getPlayers()) {
-            print(p.getNickname() + ": " + p.currentScore + "points");
+            print(p.getNickname() + ": " + p.currentScore + " points");
         }
     }
 
@@ -636,7 +632,7 @@ public class Tui  implements Ui {
         for(Card c: myPlayer.getCardOnHand()) {
             System.out.print(c.getCode() + " ");
         }
-        System.out.println("");
+        System.out.println();
     }
 
     //someWhere to create a ChatMessage
@@ -666,7 +662,7 @@ public class Tui  implements Ui {
             //store the chat for historical chat view
             chat.add((ServerChatMessage)msg);
         } else if(msg instanceof newPlayerInMsg) {
-            print("new player is in" + ((newPlayerInMsg) msg).getNicknameNewPlayer());
+            print("new player is in " + ((newPlayerInMsg) msg).getNicknameNewPlayer());
         } else if(msg instanceof gameStartMsg) {
             //print("the game is starting.. 3.. 2.. 1..");
             //print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());

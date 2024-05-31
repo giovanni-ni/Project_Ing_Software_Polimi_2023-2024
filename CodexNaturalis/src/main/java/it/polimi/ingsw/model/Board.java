@@ -108,7 +108,6 @@ public class Board implements Serializable {
 
 
 	public boolean checkCorner(int x, int y, CornerPosition corner) {
-		/* no Exception handle*/
         switch (corner) {
             case UPLEFT -> {
 				if (!isCardCoordinate(x-1,y+1))
