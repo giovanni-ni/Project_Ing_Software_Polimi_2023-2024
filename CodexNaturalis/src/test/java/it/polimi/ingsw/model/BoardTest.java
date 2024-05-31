@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static it.polimi.ingsw.model.CornerPosition.DOWNLEFT;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BoardTest {
@@ -22,7 +23,9 @@ class BoardTest {
     }
 
     @Test
-    void addCardFailRequirment(){
+    void addCardFailRequirement() throws IOException {
+
+        goldCards.getLast().setFront(true);
         assertFalse(playerBoard.addCard(goldCards.getLast(),1,1));
 
     }

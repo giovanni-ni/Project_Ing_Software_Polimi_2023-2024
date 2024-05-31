@@ -233,6 +233,8 @@ public class Tui  implements Ui {
             }
         }while(index != 0 && index != 1 && index != 2);
 
+        int code = myPlayer.getCardOnHand().get(index).getCode();
+
         print("front or back: f/b");
         String front;
         do {
@@ -258,7 +260,7 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
 
         if(status == PlayerStatus.Draw) {
-            myBoard[x+10][y+10] = myPlayer.getCardOnHand().get(index).getCode();
+            myBoard[x+10][y+10] = code;
         }
     }
 

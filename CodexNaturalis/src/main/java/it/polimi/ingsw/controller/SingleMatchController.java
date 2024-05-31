@@ -72,9 +72,10 @@ public class SingleMatchController extends Thread{
                         currentPlayer.getCardOnHand().add(match.getAGoldCard(whichCard));
                     else
                         currentPlayer.getCardOnHand().add(match.getAResourceCard(whichCard));
-                    ifLastTurn();
+
                     match.nextPlayer();
                     notifyAllListeners(new drawCardSuccess(match));
+                    ifLastTurn();
                     getListenerOf(match.getCurrentPlayer().nickname).update(new NowIsYourRoundMsg());
                 } else { //wrong deck index
                     getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
@@ -132,7 +133,7 @@ public class SingleMatchController extends Thread{
 
     public boolean addPlayer(Player p, Listener listener) throws RemoteException {
 
-        if (match.addPlayer(p) && !isPlayerFull()){
+        if (!isPlayerFull() && match.addPlayer(p)){
             notifyAllListeners(new newPlayerInMsg(this.match));
             listener.setNickname(p.nickname);
             addListener(listener);
@@ -258,7 +259,7 @@ public class SingleMatchController extends Thread{
             if (Objects.equals(listeners.getNickname(), nickName))
                 return listeners;
         }
-        throw new NullPointerException() ;
+        throw new NullPointerException();
 
     }
     private void distributeCardsAndSetBoards(){

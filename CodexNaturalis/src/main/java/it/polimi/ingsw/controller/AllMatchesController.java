@@ -133,4 +133,8 @@ public class AllMatchesController extends Thread {
         }
         msg.getListener().update(message);
     }
+
+    public SingleMatchController getControllerbyId(int id) {
+        return this.runningControllers.get(id);
+    }
 }

@@ -1,9 +1,6 @@
 package it.polimi.ingsw.controller;
 
-import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.JoinFirstMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.ActionNotRecognize;
 import it.polimi.ingsw.Message.ServerToClientMsg.joinFailMsg;
@@ -106,13 +103,17 @@ public class AllMatchControllerTest {
         };
         ObjectOutputStream out = new ObjectOutputStream(o);
         Listener l = new SocketListener(out);
-        Listener l1 = new SocketListener(out);
+        SocketListener l1 = new SocketListener(out);
         msg.setListener(l);
         msg1.setListener(l1);
 
         clt.addInQueue(msg,l);
         Thread.sleep(1000);
-        assertEquals(clt.joinMatch(msg1).getClass(), joinSuccessMsg.class);
+        clt.addInQueue(msg1, l1);
+        Thread.sleep(1000);
+
+
+        assertEquals(l1.msg.getFirst().getClass(), joinSuccessMsg.class);
 
         JoinGameMessage msg2 = new JoinGameMessage("antonio", 1);
         msg2.setListener(new SocketListener(out));
@@ -231,6 +232,57 @@ public class AllMatchControllerTest {
         Thread.sleep(1000);
 
         assertEquals(l5.msg.getFirst().getClass(), joinSuccessMsg.class);
+    }
+
+    @Test
+    void matchStartedTest() throws IOException, InterruptedException {
+        AllMatchesController clt = new AllMatchesController();
+        CreateGameMessage msg = new CreateGameMessage("paolo");
+        JoinGameMessage msg1 = new JoinGameMessage("pablo", 0);
+        OutputStream o = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+
+            }
+        };
+        ObjectOutputStream out = new ObjectOutputStream(o);
+        Listener l = new SocketListener(out);
+        Listener l1 = new SocketListener(out);
+        msg.setListener(l);
+        msg1.setListener(l1);
+        JoinGameMessage msg2 = new JoinGameMessage("annamaria", 0);
+        msg2.setListener(new SocketListener(out));
+        JoinGameMessage msg3 = new JoinGameMessage("antonio", 0);
+        Listener l2 = new SocketListener(out);
+        msg3.setListener(l2);
+
+        SetReadyMessage ready  = new SetReadyMessage(0, "annamaria");
+        SetReadyMessage ready1 = new SetReadyMessage(0, "paolo");
+        SetReadyMessage ready2 = new SetReadyMessage(0, "pablo");
+        SetReadyMessage ready3 = new SetReadyMessage(0, "antonio");
+
+        clt.addInQueue(msg,l);
+        clt.addInQueue(msg1,msg1.getListener());
+        clt.addInQueue(msg2,msg2.getListener());
+        clt.addInQueue(msg3, msg3.getListener());
+        clt.addInQueue(ready, ready.getListener());
+        clt.addInQueue(ready1, ready1.getListener());
+        clt.addInQueue(ready2, ready2.getListener());
+        clt.addInQueue(ready3, ready3.getListener());
+
+        Thread.sleep(1000);
+
+
+
+        JoinGameMessage msg4 = new JoinGameMessage("pippo", 0);
+        SocketListener s = new SocketListener(out);
+        msg4.setListener(s);
+
+        clt.addInQueue(msg4, msg4.getListener());
+        Thread.sleep(1000);
+
+        assertEquals(s.msg.getFirst().getClass(), joinFailMsg.class);
+
 
 
     }

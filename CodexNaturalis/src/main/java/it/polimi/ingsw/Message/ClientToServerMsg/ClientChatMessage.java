@@ -22,31 +22,16 @@ public class ClientChatMessage extends GenericClientMessage {
         return super.getNickname();
     }
 
-    public void setFromPlayer(String fromPlayer) {
-        this.fromPlayer = fromPlayer;
-    }
-
     public String getToPlayer() {
         return toPlayer;
-    }
-
-    public void setToPlayer(String toPlayer) {
-        this.toPlayer = toPlayer;
     }
 
     public boolean isForAll() {
         return isForAll;
     }
 
-    public void setForAll(boolean forAll) {
-        isForAll = forAll;
-    }
-
     public String getChatMsg() {
         return chatMsg;
     }
 
-    public void setChatMsg(String chatMsg) {
-        this.chatMsg = chatMsg;
-    }
 }

@@ -8,16 +8,8 @@ public class drawCardMessage extends GenericClientMessage{
         return deck;
     }
 
-    public void setDeck(boolean deck) {
-        this.deck = deck;
-    }
-
     public int getNumberindex() {
         return numberindex;
-    }
-
-    public void setNumberindex(int numberindex) {
-        this.numberindex = numberindex;
     }
 
     public drawCardMessage(String nickname,int gameId, boolean deck, int number) {
