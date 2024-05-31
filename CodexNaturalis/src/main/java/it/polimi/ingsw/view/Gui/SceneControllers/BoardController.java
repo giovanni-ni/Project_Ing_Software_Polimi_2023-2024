@@ -439,6 +439,8 @@ public class BoardController extends GenericSceneController implements Initializ
                         thirdCardOnHand.setVisible(true);
                         tooggleMain=true;
                         isClickedGetACard=false;
+                        getResourceCardIndex_toServer= null;
+                        getGoldCardIndex_toServer= null;
 
                     }
 
