@@ -439,6 +439,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         thirdCardOnHand.setVisible(true);
                         tooggleMain=true;
                         isClickedGetACard=false;
+
                     }
 
                     // disabilito gioco carta
