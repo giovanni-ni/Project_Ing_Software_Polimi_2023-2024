@@ -111,23 +111,22 @@ public class Board implements Serializable {
 		/* no Exception handle*/
         switch (corner) {
             case UPLEFT -> {
-				if (!isCardCoordinate(x-1,y+1))
+				if (!isCardCoordinate(x-1,y+1) ||( !getCardInBoard(x-1,y+1).getIsFront() && !(getCardInBoard(x-1,y+1) instanceof InitialCard)))
 					return true;
 				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNRIGHT);
             }
             case UPRIGHT -> {
-				if (!isCardCoordinate(x+1,y+1))
+				if (!isCardCoordinate(x+1,y+1) || (!getCardInBoard(x+1,y+1).getIsFront() && !(getCardInBoard(x+1,y+1) instanceof InitialCard)))
 					return true;
 				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
             }
             case DOWNLEFT -> {
-				if (!isCardCoordinate(x-1,y-1))
+				if (!isCardCoordinate(x-1,y-1) || (!getCardInBoard(x-1,y-1).getIsFront() && !(getCardInBoard(x-1,y-1) instanceof InitialCard)))
 					return true;
 				return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
             }
-
         }
-		if (!isCardCoordinate(x+1,y-1))
+		if (!isCardCoordinate(x+1,y-1) || (!getCardInBoard(x+1,y-1).getIsFront()&& !(getCardInBoard(x+1,y-1) instanceof InitialCard)))
 			return true;
 		return Elements.HIDE != cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
 

@@ -202,27 +202,28 @@ public class BoardController extends GenericSceneController implements Initializ
 
     private void showBoard(Board b) throws IOException {
         BiMap<Card, Coordinate> map= b.getCardCoordinate();
-        if (myBoard==null){
-            myBoard=b;
-        }
 
-        if (myBoard.getCardCoordinate().size()<=map.size()){
+        if (myBoard==null || myBoard.getCardCoordinate().size()<=map.size()){
 
             for(BiMap.Entry<Card, Coordinate> entry: map.entrySet()){
                 Card card = entry.getKey();
                 Coordinate coo= entry.getValue();
-                System.out.println("codice di carta messa sul board "+card.getCode()+
-                        "le sue coordinate sono x:"+(coo.getX()+40)+"y:"+(-coo.getY()+40));
 
-                Platform.runLater(()-> {
-                    try {
-                        gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
+                if (myBoard==null ||!b.isCardCoordinate(coo.getX(),coo.getY())){
 
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
+                    System.out.println("codice di carta messa sul board "+card.getCode()+
+                            "le sue coordinate sono x:"+(coo.getX()+40)+"y:"+(-coo.getY()+40));
+                    Platform.runLater(()-> {
+                        try {
+                            gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+                }
             }
+            myBoard=b;
 
         }
     }
