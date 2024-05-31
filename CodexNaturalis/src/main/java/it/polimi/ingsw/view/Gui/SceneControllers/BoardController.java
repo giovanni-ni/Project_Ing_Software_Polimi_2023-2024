@@ -40,12 +40,14 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.*;
 
+import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
 
+    private Board myBoard;
     public VBox chatVBox;
     private HashBiMap<PlayerColor, String> nickList;
     private String chatDestination;
@@ -116,9 +118,12 @@ public class BoardController extends GenericSceneController implements Initializ
         Integer  gameId= getGuiApplication().getGui().getMatchID();
         if(getGoldCardIndex_toServer!=null){
             getGuiApplication().getGui().notify(new drawCardMessage(nickname,gameId, true, getGoldCardIndex_toServer ));
+
         }else{
             getGuiApplication().getGui().notify(new drawCardMessage(nickname,gameId, false, getResourceCardIndex_toServer ));
+
         }
+
     }
     @FXML
     public void setBackCard(){
@@ -136,122 +141,18 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
 
-    private void showCardOnHand(ArrayList<Card> cardOnHand){
-        if(cardOnHand.size()==2){
-            thirdCardOnHand.setVisible(false);
+    private void showCardOnHand(ArrayList<Card> cardOnHand) throws IOException {
+        for (ImageView imageView : cardsOnHandImages){
+            imageView.setVisible(false);
         }
-        Image myImage5;
-        Integer code;
-        int numCard =1;
-        for(Card c : cardOnHand) {
-            code=c.getCode();
-            if(c.isGoldCard()) {
-                myImage5 = new Image(getClass().getResourceAsStream("/images/cards/GoldCardFront(" + code + ").jpg"));
-            }
-            else {
-                myImage5 = new Image(getClass().getResourceAsStream("/images/cards/ResourceCardFront(" + code + ").jpg"));
-            }
-            if(numCard==1){
-                firstCardOnHand.setImage(myImage5);
-                searchCode.put(firstCardOnHand,code);
-                firstCardOnHand.setCursor(Cursor.HAND);
-                firstCardOnHand.setEffect(null);
 
-                    firstCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                        @Override
-                        public void handle(MouseEvent event) {
-                            if (event.getButton() == MouseButton.PRIMARY) {
-                                if(toggle1) {
-                                    isClickedCardOnHand = true;
-                                    cardOnHandIndex_toServer = 0;
-                                    secondCardOnHand.setDisable(true);
-                                    thirdCardOnHand.setDisable(true);
-                                    light(firstCardOnHand);
-                                    gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
-                                    gameStatus.setTextFill(Color.WHITE);
-                                }
-                                else{
-                                    isClickedCardOnHand = false;
-                                    cardOnHandIndex_toServer = null;
-                                    secondCardOnHand.setDisable(false);
-                                    thirdCardOnHand.setDisable(false);
-                                    firstCardOnHand.setEffect(null);
-                                    gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
-                                    gameStatus.setTextFill(Color.WHITE);
-
-                                }
-                                toggle1 =!toggle1 ;
-                            }
-                        }
-
-                    });
-            }else if(numCard==2){
-                secondCardOnHand.setImage(myImage5);
-                searchCode.put(secondCardOnHand, code);
-                secondCardOnHand.setCursor(Cursor.HAND);
-                secondCardOnHand.setEffect(null);
-                secondCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggle2) {
-                                isClickedCardOnHand = true;
-                                cardOnHandIndex_toServer = 1;
-                                thirdCardOnHand.setDisable(true);
-                                firstCardOnHand.setDisable(true);
-                                light(secondCardOnHand);
-                                gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else{
-                                isClickedCardOnHand = false;
-                                cardOnHandIndex_toServer = null;
-                                thirdCardOnHand.setDisable(false);
-                                firstCardOnHand.setDisable(false);
-                                secondCardOnHand.setEffect(null);
-                                gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
-                                gameStatus.setTextFill(Color.WHITE);
-
-                                //disillumino
-                            }
-                            toggle2=!toggle2;
-                        }
-                    }
-
-                });
-            } else if (numCard==3){
-                thirdCardOnHand.setImage(myImage5);
-                searchCode.put(thirdCardOnHand, code);
-                thirdCardOnHand.setCursor(Cursor.HAND);
-                thirdCardOnHand.setEffect(null);
-                thirdCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggle3) {
-                                isClickedCardOnHand = true;
-                                firstCardOnHand.setDisable(true);
-                                secondCardOnHand.setDisable(true);
-                                cardOnHandIndex_toServer = 2;
-                                light(thirdCardOnHand);
-                                gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else{
-                                isClickedCardOnHand = false;
-                                firstCardOnHand.setDisable(false);
-                                secondCardOnHand.setDisable(false);
-                                cardOnHandIndex_toServer = null;
-                                thirdCardOnHand.setEffect(null);
-                                gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
-                                gameStatus.setTextFill(Color.WHITE);
-
-                            }
-                            toggle3=!toggle3;
-                        }
-                    }
-
-                });
-            }
-            numCard++;
+        for(int i =0 ;i<cardOnHand.size();i++){
+            ImageView imageView;
+            cardOnHand.get(i).setFront(true);
+            imageView=cardsOnHandImages.get(i);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(cardOnHand.get(i))))));
+            searchCode.put(imageView,cardOnHand.get(i).getCode());
+            imageView.setVisible(true);
         }
     }
 
@@ -267,229 +168,65 @@ public class BoardController extends GenericSceneController implements Initializ
         secondGoldCard.setImage(null);
         kingdomGoldDeck.setImage(null);
     }
-    private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck){
-
-        for(int i=0; i<3; i++){
-            Image image9 = null;
-            Image image10=null;
-            if(i==0 ||i ==1) {
-                image9 = new Image(getClass().getResourceAsStream("/images/cards/GoldCardFront(" + goldDeck.get(i).getCode() + ").jpg"));
-                image10 = new Image(getClass().getResourceAsStream("/images/cards/ResourceCardFront(" + resourceDeck.get(i).getCode() + ").jpg"));
-            }else{
-                if(goldDeck.get(i).getKingdom().equals(Elements.INSECT))
-                    image9= new Image(getClass().getResourceAsStream("/images/cards/InsectBackGold.jpg"));
-                else if (goldDeck.get(i).getKingdom().equals(Elements.ANIMALS))
-                    image9= new Image(getClass().getResourceAsStream("/images/cards/AnimalBackGold.jpg"));
-                else if (goldDeck.get(i).getKingdom().equals(Elements.MUSHROOMS)) {
-                    System.out.println("entrato");
-                    image9= new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
-                }
-                else if(goldDeck.get(i).getKingdom().equals(Elements.VEGETAL))
-                    image9 =new Image(getClass().getResourceAsStream("/images/cards/VegetalBackGold.jpg"));
-
-                if(resourceDeck.get(i).getKingdom().equals(Elements.INSECT))
-                    image10= new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
-                else if (resourceDeck.get(i).getKingdom().equals(Elements.ANIMALS))
-                    image10= new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
-                else if (resourceDeck.get(i).getKingdom().equals(Elements.MUSHROOMS)) {
-                    image10 = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
-                }
-                else if(resourceDeck.get(i).getKingdom().equals(Elements.VEGETAL))
-                    image10 =new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
-            }
-            if(i==0){
-                firstGoldCard.setImage(image9);
-                firstGoldCard.setCursor(Cursor.HAND);
-                firstGoldCard.setEffect(null);
-
-                firstGoldCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleG1) {
-                                getGoldCardIndex_toServer = 0;
-                                isClickedDeck = true;
-                                disableDecksEXCEPTone(firstGoldCard);
-                                light(firstGoldCard);
-                                gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else{
-                                getGoldCardIndex_toServer = null;
-                                isClickedDeck = false ;
-                                ableDecks();
-                                firstGoldCard.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleG1= !toggleG1;
-                        }
-                    }
-
-                });
-                firstResourceCard.setImage(image10);
-                firstResourceCard.setCursor(Cursor.HAND);
-                firstResourceCard.setEffect(null);
-                firstResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleR1) {
-                                isClickedDeck = true;
-                                getResourceCardIndex_toServer = 0;
-                                disableDecksEXCEPTone(firstResourceCard);
-                                light(firstResourceCard);
-                                gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else {
-                                getResourceCardIndex_toServer = null;
-                                isClickedDeck = false;
-                                ableDecks();
-                                firstResourceCard.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleR1 =! toggleR1 ;
-                        }
-                    }
-
-                });
-
-            }else if(i==1){
-                secondGoldCard.setImage(image9);
-                secondGoldCard.setCursor(Cursor.HAND);
-                secondGoldCard.setEffect(null);
-
-                secondGoldCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleG2) {
-                                isClickedDeck = true;
-                                getGoldCardIndex_toServer = 1;
-                                disableDecksEXCEPTone(secondGoldCard);
-                                light(secondGoldCard);
-                                gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else{
-                                isClickedDeck=false;
-                                getGoldCardIndex_toServer= null;
-                                ableDecks();
-                                secondGoldCard.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleG2=!toggleG2;
-                        }
-                    }
-
-                });
-                secondResourceCard.setImage(image10);
-                secondResourceCard.setCursor(Cursor.HAND);
-                secondResourceCard.setEffect(null);
-
-                secondResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleR2) {
-                                isClickedDeck = true;
-                                getResourceCardIndex_toServer = 1;
-                                disableDecksEXCEPTone(secondResourceCard);
-                                light(secondResourceCard);
-                                gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else {
-                                isClickedDeck = false;
-                                getResourceCardIndex_toServer = null;
-                                ableDecks();
-                                secondResourceCard.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleR2=!toggleR2;
-                        }
-                    }
-
-                });
-            }else if(i==2){
-                kingdomGoldDeck.setImage(image9);
-                kingdomGoldDeck.setCursor(Cursor.HAND);
-                kingdomGoldDeck.setEffect(null);
-                kingdomGoldDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleG3) {
-                                isClickedDeck = true;
-                                getGoldCardIndex_toServer = 2;
-                                disableDecksEXCEPTone(kingdomGoldDeck);
-                                light(kingdomGoldDeck);
-                                gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }else{
-                                isClickedDeck=false;
-                                getGoldCardIndex_toServer=null;
-                                ableDecks();
-                                kingdomGoldDeck.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleG3=! toggleG3;
-                        }
-                    }
-
-                });
-                kingdomResourceDeck.setImage(image10);
-                kingdomResourceDeck.setCursor(Cursor.HAND);
-                kingdomResourceDeck.setEffect(null);
-
-                kingdomResourceDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        if (event.getButton() == MouseButton.PRIMARY) {
-                            if(toggleR2) {
-                                isClickedDeck = true;
-                                getResourceCardIndex_toServer = 2;
-                                disableDecksEXCEPTone(kingdomResourceDeck);
-                                light(kingdomResourceDeck);
-                            }else{
-                                isClickedDeck=false;
-                                getResourceCardIndex_toServer =null;
-                                ableDecks();
-                                kingdomResourceDeck.setEffect(null);
-                                gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                                gameStatus.setTextFill(Color.WHITE);
-                            }
-                            toggleR2=!toggleR2;
-                        }
-                    }
-
-                });
-            }
+    private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck) throws IOException {
+        int i;
+        for (i =0; i<3 && i<resourceDeck.size() ; i++){
+            ResourceCard card = resourceDeck.get(i);
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
         }
-
+        while(i<3){
+            ImageView imageView = decksImages.get(i);
+            imageView.setVisible(false);
+            imageView.setEffect(null);
+            i++;
+        }
+        for (i =0 ; i<3 && i<goldDeck.size() ; i++){
+            GoldCard card = goldDeck.get(i);
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
+        }
+        while(i<3){
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setVisible(false);
+            i++;
+        }
     }
 
     private void showBoard(Board b) throws IOException {
         BiMap<Card, Coordinate> map= b.getCardCoordinate();
-        for(BiMap.Entry<Card, Coordinate> entry: map.entrySet()){
-            Card card = entry.getKey();
-            Coordinate coo= entry.getValue();
-            System.out.println("codice di carta messa sul board "+card.getCode()+
-            "le sue coordinate sono x:"+(coo.getX()+40)+"y:"+(-coo.getY()+40));
+        if (myBoard==null){
+            myBoard=b;
+        }
 
-            Platform.runLater(()-> {
-                try {
-                    gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
+        if (myBoard.getCardCoordinate().size()<=map.size()){
 
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
+            for(BiMap.Entry<Card, Coordinate> entry: map.entrySet()){
+                Card card = entry.getKey();
+                Coordinate coo= entry.getValue();
+                System.out.println("codice di carta messa sul board "+card.getCode()+
+                        "le sue coordinate sono x:"+(coo.getX()+40)+"y:"+(-coo.getY()+40));
+
+                Platform.runLater(()-> {
+                    try {
+                        gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
+
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+
         }
     }
-
+//TODO animal back gold wrong
     private ImageView createImageView(Card card) throws IOException {
         Image image = null;
         ImageView imageView= new ImageView();
@@ -517,76 +254,6 @@ public class BoardController extends GenericSceneController implements Initializ
                 ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
                 ArrayList<GoldCard> goldDeck = model.getGoldDeck();
                 ArrayList<ResourceCard> resourceDeck =  model.getResourceDeck();
-                showDecks(goldDeck,resourceDeck);
-                showCardOnHand(cardOnHand);
-                showBoard(myPlayer.getBoard());
-
-                if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
-                    if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
-                        thirdCardOnHand.setVisible(true);
-                        tooggleMain=true;
-                        isClickedGetACard=false;
-                    }
-                    // disabilito gioco carta
-                    gridPane.setDisable(true);
-                    playACard.setDisable(true);
-                    setBack.setDisable(true);
-                    disableCardOnHand();
-
-                    // disabilito pesca carta
-                    disableDecks();
-                    getACard.setDisable(true);
-                }else{
-                    //se sono nel mio turno
-                    //abilito gioco carta
-                    gridPane.setDisable(false);
-                    ableCardOnHand();
-                    if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
-                        gameStatus.setText("CHOOSE A CARD ON DECKS");
-
-                        cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
-                        cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
-
-                        switch (cardOnHandIndex_toServer){
-                            case 0:
-                                toggle1=!toggle1;
-                                break;
-                            case 1:
-                                toggle2=! toggle2;
-                                break;
-                            case 2:
-                                toggle3=! toggle3;
-                                break;
-                        }
-                        cardOnHandIndex_toServer=null ;
-
-                        if(setBack.isSelected())
-                            setBack.setSelected(false);
-
-                        isFront_toServer= null;
-                        putACardX_toServer=null;
-                        putACardY_toServer=null;
-                        playACard.setDisable(true);
-                        ableDecks();
-                        disableCardOnHand();
-                        getACard.setDisable(false);
-                        gridPane.setDisable(true);
-                        firstCardOnHand.setVisible(true);
-                        tooggleMain= false;
-                        boardTmpImage = new ImageView();
-                        boardTmpImageBack = new ImageView();
-                        setBack.setDisable(true);
-                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                        gameStatus.setTextFill(Color.WHITE);
-
-                        isClickedPlayACard=false;
-                    }
-
-                    // abilito  pesca carta
-                }
-                boardTmpImageBack = new ImageView();
-                boardTmpImage= new ImageView();
-                setBack.setDisable(true);
 
                 if(!initialized){
                     disableDecks();
@@ -751,6 +418,7 @@ public class BoardController extends GenericSceneController implements Initializ
 
                             }
                         }
+
                     initializeChatChoice(model.getPlayers());
                     initPtPane();
                     if (!getGuiApplication().getGui().getChat().isEmpty()){
@@ -760,6 +428,80 @@ public class BoardController extends GenericSceneController implements Initializ
                     loadPane.setDisable(true);
                     initialized =true;
                 }
+                showBoard(myPlayer.getBoard());
+                showDecks(goldDeck,resourceDeck);
+                showCardOnHand(cardOnHand);
+
+
+                if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
+                    if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
+                        thirdCardOnHand.setVisible(true);
+                        tooggleMain=true;
+                        isClickedGetACard=false;
+                    }
+
+                    // disabilito gioco carta
+                    gridPane.setDisable(true);
+                    playACard.setDisable(true);
+                    setBack.setDisable(true);
+                    disableCardOnHand();
+
+                    // disabilito pesca carta
+                    disableDecks();
+                    getResourceCardIndex_toServer=null;
+                    getGoldCardIndex_toServer=null;
+                    getACard.setDisable(true);
+                }else{
+                    //se sono nel mio turno
+                    //abilito gioco carta
+                    gridPane.setDisable(false);
+                    ableCardOnHand();
+                    if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
+                        gameStatus.setText("CHOOSE A CARD ON DECKS");
+
+                        cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
+                        cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
+                        thirdCardOnHand.setVisible(false);
+
+                        switch (cardOnHandIndex_toServer){
+                            case 0:
+                                toggle1=!toggle1;
+                                break;
+                            case 1:
+                                toggle2=! toggle2;
+                                break;
+                            case 2:
+                                toggle3=! toggle3;
+                                break;
+                        }
+                        cardOnHandIndex_toServer=null ;
+
+                        if(setBack.isSelected())
+                            setBack.setSelected(false);
+
+                        isFront_toServer= null;
+                        putACardX_toServer=null;
+                        putACardY_toServer=null;
+                        playACard.setDisable(true);
+                        ableDecks();
+                        disableCardOnHand();
+                        gridPane.setDisable(true);
+                        firstCardOnHand.setVisible(true);
+                        tooggleMain= false;
+                        boardTmpImage = new ImageView();
+                        boardTmpImageBack = new ImageView();
+                        setBack.setDisable(true);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+
+                        isClickedPlayACard=false;
+                    }
+
+                    // abilito  pesca carta
+                }
+                boardTmpImageBack = new ImageView();
+                boardTmpImage= new ImageView();
+                setBack.setDisable(true);
                 updatePt();
             }
         }
@@ -878,12 +620,12 @@ public class BoardController extends GenericSceneController implements Initializ
         firstTargetCard.setImage(myImage6);
         secondTargetCard.setImage(myImage7);
         backTargetCard.setImage(myImage8);
-        decksImages.add(firstGoldCard);
         decksImages.add(firstResourceCard);
-        decksImages.add(secondGoldCard);
         decksImages.add(secondResourceCard);
-        decksImages.add(kingdomGoldDeck);
         decksImages.add(kingdomResourceDeck);
+        decksImages.add(firstGoldCard);
+        decksImages.add(secondGoldCard);
+        decksImages.add(kingdomGoldDeck);
         cardsOnHandImages.add(firstCardOnHand);
         cardsOnHandImages.add(secondCardOnHand);
         cardsOnHandImages.add(thirdCardOnHand);
@@ -965,54 +707,6 @@ public class BoardController extends GenericSceneController implements Initializ
 
     }
 
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        chatDestination=null;
-        chatTextField.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER){
-                try {
-                    sendChatMessage();
-                } catch (RemoteException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        firstResourceCard.setOnMouseEntered(event -> rCard2.setVisible(true));
-        firstResourceCard.setOnMouseExited(event -> rCard2.setVisible(false));
-
-
-        secondResourceCard.setOnMouseEntered(event -> rCard1.setVisible(true));
-        secondResourceCard.setOnMouseExited(event -> rCard1.setVisible(false));
-
-        kingdomResourceDeck.setOnMouseEntered(event -> rDeckText.setVisible(true));
-        kingdomResourceDeck.setOnMouseExited(event -> rDeckText.setVisible(false));
-
-        firstGoldCard.setOnMouseEntered(event -> gCard2.setVisible(true));
-        firstGoldCard.setOnMouseExited(event -> gCard2.setVisible(false));
-
-        secondGoldCard.setOnMouseEntered(event -> gCard1.setVisible(true));
-        secondGoldCard.setOnMouseExited(event -> gCard1.setVisible(false));
-
-        kingdomGoldDeck.setOnMouseEntered(event -> gDeckText.setVisible(true));
-        kingdomGoldDeck.setOnMouseExited(event -> gDeckText.setVisible(false));
-
-
-        firstTargetCard.setOnMouseEntered(event -> cTarget2.setVisible(true));
-        firstTargetCard.setOnMouseExited(event -> cTarget2.setVisible(false));
-
-        secondTargetCard.setOnMouseEntered(event -> cTarget1.setVisible(true));
-        secondTargetCard.setOnMouseExited(event -> cTarget1.setVisible(false));
-
-        backTargetCard.setOnMouseEntered(event -> pTarget.setVisible(true));
-        backTargetCard.setOnMouseExited(event -> pTarget.setVisible(false));
-
-
-
-    }
-
-    //chat methods
     private void initializeChatChoice(List<Player> players){
         String client = getGuiApplication().getGui().getUsername();
         for (Player p :players){
@@ -1050,5 +744,309 @@ public class BoardController extends GenericSceneController implements Initializ
         ptPane.setVisible(true);
         ptPane.setDisable(false);
     }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        chatDestination=null;
+        chatTextField.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER){
+                try {
+                    sendChatMessage();
+                } catch (RemoteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        myBoard =null;
+
+        firstResourceCard.setOnMouseEntered(event -> rCard2.setVisible(true));
+        firstResourceCard.setOnMouseExited(event -> rCard2.setVisible(false));
+
+
+        secondResourceCard.setOnMouseEntered(event -> rCard1.setVisible(true));
+        secondResourceCard.setOnMouseExited(event -> rCard1.setVisible(false));
+
+        kingdomResourceDeck.setOnMouseEntered(event -> rDeckText.setVisible(true));
+        kingdomResourceDeck.setOnMouseExited(event -> rDeckText.setVisible(false));
+
+        firstGoldCard.setOnMouseEntered(event -> gCard2.setVisible(true));
+        firstGoldCard.setOnMouseExited(event -> gCard2.setVisible(false));
+
+        secondGoldCard.setOnMouseEntered(event -> gCard1.setVisible(true));
+        secondGoldCard.setOnMouseExited(event -> gCard1.setVisible(false));
+
+        kingdomGoldDeck.setOnMouseEntered(event -> gDeckText.setVisible(true));
+        kingdomGoldDeck.setOnMouseExited(event -> gDeckText.setVisible(false));
+
+
+        firstTargetCard.setOnMouseEntered(event -> cTarget2.setVisible(true));
+        firstTargetCard.setOnMouseExited(event -> cTarget2.setVisible(false));
+
+        secondTargetCard.setOnMouseEntered(event -> cTarget1.setVisible(true));
+        secondTargetCard.setOnMouseExited(event -> cTarget1.setVisible(false));
+
+        backTargetCard.setOnMouseEntered(event -> pTarget.setVisible(true));
+        backTargetCard.setOnMouseExited(event -> pTarget.setVisible(false));
+
+        firstCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggle1) {
+                        isClickedCardOnHand = true;
+                        cardOnHandIndex_toServer = 0;
+                        secondCardOnHand.setDisable(true);
+                        thirdCardOnHand.setDisable(true);
+                        light(firstCardOnHand);
+                        gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    else{
+                        isClickedCardOnHand = false;
+                        cardOnHandIndex_toServer = null;
+                        secondCardOnHand.setDisable(false);
+                        thirdCardOnHand.setDisable(false);
+                        firstCardOnHand.setEffect(null);
+                        gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
+                        gameStatus.setTextFill(Color.WHITE);
+
+                    }
+                    toggle1 =!toggle1 ;
+                }
+            }
+
+        });
+        secondCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggle2) {
+                        isClickedCardOnHand = true;
+                        cardOnHandIndex_toServer = 1;
+                        thirdCardOnHand.setDisable(true);
+                        firstCardOnHand.setDisable(true);
+                        light(secondCardOnHand);
+                        gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }else{
+                        isClickedCardOnHand = false;
+                        cardOnHandIndex_toServer = null;
+                        thirdCardOnHand.setDisable(false);
+                        firstCardOnHand.setDisable(false);
+                        secondCardOnHand.setEffect(null);
+                        gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
+                        gameStatus.setTextFill(Color.WHITE);
+
+                        //disillumino
+                    }
+                    toggle2=!toggle2;
+                }
+            }
+
+        });
+        thirdCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggle3) {
+                        isClickedCardOnHand = true;
+                        firstCardOnHand.setDisable(true);
+                        secondCardOnHand.setDisable(true);
+                        cardOnHandIndex_toServer = 2;
+                        light(thirdCardOnHand);
+                        gameStatus.setText("CHOOSE WHERE TO PUT THE CARD ON THE BOARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }else{
+                        isClickedCardOnHand = false;
+                        firstCardOnHand.setDisable(false);
+                        secondCardOnHand.setDisable(false);
+                        cardOnHandIndex_toServer = null;
+                        thirdCardOnHand.setEffect(null);
+                        gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
+                        gameStatus.setTextFill(Color.WHITE);
+
+                    }
+                    toggle3=!toggle3;
+                }
+            }
+
+        });
+        firstCardOnHand.setCursor(Cursor.HAND);
+        firstCardOnHand.setEffect(null);
+        secondCardOnHand.setCursor(Cursor.HAND);
+        secondCardOnHand.setEffect(null);
+        thirdCardOnHand.setCursor(Cursor.HAND);
+        thirdCardOnHand.setEffect(null);
+
+        kingdomResourceDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleR2) {
+                        isClickedDeck = true;
+                        getResourceCardIndex_toServer = 2;
+                        disableDecksEXCEPTone(kingdomResourceDeck);
+                        light(kingdomResourceDeck);
+                        getACard.setDisable(false);
+                    }else{
+                        isClickedDeck=false;
+                        getResourceCardIndex_toServer =null;
+                        ableDecks();
+                        getACard.setDisable(true);
+                        kingdomResourceDeck.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleR2=!toggleR2;
+                }
+            }
+
+        });
+        firstGoldCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleG1) {
+                        getGoldCardIndex_toServer = 0;
+                        isClickedDeck = true;
+                        disableDecksEXCEPTone(firstGoldCard);
+                        light(firstGoldCard);
+                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                        getACard.setDisable(false);
+                    }else{
+                        getACard.setDisable(true);
+                        getGoldCardIndex_toServer = null;
+                        isClickedDeck = false ;
+                        ableDecks();
+                        firstGoldCard.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleG1= !toggleG1;
+                }
+            }
+        });
+        firstResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleR1) {
+                        isClickedDeck = true;
+                        getResourceCardIndex_toServer = 0;
+                        disableDecksEXCEPTone(firstResourceCard);
+                        light(firstResourceCard);
+                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                        getACard.setDisable(false);
+                    }else {
+                        getACard.setDisable(true);
+                        getResourceCardIndex_toServer = null;
+                        isClickedDeck = false;
+                        ableDecks();
+                        firstResourceCard.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleR1 =! toggleR1 ;
+                }
+            }
+
+        });
+        secondGoldCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleG2) {
+                        getACard.setDisable(false);
+                        isClickedDeck = true;
+                        getGoldCardIndex_toServer = 1;
+                        disableDecksEXCEPTone(secondGoldCard);
+                        light(secondGoldCard);
+                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }else{
+                        getACard.setDisable(true);
+                        isClickedDeck=false;
+                        getGoldCardIndex_toServer= null;
+                        ableDecks();
+                        secondGoldCard.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleG2=!toggleG2;
+                }
+            }
+
+        });
+        secondResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleR2) {
+                        getACard.setDisable(false);
+                        isClickedDeck = true;
+                        getResourceCardIndex_toServer = 1;
+                        disableDecksEXCEPTone(secondResourceCard);
+                        light(secondResourceCard);
+                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }else {
+                        getACard.setDisable(true);
+                        isClickedDeck = false;
+                        getResourceCardIndex_toServer = null;
+                        ableDecks();
+                        secondResourceCard.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleR2=!toggleR2;
+                }
+            }
+
+        });
+        kingdomGoldDeck.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton() == MouseButton.PRIMARY) {
+                    if(toggleG3) {
+                        isClickedDeck = true;
+                        getGoldCardIndex_toServer = 2;
+                        disableDecksEXCEPTone(kingdomGoldDeck);
+                        light(kingdomGoldDeck);
+                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setTextFill(Color.WHITE);
+                        getACard.setDisable(false);
+                    }else{
+                        getACard.setDisable(true);
+                        isClickedDeck=false;
+                        getGoldCardIndex_toServer=null;
+                        ableDecks();
+                        kingdomGoldDeck.setEffect(null);
+                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                        gameStatus.setTextFill(Color.WHITE);
+                    }
+                    toggleG3=! toggleG3;
+                }
+            }
+
+        });
+        firstGoldCard.setCursor(Cursor.HAND);
+        firstGoldCard.setEffect(null);
+        firstResourceCard.setCursor(Cursor.HAND);
+        firstResourceCard.setEffect(null);
+        secondGoldCard.setCursor(Cursor.HAND);
+        secondGoldCard.setEffect(null);
+        secondResourceCard.setCursor(Cursor.HAND);
+        secondResourceCard.setEffect(null);
+        kingdomGoldDeck.setCursor(Cursor.HAND);
+        kingdomGoldDeck.setEffect(null);
+        kingdomResourceDeck.setCursor(Cursor.HAND);
+        kingdomResourceDeck.setEffect(null);
+    }
+    //chat methods
+
 }
+
 

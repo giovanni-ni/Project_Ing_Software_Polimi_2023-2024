@@ -281,7 +281,7 @@ public class Match implements Serializable {
 
 	public void updatePoint(ResourceCard card, Player currentPlayer) {
 		if(card.isGoldCard() && card.getIsFront()){
-			currentPlayer.currentScore +=((GoldCard) card).goalCount(currentPlayer.getBoard());
+			currentPlayer.currentScore +=((GoldCard) card).getGoalPoint(currentPlayer.getBoard());
 		}
 		else if(card.getIsFront()){
 			currentPlayer.currentScore += card.getBasePoint();
