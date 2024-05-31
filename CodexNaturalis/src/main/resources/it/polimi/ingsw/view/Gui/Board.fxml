@@ -242,15 +242,36 @@
          </content>
       </ScrollPane>
       <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" />
-      <Button fx:id="playACard" disable="true" layoutX="735.0" layoutY="613.0" mnemonicParsing="false" onAction="#playCardButton_toServer" prefHeight="60.0" prefWidth="106.0" styleClass="normalButton" text="PlayCard" textFill="WHITE">
+      <Button fx:id="playACard" disable="true" layoutX="525.0" layoutY="605.0" mnemonicParsing="false" onAction="#playCardButton_toServer" prefHeight="60.0" prefWidth="106.0" styleClass="normalButton" textFill="WHITE" AnchorPane.bottomAnchor="19.0">
          <font>
             <Font size="19.0" />
-         </font></Button>
-      <Button fx:id="getACard" disable="true" layoutX="846.0" layoutY="615.0" mnemonicParsing="false" onAction="#getACardButton_toServer" prefHeight="59.0" prefWidth="104.0" styleClass="normalButton" text="GetACard" textFill="WHITE">
+         </font>
+         <graphic>
+            <ImageView fitHeight="85.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/view/PlayCard.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <Button fx:id="getACard" disable="true" layoutX="650.0" layoutY="600.0" mnemonicParsing="false" onAction="#getACardButton_toServer" prefHeight="59.0" prefWidth="104.0" styleClass="normalButton" textFill="WHITE" AnchorPane.bottomAnchor="19.0" AnchorPane.leftAnchor="640.0">
          <font>
             <Font size="19.0" />
-         </font></Button>
-      <CheckBox fx:id="setBack" layoutX="565.0" layoutY="585.0" mnemonicParsing="false" onAction="#setBackCard" prefHeight="18.0" prefWidth="104.0" text="SET BACK" textFill="WHITE" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="85.0" fitWidth="106.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/view/DrawCard.png" />
+               </image>
+            </ImageView>
+         </graphic></Button>
+      <CheckBox fx:id="setBack" layoutX="539.0" layoutY="585.0" mnemonicParsing="false" onAction="#setBackCard" prefHeight="18.0" prefWidth="104.0" textFill="WHITE">
+         <graphic>
+            <ImageView fitHeight="26.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/view/reverse.png" />
+               </image>
+            </ImageView>
+         </graphic></CheckBox>
       <StackPane layoutY="352.0" prefHeight="213.0" prefWidth="332.0" style="-fx-background: transparent;" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="352.0">
          <children>
             <VBox prefHeight="200.0" prefWidth="289.0">
