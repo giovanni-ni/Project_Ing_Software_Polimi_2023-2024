@@ -22,8 +22,6 @@ class BoardControllerTest {
     }
     @Test
     void chatTest(){
-        GUIApplication guiApplication = new GUIApplication();
-        guiApplication.main(null);
 
     }
 

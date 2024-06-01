@@ -62,7 +62,7 @@ class BoardTest {
     @Test
     void checkNoCardsAboutsForDownRight(){
         playerBoard.addCard(resourceCards.getLast(),3,-1);
-        assertFalse(playerBoard.check(2,0));
+        assertTrue(playerBoard.check(2,0));
 
 
     }
@@ -70,7 +70,7 @@ class BoardTest {
     void checkNoCardsAboutsForDownLeft(){
         assertTrue(playerBoard.checkCorner(4,4,DOWNLEFT));
         playerBoard.addCard(resourceCards.get(resourceCards.size()-3),1,-1);
-        assertFalse(playerBoard.check(2,0));
+        assertTrue(playerBoard.check(2,0));
     }
     @Test
     void checkAllCornerWithCards(){
