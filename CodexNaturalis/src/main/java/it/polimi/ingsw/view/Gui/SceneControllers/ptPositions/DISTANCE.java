@@ -5,7 +5,7 @@ public enum DISTANCE {
     DISTANCEC(69),
     COULUMN1(49.5),
     LINE0(512),
-    DISTANCEL(61);
+    DISTANCEL(62);
 
     public final double data;
     DISTANCE(double data) {

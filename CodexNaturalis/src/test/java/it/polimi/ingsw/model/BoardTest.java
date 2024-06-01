@@ -16,7 +16,7 @@ class BoardTest {
     public ArrayList<GoldCard> goldCards = (ArrayList<GoldCard>) cp.loadGoldCards();
 
     public ArrayList<ResourceCard> resourceCards = (ArrayList<ResourceCard>) cp.loadResourceCards();
-    public final InitialCard startCard = initialCards.get(81-TypeOfCard.INITIALCARD.codeCardStart);
+    public final InitialCard startCard = initialCards.get(83-TypeOfCard.INITIALCARD.codeCardStart);
     public final Board playerBoard = new Board(startCard);
 
     BoardTest() throws IOException {
@@ -62,7 +62,7 @@ class BoardTest {
     @Test
     void checkNoCardsAboutsForDownRight(){
         playerBoard.addCard(resourceCards.getLast(),3,-1);
-        assertFalse(playerBoard.check(2,0));
+        assertTrue(playerBoard.check(2,0));
 
 
     }
@@ -70,7 +70,7 @@ class BoardTest {
     void checkNoCardsAboutsForDownLeft(){
         assertTrue(playerBoard.checkCorner(4,4,DOWNLEFT));
         playerBoard.addCard(resourceCards.get(resourceCards.size()-3),1,-1);
-        assertFalse(playerBoard.check(2,0));
+        assertTrue(playerBoard.check(2,0));
     }
     @Test
     void checkAllCornerWithCards(){
@@ -99,5 +99,26 @@ class BoardTest {
         }
 
 
+
+    }
+
+    @Test
+    void specificTest() {
+        ResourceCard c = resourceCards.get(16);
+        c.setFront(true);
+        assertTrue(playerBoard.addCard(c, -1, -1));
+        c = resourceCards.get(32);
+        c.setFront(false);
+        assertTrue(playerBoard.addCard(c, -2, -2));
+        c = goldCards.get(61-40);
+        c.setFront(false);
+        assertTrue(playerBoard.addCard(c, -1, -3));
+        c = resourceCards.get(37);
+        c.setFront(true);
+        assertTrue(playerBoard.addCard(c, -3, -1));
+
+        c = goldCards.get(20);
+        c.setFront(false);
+        assertTrue(playerBoard.addCard(c, -3, -3));
     }
 }
