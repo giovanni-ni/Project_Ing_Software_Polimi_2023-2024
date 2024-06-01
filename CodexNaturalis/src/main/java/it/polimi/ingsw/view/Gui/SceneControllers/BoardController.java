@@ -651,7 +651,9 @@ public class BoardController extends GenericSceneController implements Initializ
         pane.setDisable(false);
         pane.setVisible(true);
         ArrayList<PTPOSITION> ptPositions =  new ArrayList<>(List.of(PTPOSITION.values()));
-        PTPOSITION pt = ptPositions.get(point);
+        if (point>29)
+            point=29;
+        PTPOSITION pt = ptPositions.get(point) ;
         AnchorPane.setTopAnchor(pane,pt.y);
         AnchorPane.setLeftAnchor(pane,pt.x);
     }
