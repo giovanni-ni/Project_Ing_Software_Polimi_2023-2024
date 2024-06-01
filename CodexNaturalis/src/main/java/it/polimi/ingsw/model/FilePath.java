@@ -2,14 +2,14 @@ package it.polimi.ingsw.model;
 
 public enum FilePath {
 
-    RESOURCECARDPATH("src/main/resources/json/ResourceCard.json"),
-    GOLDCARDPATH("src/main/resources/json/GoldCard.json"),
-    INITIALCARDPATH("src/main/resources/json/InitialCard.json"),
+    RESOURCECARDPATH("/json/ResourceCard.json"),
+    GOLDCARDPATH("/json/GoldCard.json"),
+    INITIALCARDPATH("/json/InitialCard.json"),
 
-    COUNTTARGETCARDPATH("src/main/resources/json/CountTargetCard.json"),
+    COUNTTARGETCARDPATH("/json/CountTargetCard.json"),
 
-    OBLIQUETARGETCARDPATH("src/main/resources/json/ObliqueTargetCard.json"),
-    POSITIONGOALTARGETCARDPATH("src/main/resources/json/PositionGoalTarget.json");
+    OBLIQUETARGETCARDPATH("/json/ObliqueTargetCard.json"),
+    POSITIONGOALTARGETCARDPATH("/json/PositionGoalTarget.json");
    public final String value;
 
 
