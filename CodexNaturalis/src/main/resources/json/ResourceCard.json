@@ -104,8 +104,8 @@
       {
         "UPRIGHT": "MUSHROOMS",
         "UPLEFT": "EMPTY",
-        "DOWNRIGHT": "EMPTY",
-        "DOWNLEFT": "HIDE"
+        "DOWNRIGHT": "HIDE",
+        "DOWNLEFT": "EMPTY"
       }
     ,
     "kingdom": "MUSHROOMS",

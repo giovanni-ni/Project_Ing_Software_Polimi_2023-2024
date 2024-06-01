@@ -60,7 +60,7 @@ public class GoldCard extends ResourceCard implements Serializable {
 			}
 		}
 
-        return this.nReqElement <= board.getCounterOfElements().get(super.getKingdom()) && board.getCounterOfElements().containsKey(this.getKingdom());
+        return   board.getCounterOfElements().containsKey(this.getKingdom()) && this.nReqElement <=board.getCounterOfElements().get(super.getKingdom()) ;
     }
 	public int goalCount(Board board){
 		int count=0;
