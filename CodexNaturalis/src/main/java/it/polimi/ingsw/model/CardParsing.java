@@ -24,7 +24,7 @@ public class CardParsing implements Serializable {
     public List<GoldCard> loadGoldCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<GoldCard> cards;
-        InputStream inputStream = getClass().getResourceAsStream(FilePath.RESOURCECARDPATH.value);
+        InputStream inputStream = getClass().getResourceAsStream(FilePath.GOLDCARDPATH.value);
         cards =objectMapper.readValue(inputStream, new TypeReference<>() {
         });
         return cards;
