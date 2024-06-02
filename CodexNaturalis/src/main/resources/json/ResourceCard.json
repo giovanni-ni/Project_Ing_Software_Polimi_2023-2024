@@ -161,7 +161,7 @@
         "UPRIGHT": "VEGETAL",
         "UPLEFT": "VEGETAL",
         "DOWNRIGHT": "EMPTY",
-        "DOWNLEFT": "VEGETAL"
+        "DOWNLEFT": "HIDE"
       }
     ,
     "kingdom": "VEGETAL",
@@ -442,7 +442,7 @@
       "UPRIGHT": "HIDE",
       "UPLEFT": "INSECT",
       "DOWNRIGHT": "EMPTY",
-      "DOWNLEFT": "HIDE"
+      "DOWNLEFT": "INSECT"
     }
   ,
   "kingdom": "INSECT",
@@ -466,7 +466,7 @@
   "corners":
     {
       "UPRIGHT": "FEATHER",
-      "UPLEFT": "INSECT",
+      "UPLEFT": "HIDE",
       "DOWNRIGHT": "INSECT",
       "DOWNLEFT": "ANIMALS"
     }
@@ -479,7 +479,7 @@
   "corners":
     {
       "UPRIGHT": "INSECT",
-      "UPLEFT": "FEATHER",
+      "UPLEFT": "PARCHMENT",
       "DOWNRIGHT": "MUSHROOMS",
       "DOWNLEFT": "HIDE"
     }

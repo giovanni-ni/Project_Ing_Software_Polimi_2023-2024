@@ -9,8 +9,8 @@
       {
         "UPLEFT":"EMPTY",
         "UPRIGHT":"VEGETAL",
-        "DOWNRIGHT":"INSECT",
-        "DOWNLEFT":"EMPTY"
+        "DOWNRIGHT":"EMPTY",
+        "DOWNLEFT":"INSECT"
       },
     "cornersBack":
       {

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.printCard;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GoldCardTest {
@@ -201,6 +202,22 @@ class GoldCardTest {
         Card card = new Card();
         card.getKingdom();
         assertTrue(goldTest78.isResourceCard());
+    }
+
+    @Test
+    void test() {
+        for(ResourceCard c: resourceCards) {
+            printCard(c);
+        }
+        System.out.println();
+        for(GoldCard c: goldCards) {
+            printCard(c);
+        }
+        System.out.println();
+        for(InitialCard c: initialCards) {
+            printCard(c);
+        }
+
     }
 
 }
