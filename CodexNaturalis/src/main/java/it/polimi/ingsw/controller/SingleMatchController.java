@@ -90,9 +90,11 @@ public class SingleMatchController extends Thread{
     }
 
     private void ifLastTurn() throws RemoteException {
-        if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint()){
-            match.setStatus(MatchStatus.LastRound);
-            notifyAllListeners(new LastRoundMessage());
+        if(match.getStatus()!=MatchStatus.LastRound && match.getStatus()!=MatchStatus.End){
+            if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint()){
+                match.setStatus(MatchStatus.LastRound);
+                notifyAllListeners(new LastRoundMessage());
+            }
         }
     }
 

@@ -408,6 +408,7 @@ public class BoardController extends GenericSceneController implements Initializ
                                                             ima.setVisible(true);
                                                             ima.setDisable(false);
                                                         }
+                                                        //todo got a null pointer exception here because of index
                                                         cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
                                                         switch (cardOnHandIndex_toServer){
                                                             case 0:
