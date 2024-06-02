@@ -47,6 +47,21 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 public class BoardController extends GenericSceneController implements Initializable {
 
+    @FXML
+    public Text n_mushroom;
+    @FXML
+    public Text n_insect;
+    @FXML
+    public Text n_animals;
+    @FXML
+    public Text n_vegetal;
+    @FXML
+    public Text n_parchment;
+    @FXML
+    public Text n_ink;
+    @FXML
+    public Text n_feather;
+    @FXML
     private Board myBoard;
     public VBox chatVBox;
     private HashBiMap<PlayerColor, String> nickList;
@@ -255,12 +270,20 @@ public class BoardController extends GenericSceneController implements Initializ
                 ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
                 ArrayList<GoldCard> goldDeck = model.getGoldDeck();
                 ArrayList<ResourceCard> resourceDeck =  model.getResourceDeck();
+                n_animals.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.ANIMALS)).toString());
+                n_mushroom.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.MUSHROOMS)).toString());
+                n_feather.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.FEATHER)).toString());
+                n_parchment.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.PARCHMENT)).toString());
+                n_vegetal.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.VEGETAL)).toString());
+                n_insect.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.INSECT)).toString());
+                n_ink.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.INK)).toString());
 
                 if(!initialized){
                     disableDecks();
                     ArrayList<TargetCard> commonTarget = model.getCommonTarget();
                     TargetCard targetCard= myPlayer.getTarget();
                     setUpBoard(commonTarget,targetCard );
+
                     gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                     gameStatus.setTextFill(Color.WHITE);
 

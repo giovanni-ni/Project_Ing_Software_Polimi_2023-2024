@@ -9,15 +9,15 @@
       {
         "UPLEFT":"EMPTY",
         "UPRIGHT":"VEGETAL",
-        "DOWNRIGHT":"EMPTY",
+        "DOWNRIGHT":"INSECT",
         "DOWNLEFT":"EMPTY"
       },
     "cornersBack":
       {
         "UPLEFT":"MUSHROOMS",
         "UPRIGHT":"VEGETAL",
-        "DOWNRIGHT":"INSECT",
-        "DOWNLEFT":"ANIMALS"
+        "DOWNRIGHT":"ANIMALS",
+        "DOWNLEFT":"INSECT"
       },
     "centralElements":
     [
@@ -41,8 +41,8 @@
     {
       "UPLEFT":"VEGETAL",
       "UPRIGHT":"ANIMALS",
-      "DOWNRIGHT":"MUSHROOMS",
-      "DOWNLEFT":"INSECT"
+      "DOWNRIGHT":"INSECT",
+      "DOWNLEFT":"MUSHROOMS"
     },
     "centralElements":
     [
@@ -66,8 +66,8 @@
     {
       "UPLEFT":"INSECT",
       "UPRIGHT":"ANIMALS",
-      "DOWNRIGHT":"MUSHROOMS",
-      "DOWNLEFT":"VEGETAL"
+      "DOWNRIGHT":"VEGETAL",
+      "DOWNLEFT":"MUSHROOMS"
     },
     "centralElements":
     [
@@ -92,13 +92,13 @@
     {
       "UPLEFT":"VEGETAL",
       "UPRIGHT":"INSECT",
-      "DOWNRIGHT":"ANIMALS",
-      "DOWNLEFT":"MUSHROOMS"
+      "DOWNRIGHT":"MUSHROOMS",
+      "DOWNLEFT":"ANIMALS"
     },
     "centralElements":
     [
       "ANIMALS",
-      "MUSHROOMS"
+      "INSECT"
     ]
   },
   {
@@ -118,8 +118,8 @@
     {
       "UPLEFT":"INSECT",
       "UPRIGHT":"MUSHROOMS",
-      "DOWNRIGHT":"VEGETAL",
-      "DOWNLEFT":"ANIMALS"
+      "DOWNRIGHT":"ANIMALS",
+      "DOWNLEFT":"VEGETAL"
     },
     "centralElements":
     [
@@ -142,8 +142,8 @@
     "cornersBack": {
       "UPLEFT": "MUSHROOMS",
       "UPRIGHT": "ANIMALS",
-      "DOWNRIGHT": "VEGETAL",
-      "DOWNLEFT": "INSECT"
+      "DOWNRIGHT": "INSECT",
+      "DOWNLEFT": "VEGETAL"
     },
     "centralElements": [
       "VEGETAL",

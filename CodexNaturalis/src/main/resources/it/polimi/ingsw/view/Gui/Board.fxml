@@ -232,6 +232,8 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <ImageView fx:id="thirdCardOnHand1" fitHeight="100.0" fitWidth="166.0" pickOnBounds="true" preserveRatio="true" />
@@ -346,6 +348,76 @@
             <Font name="Arial Bold" size="13.0" />
          </font>
       </TextField>
+      <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="580.0">
+         <image>
+            <Image url="@../../../../../images/view/animal.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" AnchorPane.leftAnchor="900.0" AnchorPane.topAnchor="580.0">
+         <image>
+            <Image url="@../../../../../images/view/insect.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" AnchorPane.leftAnchor="775.0" AnchorPane.topAnchor="650.0">
+         <image>
+            <Image url="@../../../../../images/view/mushroom.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="900.0" AnchorPane.topAnchor="650.0">
+         <image>
+            <Image url="@../../../../../images/view/vegetal.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" preserveRatio="true" AnchorPane.leftAnchor="1025.0" AnchorPane.topAnchor="580.0">
+         <image>
+            <Image url="@../../../../../images/view/ink.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" AnchorPane.leftAnchor="1025.0" AnchorPane.topAnchor="650.0">
+         <image>
+            <Image url="@../../../../../images/view/feather.JPG" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="50.0" fitWidth="40.0" AnchorPane.leftAnchor="1150.0" AnchorPane.topAnchor="580.0">
+         <image>
+            <Image url="@../../../../../images/view/parchment.JPG" />
+         </image>
+      </ImageView>
+      <Text fx:id="n_insect" fill="#902ba4" layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="955.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_feather" fill="#abcc18" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="1080.0" AnchorPane.topAnchor="675.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_vegetal" fill="#20a918" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="955.0" AnchorPane.topAnchor="675.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_ink" fill="#abcc18" layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="1080.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_parchment" fill="#abcc18" layoutX="20.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="1205.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_animals" fill="#0aa8ff" layoutX="10.0" layoutY="10.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="830.0" AnchorPane.topAnchor="600.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text fx:id="n_mushroom" fill="#ff0a0a" strokeType="OUTSIDE" strokeWidth="0.0" text="-" AnchorPane.leftAnchor="830.0" AnchorPane.topAnchor="675.0">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
       <StackPane fx:id="ptPane" disable="true" prefHeight="620.0" prefWidth="685.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="50.0">
          <children>
             <HBox prefHeight="595.0" prefWidth="1154.0">
