@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -11,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.MenuController">
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.MenuController">
     <children>
         <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
             <children>
@@ -59,7 +61,7 @@
                   <Insets top="400.0" />
                </StackPane.margin>
             </Button>
-            <Text fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER" fx:id="ErrorMessage">
+            <Text fx:id="ErrorMessage" fill="#e82525" strokeType="OUTSIDE" strokeWidth="0.0" StackPane.alignment="TOP_CENTER">
                <font>
                   <Font size="14.0" />
                </font>
@@ -67,6 +69,19 @@
                   <Insets top="500.0" />
                </StackPane.margin>
             </Text>
+            <CheckBox fx:id="autoStartCheck" mnemonicParsing="false" onAction="#autoStartEnable" text="Auto Start" StackPane.alignment="BOTTOM_CENTER">
+               <font>
+                  <Font name="Arial Bold" size="15.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets bottom="100.0" right="200.0" />
+               </StackPane.margin>
+            </CheckBox>
+            <ChoiceBox fx:id="playerNumber" prefHeight="10.0" prefWidth="10.0" StackPane.alignment="BOTTOM_CENTER">
+               <StackPane.margin>
+                  <Insets bottom="100.0" />
+               </StackPane.margin>
+            </ChoiceBox>
             </children>
         </StackPane>
       <TextField fx:id="nickName" layoutY="349.3333333333333" prefHeight="60.0" prefWidth="380.0" promptText="nuge77, maku, jo ,greta" styleClass="text-field" AnchorPane.leftAnchor="450.0" AnchorPane.topAnchor="305.0">

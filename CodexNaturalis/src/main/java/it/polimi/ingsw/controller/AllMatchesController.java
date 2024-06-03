@@ -85,6 +85,9 @@ public class AllMatchesController extends Thread {
 
         msg.setGameID(runningControllers.size());
         SingleMatchController c= new SingleMatchController(runningControllers.size());
+        if (msg.getLimitPly() != 0){
+            c.setLimitPly(msg.getLimitPly());
+        }
         runningControllers.add(c);
 
         return joinMatch((JoinGameMessage)msg);

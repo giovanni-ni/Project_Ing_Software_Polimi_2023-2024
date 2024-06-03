@@ -90,7 +90,10 @@ public class GUI extends Thread implements Ui {
                 Platform.runLater(()->guiApplication.showScene(ScenesName.STARTMENU));
             }
         } else if(guiApplication.getActualScene() == ScenesName.ASKNICKNAME || guiApplication.getActualScene() == ScenesName.EASYJOIN) {
-            if (msg instanceof joinSuccessMsg){
+            if (msg instanceof gameStartMsg) {
+                myMatch = ((gameStartMsg) msg).getModel();
+                Platform.runLater(() -> guiApplication.showScene(ScenesName.PREPARE));
+            }else if (msg instanceof joinSuccessMsg){
                 myMatch =((joinSuccessMsg)msg).getModel();
                 matchID=myMatch.getIdMatch();
                 Platform.runLater(()->guiApplication.showScene(ScenesName.WAITING));

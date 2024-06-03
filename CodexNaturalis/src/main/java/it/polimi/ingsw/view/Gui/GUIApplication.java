@@ -87,6 +87,10 @@ public class GUIApplication extends Application{
      public ScenesName getActualScene(){
         return  scenesList.get(stage.getScene());
      }
+    public GenericSceneController getActualSceneController(){
+        ScenesName scenesName =getActualScene();
+        return controllerList.inverse().get(scenesName);
+    }
 
 
     public void showErrorMessage(String description) {

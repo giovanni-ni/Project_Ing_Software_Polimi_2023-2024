@@ -26,31 +26,33 @@ public class SingleMatchController extends Thread{
     private final int FIRST_CARD=0;
     private final int SECOND_CARD =1;
     private final int THIRD_CARD =2;
-
+    private int limitPly =0;
 
     private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
 
     public SingleMatchController(int GameId) throws IOException {
         match =new Match(GameId);
         this.start();
-
-
     }
     public void setPlayerAsReady_StartGameIfAllReady(String p) throws RemoteException {
 
         match.setPlayerReady(p);
 
         /*the game will start automatically if all the players are ready*/
-        if(match.isAllPlayersReady()&& match.getPlayers().size()>=2){
-            match.setStatus(MatchStatus.Playing);
-            extractCommonTargetCard();
-            distributeCardsAndSetBoards();
-            extractFirstPlayer();
-
-            notifyAllListeners(new gameStartMsg(this.match));
+        if(match.isAllPlayersReady()&& match.getPlayers().size()>=2 && limitPly==0){
+            startGame();
         }else {
             notifyAllListeners(new ActionSuccessMsg(this.match));
         }
+    }
+
+    private void startGame() throws RemoteException {
+        match.setStatus(MatchStatus.Playing);
+        extractCommonTargetCard();
+        distributeCardsAndSetBoards();
+        extractFirstPlayer();
+
+        notifyAllListeners(new gameStartMsg(this.match));
     }
 
     public void getACard (String nickname , boolean isGoldCard,int whichCard) throws RemoteException {
@@ -139,6 +141,8 @@ public class SingleMatchController extends Thread{
             notifyAllListeners(new newPlayerInMsg(this.match));
             listener.setNickname(p.nickname);
             addListener(listener);
+            if (limitPly>=2 && limitPly<=4 && match.getPlayers().size() == limitPly)
+                startGame();
             return true;
         }
         return false;
@@ -290,5 +294,9 @@ public class SingleMatchController extends Thread{
         int randomNumber = random.nextInt(match.getPlayers().size()-1);
         match.setFirstPlayer(match.getPlayers().get(randomNumber).nickname);
         match.setCurrentPlayer(match.getPlayers().get(randomNumber));
+    }
+
+    public void setLimitPly(int limitPly) {
+        this.limitPly = limitPly;
     }
 }

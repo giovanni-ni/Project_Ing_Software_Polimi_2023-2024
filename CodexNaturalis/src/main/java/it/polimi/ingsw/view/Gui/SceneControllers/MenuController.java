@@ -6,15 +6,20 @@ import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
 import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import org.w3c.dom.Text;
 
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class MenuController extends GenericSceneController{
 
+    public CheckBox autoStartCheck;
+    public ChoiceBox playerNumber;
     private boolean isCreateGame =false;
     private boolean isJoinGame = false;
     private int numOfError=0;
@@ -30,7 +35,12 @@ public class MenuController extends GenericSceneController{
             nickName.setText("nuge"+numOfError);
         }
         if (isCreateGame){
-            getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText()));
+            if (autoStartCheck.isSelected()){
+                int num = (int) playerNumber.getValue();
+                getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText(),num));
+            }else {
+                getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText()));
+            }
         }else {
             getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText())); //ToDO if we do join first method
         }
@@ -60,22 +70,24 @@ public class MenuController extends GenericSceneController{
     @FXML
     void goCreateGame(ActionEvent event) {
         getGuiApplication().showScene(ScenesName.ASKNICKNAME);
-        isCreateGame = true;
+        MenuController nextC = (MenuController) getGuiApplication().getActualSceneController();
+        nextC.setCreateGame(true);
     }
     @FXML
     void goJoinGame(ActionEvent event) {
         getGuiApplication().showScene(ScenesName.EASYJOIN);
-        isJoinGame = true;
+        MenuController nextC = (MenuController) getGuiApplication().getActualSceneController();
+        nextC.setJoinGame(true);
     }
     @FXML
     void goReconnect(ActionEvent event) {
         getGuiApplication().showScene(ScenesName.EASYJOIN);
-        isJoinGame = false;
+
     }
     @FXML
     void goJoinFirst(ActionEvent event) {
         getGuiApplication().showScene(ScenesName.ASKNICKNAME);
-        isCreateGame= false;
+
     }
 
     @Override
@@ -88,5 +100,28 @@ public class MenuController extends GenericSceneController{
     public void ShowJoiningMessage(){
         ErrorMessage.setText("Joining");
         ErrorMessage.setFill(Color.GREEN);
+    }
+
+    public void autoStartEnable(ActionEvent actionEvent) {
+        if(autoStartCheck.isSelected() && isCreateGame){
+            playerNumber.getItems().add(2);
+            playerNumber.getItems().add(3);
+            playerNumber.getItems().add(4);
+
+            playerNumber.setValue(4);
+            playerNumber.setDisable(false);
+        }else {
+            playerNumber.setDisable(true);
+        }
+
+        
+    }
+
+    public void setCreateGame(boolean createGame) {
+        isCreateGame = createGame;
+    }
+
+    public void setJoinGame(boolean joinGame) {
+        isJoinGame = joinGame;
     }
 }
