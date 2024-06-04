@@ -11,6 +11,7 @@ public class Match implements Serializable {
 
 	public int idMatch;
 
+	private boolean autostart;
 	private PointTable pt;
 
 	private ArrayList<Player> players;
@@ -110,6 +111,7 @@ public class Match implements Serializable {
 		CardParsing cp= new CardParsing();
 		this.idMatch = idMatch;
 		pt=new PointTable();
+		autostart = false;
 
 		listenerList = new ArrayList<>();
 		players = new ArrayList<>();
@@ -128,6 +130,7 @@ public class Match implements Serializable {
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
+		autostart = false;
 
 		listenerList = new ArrayList<>();
 		players = new ArrayList<>();;
@@ -287,5 +290,13 @@ public class Match implements Serializable {
 			currentPlayer.currentScore += card.getBasePoint();
 		}
 		getPt().updatePoint(currentPlayer);
+	}
+
+	public boolean getAutoStart() {
+		return this.autostart;
+	}
+
+	public void setAutostart(boolean autostart) {
+		this.autostart = autostart;
 	}
 }

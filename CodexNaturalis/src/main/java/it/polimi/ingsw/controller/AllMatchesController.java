@@ -87,6 +87,7 @@ public class AllMatchesController extends Thread {
         SingleMatchController c= new SingleMatchController(runningControllers.size());
         if (msg.getLimitPly() != 0){
             c.setLimitPly(msg.getLimitPly());
+            c.getMatch().setAutostart(true);
         }
         runningControllers.add(c);
 

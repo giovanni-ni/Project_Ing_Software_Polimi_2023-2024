@@ -48,6 +48,8 @@ public class Tui  implements Ui {
 
     public static ArrayList<ServerChatMessage> chat;
 
+    private int autostart;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
@@ -73,6 +75,7 @@ public class Tui  implements Ui {
     }*/
 
     public void init() throws Exception {
+        autostart = 0;
         print(Print.Codex);
         askToContinue();
         askConnectionType();
@@ -138,6 +141,8 @@ public class Tui  implements Ui {
                 if(username.equals("nuge")) {
                     print("nu哥yyds");
                 }
+                myPlayer = new Player(username);
+
                 return;
             }
         } while(user.isEmpty());
@@ -182,21 +187,23 @@ public class Tui  implements Ui {
 
     public void askSetReady() throws InterruptedException, RemoteException {
         String option;
-        if (!myPlayer.getReady()) {
-            do {
 
-                print("Ready? y/n: ");
-                option = in.nextLine();
-                if(option.equals("y")){
-                    SetReadyMessage msg = new SetReadyMessage(myMatch.getIdMatch(),this.username);
-                    myPlayer.setReady(true);
-                    client.messageToServer(msg);
-                }
-                Thread.sleep(1000);
-            } while(!option.equals("y"));
+        if(autostart == 0) {
+            if (!myPlayer.getReady()) {
+                do {
 
+                    print("Ready? y/n: ");
+                    option = in.nextLine();
+                    if(option.equals("y")){
+                        SetReadyMessage msg = new SetReadyMessage(myMatch.getIdMatch(),this.username);
+                        myPlayer.setReady(true);
+                        client.messageToServer(msg);
+                    }
+                    Thread.sleep(1000);
+                } while(!option.equals("y"));
+
+            }
         }
-
         System.out.flush();
     }
 
@@ -285,7 +292,30 @@ public class Tui  implements Ui {
 
 
     public void askCreateMatch() throws Exception {
-        CreateGameMessage message = new CreateGameMessage(this.username);
+
+        String choice;
+
+        do {
+            print("autostart? y/n");
+            choice = in.nextLine();
+
+            if(!choice.equals("y") && !choice.equals("n")) {
+                print("error");
+            }
+
+        } while(!choice.equals("y") && !choice.equals("n"));
+
+        CreateGameMessage message;
+
+        if(choice.equals("y")) {
+            int numPlayer = askMaxSeats();
+            message = new CreateGameMessage(this.username, numPlayer);
+            autostart = 1;
+        } else {
+            message = new CreateGameMessage(this.username);
+        }
+
+
         client.messageToServer(message);
 
         //wait(100);
@@ -294,8 +324,7 @@ public class Tui  implements Ui {
 
     }
 
-    /*@Override
-    public int askMaxSeats() throws Exception {
+    private int askMaxSeats() throws Exception {
         int playerNumber = 0;
         do {
 
@@ -309,7 +338,7 @@ public class Tui  implements Ui {
         print("Selected " + playerNumber + " players.");
         return playerNumber;
     }
-*/
+
 
     public void askJoinMatch() throws Exception {
         String value;
@@ -376,8 +405,8 @@ public class Tui  implements Ui {
         }
 
         if(status == PlayerStatus.MatchStart) {
-
-            askSetReady();
+            if(!myMatch.getAutostart())
+                askSetReady();
             //print("la partita sta per iniziare");
         }
 
@@ -649,11 +678,12 @@ public class Tui  implements Ui {
     @Override
     public void handleMessage(GenericServerMessage msg)  {
         if(msg instanceof joinSuccessMsg) {
-            status = PlayerStatus.MatchStart;
-            myMatch = ((joinSuccessMsg) msg).getModel();
-            myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
-            print(myMatch.idMatch);
-
+            if(!status.equals(PlayerStatus.Preparing)) {
+                status = PlayerStatus.MatchStart;
+                myMatch = ((joinSuccessMsg) msg).getModel();
+                myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
+                print(myMatch.idMatch);
+            }
         } else if(msg instanceof joinFailMsg) {
             print("join fail because" + ((joinFailMsg) msg).getDescription());
         }else if(msg instanceof ServerChatMessage) {
