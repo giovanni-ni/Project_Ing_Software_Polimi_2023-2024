@@ -9,6 +9,7 @@ import java.util.List;
 public class ViewModel implements Serializable {
     public final int idMatch;
 
+    private final boolean autoStart;
     private final PointTable pt;
 
     private final ArrayList<Player> players;
@@ -33,6 +34,7 @@ public class ViewModel implements Serializable {
     private final Player currentPlayer;
 
     public ViewModel(Match match) {
+        this.autoStart = match.getAutoStart();
         this.idMatch = match.idMatch;
         this.pt = match.getPt();
         this.players = match.getPlayers();
@@ -106,5 +108,9 @@ public class ViewModel implements Serializable {
             }
         }
         return null;
+    }
+
+    public boolean getAutostart() {
+        return this.autoStart;
     }
 }

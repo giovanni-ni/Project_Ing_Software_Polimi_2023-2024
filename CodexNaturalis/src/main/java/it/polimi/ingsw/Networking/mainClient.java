@@ -2,6 +2,9 @@ package it.polimi.ingsw.Networking;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
+import it.polimi.ingsw.view.Gui.GUIApplication;
+import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
+import it.polimi.ingsw.view.Ui;
 
 import javax.swing.*;
 import java.io.*;
@@ -13,6 +16,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.Scanner;
 
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+
 public class mainClient
 {
 
@@ -21,32 +27,34 @@ public class mainClient
          * @param args
          * @throws IOException
          */
-        public static void main(String[] args) throws IOException
-        {
-            //try with resource
-            try (Socket socket = new Socket("localhost", 1234);) //open a socket
-            {
-                ObjectOutputStream outputStream = new ObjectOutputStream(socket.getOutputStream());
-                /*while(true){
-                    Scanner scanner = new Scanner(System.in);
-                    System.out.print("Enter command: ");
-                    String command = scanner.nextLine();
-                    switch (command){
-                        case "1" ->outputStream.writeObject(new CreateGameMessage("Mako"));
-                        case "2"-> outputStream.writeObject(new drawCardMessage("mako",1,true,3));
-                        case "3"-> outputStream.writeObject(new JoinFirstMessage("Mike"));
-                        case "4"-> outputStream.writeObject( new JoinGameMessage("Mike",12));
-                        case "5"->outputStream.writeObject( new LeaveMessage("Mike",12));
-                        case "6"-> outputStream.writeObject( new NewChatMessageMessage("Mike"));
+        public static void main(String[] args) throws Exception {
 
-                        case null, default-> outputStream.writeObject( new CreateGameMessage("mao"));
-                    }
-                    outputStream.flush();
-                    outputStream.reset();
-                }*/
+            Ui ui;
+            int option = 0;
+            Scanner in = new Scanner(System.in);
+            do {
+                print("""
+                    Please choose UI
+                        1  --> TUI
+                        2  --> GUI
+                    Enter your choice.
+                    >\040""");
+                try {
+                    option = Integer.parseInt(in.nextLine());
+                } catch (NumberFormatException e) {
+                    print(ANSI_MUSHROOM + "Invalid input. Try again. (1 or 2)"+ANSI_RESET);
+                }
+            } while (option != 1 && option != 2);
 
+            if(option == 1) {
+                Tui tui  = new Tui();
+                tui.init();
+            } else {
+                print("Starting Gui.....");
+                GUIApplication.main(null);
 
             }
+
         }
 
 }

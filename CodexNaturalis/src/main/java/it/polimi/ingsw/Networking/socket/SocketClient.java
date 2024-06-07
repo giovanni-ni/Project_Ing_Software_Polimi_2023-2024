@@ -54,6 +54,7 @@ public class SocketClient extends Thread implements Client {
                 Server_ok=false;
             }catch (NullPointerException e){
                 print("Connection has a problem, network is not reading");
+                e.printStackTrace();
             }
         }
     }
