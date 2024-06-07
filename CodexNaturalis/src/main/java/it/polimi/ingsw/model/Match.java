@@ -198,7 +198,7 @@ public class Match implements Serializable {
 				roundCount++;
 			}
 		}
-		if (roundCount>2){
+		if (roundCount>1){
 			setStatus(MatchStatus.End);
 		}
 
