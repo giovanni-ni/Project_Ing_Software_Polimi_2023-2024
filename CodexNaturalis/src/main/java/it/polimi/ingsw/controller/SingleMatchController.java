@@ -83,17 +83,17 @@ public class SingleMatchController extends Thread{
                     getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
                 }
             } else {
-                match.setStatus(MatchStatus.LastRound);
                 getListenerOf(nickname).update( new ActionNotRecognize("Deck Empty"));
             }
         } else {
             getListenerOf(nickname).update( new ActionNotRecognize("Can't draw Card now"));
         }
+
     }
 
     private void ifLastTurn() throws RemoteException {
         if(match.getStatus()!=MatchStatus.LastRound && match.getStatus()!=MatchStatus.End){
-            if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint()){
+            if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint() || (match.getGoldDeck().isEmpty()&&match.getResourceDeck().isEmpty())){
                 match.setStatus(MatchStatus.LastRound);
                 notifyAllListeners(new LastRoundMessage());
             }
@@ -117,6 +117,9 @@ public class SingleMatchController extends Thread{
                     currentPlayer.getCardOnHand().remove(indexCardOnHand);
                     //update current score of the player;
                     match.updatePoint(card,currentPlayer);
+                    if(match.getStatus()==MatchStatus.LastRound && match.getGoldDeck().isEmpty() && match.getResourceDeck().isEmpty()){
+                        match.nextPlayer();
+                    }
                     notifyAllListeners( new playCardSuccess(match));
                 }else {
                      getListenerOf(nickname).update( new ActionNotRecognize("Not valid choice"));
