@@ -963,6 +963,21 @@
                 <Font size="21.0" />
             </font>
         </Text>
+      <ImageView fx:id="firstCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
+      <ImageView fx:id="firstCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
+      <ImageView fx:id="firstCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
+      <ImageView fx:id="firstCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
+      <ImageView fx:id="secondCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
+      <ImageView fx:id="secondCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
+      <ImageView fx:id="secondCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
+      <ImageView fx:id="secondCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
+      <ImageView fx:id="thirdCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
+      <ImageView fx:id="thirdCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
+      <ImageView fx:id="thirdCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
+      <ImageView fx:id="thirdCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
+      <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
+        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
+        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
       <StackPane fx:id="ptPane" disable="true" prefHeight="620.0" prefWidth="685.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="50.0">
          <children>
             <HBox prefHeight="595.0" prefWidth="1154.0">
@@ -1129,20 +1144,5 @@
             </Button>
          </children>
       </StackPane>
-      <ImageView fx:id="firstCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="765.0" />
-      <ImageView fx:id="firstCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="765.0" />
-      <ImageView fx:id="firstCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="359.0" layoutY="604.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="765.0" />
-      <ImageView fx:id="firstCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="765.0" />
-      <ImageView fx:id="secondCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="926.0" />
-      <ImageView fx:id="secondCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="926.0" />
-      <ImageView fx:id="secondCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="926.0" />
-      <ImageView fx:id="secondCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="369.0" layoutY="614.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="926.0" />
-      <ImageView fx:id="thirdCardOnHand_BLUE" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1086.0" />
-      <ImageView fx:id="thirdCardOnHand_RED" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1086.0" />
-      <ImageView fx:id="thirdCardOnHand_YELLOW" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1086.0" />
-      <ImageView fx:id="thirdCardOnHand_GREEN" fitHeight="100.0" fitWidth="166.0" layoutX="38.0" layoutY="603.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1086.0" />
-      <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1086.0" />
-        <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="926.0" />
-        <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="765.0" />
     </children>
 </AnchorPane>
