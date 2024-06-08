@@ -121,8 +121,15 @@ public class GUI extends Thread implements Ui {
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.DRAWCARD));
             }else if(msg instanceof LastRoundMessage){
-
+                matchID = myMatch.getIdMatch();
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.LASTROUND));
             }else if(msg instanceof  endGameMessage){
+                myMatch = ((endGameMessage) msg).getModel();
+                matchID = myMatch.getIdMatch();
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.ENDMESSAGE));
+            }
+            else if(msg instanceof  NowIsYourRoundMsg){
+                Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.YOURROUND));
 
             }
         }

@@ -5,6 +5,7 @@ public enum UPDATE {
     CHATMESSAGE,
     PLAYCARD,
     GENERAL,
-    PLAYER,
-    READY;
+    LASTROUND,
+    ENDMESSAGE,
+    YOURROUND
 }

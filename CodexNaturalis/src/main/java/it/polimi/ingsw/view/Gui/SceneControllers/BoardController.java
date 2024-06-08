@@ -42,6 +42,7 @@ import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myMatch;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 
@@ -69,6 +70,10 @@ public class BoardController extends GenericSceneController implements Initializ
     private ArrayList<ImageView> decksImages = new ArrayList<>();
     private ArrayList<ImageView> cardsOnHandImages = new ArrayList<>();
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
+    private ArrayList<ImageView> firstPlayerBoardImages= new ArrayList<>();
+    private ArrayList<ImageView> secondPlayerBoardImages= new ArrayList<>();
+    private ArrayList<ImageView> thirdBoardImages= new ArrayList<>();
+    private ArrayList<ImageView> fourthPlayerBoardImages= new ArrayList<>();
     Boolean initialized =false;
     Boolean isClickedCardOnHand=false;
     Boolean isClickedBoard= false;
@@ -86,17 +91,17 @@ public class BoardController extends GenericSceneController implements Initializ
     Boolean isError_playCard= false, isError_getCard=false;
 
     private BiMap<PlayerColor,StackPane> paneMap;
-
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
-            firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack;
+            firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack,
+            blue, red, yellow, green;
     @FXML
     Label gameStatus;
     @FXML
-    Button button, playACard, getACard;
+    Button  playACard, getACard;
     @FXML
-    GridPane gridPane;
+    GridPane gridPane, gridPane2, gridPane3, gridPane4;
     @FXML
     CheckBox setBack;
     @FXML
@@ -110,7 +115,8 @@ public class BoardController extends GenericSceneController implements Initializ
 
     @FXML
     StackPane ptPane,loadPane, bluePane,redPane, yellowPane, greenPane;
-
+    @FXML
+    ScrollPane scrollPane1, scrollPane2, scrollPane3, scrollPane4;
     @FXML
     AnchorPane ptAnchor;
 
@@ -171,18 +177,6 @@ public class BoardController extends GenericSceneController implements Initializ
         }
     }
 
-    private void setUpGridPane() {
-
-    }
-
-    private void resetDeck(){
-        firstResourceCard.setImage(null);
-        secondResourceCard.setImage(null);
-        kingdomResourceDeck.setImage(null);
-        firstGoldCard.setImage(null);
-        secondGoldCard.setImage(null);
-        kingdomGoldDeck.setImage(null);
-    }
     private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck) throws IOException {
         int i;
         for (i =0; i<3 && i<resourceDeck.size() ; i++){
@@ -215,35 +209,54 @@ public class BoardController extends GenericSceneController implements Initializ
         }
     }
 
-    private void showBoard(Board b) throws IOException {
-        BiMap<Card, Coordinate> map= b.getCardCoordinate();
-
-        if (myBoard==null || myBoard.getCardCoordinate().size()<=map.size()){
-
-            for(BiMap.Entry<Card, Coordinate> entry: map.entrySet()){
-                Card card = entry.getKey();
-                Coordinate coo= entry.getValue();
-
-                if (myBoard==null ||!b.isCardCoordinate(coo.getX(),coo.getY())){
-
-                    System.out.println("codice di carta messa sul board "+card.getCode()+
-                            "le sue coordinate sono x:"+(coo.getX()+40)+"y:"+(-coo.getY()+40));
-                    Platform.runLater(()-> {
+    private void showBoard(Board b, Player p) throws IOException {
+        int numImagesOnBoard = switch (p.getPlayerID()) {
+            case BLUE -> firstPlayerBoardImages.size();
+            case RED -> secondPlayerBoardImages.size();
+            case YELLOW -> thirdBoardImages.size();
+            case GREEN -> fourthPlayerBoardImages.size();
+        };
+        if(b.getCardCoordinate()!=null && (numImagesOnBoard<b.getCardCoordinate().size())) {
+            BiMap<Card, Coordinate> map = b.getCardCoordinate();
+            int i = map.entrySet().size();
+            if (b.getCardCoordinate().size() <= map.size()) {
+                for (BiMap.Entry<Card, Coordinate> entry : map.entrySet()) {
+                    Card card = entry.getKey();
+                    Coordinate coo = entry.getValue();
+                    System.out.println("codice di carta messa sul board " + card.getCode() +
+                            "le sue coordinate sono x:" + (coo.getX() + 40) + "y:" + (-coo.getY() + 40));
+                    int currentIndex = i;
+                    Platform.runLater(() -> {
                         try {
-                            gridPane.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
-
+                            if ((b.getCardCoordinate().size()==2&& numImagesOnBoard== 0) ||currentIndex == 1 ) {
+                                switch (p.getPlayerID()){
+                                    case BLUE:
+                                        gridPane.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
+                                        break;
+                                    case RED :
+                                        gridPane2.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
+                                        break;
+                                    case YELLOW:
+                                        gridPane3.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
+                                        break;
+                                    case GREEN:
+                                        gridPane4.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
+                                        break;
+                                }
+                            }
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     });
+                    i--;
                 }
-            }
-            myBoard=b;
 
+            }
         }
+
     }
 //TODO animal back gold wrong
-    private ImageView createImageView(Card card) throws IOException {
+    private ImageView createImageView(Card card,Player p) throws IOException {
         Image image = null;
         ImageView imageView= new ImageView();
         if(card.getIsFront())
@@ -255,6 +268,7 @@ public class BoardController extends GenericSceneController implements Initializ
         imageView.setFitHeight(100);
         imageView.setFitWidth(146);
         imageView.setDisable(true);
+
         return imageView;
     }
 
@@ -263,6 +277,24 @@ public class BoardController extends GenericSceneController implements Initializ
         switch (update) {
             case CHATMESSAGE -> {
                 showNewMessage();
+            }
+            case LASTROUND -> {
+                gameStatus.setText("THIS IS THE LAST ROUND, COME ON, GO FOR THE VICTORY");
+                gameStatus.setTextFill(Color.WHITE);
+            }
+            case ENDMESSAGE -> {
+                StringBuilder winner = new StringBuilder();
+                for(Player p: myMatch.getWinners()){
+                    winner.append(p.getNickname());
+                    winner.append(" ");
+                }
+                gameStatus.setText("WOWWW THE VICTORY BELONGS TO "+ winner);
+                gameStatus.setTextFill(Color.WHITE);
+            }
+
+            case YOURROUND -> {
+                gameStatus.setText("IT'S YOUR ROUND   PLAY AND DRAW CARD WITH CAUTION");
+                gameStatus.setTextFill(Color.WHITE);
             }
             default -> {
                 ViewModel model = getGuiApplication().getGui().getMyMatch();
@@ -278,37 +310,48 @@ public class BoardController extends GenericSceneController implements Initializ
                 n_insect.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.INSECT)).toString());
                 n_ink.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.INK)).toString());
 
-                if(!initialized){
+                if(!initialized) {
                     disableDecks();
                     ArrayList<TargetCard> commonTarget = model.getCommonTarget();
-                    TargetCard targetCard= myPlayer.getTarget();
-                    setUpBoard(commonTarget,targetCard );
-
+                    TargetCard targetCard = myPlayer.getTarget();
+                    setUpBoard(commonTarget, targetCard);
                     gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                     gameStatus.setTextFill(Color.WHITE);
-
-                    for(int i= 0; i<82; i++)
-                        for(int j=0; j<82; j++) {
-                            if (((i+j)%2 == 0) &&!(i==40 &&j==40)){
+                        for (int i = 0; i < 82; i++)
+                            for (int j = 0; j < 82; j++) {
+                                if (((i + j) % 2 == 0) && !(i == 40 && j == 40)) {
                                 //add heart
                                 ImageView imageViewHeart = new ImageView();
                                 imageViewHeart.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
                                 imageViewHeart.setCursor(Cursor.HAND);
                                 imageViewHeart.setFitWidth(15);
                                 imageViewHeart.setFitHeight(15);
-                                StackPane stackPane= new StackPane(imageViewHeart);
+                                StackPane stackPane = new StackPane(imageViewHeart);
                                 stackPane.setAlignment(Pos.CENTER);
-                                gridPane.add(stackPane, i, j);
+                                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                                        case BLUE-> {
+                                            gridPane.add(stackPane, i, j);
+                                        }
+                                        case RED -> {
+                                            gridPane2.add(stackPane, i, j);
+                                        }
+                                        case YELLOW -> {
+                                            gridPane3.add(stackPane, i, j);
+                                        }
+                                        case GREEN -> {
+                                            gridPane4.add(stackPane, i, j);
+                                        }
+                                    }
 
                                 //what happens if you click the heart
                                 imageViewHeart.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
-                                        if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand){
+                                        if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
                                             //abilito la casella
                                             setBack.setDisable(false);
-                                            isClickedBoard=true;
-                                            gameStatus.setText("CLICK THE BUTTON -PLAY CARD- or MOVE THE CARD ON THE BOARD");
+                                            isClickedBoard = true;
+                                            gameStatus.setText("CLICK THE BUTTON PLAY CARD or MOVE THE CARD ON THE BOARD");
                                             gameStatus.setTextFill(Color.WHITE);
 
                                             // rendo invisibile le carte che ho in mano
@@ -320,16 +363,32 @@ public class BoardController extends GenericSceneController implements Initializ
 
                                             // search which heart is clicked
                                             ImageView imageClicked = (ImageView) event.getSource();
-                                            StackPane stackPane= (StackPane) imageClicked.getParent();
+                                            StackPane stackPane = (StackPane) imageClicked.getParent();
                                             Integer columnIndex = GridPane.getColumnIndex(stackPane);
                                             Integer rowIndex = GridPane.getRowIndex(stackPane);
 
                                             // after you first put of card you can move it on the board
-                                            if(putACardY_toServer!=rowIndex || putACardX_toServer !=columnIndex ){
-                                                gridPane.getChildren().remove(boardTmpImage);
-                                                gridPane.getChildren().remove(boardTmpImageBack);
+                                            if (putACardY_toServer != rowIndex || putACardX_toServer != columnIndex) {
+                                                switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                                                    case BLUE-> {
+                                                        gridPane.getChildren().remove(boardTmpImage);
+                                                        gridPane.getChildren().remove(boardTmpImageBack);
+                                                    }
+                                                    case RED -> {
+                                                        gridPane2.getChildren().remove(boardTmpImage);
+                                                        gridPane2.getChildren().remove(boardTmpImageBack);
+
+                                                    }
+                                                    case YELLOW -> {
+                                                        gridPane3.getChildren().remove(boardTmpImage);
+                                                        gridPane3.getChildren().remove(boardTmpImageBack);
+                                                    }
+                                                    case GREEN -> {
+                                                        gridPane4.getChildren().remove(boardTmpImage);
+                                                    }
+                                                }
                                             }
-                                            putACardX_toServer= columnIndex == null ? 0 : columnIndex;
+                                            putACardX_toServer = columnIndex == null ? 0 : columnIndex;
                                             putACardY_toServer = rowIndex == null ? 0 : rowIndex;
 
 
@@ -338,53 +397,80 @@ public class BoardController extends GenericSceneController implements Initializ
                                             boardTmpImage.setFitWidth(146);
                                             boardTmpImage.setFitHeight(100);
                                             boardTmpImage.setCursor(Cursor.HAND);
-                                            gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
-                                            Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
-                                            List <Card> cardOnHand =  myPlayer.getCardOnHand();
+                                            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                                                case BLUE-> {
+                                                    gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+                                                }
+                                                case RED -> {
+                                                    gridPane2.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+
+                                                }
+                                                case YELLOW -> {
+                                                    gridPane3.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+                                                }
+                                                case GREEN -> {
+                                                    gridPane4.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
+                                                }
+                                            }
+                                            Player myPlayer = getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                            List<Card> cardOnHand = myPlayer.getCardOnHand();
 
                                             // add back card
                                             Image image = null;
                                             switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
                                                 case Elements.ANIMALS:
-                                                    if(cardOnHand.get(cardOnHandIndex_toServer)instanceof GoldCard)
+                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBackGold.jpg"));
                                                     else
-                                                        image=  new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
+                                                        image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
                                                     break;
                                                 case Elements.MUSHROOMS:
-                                                    if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
                                                     else
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
                                                     break;
                                                 case Elements.INSECT:
-                                                    if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/InsectBackGold.jpg"));
                                                     else
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
                                                     break;
                                                 case Elements.VEGETAL:
-                                                    if(cardOnHand.get(cardOnHandIndex_toServer)instanceof  GoldCard)
+                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
                                                         image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBackGold.jpg"));
                                                     else
-                                                        image=  new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
+                                                        image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
                                                     break;
                                             }
                                             boardTmpImageBack.setImage(image);
                                             boardTmpImageBack.setFitHeight(100);
                                             boardTmpImageBack.setFitWidth(146);
-                                            gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                                            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                                                case BLUE-> {
+                                                    gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                                                }
+                                                case RED -> {
+                                                    gridPane2.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+
+                                                }
+                                                case YELLOW -> {
+                                                    gridPane3.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                                                }
+                                                case GREEN -> {
+                                                    gridPane4.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
+                                                }
+                                            }
 
                                             // in base alla casella decido quale carta mostrare
-                                            if(!setBack.isSelected()) {
+                                            if (!setBack.isSelected()) {
                                                 boardTmpImageBack.setVisible(false);
                                                 boardTmpImage.setVisible(true);
-                                                isFront_toServer=true;
-                                            }
-                                            else {
+                                                isFront_toServer = true;
+                                            } else {
                                                 boardTmpImageBack.setVisible(true);
                                                 boardTmpImage.setVisible(false);
-                                                isFront_toServer=false;
+                                                isFront_toServer = false;
                                             }
 
                                             // se clico un' altra volta una carta front del board
@@ -396,38 +482,54 @@ public class BoardController extends GenericSceneController implements Initializ
 
                                                     if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
                                                         boardTmpImage.setVisible(false);
-                                                        isFront_toServer=null;
-                                                        isClickedCardOnHand=false;
+                                                        isFront_toServer = null;
+                                                        isClickedCardOnHand = false;
 
                                                         setBack.setDisable(true);
                                                         playACard.setDisable(true);
-                                                        isClickedBoard=false;
+                                                        isClickedBoard = false;
 
                                                         // rendo visibile la carta in mano
-                                                        for (ImageView ima : cardsOnHandImages){
+                                                        for (ImageView ima : cardsOnHandImages) {
                                                             ima.setVisible(true);
                                                             ima.setDisable(false);
                                                         }
                                                         //todo got a null pointer exception here because of index
                                                         cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
-                                                        switch (cardOnHandIndex_toServer){
+                                                        switch (cardOnHandIndex_toServer) {
                                                             case 0:
-                                                                toggle1=!toggle1;
+                                                                toggle1 = !toggle1;
                                                                 break;
                                                             case 1:
-                                                                toggle2=! toggle2;
+                                                                toggle2 = !toggle2;
                                                                 break;
                                                             case 2:
-                                                                toggle3=! toggle3;
+                                                                toggle3 = !toggle3;
                                                                 break;
                                                         }
 
-                                                        cardOnHandIndex_toServer=null;
+                                                        cardOnHandIndex_toServer = null;
 
                                                         // rimnuovo le carte sul board
-                                                        gridPane.getChildren().remove(boardTmpImage);
-                                                        gridPane.getChildren().remove(boardTmpImageBack);
+                                                        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()) {
+                                                            case BLUE -> {
+                                                                gridPane.getChildren().remove(boardTmpImage);
+                                                                gridPane.getChildren().remove(boardTmpImageBack);
+                                                            }
+                                                            case RED -> {
+                                                                gridPane2.getChildren().remove(boardTmpImage);
+                                                                gridPane2.getChildren().remove(boardTmpImageBack);
 
+                                                            }
+                                                            case YELLOW -> {
+                                                                gridPane3.getChildren().remove(boardTmpImage);
+                                                                gridPane3.getChildren().remove(boardTmpImageBack);
+                                                            }
+                                                            case GREEN -> {
+                                                                gridPane4.getChildren().remove(boardTmpImage);
+                                                                gridPane4.getChildren().remove(boardTmpImageBack);
+                                                            }
+                                                        }
 
                                                         // inizializzo boardTmpImage
                                                         boardTmpImage = new ImageView();
@@ -451,25 +553,131 @@ public class BoardController extends GenericSceneController implements Initializ
                     }
                     loadPane.setVisible(false);
                     loadPane.setDisable(true);
-                    initialized =true;
+                    initialized = true;
+                    yellow.setVisible(false);
+                    green.setVisible(false);
+                    int i = 0;
+                    for (Player p : getGuiApplication().getGui().getMyMatch().getPlayers()) {
+                        if (i == 0) {
+                            red.setCursor(Cursor.HAND);
+                        } else if (i == 1) {
+                            blue.setCursor(Cursor.HAND);
+                        } else if (i == 2) {
+                            yellow.setVisible(true);
+                            yellow.setCursor(Cursor.HAND);
+                        } else if (i == 3) {
+                            green.setVisible(true);
+                            green.setCursor(Cursor.HAND);
+                        }
+                        i++;
+                    }
+                    blue.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+
+                            scrollPane1.setVisible(true);
+                            scrollPane2.setVisible(false);
+                            scrollPane3.setVisible(false);
+                            scrollPane4.setVisible(false);
+                        }
+
+                    });
+                    red.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            scrollPane1.setVisible(false);
+                            scrollPane2.setVisible(true);
+                            scrollPane3.setVisible(false);
+                            scrollPane4.setVisible(false);
+
+                        }
+                    });
+                    for(Player p : getGuiApplication().getGui().getMyMatch().getPlayers()){
+
+                    }
+                    yellow.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            scrollPane1.setVisible(false);
+                            scrollPane2.setVisible(false);
+                            scrollPane3.setVisible(true);
+                            scrollPane4.setVisible(false);
+                        }
+                    });
+
+                    green.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            scrollPane1.setVisible(false);
+                            scrollPane2.setVisible(false);
+                            scrollPane3.setVisible(false);
+                            scrollPane4.setVisible(true);
+                        }
+                    });
+
                 }
-                showBoard(myPlayer.getBoard());
+
+                for(Player p: getGuiApplication().getGui().getMyMatch().getPlayers()){
+                       showBoard(p.getBoard(), p);
+                }
+                switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()) {
+                    case BLUE:
+                        scrollPane1.setVisible(true);
+                        scrollPane2.setVisible(false);
+                        scrollPane3.setVisible(false);
+                        scrollPane4.setVisible(false);
+                        break;
+                    case RED:
+                        scrollPane1.setVisible(false);
+                        scrollPane2.setVisible(true);
+                        scrollPane3.setVisible(false);
+                        scrollPane4.setVisible(false);
+                        break;
+                    case YELLOW:
+                        scrollPane1.setVisible(false);
+                        scrollPane2.setVisible(false);
+                        scrollPane3.setVisible(true);
+                        scrollPane4.setVisible(false);
+                        break;
+                    case GREEN:
+                        scrollPane1.setVisible(false);
+                        scrollPane2.setVisible(false);
+                        scrollPane3.setVisible(false);
+                        scrollPane4.setVisible(true);
+                        break;
+                }
                 showDecks(goldDeck,resourceDeck);
                 showCardOnHand(cardOnHand);
 
 
                 if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
+                    gameStatus.setText("WAITING OTHER PLAYERS");
                     if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
                         thirdCardOnHand.setVisible(true);
                         tooggleMain=true;
                         isClickedGetACard=false;
                         getResourceCardIndex_toServer= null;
                         getGoldCardIndex_toServer= null;
-
+                        gameStatus.setTextFill(Color.WHITE);
                     }
 
                     // disabilito gioco carta
-                    gridPane.setDisable(true);
+                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                        case BLUE-> {
+                            gridPane.setDisable(true);
+                        }
+                        case RED -> {
+                            gridPane2.setDisable(true);
+
+                        }
+                        case YELLOW -> {
+                            gridPane3.setDisable(true);
+                        }
+                        case GREEN -> {
+                            gridPane4.setDisable(true);
+                        }
+                    }
+
                     playACard.setDisable(true);
                     setBack.setDisable(true);
                     disableCardOnHand();
@@ -482,7 +690,21 @@ public class BoardController extends GenericSceneController implements Initializ
                 }else{
                     //se sono nel mio turno
                     //abilito gioco carta
-                    gridPane.setDisable(false);
+                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                        case BLUE-> {
+                            gridPane.setDisable(false);
+                        }
+                        case RED -> {
+                            gridPane2.setDisable(false);
+
+                        }
+                        case YELLOW -> {
+                            gridPane3.setDisable(false);
+                        }
+                        case GREEN -> {
+                            gridPane4.setDisable(false);
+                        }
+                        }
                     ableCardOnHand();
                     if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
                         gameStatus.setText("CHOOSE A CARD ON DECKS");
@@ -513,7 +735,22 @@ public class BoardController extends GenericSceneController implements Initializ
                         playACard.setDisable(true);
                         ableDecks();
                         disableCardOnHand();
-                        gridPane.setDisable(true);
+                        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                            case BLUE-> {
+                                gridPane.setDisable(true);
+                            }
+                            case RED -> {
+                                gridPane2.setDisable(true);
+
+                            }
+                            case YELLOW -> {
+                                gridPane3.setDisable(true);
+                            }
+                            case GREEN -> {
+                                gridPane4.setDisable(true);
+                            }
+                        }
+
                         firstCardOnHand.setVisible(true);
                         tooggleMain= false;
                         boardTmpImage = new ImageView();
@@ -602,8 +839,25 @@ public class BoardController extends GenericSceneController implements Initializ
         gameStatus.setTextFill(Color.RED);
         if(isClickedPlayACard) {
             cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
-            gridPane.getChildren().remove(boardTmpImage);
-            gridPane.getChildren().remove(boardTmpImageBack);
+            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+                case BLUE-> {
+                    gridPane.getChildren().remove(boardTmpImage);
+                    gridPane.getChildren().remove(boardTmpImageBack);
+                }
+                case RED -> {
+                    gridPane2.getChildren().remove(boardTmpImage);
+                    gridPane2.getChildren().remove(boardTmpImageBack);
+
+                }
+                case YELLOW -> {
+                    gridPane3.getChildren().remove(boardTmpImage);
+                    gridPane3.getChildren().remove(boardTmpImageBack);
+                }
+                case GREEN -> {
+                    gridPane4.getChildren().remove(boardTmpImage);
+                }
+            }
+
             isError_playCard = false;
             ableCardOnHand();
             isClickedDeck=false;
@@ -1075,7 +1329,24 @@ public class BoardController extends GenericSceneController implements Initializ
         kingdomResourceDeck.setCursor(Cursor.HAND);
         kingdomResourceDeck.setEffect(null);
     }
-    //chat methods
+
+    private GridPane findMyGridPane(){
+        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
+            case BLUE-> {
+                return gridPane;
+            }
+            case RED -> {
+                return gridPane2;
+            }
+            case YELLOW -> {
+                return  gridPane3;
+            }
+            case GREEN -> {
+                return gridPane4;
+            }
+        }
+        return null;
+    }
 
 }
 
