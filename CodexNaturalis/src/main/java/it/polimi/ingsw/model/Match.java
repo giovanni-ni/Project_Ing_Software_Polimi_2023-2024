@@ -289,6 +289,9 @@ public class Match implements Serializable {
 		else if(card.getIsFront()){
 			currentPlayer.currentScore += card.getBasePoint();
 		}
+		if (currentPlayer.currentScore > pt.getMaxPoint())
+			currentPlayer.currentScore = pt.getMaxPoint();
+
 		getPt().updatePoint(currentPlayer);
 	}
 

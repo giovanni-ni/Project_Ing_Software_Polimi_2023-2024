@@ -67,6 +67,7 @@ public class BoardController extends GenericSceneController implements Initializ
     private String chatDestination;
     private ArrayList<ImageView> decksImages = new ArrayList<>();
     private ArrayList<ImageView> cardsOnHandImages = new ArrayList<>();
+    //todo delete unuseful elements
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
     private ArrayList<ImageView> firstPlayerBoardImages= new ArrayList<>();
     private ArrayList<ImageView> secondPlayerBoardImages= new ArrayList<>();
@@ -122,7 +123,7 @@ public class BoardController extends GenericSceneController implements Initializ
    public void playCardButton_toServer(ActionEvent e) throws RemoteException {
         isClickedPlayACard=true;
         String nickname=getGuiApplication().getGui().getUsername();
-        code_toServer=searchCode.get(cardsOnHandImages.get(cardOnHandIndex_toServer));
+        code_toServer=searchCode.get(cardsOnHandImages.get(cardOnHandIndex_toServer)); // todo
         System.out.println("Print cardOnHand:"+ cardOnHandIndex_toServer+"is Front:"+ isFront_toServer);
         Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
         for(Card c: myPlayer.getCardOnHand()){
@@ -588,21 +589,7 @@ public class BoardController extends GenericSceneController implements Initializ
                     }
 
                     // disabilito gioco carta
-                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                        case BLUE-> {
-                            gridPane.setDisable(true);
-                        }
-                        case RED -> {
-                            gridPane2.setDisable(true);
-
-                        }
-                        case YELLOW -> {
-                            gridPane3.setDisable(true);
-                        }
-                        case GREEN -> {
-                            gridPane4.setDisable(true);
-                        }
-                    }
+                    myGrid.setDisable(true);
 
                     playACard.setDisable(true);
                     setBack.setDisable(true);
@@ -616,21 +603,9 @@ public class BoardController extends GenericSceneController implements Initializ
                 }else{
                     //se sono nel mio turno
                     //abilito gioco carta
-                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                        case BLUE-> {
-                            gridPane.setDisable(false);
-                        }
-                        case RED -> {
-                            gridPane2.setDisable(false);
 
-                        }
-                        case YELLOW -> {
-                            gridPane3.setDisable(false);
-                        }
-                        case GREEN -> {
-                            gridPane4.setDisable(false);
-                        }
-                        }
+                    myGrid.setDisable(false);
+
                     ableCardOnHand();
                     if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
                         gameStatus.setText("CHOOSE A CARD ON DECKS");
@@ -661,21 +636,8 @@ public class BoardController extends GenericSceneController implements Initializ
                         playACard.setDisable(true);
                         ableDecks();
                         disableCardOnHand();
-                        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                            case BLUE-> {
-                                gridPane.setDisable(true);
-                            }
-                            case RED -> {
-                                gridPane2.setDisable(true);
 
-                            }
-                            case YELLOW -> {
-                                gridPane3.setDisable(true);
-                            }
-                            case GREEN -> {
-                                gridPane4.setDisable(true);
-                            }
-                        }
+                        myGrid.setDisable(true);
 
                         firstCardOnHand.setVisible(true);
                         tooggleMain= false;
@@ -765,24 +727,10 @@ public class BoardController extends GenericSceneController implements Initializ
         gameStatus.setTextFill(Color.RED);
         if(isClickedPlayACard) {
             cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
-            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                case BLUE-> {
-                    gridPane.getChildren().remove(boardTmpImage);
-                    gridPane.getChildren().remove(boardTmpImageBack);
-                }
-                case RED -> {
-                    gridPane2.getChildren().remove(boardTmpImage);
-                    gridPane2.getChildren().remove(boardTmpImageBack);
 
-                }
-                case YELLOW -> {
-                    gridPane3.getChildren().remove(boardTmpImage);
-                    gridPane3.getChildren().remove(boardTmpImageBack);
-                }
-                case GREEN -> {
-                    gridPane4.getChildren().remove(boardTmpImage);
-                }
-            }
+            myGrid.getChildren().remove(boardTmpImage);
+            myGrid.getChildren().remove(boardTmpImageBack);
+
 
             isError_playCard = false;
             ableCardOnHand();
@@ -1256,23 +1204,6 @@ public class BoardController extends GenericSceneController implements Initializ
         kingdomResourceDeck.setEffect(null);
     }
 
-    private GridPane findMyGridPane(){
-        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-            case BLUE-> {
-                return gridPane;
-            }
-            case RED -> {
-                return gridPane2;
-            }
-            case YELLOW -> {
-                return  gridPane3;
-            }
-            case GREEN -> {
-                return gridPane4;
-            }
-        }
-        return null;
-    }
 
 }
 
