@@ -7,7 +7,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.ClientChatMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.drawCardMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.playCardMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
-import it.polimi.ingsw.Networking.socket.Server;
+
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Gui.SceneControllers.ptPositions.PTPOSITION;
 import javafx.application.Platform;
@@ -42,8 +42,6 @@ import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myMatch;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
@@ -101,7 +99,7 @@ public class BoardController extends GenericSceneController implements Initializ
     @FXML
     Button  playACard, getACard;
     @FXML
-    GridPane gridPane, gridPane2, gridPane3, gridPane4;
+    GridPane gridPane, gridPane2, gridPane3, gridPane4, myGrid;
     @FXML
     CheckBox setBack;
     @FXML
@@ -172,15 +170,17 @@ public class BoardController extends GenericSceneController implements Initializ
             cardOnHand.get(i).setFront(true);
             imageView=cardsOnHandImages.get(i);
             imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(cardOnHand.get(i))))));
-            searchCode.put(imageView,cardOnHand.get(i).getCode());
+            searchCode.put(imageView,cardOnHand.get(i).getCode()); // search code is used for?
             imageView.setVisible(true);
         }
     }
 
     private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck) throws IOException {
         int i;
+        // show resource deck images
         for (i =0; i<3 && i<resourceDeck.size() ; i++){
             ResourceCard card = resourceDeck.get(i);
+            //set the third one back and others front
             if (i!=2)
                 card.setFront(true);
             ImageView imageView = decksImages.get(i);
@@ -188,11 +188,14 @@ public class BoardController extends GenericSceneController implements Initializ
             imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
         }
         while(i<3){
+            //if the for loops ends because of deck empty disable others slots
             ImageView imageView = decksImages.get(i);
             imageView.setVisible(false);
             imageView.setEffect(null);
             i++;
         }
+
+        //same logic for the gold cards slots
         for (i =0 ; i<3 && i<goldDeck.size() ; i++){
             GoldCard card = goldDeck.get(i);
             if (i!=2)
@@ -211,6 +214,7 @@ public class BoardController extends GenericSceneController implements Initializ
 
     private void showBoard(Board b, Player p) throws IOException {
         int numImagesOnBoard = switch (p.getPlayerID()) {
+            //todo array of images never updated
             case BLUE -> firstPlayerBoardImages.size();
             case RED -> secondPlayerBoardImages.size();
             case YELLOW -> thirdBoardImages.size();
@@ -219,7 +223,8 @@ public class BoardController extends GenericSceneController implements Initializ
         if(b.getCardCoordinate()!=null && (numImagesOnBoard<b.getCardCoordinate().size())) {
             BiMap<Card, Coordinate> map = b.getCardCoordinate();
             int i = map.entrySet().size();
-            if (b.getCardCoordinate().size() <= map.size()) {
+            //todo this if is always true? they are the same array
+            if (b.getCardCoordinate().size() <= map.size() ) {
                 for (BiMap.Entry<Card, Coordinate> entry : map.entrySet()) {
                     Card card = entry.getKey();
                     Coordinate coo = entry.getValue();
@@ -228,6 +233,7 @@ public class BoardController extends GenericSceneController implements Initializ
                     int currentIndex = i;
                     Platform.runLater(() -> {
                         try {
+                            //todo why the image size
                             if ((b.getCardCoordinate().size()==2&& numImagesOnBoard== 0) ||currentIndex == 1 ) {
                                 switch (p.getPlayerID()){
                                     case BLUE:
@@ -274,6 +280,7 @@ public class BoardController extends GenericSceneController implements Initializ
 
     @Override
     public void updateModel(UPDATE update) throws IOException {
+        ViewModel model = getGuiApplication().getGui().getMyMatch();
         switch (update) {
             case CHATMESSAGE -> {
                 showNewMessage();
@@ -284,7 +291,7 @@ public class BoardController extends GenericSceneController implements Initializ
             }
             case ENDMESSAGE -> {
                 StringBuilder winner = new StringBuilder();
-                for(Player p: myMatch.getWinners()){
+                for(Player p: model.getWinners()){
                     winner.append(p.getNickname());
                     winner.append(" ");
                 }
@@ -297,7 +304,7 @@ public class BoardController extends GenericSceneController implements Initializ
                 gameStatus.setTextFill(Color.WHITE);
             }
             default -> {
-                ViewModel model = getGuiApplication().getGui().getMyMatch();
+
                 Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
                 ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
                 ArrayList<GoldCard> goldDeck = model.getGoldDeck();
@@ -311,6 +318,20 @@ public class BoardController extends GenericSceneController implements Initializ
                 n_ink.setText((myPlayer.getBoard().getCounterOfElements().get(Elements.INK)).toString());
 
                 if(!initialized) {
+                    switch(myPlayer.getPlayerID()){
+                        case BLUE-> {
+                            myGrid =gridPane;
+                        }
+                        case RED -> {
+                            myGrid =gridPane2;
+                        }
+                        case YELLOW -> {
+                            myGrid =gridPane3;
+                        }
+                        case GREEN -> {
+                            myGrid =gridPane4;
+                        }
+                    }
                     disableDecks();
                     ArrayList<TargetCard> commonTarget = model.getCommonTarget();
                     TargetCard targetCard = myPlayer.getTarget();
@@ -328,20 +349,7 @@ public class BoardController extends GenericSceneController implements Initializ
                                 imageViewHeart.setFitHeight(15);
                                 StackPane stackPane = new StackPane(imageViewHeart);
                                 stackPane.setAlignment(Pos.CENTER);
-                                    switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                                        case BLUE-> {
-                                            gridPane.add(stackPane, i, j);
-                                        }
-                                        case RED -> {
-                                            gridPane2.add(stackPane, i, j);
-                                        }
-                                        case YELLOW -> {
-                                            gridPane3.add(stackPane, i, j);
-                                        }
-                                        case GREEN -> {
-                                            gridPane4.add(stackPane, i, j);
-                                        }
-                                    }
+                                myGrid.add(stackPane, i, j);
 
                                 //what happens if you click the heart
                                 imageViewHeart.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -368,25 +376,11 @@ public class BoardController extends GenericSceneController implements Initializ
                                             Integer rowIndex = GridPane.getRowIndex(stackPane);
 
                                             // after you first put of card you can move it on the board
-                                            if (putACardY_toServer != rowIndex || putACardX_toServer != columnIndex) {
-                                                switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                                                    case BLUE-> {
-                                                        gridPane.getChildren().remove(boardTmpImage);
-                                                        gridPane.getChildren().remove(boardTmpImageBack);
-                                                    }
-                                                    case RED -> {
-                                                        gridPane2.getChildren().remove(boardTmpImage);
-                                                        gridPane2.getChildren().remove(boardTmpImageBack);
+                                            if (!Objects.equals(putACardY_toServer, rowIndex) || !Objects.equals(putACardX_toServer, columnIndex)) {
 
-                                                    }
-                                                    case YELLOW -> {
-                                                        gridPane3.getChildren().remove(boardTmpImage);
-                                                        gridPane3.getChildren().remove(boardTmpImageBack);
-                                                    }
-                                                    case GREEN -> {
-                                                        gridPane4.getChildren().remove(boardTmpImage);
-                                                    }
-                                                }
+                                                myGrid.getChildren().remove(boardTmpImage);
+                                                myGrid.getChildren().remove(boardTmpImageBack);
+
                                             }
                                             putACardX_toServer = columnIndex == null ? 0 : columnIndex;
                                             putACardY_toServer = rowIndex == null ? 0 : rowIndex;
@@ -397,70 +391,19 @@ public class BoardController extends GenericSceneController implements Initializ
                                             boardTmpImage.setFitWidth(146);
                                             boardTmpImage.setFitHeight(100);
                                             boardTmpImage.setCursor(Cursor.HAND);
-                                            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                                                case BLUE-> {
-                                                    gridPane.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
-                                                }
-                                                case RED -> {
-                                                    gridPane2.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
 
-                                                }
-                                                case YELLOW -> {
-                                                    gridPane3.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
-                                                }
-                                                case GREEN -> {
-                                                    gridPane4.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
-                                                }
-                                            }
-                                            Player myPlayer = getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
-                                            List<Card> cardOnHand = myPlayer.getCardOnHand();
+                                            myGrid.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
 
                                             // add back card
+
+
                                             Image image = null;
-                                            switch (cardOnHand.get(cardOnHandIndex_toServer).getKingdom()) {
-                                                case Elements.ANIMALS:
-                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBackGold.jpg"));
-                                                    else
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/AnimalBack.jpg"));
-                                                    break;
-                                                case Elements.MUSHROOMS:
-                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBackGold.jpg"));
-                                                    else
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/MushroomBack.jpg"));
-                                                    break;
-                                                case Elements.INSECT:
-                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/InsectBackGold.jpg"));
-                                                    else
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/InsectBack.jpg"));
-                                                    break;
-                                                case Elements.VEGETAL:
-                                                    if (cardOnHand.get(cardOnHandIndex_toServer) instanceof GoldCard)
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBackGold.jpg"));
-                                                    else
-                                                        image = new Image(getClass().getResourceAsStream("/images/cards/VegetalBack.jpg"));
-                                                    break;
-                                            }
+                                            image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCardID(cardOnHand.get(cardOnHandIndex_toServer).getCode(),false))));
+
                                             boardTmpImageBack.setImage(image);
                                             boardTmpImageBack.setFitHeight(100);
                                             boardTmpImageBack.setFitWidth(146);
-                                            switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()){
-                                                case BLUE-> {
-                                                    gridPane.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
-                                                }
-                                                case RED -> {
-                                                    gridPane2.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
-
-                                                }
-                                                case YELLOW -> {
-                                                    gridPane3.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
-                                                }
-                                                case GREEN -> {
-                                                    gridPane4.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
-                                                }
-                                            }
+                                            myGrid.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
 
                                             // in base alla casella decido quale carta mostrare
                                             if (!setBack.isSelected()) {
@@ -511,25 +454,8 @@ public class BoardController extends GenericSceneController implements Initializ
                                                         cardOnHandIndex_toServer = null;
 
                                                         // rimnuovo le carte sul board
-                                                        switch(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID()) {
-                                                            case BLUE -> {
-                                                                gridPane.getChildren().remove(boardTmpImage);
-                                                                gridPane.getChildren().remove(boardTmpImageBack);
-                                                            }
-                                                            case RED -> {
-                                                                gridPane2.getChildren().remove(boardTmpImage);
-                                                                gridPane2.getChildren().remove(boardTmpImageBack);
-
-                                                            }
-                                                            case YELLOW -> {
-                                                                gridPane3.getChildren().remove(boardTmpImage);
-                                                                gridPane3.getChildren().remove(boardTmpImageBack);
-                                                            }
-                                                            case GREEN -> {
-                                                                gridPane4.getChildren().remove(boardTmpImage);
-                                                                gridPane4.getChildren().remove(boardTmpImageBack);
-                                                            }
-                                                        }
+                                                        myGrid.getChildren().remove(boardTmpImage);
+                                                        myGrid.getChildren().remove(boardTmpImageBack);
 
                                                         // inizializzo boardTmpImage
                                                         boardTmpImage = new ImageView();
