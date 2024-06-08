@@ -260,27 +260,36 @@ public class Board implements Serializable {
 	public void deleteCoveredByCorner(int x, int y,CornerPosition corner){
         switch (corner) {
             case UPLEFT -> {
-				if (isCardCoordinate( x-1, y+1) || ( !getCardInBoard(x-1,y+1).getIsFront() && !(getCardInBoard(x-1,y+1) instanceof InitialCard))){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNRIGHT);
-					addElement(element,-1);
+				if (isCardCoordinate( x-1, y+1) ){
+					if ((getCardInBoard(x-1,y+1) instanceof InitialCard) || (getCardInBoard(x-1,y+1).getIsFront())){
+						Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y+1)).getCorners().get(CornerPosition.DOWNRIGHT);
+						addElement(element,-1);
+					}
 				}
 			}
 			case UPRIGHT -> {
-				if (isCardCoordinate( x+1, y+1) || ( !getCardInBoard(x+1,y+1).getIsFront() && !(getCardInBoard(x+1,y+1) instanceof InitialCard))){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
-					addElement(element,-1);
+				if (isCardCoordinate( x+1, y+1)){
+					if ((getCardInBoard(x+1,y+1) instanceof InitialCard) || getCardInBoard(x+1,y+1).getIsFront()){
+						Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y+1)).getCorners().get(CornerPosition.DOWNLEFT);
+						addElement(element,-1);
+					}
 				}
 			}
 			case DOWNLEFT -> {
-				if (isCardCoordinate( x-1, y-1)|| ( !getCardInBoard(x-1,y-1).getIsFront() && !(getCardInBoard(x-1,y-1) instanceof InitialCard))){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
-					addElement(element,-1);
+				if (isCardCoordinate( x-1, y-1)){
+					if ((getCardInBoard(x-1,y-1) instanceof InitialCard) || getCardInBoard(x-1,y-1).getIsFront()){
+						Elements element=cardCoordinate.inverse().get(new Coordinate(x-1,y-1)).getCorners().get(CornerPosition.UPRIGHT);
+						addElement(element,-1);
+					}
 				}
 			}
 			default -> {
-				if (isCardCoordinate( x+1, y-1)|| ( !getCardInBoard(x+1,y-1).getIsFront() && !(getCardInBoard(x+1,y-1) instanceof InitialCard))){
-					Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
-					addElement(element,-1);
+				if (isCardCoordinate( x+1, y-1)){
+
+					if ((getCardInBoard(x+1,y-1) instanceof InitialCard) || getCardInBoard(x+1,y-1).getIsFront()){
+						Elements element=cardCoordinate.inverse().get(new Coordinate(x+1,y-1)).getCorners().get(CornerPosition.UPLEFT);
+						addElement(element,-1);
+					}
 				}
 			}
 		}
