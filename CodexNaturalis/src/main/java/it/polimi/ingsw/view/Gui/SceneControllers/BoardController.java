@@ -42,6 +42,8 @@ import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myMatch;
+import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
@@ -67,6 +69,10 @@ public class BoardController extends GenericSceneController implements Initializ
     private String chatDestination;
     private ArrayList<ImageView> decksImages = new ArrayList<>();
     private ArrayList<ImageView> cardsOnHandImages = new ArrayList<>();
+    private ArrayList<ImageView> backCardsOnHandImages_BLUE = new ArrayList<>();
+    private ArrayList<ImageView> backCardsOnHandImages_RED = new ArrayList<>();
+    private ArrayList<ImageView> backCardsOnHandImages_YELLOW= new ArrayList<>();
+    private ArrayList<ImageView> backCardsOnHandImages_GREEN = new ArrayList<>();
     //todo delete unuseful elements
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
     private ArrayList<ImageView> firstPlayerBoardImages= new ArrayList<>();
@@ -94,7 +100,8 @@ public class BoardController extends GenericSceneController implements Initializ
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
             firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack,
-            blue, red, yellow, green;
+            blue, red, yellow, green,firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
+            secondCardOnHand_RED,secondCardOnHand_YELLOW,secondCardOnHand_GREEN,thirdCardOnHand_BLUE,thirdCardOnHand_RED,thirdCardOnHand_YELLOW,thirdCardOnHand_GREEN;
     @FXML
     Label gameStatus;
     @FXML
@@ -161,6 +168,10 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
 
+    private void showBackCards(ArrayList<ImageView> imagesList, Player p){
+
+    }
+
     private void showCardOnHand(ArrayList<Card> cardOnHand) throws IOException {
         for (ImageView imageView : cardsOnHandImages){
             imageView.setVisible(false);
@@ -224,8 +235,7 @@ public class BoardController extends GenericSceneController implements Initializ
         if(b.getCardCoordinate()!=null && (numImagesOnBoard<b.getCardCoordinate().size())) {
             BiMap<Card, Coordinate> map = b.getCardCoordinate();
             int i = map.entrySet().size();
-            //todo this if is always true? they are the same array
-            if (b.getCardCoordinate().size() <= map.size() ) {
+            if (b.getCardCoordinate().size() <= map.size()) {
                 for (BiMap.Entry<Card, Coordinate> entry : map.entrySet()) {
                     Card card = entry.getKey();
                     Coordinate coo = entry.getValue();
@@ -234,7 +244,6 @@ public class BoardController extends GenericSceneController implements Initializ
                     int currentIndex = i;
                     Platform.runLater(() -> {
                         try {
-                            //todo why the image size
                             if ((b.getCardCoordinate().size()==2&& numImagesOnBoard== 0) ||currentIndex == 1 ) {
                                 switch (p.getPlayerID()){
                                     case BLUE:
@@ -396,8 +405,6 @@ public class BoardController extends GenericSceneController implements Initializ
                                             myGrid.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
 
                                             // add back card
-
-
                                             Image image = null;
                                             image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCardID(cardOnHand.get(cardOnHandIndex_toServer).getCode(),false))));
 
@@ -575,8 +582,23 @@ public class BoardController extends GenericSceneController implements Initializ
                 }
                 showDecks(goldDeck,resourceDeck);
                 showCardOnHand(cardOnHand);
-
-
+                for(Player p: getGuiApplication().getGui().getMyMatch().getPlayers()){
+                    if(!p.getNickname().equals(getGuiApplication().getGui().getUsername()))
+                        switch (p.getPlayerID()){
+                            case BLUE -> {
+                                showBackCards(backCardsOnHandImages_BLUE, p);
+                            }
+                            case RED -> {
+                                showBackCards(backCardsOnHandImages_RED, p);
+                            }
+                            case YELLOW -> {
+                                showBackCards(backCardsOnHandImages_YELLOW, p);
+                            }
+                            case GREEN -> {
+                                showBackCards(backCardsOnHandImages_GREEN,p);
+                            }
+                        }
+                }
                 if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
                     gameStatus.setText("WAITING OTHER PLAYERS");
                     if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
@@ -785,7 +807,35 @@ public class BoardController extends GenericSceneController implements Initializ
         cardsOnHandImages.add(firstCardOnHand);
         cardsOnHandImages.add(secondCardOnHand);
         cardsOnHandImages.add(thirdCardOnHand);
+        backCardsOnHandImages_BLUE.add(firstCardOnHand_BLUE);
+        backCardsOnHandImages_BLUE.add(secondCardOnHand_BLUE);
+        backCardsOnHandImages_BLUE.add(thirdCardOnHand_BLUE);
+        backCardsOnHandImages_RED.add(firstCardOnHand_RED);
+        backCardsOnHandImages_RED.add(secondCardOnHand_RED);
+        backCardsOnHandImages_RED.add(thirdCardOnHand_RED);
+        backCardsOnHandImages_YELLOW.add(firstCardOnHand_YELLOW);
+        backCardsOnHandImages_YELLOW.add(secondCardOnHand_YELLOW);
+        backCardsOnHandImages_YELLOW.add(thirdCardOnHand_YELLOW);
+        backCardsOnHandImages_GREEN.add(firstCardOnHand_GREEN);
+        backCardsOnHandImages_GREEN.add(secondCardOnHand_GREEN);
+        backCardsOnHandImages_GREEN.add(thirdCardOnHand_GREEN);
+        unvisibleBackCardsOnHand(backCardsOnHandImages_BLUE);
+        unvisibleBackCardsOnHand(backCardsOnHandImages_RED);
+        unvisibleBackCardsOnHand(backCardsOnHandImages_YELLOW);
+        unvisibleBackCardsOnHand(backCardsOnHandImages_GREEN);
 
+    }
+
+    private void visibleBackCardsOnHand(ArrayList <ImageView> arr){
+        for(ImageView im: arr){
+            im.setVisible(false);
+        }
+    }
+
+    private void unvisibleBackCardsOnHand(ArrayList <ImageView> arr){
+        for(ImageView im: arr){
+            im.setVisible(true);
+        }
     }
 
     private void disableCardOnHand(){
