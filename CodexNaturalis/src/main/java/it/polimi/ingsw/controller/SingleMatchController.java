@@ -75,9 +75,9 @@ public class SingleMatchController extends Thread{
                     else
                         currentPlayer.getCardOnHand().add(match.getAResourceCard(whichCard));
 
+                    ifLastTurn();
                     match.nextPlayer();
                     notifyAllListeners(new drawCardSuccess(match));
-                    ifLastTurn();
                     getListenerOf(match.getCurrentPlayer().nickname).update(new NowIsYourRoundMsg());
                 } else { //wrong deck index
                     getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
@@ -231,7 +231,7 @@ public class SingleMatchController extends Thread{
                 p.getBoard().getCardInBoard(0,0).setFront(((FrontOrBackMessage) msg).getFrontOrBack());
             }
         }
-        getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
+        notifyAllListeners(new ActionSuccessMsg(match));
     }
     public void setTargetCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {

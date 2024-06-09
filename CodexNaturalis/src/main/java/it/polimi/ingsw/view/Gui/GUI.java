@@ -28,7 +28,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
 public class GUI extends Thread implements Ui {
     private GUIApplication guiApplication;
@@ -130,7 +129,10 @@ public class GUI extends Thread implements Ui {
             }
             else if(msg instanceof  NowIsYourRoundMsg){
                 Platform.runLater(()->guiApplication.updateCurrentSceneModel(UPDATE.YOURROUND));
-
+            }else if(msg instanceof  ActionSuccessMsg) {
+                myMatch = ((ActionSuccessMsg) msg).getModel();
+                matchID = myMatch.getIdMatch();
+                Platform.runLater(() -> guiApplication.updateCurrentSceneModel(UPDATE.GENERAL));
             }
         }
         else if (msg instanceof ActionSuccessMsg) {

@@ -20,6 +20,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
 import javafx.scene.image.Image;
@@ -42,8 +43,6 @@ import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myMatch;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Tui.myPlayer;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
@@ -63,8 +62,8 @@ public class BoardController extends GenericSceneController implements Initializ
     @FXML
     public Text n_feather;
     @FXML
-    private Board myBoard;
-    public VBox chatVBox;
+    public VBox chatVBox, winVbox;
+
     private HashBiMap<PlayerColor, String> nickList;
     private String chatDestination;
     private ArrayList<ImageView> decksImages = new ArrayList<>();
@@ -75,10 +74,6 @@ public class BoardController extends GenericSceneController implements Initializ
     private ArrayList<ImageView> backCardsOnHandImages_GREEN = new ArrayList<>();
     //todo delete unuseful elements
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
-    private ArrayList<ImageView> firstPlayerBoardImages= new ArrayList<>();
-    private ArrayList<ImageView> secondPlayerBoardImages= new ArrayList<>();
-    private ArrayList<ImageView> thirdBoardImages= new ArrayList<>();
-    private ArrayList<ImageView> fourthPlayerBoardImages= new ArrayList<>();
     Boolean initialized =false;
     Boolean isClickedCardOnHand=false;
     Boolean isClickedBoard= false;
@@ -96,12 +91,15 @@ public class BoardController extends GenericSceneController implements Initializ
     Boolean isError_playCard= false, isError_getCard=false;
 
     private BiMap<PlayerColor,StackPane> paneMap;
+    private BiMap<PlayerColor,Board> playerBoards;
+    private BiMap<PlayerColor,GridPane> playerGrids;
+    private BiMap<PlayerColor,ImageView> playerColorMap;
     @FXML
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
             firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack,
             blue, red, yellow, green,firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
-            secondCardOnHand_RED,secondCardOnHand_YELLOW,secondCardOnHand_GREEN,thirdCardOnHand_BLUE,thirdCardOnHand_RED,thirdCardOnHand_YELLOW,thirdCardOnHand_GREEN;
+            secondCardOnHand_RED,secondCardOnHand_YELLOW,secondCardOnHand_GREEN,thirdCardOnHand_BLUE,thirdCardOnHand_RED,thirdCardOnHand_YELLOW,thirdCardOnHand_GREEN,biggerImg;
     @FXML
     Label gameStatus;
     @FXML
@@ -113,14 +111,14 @@ public class BoardController extends GenericSceneController implements Initializ
     @FXML
     ChoiceBox<String> chatChoice;
     @FXML
-    TextField chatTextField;
+    TextField chatTextField, nRed, nBlue, nGreen, nYellow;
     @FXML
     TextField rCard1, rCard2, gCard1, gCard2, rDeckText, gDeckText, cTarget1, cTarget2, pTarget;
     @FXML
-    Text p1nick,p2nick,p3nick,p4nick,p1nick1,p2nick1,p3nick1,p4nick1;
+    Text p1nick,p2nick,p3nick,p4nick,p1nick1,p2nick1,p3nick1,p4nick1, playerID, winText;
 
     @FXML
-    StackPane ptPane,loadPane, bluePane,redPane, yellowPane, greenPane;
+    StackPane ptPane,loadPane, bluePane,redPane, yellowPane, greenPane,bigImgPane, winPane;
     @FXML
     ScrollPane scrollPane1, scrollPane2, scrollPane3, scrollPane4;
     @FXML
@@ -225,54 +223,37 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
     private void showBoard(Board b, Player p) throws IOException {
-        int numImagesOnBoard = switch (p.getPlayerID()) {
-            //todo array of images never updated
-            case BLUE -> firstPlayerBoardImages.size();
-            case RED -> secondPlayerBoardImages.size();
-            case YELLOW -> thirdBoardImages.size();
-            case GREEN -> fourthPlayerBoardImages.size();
-        };
-        if(b.getCardCoordinate()!=null && (numImagesOnBoard<b.getCardCoordinate().size())) {
-            BiMap<Card, Coordinate> map = b.getCardCoordinate();
-            int i = map.entrySet().size();
-            if (b.getCardCoordinate().size() <= map.size()) {
-                for (BiMap.Entry<Card, Coordinate> entry : map.entrySet()) {
-                    Card card = entry.getKey();
-                    Coordinate coo = entry.getValue();
-                    System.out.println("codice di carta messa sul board " + card.getCode() +
-                            "le sue coordinate sono x:" + (coo.getX() + 40) + "y:" + (-coo.getY() + 40));
-                    int currentIndex = i;
-                    Platform.runLater(() -> {
+        Board targetBoard = playerBoards.get(p.getPlayerID());
+        GridPane targetGrid = playerGrids.get(p.getPlayerID());
+        BiMap<Card, Coordinate> map= b.getCardCoordinate();
+
+        if (map!=null && (!playerBoards.containsKey(p.getPlayerID()) || playerBoards.get(p.getPlayerID()).getCardCoordinate().size()<=map.size())){
+
+            for(BiMap.Entry<Card, Coordinate> entry: map.entrySet()){
+                Card card = entry.getKey();
+                Coordinate coo= entry.getValue();
+
+                if (!playerBoards.containsKey(p.getPlayerID()) || !playerBoards.get(p.getPlayerID()).isCardCoordinate(coo.getX(), coo.getY())){
+
+                    System.out.println("codice di carta messa sul board di " + p.nickname+" " +card.getCode()+
+                            "le sue coordinate sono x: "+(coo.getX()+40)+" y: "+(-coo.getY()+40));
+
+                    Platform.runLater(()-> {
                         try {
-                            if ((b.getCardCoordinate().size()==2&& numImagesOnBoard== 0) ||currentIndex == 1 ) {
-                                switch (p.getPlayerID()){
-                                    case BLUE:
-                                        gridPane.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
-                                        break;
-                                    case RED :
-                                        gridPane2.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
-                                        break;
-                                    case YELLOW:
-                                        gridPane3.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
-                                        break;
-                                    case GREEN:
-                                        gridPane4.add(createImageView(card, p), coo.getX() + 40, (-coo.getY() + 40));
-                                        break;
-                                }
-                            }
+                            targetGrid.add(createImageView(card), coo.getX()+40, (-coo.getY()+40));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     });
-                    i--;
                 }
-
             }
+            playerBoards.put(p.getPlayerID(),b);
+
         }
 
     }
 //TODO animal back gold wrong
-    private ImageView createImageView(Card card,Player p) throws IOException {
+    private ImageView createImageView(Card card) throws IOException {
         Image image = null;
         ImageView imageView= new ImageView();
         if(card.getIsFront())
@@ -296,22 +277,48 @@ public class BoardController extends GenericSceneController implements Initializ
                 showNewMessage();
             }
             case LASTROUND -> {
-                gameStatus.setText("THIS IS THE LAST ROUND, COME ON, GO FOR THE VICTORY");
-                gameStatus.setTextFill(Color.WHITE);
+                showChatMessage(new ServerChatMessage(new ClientChatMessage(0,"Server",true,"","THIS IS THE LAST ROUND, COME ON, GO FOR THE VICTORY")));
             }
             case ENDMESSAGE -> {
                 StringBuilder winner = new StringBuilder();
+                // disabilito gioco carta
+                myGrid.setDisable(true);
+
+                playACard.setDisable(true);
+                setBack.setDisable(true);
+                disableCardOnHand();
+
+                // disabilito pesca carta
+                disableDecks();
+                getResourceCardIndex_toServer=null;
+                getGoldCardIndex_toServer=null;
+                getACard.setDisable(true);
                 for(Player p: model.getWinners()){
                     winner.append(p.getNickname());
                     winner.append(" ");
+                    Text wint = new Text(p.nickname);
+                    wint.setStyle(winText.getStyle());
+                    wint.setFont(winText.getFont());
+                    wint.setFill(winText.getFill());
+                    winVbox.getChildren().add(wint);
                 }
+                winVbox.getChildren().remove(winText);
+                //A richiesta di Stefano Hong
+                Text wint = new Text("Loser is JO77");
+                wint.setStyle(winText.getStyle());
+                wint.setFont(winText.getFont());
+                wint.setFill(winText.getFill());
+                winVbox.getChildren().add(wint);
+
                 gameStatus.setText("WOWWW THE VICTORY BELONGS TO "+ winner);
                 gameStatus.setTextFill(Color.WHITE);
+                winPane.setVisible(true);
             }
 
             case YOURROUND -> {
-                gameStatus.setText("IT'S YOUR ROUND   PLAY AND DRAW CARD WITH CAUTION");
+                gameStatus.setText("IT'S YOUR ROUND PLAY AND DRAW CARD WITH CAUTION");
                 gameStatus.setTextFill(Color.WHITE);
+                lightGold(cardOnHandBackground);
             }
             default -> {
 
@@ -330,7 +337,7 @@ public class BoardController extends GenericSceneController implements Initializ
                 if(!initialized) {
                     switch(myPlayer.getPlayerID()){
                         case BLUE-> {
-                            myGrid =gridPane;
+                           myGrid =gridPane;
                         }
                         case RED -> {
                             myGrid =gridPane2;
@@ -348,6 +355,7 @@ public class BoardController extends GenericSceneController implements Initializ
                     setUpBoard(commonTarget, targetCard);
                     gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                     gameStatus.setTextFill(Color.WHITE);
+                    lightGold(cardOnHandBackground);
                         for (int i = 0; i < 82; i++)
                             for (int j = 0; j < 82; j++) {
                                 if (((i + j) % 2 == 0) && !(i == 40 && j == 40)) {
@@ -406,6 +414,8 @@ public class BoardController extends GenericSceneController implements Initializ
 
                                             // add back card
                                             Image image = null;
+                                            Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                            ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
                                             image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCardID(cardOnHand.get(cardOnHandIndex_toServer).getCode(),false))));
 
                                             boardTmpImageBack.setImage(image);
@@ -482,6 +492,9 @@ public class BoardController extends GenericSceneController implements Initializ
 
                     initializeChatChoice(model.getPlayers());
                     initPtPane();
+                    playerID.setText(myPlayer.nickname);
+                    playerID.setVisible(true);
+
                     if (!getGuiApplication().getGui().getChat().isEmpty()){
                         showAllChat();
                     }
@@ -601,6 +614,7 @@ public class BoardController extends GenericSceneController implements Initializ
                 }
                 if(!model.getCurrentPlayer().getNickname().equals(getGuiApplication().getGui().getUsername())){
                     gameStatus.setText("WAITING OTHER PLAYERS");
+                    disableAllGoldLights();
                     if(!isError_getCard&&!tooggleMain&&initialized&&isClickedGetACard){
                         thirdCardOnHand.setVisible(true);
                         tooggleMain=true;
@@ -631,6 +645,9 @@ public class BoardController extends GenericSceneController implements Initializ
                     ableCardOnHand();
                     if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
                         gameStatus.setText("CHOOSE A CARD ON DECKS");
+                        disableAllGoldLights();
+                        lightGold(deckBackground);
+
 
                         cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
                         cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
@@ -678,8 +695,33 @@ public class BoardController extends GenericSceneController implements Initializ
                 boardTmpImage= new ImageView();
                 setBack.setDisable(true);
                 updatePt();
+                lightCurrentPlayer(model);
             }
         }
+    }
+
+    private void disableAllGoldLights() {
+        deckBackground.setEffect(null);
+        cardOnHandBackground.setEffect(null);
+    }
+
+    private void lightGold(ImageView imageView) {
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.rgb(255, 215, 0, 0.75));
+        dropShadow.setRadius(10);
+        dropShadow.setSpread(0.5);
+        imageView.setEffect(dropShadow);
+    }
+
+    private void lightCurrentPlayer(ViewModel model) {
+        for (ImageView image : playerColorMap.values()){
+            image.setEffect(null);
+        }
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setColor(Color.rgb(255, 215, 0, 0.75));
+        dropShadow.setRadius(10);
+        dropShadow.setSpread(0.5);
+        playerColorMap.get(model.getCurrentPlayer().getPlayerID()).setEffect(dropShadow);
     }
 
     private void initPtPane() {
@@ -688,6 +730,7 @@ public class BoardController extends GenericSceneController implements Initializ
         paneMap.put(PlayerColor.BLUE,bluePane);
         paneMap.put(PlayerColor.GREEN,greenPane);
         paneMap.put(PlayerColor.YELLOW,yellowPane);
+        playerColorMap =HashBiMap.create();
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
         for (Player p : players){
             PlayerColor playerColor = p.getPlayerID();
@@ -695,19 +738,31 @@ public class BoardController extends GenericSceneController implements Initializ
             switch (playerColor){
                 case RED -> {
                     p2nick.setText(nick);
+                    nRed.setText(nick);
+                    initColorEvent(red,nRed);
+                    playerColorMap.put(PlayerColor.RED,red);
                     p2nick.setVisible(true);
                 }
                 case GREEN -> {
                     p4nick.setText(nick);
+                    initColorEvent(green,nGreen);
+                    nGreen.setText(nick);
                     p4nick.setVisible(true);
+                    playerColorMap.put(PlayerColor.GREEN,green);
                 }
                 case BLUE -> {
+                    initColorEvent(blue,nBlue);
                     p1nick.setText(nick);
+                    nBlue.setText(nick);
                     p1nick.setVisible(true);
+                    playerColorMap.put(PlayerColor.BLUE,blue);
                 }
                 default -> {
+                    initColorEvent(yellow,nYellow);
+                    nYellow.setText(nick);
                     p3nick.setText(nick);
                     p3nick.setVisible(true);
+                    playerColorMap.put(PlayerColor.YELLOW,yellow);
                 }
             }
         }
@@ -949,8 +1004,12 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
     public void openPt(ActionEvent event) {
-        ptPane.setVisible(true);
-        ptPane.setDisable(false);
+        if(ptPane.isDisable()){
+            ptPane.setVisible(true);
+            ptPane.setDisable(false);
+        }else{
+            closePt(event);
+        }
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -964,37 +1023,26 @@ public class BoardController extends GenericSceneController implements Initializ
                 }
             }
         });
+        playerBoards = HashBiMap.create();
 
-        myBoard =null;
+        playerGrids = HashBiMap.create();
+        playerGrids.put(PlayerColor.BLUE, gridPane);
+        playerGrids.put(PlayerColor.RED, gridPane2);
+        playerGrids.put(PlayerColor.YELLOW, gridPane3);
+        playerGrids.put(PlayerColor.GREEN, gridPane4);
 
-        firstResourceCard.setOnMouseEntered(event -> rCard2.setVisible(true));
-        firstResourceCard.setOnMouseExited(event -> rCard2.setVisible(false));
+        initDrawAreaEvent(firstResourceCard, rCard2);
+        initDrawAreaEvent(secondResourceCard, rCard1);
+        initDrawAreaEvent(kingdomResourceDeck, rDeckText);
 
+        initDrawAreaEvent(firstGoldCard, gCard2);
+        initDrawAreaEvent(secondGoldCard, gCard1);
+        initDrawAreaEvent(kingdomGoldDeck, gDeckText);
 
-        secondResourceCard.setOnMouseEntered(event -> rCard1.setVisible(true));
-        secondResourceCard.setOnMouseExited(event -> rCard1.setVisible(false));
+        initDrawAreaEvent(firstTargetCard, cTarget2);
+        initDrawAreaEvent(secondTargetCard, cTarget1);
+        initDrawAreaEvent( backTargetCard, pTarget);
 
-        kingdomResourceDeck.setOnMouseEntered(event -> rDeckText.setVisible(true));
-        kingdomResourceDeck.setOnMouseExited(event -> rDeckText.setVisible(false));
-
-        firstGoldCard.setOnMouseEntered(event -> gCard2.setVisible(true));
-        firstGoldCard.setOnMouseExited(event -> gCard2.setVisible(false));
-
-        secondGoldCard.setOnMouseEntered(event -> gCard1.setVisible(true));
-        secondGoldCard.setOnMouseExited(event -> gCard1.setVisible(false));
-
-        kingdomGoldDeck.setOnMouseEntered(event -> gDeckText.setVisible(true));
-        kingdomGoldDeck.setOnMouseExited(event -> gDeckText.setVisible(false));
-
-
-        firstTargetCard.setOnMouseEntered(event -> cTarget2.setVisible(true));
-        firstTargetCard.setOnMouseExited(event -> cTarget2.setVisible(false));
-
-        secondTargetCard.setOnMouseEntered(event -> cTarget1.setVisible(true));
-        secondTargetCard.setOnMouseExited(event -> cTarget1.setVisible(false));
-
-        backTargetCard.setOnMouseEntered(event -> pTarget.setVisible(true));
-        backTargetCard.setOnMouseExited(event -> pTarget.setVisible(false));
 
         firstCardOnHand.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -1079,6 +1127,7 @@ public class BoardController extends GenericSceneController implements Initializ
             }
 
         });
+
         firstCardOnHand.setCursor(Cursor.HAND);
         firstCardOnHand.setEffect(null);
         secondCardOnHand.setCursor(Cursor.HAND);
@@ -1161,31 +1210,27 @@ public class BoardController extends GenericSceneController implements Initializ
             }
 
         });
-        secondGoldCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton() == MouseButton.PRIMARY) {
-                    if(toggleG2) {
-                        getACard.setDisable(false);
-                        isClickedDeck = true;
-                        getGoldCardIndex_toServer = 1;
-                        disableDecksEXCEPTone(secondGoldCard);
-                        light(secondGoldCard);
-                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
-                        gameStatus.setTextFill(Color.WHITE);
-                    }else{
-                        getACard.setDisable(true);
-                        isClickedDeck=false;
-                        getGoldCardIndex_toServer= null;
-                        ableDecks();
-                        secondGoldCard.setEffect(null);
-                        gameStatus.setText("CHOOSE A CARD FROM DECKS");
-                        gameStatus.setTextFill(Color.WHITE);
-                    }
-                    toggleG2=!toggleG2;
+        secondGoldCard.setOnMouseClicked(event -> {
+            if (event.getButton() == MouseButton.PRIMARY) {
+                if(toggleG2) {
+                    getACard.setDisable(false);
+                    isClickedDeck = true;
+                    getGoldCardIndex_toServer = 1;
+                    disableDecksEXCEPTone(secondGoldCard);
+                    light(secondGoldCard);
+                    gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                    gameStatus.setTextFill(Color.WHITE);
+                }else{
+                    getACard.setDisable(true);
+                    isClickedDeck=false;
+                    getGoldCardIndex_toServer= null;
+                    ableDecks();
+                    secondGoldCard.setEffect(null);
+                    gameStatus.setText("CHOOSE A CARD FROM DECKS");
+                    gameStatus.setTextFill(Color.WHITE);
                 }
+                toggleG2=!toggleG2;
             }
-
         });
         secondResourceCard.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -1254,7 +1299,36 @@ public class BoardController extends GenericSceneController implements Initializ
         kingdomResourceDeck.setEffect(null);
     }
 
+    private void initDrawAreaEvent(ImageView firstTargetCard, TextField cTarget2) {
+        firstTargetCard.setOnMouseEntered(event -> {
+            cTarget2.setVisible(true);
+            enableBigImg(firstTargetCard.getImage());
+        });
+        firstTargetCard.setOnMouseExited(event -> {
+            cTarget2.setVisible(false);
+            bigImgPane.setVisible(false);
+        });
+    }
+    private void initColorEvent(ImageView color, TextField nick) {
+       color.setOnMouseEntered(event -> {
+            nick.setVisible(true);
+        });
+        color.setOnMouseExited(event -> {
+            nick.setVisible(false);
+        });
+    }
 
+
+    private void enableBigImg(Image image) {
+        biggerImg.setImage(image);
+        bigImgPane.setVisible(true);
+    }
+
+    @FXML
+    public void exitWin(ActionEvent event) {
+        winPane.setVisible(false);
+        winPane.setDisable(true);
+    }
 }
 
 
