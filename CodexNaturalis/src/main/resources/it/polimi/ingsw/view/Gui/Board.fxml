@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -164,18 +165,6 @@
             <Font name="Arial Bold" size="13.0" />
          </font>
       </TextField>
-      <StackPane fx:id="loadPane" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="285.0">
-         <children>
-            <ImageView fitHeight="292.0" fitWidth="743.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
-               <image>
-                  <Image url="@../../../../../images/view/loadingTxt.png" />
-               </image>
-               <StackPane.margin>
-                  <Insets top="20.0" />
-               </StackPane.margin>
-            </ImageView>
-         </children>
-      </StackPane>
       <ImageView fx:id="blue" fitHeight="60.0" fitWidth="50.0" layoutX="1212.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="18.0">
          <image>
             <Image url="@../../../../../images/view/blue.png" />
@@ -978,6 +967,115 @@
       <ImageView fx:id="thirdCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="28.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="1100.0" />
         <ImageView fx:id="secondCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="188.0" layoutY="593.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="940.0" />
         <ImageView fx:id="firstCardOnHand" fitHeight="100.0" fitWidth="166.0" layoutX="349.0" layoutY="594.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="26.0" AnchorPane.rightAnchor="780.0" />
+      <StackPane fx:id="loadPane" disable="true" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" AnchorPane.bottomAnchor="285.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="285.0">
+         <children>
+            <ImageView fitHeight="292.0" fitWidth="743.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/loadingTxt.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="20.0" />
+               </StackPane.margin>
+            </ImageView>
+         </children>
+      </StackPane>
+      <Text fx:id="playerID" fill="WHITE" layoutY="-36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="PlayerID" textAlignment="CENTER" visible="false" wrappingWidth="172.90691566467285" AnchorPane.leftAnchor="1100.0" AnchorPane.topAnchor="660.0">
+         <font>
+            <Font name="Arial Bold" size="26.0" />
+         </font>
+      </Text>
+      <StackPane disable="true" layoutY="66.0" prefHeight="261.0" prefWidth="200.0" AnchorPane.leftAnchor="1000.0" AnchorPane.topAnchor="66.0">
+         <children>
+            <TextField fx:id="nBlue" alignment="CENTER" editable="false" opacity="0.7" prefHeight="27.0" prefWidth="195.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="player1" visible="false" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets />
+               </StackPane.margin>
+            </TextField>
+            <TextField fx:id="nRed" alignment="CENTER" editable="false" opacity="0.7" prefHeight="27.0" prefWidth="195.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="player1" visible="false" StackPane.alignment="TOP_CENTER">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="70.0" />
+               </StackPane.margin>
+            </TextField>
+            <TextField fx:id="nGreen" alignment="CENTER" editable="false" opacity="0.7" prefHeight="27.0" prefWidth="195.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="player1" visible="false" StackPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="200.0" />
+               </StackPane.margin>
+            </TextField>
+            <TextField fx:id="nYellow" alignment="CENTER" editable="false" opacity="0.7" prefHeight="27.0" prefWidth="195.0" style="-fx-background-color: white; -fx-background-radius: 15px;" text="player1" visible="false" StackPane.alignment="CENTER">
+               <font>
+                  <Font name="Arial Bold" size="13.0" />
+               </font>
+               <StackPane.margin>
+                  <Insets top="60.0" />
+               </StackPane.margin>
+            </TextField>
+         </children>
+      </StackPane>
+      <StackPane fx:id="bigImgPane" disable="true" layoutX="10.0" layoutY="17.0" prefHeight="261.0" prefWidth="348.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" visible="false" AnchorPane.bottomAnchor="441.3333333333333" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="582.0" AnchorPane.topAnchor="17.0">
+         <children>
+            <ImageView fx:id="biggerImg" fitHeight="199.0" fitWidth="289.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../images/cards/102.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </StackPane>
+      <StackPane fx:id="winPane" prefHeight="699.0" prefWidth="1252.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);" visible="false" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+            <Button fx:id="ptEsc1" mnemonicParsing="false" onAction="#exitWin" StackPane.alignment="TOP_RIGHT">
+               <graphic>
+                  <ImageView fitHeight="31.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../../images/view/esc.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <StackPane.margin>
+                  <Insets right="20.0" top="20.0" />
+               </StackPane.margin>
+            </Button>
+            <ImageView fitHeight="150.0" fitWidth="964.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="TOP_CENTER">
+               <image>
+                  <Image url="@../../../../../images/view/victory.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets top="30.0" />
+               </StackPane.margin>
+            </ImageView>
+            <ImageView fitHeight="396.0" fitWidth="453.0" pickOnBounds="true" preserveRatio="true" StackPane.alignment="CENTER_LEFT">
+               <image>
+                  <Image url="@../../../../../images/view/trophy.png" />
+               </image>
+               <StackPane.margin>
+                  <Insets left="100.0" top="100.0" />
+               </StackPane.margin>
+            </ImageView>
+            <VBox fx:id="winVbox" prefHeight="578.0" prefWidth="1057.0" StackPane.alignment="TOP_LEFT">
+               <children>
+                  <Text fx:id="winText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow(gaussian, rgba(255, 215, 0, 0.75), 10, 0.5, 0, 0);" text="Winners are....." wrappingWidth="577.1291213035583">
+                     <font>
+                        <Font name="Arial Bold" size="76.0" />
+                     </font>
+                     <effect>
+                        <Glow level="0.53" />
+                     </effect>
+                  </Text>
+               </children>
+               <StackPane.margin>
+                  <Insets left="500.0" top="250.0" />
+               </StackPane.margin>
+            </VBox>
+         </children>
+      </StackPane>
       <StackPane fx:id="ptPane" disable="true" prefHeight="620.0" prefWidth="685.0" style="-fx-background-color: rgba(242,242,242,1); -fx-background-radius: 45; -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.75), 10, 0.5, 0, 0);;" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="400.0" AnchorPane.topAnchor="50.0">
          <children>
             <HBox prefHeight="595.0" prefWidth="1154.0">

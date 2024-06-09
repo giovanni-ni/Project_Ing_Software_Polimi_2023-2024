@@ -117,6 +117,7 @@ public class MenuController extends GenericSceneController{
         
     }
 
+
     public void setCreateGame(boolean createGame) {
         isCreateGame = createGame;
     }
