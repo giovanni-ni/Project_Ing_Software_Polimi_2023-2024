@@ -26,21 +26,24 @@
     -fx-background-color: transparent;
 }
 
-/*.scroll-pane .scroll-bar:horizontal .track,
+.scroll-pane .scroll-bar{
+    -fx-background-color: transparent;
+}
+.scroll-pane .scroll-bar:horizontal .track,
 .scroll-pane .scroll-bar:vertical .track {
-    -fx-background-color: pink;
+    -fx-background-color: transparent;
 }
 
 .scroll-pane .scroll-bar:horizontal .thumb,
 .scroll-pane .scroll-bar:vertical .thumb {
-    -fx-background-color: red;
+    -fx-background-color: white;
 }
 
 .scroll-pane .scroll-bar .increment-button,
 .scroll-pane .scroll-bar .decrement-button {
-    -fx-background-color: blue;
+    -fx-background-color: transparent;
 
-}*/
+}
 
 .chatPane{
     -fx-background-color:rgba(255,255,255,0.2);
@@ -51,13 +54,16 @@
 }
 .chatPane .scroll-bar:horizontal .track,
 .chatPane .scroll-bar:vertical .track {
-    -fx-background-color:rgba(0,0,0,0.5);
+    -fx-background-color:transparent;
 
+}
+.chatPane .scroll-bar{
+    -fx-background-color: transparent;
 }
 
 .chatPane .scroll-bar:horizontal .thumb,
 .chatPane .scroll-bar:vertical .thumb {
-    -fx-background-color:rgba(255,255,255,0.2);
+    -fx-background-color:white;
 }
 
 .chatPane .scroll-bar .increment-button,

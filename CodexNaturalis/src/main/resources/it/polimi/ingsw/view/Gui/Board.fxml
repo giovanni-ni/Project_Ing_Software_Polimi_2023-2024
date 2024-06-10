@@ -95,7 +95,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="289.0">
                <children>
-                  <ScrollPane prefHeight="278.0" prefWidth="332.0" styleClass="chatPane">
+                  <ScrollPane pannable="true" prefHeight="278.0" prefWidth="332.0" styleClass="chatPane">
                      <content>
                         <VBox fx:id="chatVBox" prefHeight="213.0" prefWidth="295.0">
                            <children>
@@ -186,7 +186,7 @@
          </image>
       </ImageView>
       <Label layoutX="961.0" layoutY="603.0" prefHeight="100.0" prefWidth="195.0" />
-      <ScrollPane fx:id="scrollPane1" hvalue="0.51" layoutX="349.0" layoutY="55.0" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
+      <ScrollPane fx:id="scrollPane1" hvalue="0.51" layoutX="349.0" layoutY="55.0" pannable="true" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
          <content>
             <GridPane fx:id="gridPane" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
               <columnConstraints>
@@ -360,7 +360,7 @@
             </GridPane>
          </content>
       </ScrollPane>
-<ScrollPane fx:id="scrollPane2" hvalue="0.51" layoutX="359.0" layoutY="65.0" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
+<ScrollPane fx:id="scrollPane2" hvalue="0.51" layoutX="359.0" layoutY="65.0" pannable="true" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
 <content>
     <GridPane fx:id="gridPane2" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
         <columnConstraints>
@@ -534,7 +534,7 @@
     </GridPane>
 </content>
 </ScrollPane>
-        <ScrollPane fx:id="scrollPane3" hvalue="0.51" layoutX="349.0" layoutY="55.0" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
+        <ScrollPane fx:id="scrollPane3" hvalue="0.51" layoutX="349.0" layoutY="55.0" pannable="true" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
             <content>
                 <GridPane fx:id="gridPane3" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
                     <columnConstraints>
@@ -708,7 +708,7 @@
                 </GridPane>
             </content>
         </ScrollPane>
-        <ScrollPane fx:id="scrollPane4" hvalue="0.51" layoutX="349.0" layoutY="55.0" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
+        <ScrollPane fx:id="scrollPane4" hvalue="0.51" layoutX="349.0" layoutY="55.0" pannable="true" prefHeight="510.0" prefWidth="852.0" style="-fx-background-color: transparent; -fx-background: transparent;" vvalue="0.5" AnchorPane.leftAnchor="349.0" AnchorPane.topAnchor="55.0">
             <content>
                 <GridPane fx:id="gridPane4" alignment="CENTER" gridLinesVisible="true" prefHeight="4800.0" prefWidth="9000.0" style="-fx-background: transparent; -fx-background-color: transparent;">
                     <columnConstraints>
