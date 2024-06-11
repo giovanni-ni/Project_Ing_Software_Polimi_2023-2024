@@ -41,8 +41,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.*;
 
-import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
-import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
+import static it.polimi.ingsw.utils.pathSearch.*;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
@@ -80,14 +79,13 @@ public class BoardController extends GenericSceneController implements Initializ
     Boolean isClickedPlayACard= false;
     Boolean isClickedDeck =false;
     Boolean isClickedGetACard= false;
-    Boolean toggle1= true, toggle2=true, toggle3= true, toggleR1=true , toggleG1=true , toggleR2= true, toggleG2 =true,toggleR3= true, toggleG3 = true, tooggleMain= true;
+    Boolean toggle1= true, toggle2=true, toggle3= true, toggleR1=true , toggleG1=true , toggleR2= true, toggleG2 =true, toggleG3 = true, tooggleMain= true;
     Boolean isFront_toServer;
     Integer cardOnHandIndex_toServer=null,
     getResourceCardIndex_toServer=null,
     getGoldCardIndex_toServer=null,
     putACardX_toServer=null,
-    putACardY_toServer=null,
-    code_toServer=null;
+    putACardY_toServer=null;
     Boolean isError_playCard= false, isError_getCard=false;
 
     private BiMap<PlayerColor,StackPane> paneMap;
@@ -128,7 +126,6 @@ public class BoardController extends GenericSceneController implements Initializ
    public void playCardButton_toServer(ActionEvent e) throws RemoteException {
         isClickedPlayACard=true;
         String nickname=getGuiApplication().getGui().getUsername();
-        code_toServer=searchCode.get(cardsOnHandImages.get(cardOnHandIndex_toServer)); // todo
         System.out.println("Print cardOnHand:"+ cardOnHandIndex_toServer+"is Front:"+ isFront_toServer);
         Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
         for(Card c: myPlayer.getCardOnHand()){
@@ -166,8 +163,18 @@ public class BoardController extends GenericSceneController implements Initializ
     }
 
 
-    private void showBackCards(ArrayList<ImageView> imagesList, Player p){
-
+    private void showBackCards(ArrayList<ImageView> imagesList, Player p)throws IOException{
+        ArrayList<Card> backCardOnHand= (ArrayList<Card>) p.getCardOnHand();
+        for(int i =0 ;i<p.getCardOnHand().size();i++){
+            ImageView imageView;
+            imageView=imagesList.get(i);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByBackCard(backCardOnHand.get(i),false)))));
+            imageView.setVisible(false);
+        }
+        //if a player played a card, I do not show his thirdCardOnHand
+        if(backCardOnHand.size()==2){
+            imagesList.get(2).setImage(null);
+        }
     }
 
     private void showCardOnHand(ArrayList<Card> cardOnHand) throws IOException {
@@ -246,6 +253,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         }
                     });
                 }
+
             }
             playerBoards.put(p.getPlayerID(),b);
 
@@ -526,6 +534,17 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(false);
                             scrollPane3.setVisible(false);
                             scrollPane4.setVisible(false);
+                            // my ID is blue, show myFrontCardOnHand
+                            if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.BLUE)){
+                                visibleCardsOnHand(cardsOnHandImages);
+                            }else { //my id is not  blue show back cards
+                                visibleCardsOnHand(backCardsOnHandImages_BLUE);
+                                disableVisibilityCardOnHand(cardsOnHandImages);
+                            }
+
+                            disableVisibilityCardOnHand(backCardsOnHandImages_RED);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_YELLOW);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
                         }
 
                     });
@@ -536,7 +555,16 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(true);
                             scrollPane3.setVisible(false);
                             scrollPane4.setVisible(false);
-
+                            // my ID is red, show myFrontCardOnHand
+                            if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.RED)){
+                                visibleCardsOnHand(cardsOnHandImages);
+                            }else { //my id is not  red show back cards
+                                visibleCardsOnHand(backCardsOnHandImages_RED);
+                                disableVisibilityCardOnHand(cardsOnHandImages);
+                            }
+                            disableVisibilityCardOnHand(backCardsOnHandImages_BLUE);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_YELLOW);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
                         }
                     });
                     for(Player p : getGuiApplication().getGui().getMyMatch().getPlayers()){
@@ -549,6 +577,17 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(false);
                             scrollPane3.setVisible(true);
                             scrollPane4.setVisible(false);
+                            // my ID is yellow, show myFrontCardOnHand
+                            if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.YELLOW)){
+                                visibleCardsOnHand(cardsOnHandImages);
+                            }else { //my id is not  red ,show back cards
+                                visibleCardsOnHand(backCardsOnHandImages_YELLOW);
+                                disableVisibilityCardOnHand(cardsOnHandImages);
+
+                            }
+                            disableVisibilityCardOnHand(backCardsOnHandImages_BLUE);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_RED);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
                         }
                     });
 
@@ -559,6 +598,17 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(false);
                             scrollPane3.setVisible(false);
                             scrollPane4.setVisible(true);
+                            if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.GREEN)){
+                                visibleCardsOnHand(cardsOnHandImages);
+                            }else { //my id is not  red show back cards
+                                visibleCardsOnHand(backCardsOnHandImages_GREEN);
+                                disableVisibilityCardOnHand(cardsOnHandImages);
+
+                            }
+
+                            disableVisibilityCardOnHand(backCardsOnHandImages_BLUE);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_RED);
+                            disableVisibilityCardOnHand(backCardsOnHandImages_YELLOW);
                         }
                     });
 
@@ -651,7 +701,7 @@ public class BoardController extends GenericSceneController implements Initializ
 
                         cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(true);
                         cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
-                        thirdCardOnHand.setVisible(false);
+                        thirdCardOnHand.setImage(null);
 
                         switch (cardOnHandIndex_toServer){
                             case 0:
@@ -874,22 +924,22 @@ public class BoardController extends GenericSceneController implements Initializ
         backCardsOnHandImages_GREEN.add(firstCardOnHand_GREEN);
         backCardsOnHandImages_GREEN.add(secondCardOnHand_GREEN);
         backCardsOnHandImages_GREEN.add(thirdCardOnHand_GREEN);
-        unvisibleBackCardsOnHand(backCardsOnHandImages_BLUE);
-        unvisibleBackCardsOnHand(backCardsOnHandImages_RED);
-        unvisibleBackCardsOnHand(backCardsOnHandImages_YELLOW);
-        unvisibleBackCardsOnHand(backCardsOnHandImages_GREEN);
+        disableVisibilityCardOnHand(backCardsOnHandImages_BLUE);
+        disableVisibilityCardOnHand(backCardsOnHandImages_RED);
+        disableVisibilityCardOnHand(backCardsOnHandImages_YELLOW);
+        disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
 
     }
 
-    private void visibleBackCardsOnHand(ArrayList <ImageView> arr){
+    private void visibleCardsOnHand(ArrayList <ImageView> arr){
         for(ImageView im: arr){
-            im.setVisible(false);
+            im.setVisible(true);
         }
     }
 
-    private void unvisibleBackCardsOnHand(ArrayList <ImageView> arr){
+    private void disableVisibilityCardOnHand(ArrayList <ImageView> arr){
         for(ImageView im: arr){
-            im.setVisible(true);
+            im.setVisible(false);
         }
     }
 

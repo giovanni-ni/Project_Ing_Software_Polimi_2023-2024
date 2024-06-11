@@ -81,6 +81,10 @@ public class GUI extends Thread implements Ui {
         if (msg instanceof ServerChatMessage){
             chat.add((ServerChatMessage) msg);
             guiApplication.updateCurrentSceneModel(UPDATE.CHATMESSAGE);
+            if(((ServerChatMessage) msg).getChatMsg().equals("快点吧")) {
+
+            }
+
         }
         if (msg instanceof ActionNotRecognize){
             Platform.runLater(()->guiApplication.showErrorMessage(((ActionNotRecognize)msg).getDescription()));
