@@ -79,4 +79,7 @@ public class pathSearch {
     public static String getPathByCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),card.getIsFront());
     }
+    public static String getPathByBackCard(Card card,Boolean isFront) throws IOException {
+        return getPathByCardID(card.getCode(),false);
+    }
 }
