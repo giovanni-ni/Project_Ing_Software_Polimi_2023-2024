@@ -3,14 +3,11 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
-import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
-import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -53,6 +50,7 @@ public class SingleMatchController extends Thread{
         extractFirstPlayer();
 
         notifyAllListeners(new gameStartMsg(this.match));
+
     }
 
     public void getACard (String nickname , boolean isGoldCard,int whichCard) throws RemoteException {
@@ -188,6 +186,10 @@ public class SingleMatchController extends Thread{
                     setInitialCard(msg);
             case ClientChatMessage clientChatMessage ->
                     sendChatMsg(msg);
+            case ChooseColorMsg chooseColorMsg when (match.getStatus() == MatchStatus.Playing)  ->
+                    chooseColor(msg);
+
+
             case null, default -> {
                 assert msg != null;
 
@@ -199,6 +201,23 @@ public class SingleMatchController extends Thread{
                 }
             }
         }
+    }
+
+    private void chooseColor(GenericClientMessage msg) throws RemoteException {
+
+        ChooseColorMsg chooseColorMsg = (ChooseColorMsg)msg;
+        PlayerColor color = chooseColorMsg.getColor();
+        for(Player p: match.getPlayers()) {
+            if (p.getNickname().equals(msg.getNickname())) {
+                if (match.getNotChosenColor().contains(color)){
+                    match.getNotChosenColor().remove(color);
+                    p.setPlayerID(color);
+                } else {
+                    getListenerOf(p.getNickname()).update(new ActionNotRecognize("Color already choose"));
+                }
+            }
+        }
+
     }
 
     private void sendChatMsg(GenericClientMessage msg) throws RemoteException {

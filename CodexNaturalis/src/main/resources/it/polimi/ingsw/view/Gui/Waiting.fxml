@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane stylesheets="@Style.css" fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.WaitingController">
+<AnchorPane fx:id="Anchore" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" stylesheets="@Style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.polimi.ingsw.view.Gui.SceneControllers.WaitingController">
     <children>
         <StackPane alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0">
             <children>
@@ -68,7 +68,7 @@
                <children>
                   <ImageView fx:id="blueBall" fitHeight="400.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/blue.png" />
+                        <Image url="@../../../../../images/view/1.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="120.0" />
@@ -76,7 +76,7 @@
                   </ImageView>
                   <ImageView fx:id="redBall" fitHeight="400.0" fitWidth="150.0" layoutX="110.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/red.png" />
+                        <Image url="@../../../../../images/view/2.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />
@@ -84,7 +84,7 @@
                   </ImageView>
                   <ImageView fx:id="yellowBall" fitHeight="400.0" fitWidth="150.0" layoutX="360.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/yellow.png" />
+                        <Image url="@../../../../../images/view/3.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />
@@ -92,7 +92,7 @@
                   </ImageView>
                   <ImageView fx:id="greenBall" fitHeight="400.0" fitWidth="150.0" layoutX="610.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/green.png" />
+                        <Image url="@../../../../../images/view/4.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />
@@ -181,7 +181,7 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button mnemonicParsing="false" onAction="#setPlayerReady" StackPane.alignment="BOTTOM_RIGHT" styleClass="button">
+            <Button mnemonicParsing="false" onAction="#setPlayerReady" styleClass="button" StackPane.alignment="BOTTOM_RIGHT">
                <graphic>
                   <ImageView fitWidth="300.0" pickOnBounds="true" preserveRatio="true" styleClass="imageview">
                      <image>

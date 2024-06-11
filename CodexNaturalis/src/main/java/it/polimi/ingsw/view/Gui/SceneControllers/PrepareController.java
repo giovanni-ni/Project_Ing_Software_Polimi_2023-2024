@@ -42,8 +42,8 @@ public class PrepareController extends GenericSceneController {
     @FXML
     void confirmSelectTarget(ActionEvent event) throws IOException {
 
-            if (step ==0){
-                step=1;
+            if (step ==1){
+                step=2;
                 updateModel(UPDATE.GENERAL);
             }else{
                 if (targetOneCheck.isSelected() && targetTwoCheck.isSelected()){
@@ -51,13 +51,13 @@ public class PrepareController extends GenericSceneController {
                 } else if (!targetTwoCheck.isSelected() && !targetOneCheck.isSelected()) {
                     super.ShowErrorMessage("Please select a "+variableText);
                 }else if (targetOneCheck.isSelected()){
-                    if (step==1){
+                    if (step==2){
                         getGuiApplication().getGui().notify(new SetTargetCardMessage(0));
-                        step=2;
+                        step=3;
                     }
                     else {
                         getGuiApplication().getGui().notify(new FrontOrBackMessage(true));
-                        step =3;
+                        step =1;
                     }
                 }else {
                     if (step==1){
@@ -112,14 +112,14 @@ public class PrepareController extends GenericSceneController {
 
         }
         switch (step){
-            case 0 ->{
+            case 1 ->{
                 maintext.setImage(textCommon);
                 targetOneImg.setImage(common1);
                 targetTwoImg.setImage(common2);
                 targetOneCheck.setVisible(false);
                 targetTwoCheck.setVisible(false);
             }
-            case 1->{
+            case 2->{
                 maintext.setImage(textTarget);
                 targetOneImg.setImage(target1);
                 targetTwoImg.setImage(target2);
@@ -128,7 +128,7 @@ public class PrepareController extends GenericSceneController {
                 variableText ="target";
 
             }
-            case 2 -> {
+            case 0 -> {
                 maintext.setImage(textInitial);
                 targetOneImg.setImage(frontInitial);
                 targetTwoImg.setImage(backInitial);
