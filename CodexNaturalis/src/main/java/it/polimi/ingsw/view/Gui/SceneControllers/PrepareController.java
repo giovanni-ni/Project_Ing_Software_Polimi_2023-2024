@@ -10,9 +10,12 @@ import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,6 +35,9 @@ public class PrepareController extends GenericSceneController {
 
     @FXML
     ImageView targetOneImg, targetTwoImg, maintext;
+
+    @FXML
+    Button confirm;
 
     @FXML
     void confirmSelectTarget(ActionEvent event) throws IOException {
@@ -89,6 +95,21 @@ public class PrepareController extends GenericSceneController {
             textInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/setInitial.png")));
             textTarget =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/targetSelect.png")));
             initialized =true;
+            targetOneImg.setOnMouseClicked(mouseEvent -> {
+                    targetOneCheck.setSelected(true);
+                    onlyOne(new ActionEvent());
+            });
+
+            targetOneImg.setCursor(Cursor.HAND);
+            targetTwoImg.setOnMouseClicked(mouseEvent -> {
+                    targetTwoCheck.setSelected(true);
+                    onlyTwo(new ActionEvent());
+            });
+            targetTwoImg.setCursor(Cursor.HAND);
+
+            confirm.setDisable(false);
+
+
         }
         switch (step){
             case 0 ->{
@@ -119,6 +140,14 @@ public class PrepareController extends GenericSceneController {
                Platform.runLater(()->getGuiApplication().showScene(ScenesName.BOARD));
             }
         }
+    }
+    @FXML
+    void onlyOne(ActionEvent event){
+            targetTwoCheck.setSelected(false);
+    }
+    @FXML
+    void onlyTwo(ActionEvent event){
+            targetOneCheck.setSelected(false);
     }
 
 }

@@ -127,7 +127,9 @@ public class AllMatchesController extends Thread {
                 }
             }
             if (! (message instanceof joinSuccessMsg)){
-                message = new joinFailMsg("No Match available");
+                CreateGameMessage createGameMessage=new CreateGameMessage(msg.getNickname());
+                createGameMessage.setListener(msg.getListener());
+                message = createNewMatch(createGameMessage);
             }
 
         } else if (msg instanceof JoinGameMessage){

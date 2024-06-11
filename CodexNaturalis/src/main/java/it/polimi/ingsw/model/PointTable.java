@@ -35,6 +35,8 @@ public class PointTable implements Serializable {
 			if (Objects.equals(player.getNickname(), p.getNickname()))
 				playerToRemove=player;
 		playerPoints.remove(playerToRemove);
+		if(p.currentScore>=maxPoint)
+			p.currentScore=maxPoint;
 		playerPoints.put(p,p.currentScore);
 	}
 

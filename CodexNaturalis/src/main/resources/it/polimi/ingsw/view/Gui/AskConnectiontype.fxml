@@ -65,12 +65,12 @@
                   <Insets top="450.0" />
                </StackPane.margin>
             </Button>
-            <CheckBox fx:id="RMIcheckBox" mnemonicParsing="false" text="RMI" StackPane.alignment="TOP_CENTER">
+            <CheckBox fx:id="RMIcheckBox" mnemonicParsing="false" onAction="#onlyTwo" text="RMI" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets right="300.0" top="400.0" />
                </StackPane.margin>
             </CheckBox>
-            <CheckBox fx:id="SocketcheckBox" mnemonicParsing="false" text="Socket" StackPane.alignment="TOP_CENTER">
+            <CheckBox fx:id="SocketcheckBox" mnemonicParsing="false" onAction="#onlyOne" text="Socket" StackPane.alignment="TOP_CENTER">
                <StackPane.margin>
                   <Insets top="400.0" />
                </StackPane.margin>

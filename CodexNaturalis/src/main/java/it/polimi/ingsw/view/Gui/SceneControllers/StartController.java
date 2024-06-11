@@ -87,5 +87,12 @@ public class StartController extends GenericSceneController {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
     }
-
+    @FXML
+    void onlyOne(ActionEvent event){
+        RMIcheckBox.setSelected(false);
+    }
+    @FXML
+    void onlyTwo(ActionEvent event){
+        SocketcheckBox.setSelected(false);
+    }
 }

@@ -9,9 +9,14 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.findCardById;
 
 public class pathSearch {
 
-    public static String getPathByCardID(int cardId, boolean isFront) throws IOException {
+    public static String getPathByCardID(int cardId, boolean isFront)  {
         String path = null;
-        Object card =findCardById(cardId);
+        Object card = null;
+        try {
+            card = findCardById(cardId);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         if (card instanceof CountTargetCard || card instanceof ObliqueTargetCard || card instanceof PositionGoalTarget){
             if (isFront){
                 path = "/images/cards/TargetCardFront("+cardId+").jpg";
@@ -73,5 +78,8 @@ public class pathSearch {
     }
     public static String getPathByCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),card.getIsFront());
+    }
+    public static String getPathByBackCard(Card card,Boolean isFront) throws IOException {
+        return getPathByCardID(card.getCode(),false);
     }
 }
