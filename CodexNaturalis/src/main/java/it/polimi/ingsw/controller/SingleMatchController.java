@@ -212,6 +212,7 @@ public class SingleMatchController extends Thread{
                 if (match.getNotChosenColor().contains(color)){
                     match.getNotChosenColor().remove(color);
                     p.setPlayerID(color);
+                    notifyAllListeners(new ActionSuccessMsg(this.match));
                 } else {
                     getListenerOf(p.getNickname()).update(new ActionNotRecognize("Color already choose"));
                 }

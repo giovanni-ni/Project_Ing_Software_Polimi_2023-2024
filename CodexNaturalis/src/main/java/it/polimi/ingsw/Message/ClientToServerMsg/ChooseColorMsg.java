@@ -5,11 +5,11 @@ import it.polimi.ingsw.model.PlayerColor;
 public class ChooseColorMsg extends GenericClientMessage{
     PlayerColor color;
 
-    ChooseColorMsg(String nickName, int gameID, PlayerColor color){
+    public ChooseColorMsg(String nickName, int gameID, PlayerColor color){
         super(gameID,nickName);
         this.color = color;
     }
-    ChooseColorMsg(PlayerColor color){
+    public ChooseColorMsg(PlayerColor color){
         this.color = color;
     }
 

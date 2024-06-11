@@ -443,8 +443,33 @@ public class Tui  implements Ui {
             for( int i = 0; i < myMatch.getPlayerColors().size(); i++ ) {
                 print( myMatch.getPlayerColors().get(i) );
             }
+            String color;
+            do {
+                color = in.nextLine();
+                ChooseColorMsg msg;
+                switch(color) {
+                    case "red":
+                        msg = new ChooseColorMsg(myPlayer.getNickname(), myMatch.idMatch, PlayerColor.RED);
+                        client.messageToServer(msg);
+                        break;
+                    case "blue":
+                        msg = new ChooseColorMsg(myPlayer.getNickname(), myMatch.idMatch, PlayerColor.BLUE);
+                        client.messageToServer(msg);
+                        break;
+                    case "yellow":
+                        msg = new ChooseColorMsg(myPlayer.getNickname(), myMatch.idMatch, PlayerColor.YELLOW);
+                        client.messageToServer(msg);
+                        break;
+                    case "green":
+                        msg = new ChooseColorMsg(myPlayer.getNickname(), myMatch.idMatch, PlayerColor.GREEN);
+                        client.messageToServer(msg);
+                        break;
+                    default:
+                        print("error, choose a color");
+                        break;
+                }
+            } while(!color.equals("blue") && !color.equals("red") && !color.equals("yellow") && !color.equals("green"));
 
-            String color = in.nextLine();
 
             choosingColor = false;
 
@@ -455,14 +480,31 @@ public class Tui  implements Ui {
             }
         }
 
-        showMyCard();
+        showDeck();
 
-        for(Card c: myPlayer.getCardOnHand()) {
-            printCardById(c.getCode());
-        }
-        print("choose your personal target card from: ");
-        print(myPlayer.getTargetOnHand()[0].getIdCard() + " " + myPlayer.getTargetOnHand()[1].getIdCard());
         int choice;
+        print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
+        do {
+            choice = Integer.parseInt(in.nextLine());
+            if(choice != 0 && choice != 1) {
+                print("error");
+                print(" front(0) or back(1) ");
+            }
+        } while(choice != 0 && choice != 1);
+        boolean b;
+        if(choice == 0) {
+            b = true;
+        } else {
+            b = false;
+        }
+
+        FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, b);
+        client.messageToServer(msg1);
+
+        Thread.sleep(1000);
+
+        print("choose your personal target card from: ");
+        print("0: " + myPlayer.getTargetOnHand()[0].getIdCard() + "\n1: " + myPlayer.getTargetOnHand()[1].getIdCard());
         do {
             choice = Integer.parseInt(in.nextLine());
             if(choice != 0 && choice != 1) {
@@ -476,25 +518,7 @@ public class Tui  implements Ui {
 
         Thread.sleep(1000);
 
-        print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
-        do {
-            choice = Integer.parseInt(in.nextLine());
-            if(choice != 0 && choice != 1) {
-                print("error");
-                print(" front(0) or back(1) ");
-            }
-        } while(choice != 0 && choice != 1);
-        boolean c;
-        if(choice == 0) {
-            c = true;
-        } else {
-            c = false;
-        }
-
-        FrontOrBackMessage msg1 = new FrontOrBackMessage(myMatch.idMatch, this.username, c);
-        client.messageToServer(msg1);
-
-        Thread.sleep(1000);
+        showMyCard();
 
         resetBoard();
         myBoard[10][10] = myPlayer.getInitialCard().getCode();
@@ -502,6 +526,21 @@ public class Tui  implements Ui {
         this.first++;
         print("Game is Start!");
         status = PlayerStatus.GamePlay;
+    }
+
+    private void showDeck() {
+        print("resource cards: ");
+        printCard( myMatch.getResourceDeck().get(0).getCode());
+        printCard( myMatch.getResourceDeck().get(1).getCode());
+        print("kingdom of the third card: ");
+        print(myMatch.getResourceDeck().get(2).getKingdom());
+
+        print("gold cards: ");
+        printCard(myMatch.getGoldDeck().get(0).getCode());
+        printCard(myMatch.getGoldDeck().get(1).getCode());
+        print("kingdom of the third card: ");
+        print(myMatch.getGoldDeck().get(2).getKingdom());
+
     }
 
     public void endGame() {
@@ -612,7 +651,7 @@ public class Tui  implements Ui {
 
     private void showPoints() {
         for(Player p : myMatch.getPlayers()) {
-            print(p.getNickname() + ": " + p.currentScore + " points");
+            print(p.getNickname() + ": " + "[" + p.getPlayerID() + "] "+ p.currentScore + " points");
         }
     }
 
@@ -728,6 +767,9 @@ public class Tui  implements Ui {
             Tui.myPlayer = ((ActionSuccessMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
         } else if(msg instanceof ActionNotRecognize) {
             Tui.printMessage(((ActionNotRecognize) msg).getDescription());
+            if(((ActionNotRecognize) msg).getDescription().equals("Color already choose")) {
+                Tui.choosingColor = true;
+            }
         } else if(msg instanceof NowIsYourRoundMsg) {
             Tui.printMessage(((NowIsYourRoundMsg) msg).getDescription());
         } else if(msg instanceof LastRoundMessage) {
