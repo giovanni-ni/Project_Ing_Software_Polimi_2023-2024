@@ -1,6 +1,5 @@
 package it.polimi.ingsw.model;
 
-import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 
 import java.io.IOException;
@@ -62,6 +61,8 @@ public class Match implements Serializable {
 		this.players = players;
 	}
 
+	public ArrayList<PlayerColor> notChosenColor;
+
 	public ArrayList<InitialCard> getInitialDeck() {
 		return initialDeck;
 	}
@@ -69,6 +70,10 @@ public class Match implements Serializable {
 
 	public ArrayList<ResourceCard> getResourceDeck() {
 		return resourceDeck;
+	}
+
+	public ArrayList<PlayerColor> getNotChosenColor() {
+		return notChosenColor;
 	}
 
 
@@ -106,7 +111,6 @@ public class Match implements Serializable {
 		this.currentPlayer = currentPlayer;
 	}
 
-
 	private Player currentPlayer;
 
 	public Match(int idMatch) throws IOException {
@@ -124,7 +128,8 @@ public class Match implements Serializable {
 		shuffleAll();
 		status =MatchStatus.Waiting;
 		currentPlayer = null;
-
+		notChosenColor = new ArrayList<>();
+		notChosenColor.addAll(List.of(PlayerColor.values()));
 		commonTarget = new ArrayList<TargetCard>();
 		playerColors = new ArrayList<>(Arrays.asList(PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.GREEN, PlayerColor.BLUE));
 
@@ -141,6 +146,8 @@ public class Match implements Serializable {
 		goldDeck = (ArrayList<GoldCard>) cp.loadGoldCards();
 		targetDeck = (ArrayList<TargetCard>) cp.loadTargetCards();
 		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
+		notChosenColor = new ArrayList<>();
+		notChosenColor.addAll(List.of(PlayerColor.values()));
 		shuffleAll();
 		winners= null;
 
@@ -261,8 +268,6 @@ public class Match implements Serializable {
 				return false;
 		}
 		players.add(p);
-        ArrayList<PlayerColor> playerColors = new ArrayList<>(List.of(PlayerColor.values()));
-		p.setPlayerID(playerColors.get(players.size()-1));
 		pt.getPlayerPoints().put(p,0);
 
 		return true;

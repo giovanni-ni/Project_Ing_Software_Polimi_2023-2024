@@ -47,7 +47,7 @@ public class MenuController extends GenericSceneController{
                 getGuiApplication().getGui().notify(new CreateGameMessage(nickName.getText()));
             }
         }else {
-            getGuiApplication().getGui().notify(new JoinFirstMessage(nickName.getText())); //ToDO if we do join first method
+            getGuiApplication().getGui().notify(new JoinFirstMessage(nickName.getText()));
         }
         ShowJoiningMessage();
 

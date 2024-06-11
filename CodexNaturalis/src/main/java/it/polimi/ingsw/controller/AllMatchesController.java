@@ -104,7 +104,7 @@ public class AllMatchesController extends Thread {
                 if (ctrl.isPlayerFull())
                     return new joinFailMsg("Match Full");
                 if(!ctrl.addPlayer(p,msg.getListener())){
-                    return new joinFailMsg("NickNameUsed");
+                    return new joinFailMsg("Nick Name Used");
                 }
                 return new joinSuccessMsg(ctrl.getMatch());
             }
