@@ -41,8 +41,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.*;
 
-import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
-import static it.polimi.ingsw.utils.pathSearch.getPathByCardID;
+import static it.polimi.ingsw.utils.pathSearch.*;
 
 
 public class BoardController extends GenericSceneController implements Initializable {
@@ -253,7 +252,6 @@ public class BoardController extends GenericSceneController implements Initializ
                             throw new RuntimeException(e);
                         }
                     });
-                    i--;
                 }
 
             }
