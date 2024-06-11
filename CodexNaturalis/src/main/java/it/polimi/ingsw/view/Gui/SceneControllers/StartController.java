@@ -1,6 +1,7 @@
 package it.polimi.ingsw.view.Gui.SceneControllers;
 
 import it.polimi.ingsw.view.Gui.ScenesName;
+import it.polimi.ingsw.view.Gui.Sound;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -35,7 +36,7 @@ public class StartController extends GenericSceneController {
     private void AskConnection(ActionEvent event) throws IOException {
         print("key pressed");
         getGuiApplication().showScene(ScenesName.ASKCONNECTION);
-
+        Sound.playSound("opening.wav");
     }
 
     @FXML
