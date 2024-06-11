@@ -33,6 +33,8 @@ public class ViewModel implements Serializable {
     private final List<Player> winners;
     private final Player currentPlayer;
 
+    private final List<PlayerColor> playerColors;
+
     public ViewModel(Match match) {
         this.autoStart = match.getAutoStart();
         this.idMatch = match.idMatch;
@@ -47,6 +49,7 @@ public class ViewModel implements Serializable {
         this.firstPlayer = match.getFirstPlayer();
         this.winners = match.getWinners();
         this.currentPlayer = match.getCurrentPlayer();
+        this.playerColors = match.getPlayerColors();
     }
 
     public int getIdMatch() {
@@ -112,5 +115,9 @@ public class ViewModel implements Serializable {
 
     public boolean getAutostart() {
         return this.autoStart;
+    }
+
+    public List<PlayerColor> getPlayerColors() {
+        return playerColors;
     }
 }

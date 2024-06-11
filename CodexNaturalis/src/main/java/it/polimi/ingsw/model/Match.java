@@ -36,6 +36,8 @@ public class Match implements Serializable {
 
 	private List<Player> winners;
 
+	private List<PlayerColor> playerColors;
+
 	public int getIdMatch() {
 		return idMatch;
 	}
@@ -124,6 +126,7 @@ public class Match implements Serializable {
 		currentPlayer = null;
 
 		commonTarget = new ArrayList<TargetCard>();
+		playerColors = new ArrayList<>(Arrays.asList(PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.GREEN, PlayerColor.BLUE));
 
 	}
 
@@ -140,6 +143,9 @@ public class Match implements Serializable {
 		resourceDeck = (ArrayList<ResourceCard>) cp.loadResourceCards();
 		shuffleAll();
 		winners= null;
+
+		playerColors = new ArrayList<>(Arrays.asList(PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.GREEN, PlayerColor.BLUE));
+
 
 	}
 
@@ -301,5 +307,9 @@ public class Match implements Serializable {
 
 	public void setAutostart(boolean autostart) {
 		this.autostart = autostart;
+	}
+
+	public List<PlayerColor> getPlayerColors() {
+		return playerColors;
 	}
 }

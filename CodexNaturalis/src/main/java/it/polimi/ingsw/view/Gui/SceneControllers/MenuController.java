@@ -34,6 +34,11 @@ public class MenuController extends GenericSceneController{
         if (Objects.equals(nickName.getText(), "")){
             nickName.setText("nuge"+numOfError);
         }
+
+        if(Objects.equals(nickName.getText(), "stefano")) {
+            nickName.setText("别玩了呐 你已经输了");
+        }
+
         if (isCreateGame){
             if (autoStartCheck.isSelected()){
                 int num = (int) playerNumber.getValue();

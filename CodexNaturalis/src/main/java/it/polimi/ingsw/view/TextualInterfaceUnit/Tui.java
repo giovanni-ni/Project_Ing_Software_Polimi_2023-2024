@@ -50,6 +50,8 @@ public class Tui  implements Ui {
 
     private int autostart;
 
+    public static boolean choosingColor;
+
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
@@ -58,6 +60,7 @@ public class Tui  implements Ui {
         myPlayer = new Player("");
         myPlayer.setReady(false);
         chat = new ArrayList<>();
+        choosingColor = true;
     }
 
     /*@Override
@@ -435,20 +438,25 @@ public class Tui  implements Ui {
         List<Card> deck = new ArrayList<>();
         TargetCard[] target = {};
 
+        while(choosingColor) {
+            print("choose a color from:");
+            for( int i = 0; i < myMatch.getPlayerColors().size(); i++ ) {
+                print( myMatch.getPlayerColors().get(i) );
+            }
+
+            String color = in.nextLine();
+
+            choosingColor = false;
+
+            Thread.sleep(1000);
+
+            if(choosingColor) {
+                print("error");
+            }
+        }
+
         showMyCard();
 
-        //for(Player p : myMatch.getPlayers()) {
-        //print("ci sono giocatori n"+myMatch.getPlayers().size());
-        //print(p.nickname);
-        //print("hai in mano "+p.getCardOnHand().size());
-
-        //    if(p.getNickname().equals(this.username) ) {
-
-        //        deck.addAll(p.getCardOnHand());
-        //print("hhhhhhh");
-        //        target = p.getTargetOnHand();
-        //    }
-        //}
         for(Card c: myPlayer.getCardOnHand()) {
             printCardById(c.getCode());
         }
