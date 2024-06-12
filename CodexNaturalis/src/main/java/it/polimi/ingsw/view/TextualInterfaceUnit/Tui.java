@@ -483,7 +483,10 @@ public class Tui  implements Ui {
         showDeck();
 
         int choice;
-        print("this is your initial card:" + myPlayer.getInitialCard().getCode() + " front(0) or back(1) ");
+
+        printCard(myPlayer.getInitialCard());
+
+        print("this is your initial card: front(0) or back(1) ");
         do {
             choice = Integer.parseInt(in.nextLine());
             if(choice != 0 && choice != 1) {
@@ -504,7 +507,11 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
 
         print("choose your personal target card from: ");
-        print("0: " + myPlayer.getTargetOnHand()[0].getIdCard() + "\n1: " + myPlayer.getTargetOnHand()[1].getIdCard());
+        print("0: ");
+        printCard(myPlayer.getTargetOnHand()[0]);
+        print("1: ");
+        printCard(myPlayer.getTargetOnHand()[1]);
+
         do {
             choice = Integer.parseInt(in.nextLine());
             if(choice != 0 && choice != 1) {
@@ -524,20 +531,31 @@ public class Tui  implements Ui {
         myBoard[10][10] = myPlayer.getInitialCard().getCode();
         showBoard();
         this.first++;
+
+        boolean waiting = true;
+        while(myMatch.getPlayerColors().size() != 4 - myMatch.getPlayers().size()) {
+            if(waiting) {
+                print("...waiting other players...");
+                waiting = false;
+
+            }
+            System.out.flush();
+        }
+
         print("Game is Start!");
         status = PlayerStatus.GamePlay;
     }
 
     private void showDeck() {
         print("resource cards: ");
-        printCard( myMatch.getResourceDeck().get(0).getCode());
-        printCard( myMatch.getResourceDeck().get(1).getCode());
+        printCard( myMatch.getResourceDeck().get(0));
+        printCard( myMatch.getResourceDeck().get(1));
         print("kingdom of the third card: ");
         print(myMatch.getResourceDeck().get(2).getKingdom());
 
         print("gold cards: ");
-        printCard(myMatch.getGoldDeck().get(0).getCode());
-        printCard(myMatch.getGoldDeck().get(1).getCode());
+        printCard(myMatch.getGoldDeck().get(0));
+        printCard(myMatch.getGoldDeck().get(1));
         print("kingdom of the third card: ");
         print(myMatch.getGoldDeck().get(2).getKingdom());
 

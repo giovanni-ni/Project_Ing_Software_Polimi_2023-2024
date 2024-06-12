@@ -131,7 +131,6 @@ public class Match implements Serializable {
 		notChosenColor = new ArrayList<>();
 		notChosenColor.addAll(List.of(PlayerColor.values()));
 		commonTarget = new ArrayList<TargetCard>();
-		playerColors = new ArrayList<>(Arrays.asList(PlayerColor.RED, PlayerColor.YELLOW, PlayerColor.GREEN, PlayerColor.BLUE));
 
 	}
 
