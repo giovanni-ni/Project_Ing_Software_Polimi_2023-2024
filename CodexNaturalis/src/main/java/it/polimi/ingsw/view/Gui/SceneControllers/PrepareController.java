@@ -1,34 +1,53 @@
 package it.polimi.ingsw.view.Gui.SceneControllers;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import it.polimi.ingsw.Message.ClientToServerMsg.ChooseColorMsg;
 import it.polimi.ingsw.Message.ClientToServerMsg.FrontOrBackMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.SetTargetCardMessage;
-import it.polimi.ingsw.model.InitialCard;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.TargetCard;
+import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.utils.pathSearch;
 import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.net.URL;
+import java.util.*;
 
-public class PrepareController extends GenericSceneController {
+import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
 
-    Image target1, target2,common1,common2,frontInitial, backInitial, textCommon, textTarget, textInitial;
+public class PrepareController extends GenericSceneController implements Initializable {
+
+
+    @FXML
+    public ImageView green, blu, yellow, red,resourceBack,resource1,resource2,goldBack,gold1,gold2,waiting, Loading;
+    @FXML
+    public CheckBox bluCheck, greenCheck, yellowCheck, redCheck;
+    @FXML
+    public StackPane colorPane, drawCardPane;
+    @FXML
+    public VBox vred,vyellow,vblue,vgreen;
+    ;
+    Image target1, target2,common1,common2,frontInitial, backInitial, textCommon, textTarget, textInitial, textColor, textDeck;
     private  int step = 0;
     private boolean initialized = false;
-    private String variableText;
 
+    private  ArrayList<ImageView> decksImages;
+    private  BiMap<PlayerColor,VBox> colorVboxs;
+
+    @FXML
+    private boolean colorChoose =false;
 
     @FXML
     CheckBox targetOneCheck, targetTwoCheck;
@@ -41,37 +60,44 @@ public class PrepareController extends GenericSceneController {
 
     @FXML
     void confirmSelectTarget(ActionEvent event) throws IOException {
+    int choice =0;
+        if (step == 0 || step == 3) {
+            step ++;
+            updateModel(UPDATE.GENERAL);
+        } else {
+            if (step == 1){
+                if (!targetOneCheck.isSelected() && !targetTwoCheck.isSelected())
+                    super.ShowErrorMessage("Please choose at least one");
+                else
+                  getGuiApplication().getGui().notify(new FrontOrBackMessage(targetOneCheck.isSelected()));
+                step++;
+            }else if (step==2){
+                BiMap<PlayerColor,CheckBox> allCheckBox = HashBiMap.create();
+                allCheckBox.put(PlayerColor.RED,redCheck);
+                allCheckBox.put(PlayerColor.BLUE,bluCheck);
+                allCheckBox.put(PlayerColor.GREEN,greenCheck);
+                allCheckBox.put(PlayerColor.YELLOW,yellowCheck);
 
-            if (step ==1){
-                step=2;
-                updateModel(UPDATE.GENERAL);
-            }else{
-                if (targetOneCheck.isSelected() && targetTwoCheck.isSelected()){
-                    super.ShowErrorMessage("Please select only one "+variableText);
-                } else if (!targetTwoCheck.isSelected() && !targetOneCheck.isSelected()) {
-                    super.ShowErrorMessage("Please select a "+variableText);
-                }else if (targetOneCheck.isSelected()){
-                    if (step==2){
-                        getGuiApplication().getGui().notify(new SetTargetCardMessage(0));
-                        step=3;
-                    }
-                    else {
-                        getGuiApplication().getGui().notify(new FrontOrBackMessage(true));
-                        step =1;
-                    }
-                }else {
-                    if (step==1){
-                        getGuiApplication().getGui().notify(new SetTargetCardMessage(1));
-                        step=2;
-                    }
-                    else {
-                        getGuiApplication().getGui().notify(new FrontOrBackMessage(false));
-                        step=3;
+                PlayerColor chosenColor = null;
+                for (CheckBox checkBox : allCheckBox.values()){
+                    if (checkBox.isSelected()){
+                        chosenColor = allCheckBox.inverse().get(checkBox);
+                        getGuiApplication().getGui().notify(new ChooseColorMsg(chosenColor));
+                        colorChoose =true;
                     }
                 }
 
+            }else if (step==4){
+                if (!targetOneCheck.isSelected() && !targetTwoCheck.isSelected())
+                    super.ShowErrorMessage("Please choose at least one");
+                else{
+                    if (!targetOneCheck.isSelected())
+                        choice = 1;
+                    getGuiApplication().getGui().notify(new SetTargetCardMessage(choice));
+                    step++;
+                }
 
-
+            }
         }
 
     }
@@ -91,56 +117,159 @@ public class PrepareController extends GenericSceneController {
             backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), false))));
             common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
             common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
-            textCommon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/commonTarget.png")));
-            textInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/setInitial.png")));
-            textTarget =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/targetSelect.png")));
+            updateDrawCard();
             initialized =true;
-            targetOneImg.setOnMouseClicked(mouseEvent -> {
-                    targetOneCheck.setSelected(true);
-                    onlyOne(new ActionEvent());
-            });
-
-            targetOneImg.setCursor(Cursor.HAND);
-            targetTwoImg.setOnMouseClicked(mouseEvent -> {
-                    targetTwoCheck.setSelected(true);
-                    onlyTwo(new ActionEvent());
-            });
-            targetTwoImg.setCursor(Cursor.HAND);
-
-            confirm.setDisable(false);
-
-
         }
+        if (colorChoose && step==2){
+            step++;
+        }
+        Loading.setVisible(false);
+        // step 0 show draw card area
+        // step 1 initial card selection
+        // step 2 color selection
+        // step 3 show common target
+        // step 4 private target selection
         switch (step){
-            case 1 ->{
+            case 0 ->{
+                maintext.setImage(textDeck);
+                maintext.setVisible(true);
+
+                setPane(colorPane,false);
+
+                targetOneImg.setVisible(false);
+                targetTwoImg.setVisible(false);
+
+                setAllCheckBoxFalse();
+
+                targetOneCheck.setVisible(false);
+                targetTwoCheck.setVisible(false);
+
+                setPane(drawCardPane,true);
+
+                confirm.setDisable(false);
+            }
+            case 1 -> {
+                setPane(drawCardPane,false);
+                maintext.setImage(textInitial);
+                targetOneImg.setImage(frontInitial);
+                targetTwoImg.setImage(backInitial);
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                targetOneCheck.setVisible(true);
+                targetTwoCheck.setVisible(true);
+                confirm.setDisable(false);
+            }
+            case 2 ->{
+                maintext.setImage(textColor);
+                updateColorPane();
+                setPane(colorPane,true);
+                setPane(drawCardPane,false);
+                targetOneImg.setVisible(false);
+                targetTwoImg.setVisible(false);
+                targetOneCheck.setVisible(false);
+                targetTwoCheck.setVisible(false);
+            }
+            case 3 ->{
+
+                setPane(colorPane,false);
+                setPane(drawCardPane,false);
                 maintext.setImage(textCommon);
                 targetOneImg.setImage(common1);
                 targetTwoImg.setImage(common2);
                 targetOneCheck.setVisible(false);
                 targetTwoCheck.setVisible(false);
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                confirm.setDisable(false);
             }
-            case 2->{
+            case 4->{
+                setPane(colorPane,false);
+                setPane(drawCardPane,false);
                 maintext.setImage(textTarget);
                 targetOneImg.setImage(target1);
                 targetTwoImg.setImage(target2);
                 targetOneCheck.setVisible(true);
                 targetTwoCheck.setVisible(true);
-                variableText ="target";
-
-            }
-            case 0 -> {
-                maintext.setImage(textInitial);
-                targetOneImg.setImage(frontInitial);
-                targetTwoImg.setImage(backInitial);
-                targetOneCheck.setVisible(true);
-                targetTwoCheck.setVisible(true);
-                variableText ="side";
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                confirm.setDisable(false);
             }
             default -> {
-               Platform.runLater(()->getGuiApplication().showScene(ScenesName.BOARD));
+                boolean allReady = true;
+                ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
+                for (Player p : players){
+                    if (p.getPlayerID()==null){
+                        allReady =false;
+                    }
+                }
+                if (allReady){
+                    Platform.runLater(()->getGuiApplication().showScene(ScenesName.BOARD));
+                }else {
+                    maintext.setVisible(false);
+                    confirm.setDisable(false);
+                    confirm.setVisible(false);
+                    waiting.setVisible(true);
+                    setPane(colorPane, false);
+                    setPane(drawCardPane,false);
+                    targetOneImg.setVisible(false);
+                    targetTwoImg.setVisible(false);
+
+                    setAllCheckBoxFalse();
+
+                    targetOneCheck.setVisible(false);
+                    targetTwoCheck.setVisible(false);
+                }
             }
         }
     }
+
+    private void updateColorPane() {
+        for (VBox vBox : colorVboxs.values()) {
+            vBox.setVisible(false);
+        }
+        for (PlayerColor color : getGuiApplication().getGui().getMyMatch().getPlayerColors()){
+            colorVboxs.get(color).setVisible(true);
+        }
+    }
+
+    private void updateDrawCard() throws IOException {
+        ArrayList<ResourceCard> resourceDeck = getGuiApplication().getGui().getMyMatch().getResourceDeck();
+        ArrayList<GoldCard> goldDeck = getGuiApplication().getGui().getMyMatch().getGoldDeck();
+        int i ;
+        for (i =0; i<3 && i<resourceDeck.size() ; i++){
+            ResourceCard card = resourceDeck.get(i);
+            //set the third one back and others front
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
+        }
+        while(i<3){
+            //if the for loops ends because of deck empty disable others slots
+            ImageView imageView = decksImages.get(i);
+            imageView.setVisible(false);
+            imageView.setEffect(null);
+            i++;
+        }
+
+        //same logic for the gold cards slots
+        for (i =0 ; i<3 && i<goldDeck.size() ; i++){
+            GoldCard card = goldDeck.get(i);
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
+        }
+        while(i<3){
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setVisible(false);
+            i++;
+        }
+    }
+
     @FXML
     void onlyOne(ActionEvent event){
             targetTwoCheck.setSelected(false);
@@ -150,4 +279,93 @@ public class PrepareController extends GenericSceneController {
             targetOneCheck.setSelected(false);
     }
 
+    public void onlyBlue(ActionEvent event) {
+        setAllCheckBoxFalse();
+        bluCheck.setSelected(true);
+    }
+
+    public void onlyRed(ActionEvent event) {
+        setAllCheckBoxFalse();
+        redCheck.setSelected(true);
+    }
+
+    public void onlyYellow(ActionEvent event) {
+        setAllCheckBoxFalse();
+        yellowCheck.setSelected(true);
+    }
+
+    public void onlyGreen(ActionEvent event) {
+        setAllCheckBoxFalse();
+        greenCheck.setSelected(true);
+    }
+
+    public void onlyB(MouseEvent mouseEvent) {
+        onlyBlue(new ActionEvent());
+    }
+
+    public void onlyR(MouseEvent mouseEvent) {
+        onlyRed(new ActionEvent());
+    }
+
+    public void onlyY(MouseEvent mouseEvent) {
+        onlyYellow(new ActionEvent());
+    }
+
+    public void onlyG(MouseEvent mouseEvent) {
+        onlyGreen(new ActionEvent());
+    }
+    public void setAllCheckBoxFalse(){
+        ArrayList<CheckBox> allCheckBox = new ArrayList<>(List.of(targetOneCheck, targetTwoCheck, bluCheck, greenCheck, yellowCheck, redCheck));
+        for (CheckBox checkBox : allCheckBox){
+            checkBox.setSelected(false);
+        }
+    }
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        textCommon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/commonTarget.png")));
+        textInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/setInitial.png")));
+        textTarget =new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/targetSelect.png")));
+        textColor = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/playerColorText.png")));
+        textDeck = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/view/drawCardText.png")));
+        targetOneImg.setOnMouseClicked(mouseEvent -> {
+            targetOneCheck.setSelected(true);
+            onlyOne(new ActionEvent());
+        });
+        targetOneImg.setCursor(Cursor.HAND);
+        targetTwoImg.setOnMouseClicked(mouseEvent -> {
+            targetTwoCheck.setSelected(true);
+            onlyTwo(new ActionEvent());
+        });
+        maintext.setVisible(false);
+        targetTwoImg.setCursor(Cursor.HAND);
+
+        setPane(drawCardPane,false);
+
+        bluCheck.setVisible(true);
+        redCheck.setVisible(true);
+        yellowCheck.setVisible(true);
+        greenCheck.setVisible(true);
+        setPane(colorPane,false);
+        setAllCheckBoxFalse();
+        confirm.setDisable(false);
+        decksImages = new ArrayList<>();
+        decksImages.addAll(List.of(resource1,resource2,resourceBack,gold1,gold2,goldBack));
+        colorVboxs = HashBiMap.create();
+        colorVboxs.put(PlayerColor.RED,vred);
+        colorVboxs.put(PlayerColor.BLUE,vblue);
+        colorVboxs.put(PlayerColor.YELLOW,vyellow);
+        colorVboxs.put(PlayerColor.GREEN,vgreen);
+
+    }
+
+    private void setPane(StackPane pane, boolean b) {
+        pane.setVisible(b);
+        pane.setDisable(!b);
+    }
+
+    @Override
+    public void ShowErrorMessage(String string){
+        super.ShowErrorMessage(string);
+        colorChoose=false;
+    }
 }

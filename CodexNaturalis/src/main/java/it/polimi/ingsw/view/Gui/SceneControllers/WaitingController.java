@@ -17,9 +17,9 @@ import java.util.ResourceBundle;
 
 public class WaitingController extends GenericSceneController implements Initializable {
 
-    private  HashMap<PlayerColor,ImageView> ballList;
-    private  HashMap<PlayerColor,ImageView> tickList;
-    private  HashMap<PlayerColor, Text> nickList;
+    private  HashMap<Integer,ImageView> ballList;
+    private  HashMap<Integer,ImageView> tickList;
+    private  HashMap<Integer, Text> nickList;
     boolean isReady = false;
 
 
@@ -42,38 +42,40 @@ public class WaitingController extends GenericSceneController implements Initial
     public void updateModel(UPDATE update){
 
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
+        int i = 0;
         for (Player p : players){
-            ballList.get(p.getPlayerID()).setVisible(true);
-            nickList.get(p.getPlayerID()).setText(p.nickname);
-            tickList.get(p.getPlayerID()).setVisible(p.getReady());
+            ballList.get(i).setVisible(true);
+            nickList.get(i).setText(p.nickname);
+            tickList.get(i).setVisible(p.getReady());
+            i++;
         }
         roomID.setText("Room ID: "+getGuiApplication().getGui().getMatchID());
 
     }
 
 
-    private HashMap<PlayerColor,ImageView> getBallList(){
+    private HashMap<Integer,ImageView> getBallList(){
         return getPlayerColorImageViewHashMap(blueBall, redBall, yellowBall, greenBall);
     }
-    private HashMap<PlayerColor,ImageView> getTickList(){
+    private HashMap<Integer,ImageView> getTickList(){
         return getPlayerColorImageViewHashMap(tickBlue, tickRed, tickYellow, tickGreen);
     }
 
-    private HashMap<PlayerColor, ImageView> getPlayerColorImageViewHashMap(ImageView tickBlue, ImageView tickRed, ImageView tickYellow, ImageView tickGreen) {
-        HashMap<PlayerColor,ImageView> tickList = new HashMap<>();
-        tickList.put(PlayerColor.BLUE, tickBlue);
-        tickList.put(PlayerColor.RED, tickRed);
-        tickList.put(PlayerColor.YELLOW, tickYellow);
-        tickList.put(PlayerColor.GREEN, tickGreen);
+    private HashMap<Integer, ImageView> getPlayerColorImageViewHashMap(ImageView tickBlue, ImageView tickRed, ImageView tickYellow, ImageView tickGreen) {
+        HashMap<Integer,ImageView> tickList = new HashMap<>();
+        tickList.put(0, tickBlue);
+        tickList.put(1, tickRed);
+        tickList.put(2, tickYellow);
+        tickList.put(3, tickGreen);
         return tickList;
     }
 
-    private  HashMap<PlayerColor, Text> getNickList(){
-        HashMap<PlayerColor, Text>  nickList= new HashMap<>();
-        nickList.put(PlayerColor.BLUE, nickBlue);
-        nickList.put(PlayerColor.RED,nickRed);
-        nickList.put(PlayerColor.YELLOW, nickYellow);
-        nickList.put(PlayerColor.GREEN, nickGreen);
+    private  HashMap<Integer, Text> getNickList(){
+        HashMap<Integer, Text>  nickList= new HashMap<>();
+        nickList.put(0, nickBlue);
+        nickList.put(1,nickRed);
+        nickList.put(2, nickYellow);
+        nickList.put(3, nickGreen);
         return nickList;
     }
     @Override

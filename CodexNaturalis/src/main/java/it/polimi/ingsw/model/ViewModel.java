@@ -49,7 +49,7 @@ public class ViewModel implements Serializable {
         this.firstPlayer = match.getFirstPlayer();
         this.winners = match.getWinners();
         this.currentPlayer = match.getCurrentPlayer();
-        this.playerColors = match.getPlayerColors();
+        this.playerColors = match.getNotChosenColor();
     }
 
     public int getIdMatch() {
