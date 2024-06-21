@@ -122,6 +122,15 @@ public class BoardController extends GenericSceneController implements Initializ
     @FXML
     AnchorPane ptAnchor;
 
+    /**
+     * Handles the action event triggered by the play card button.
+     * Sets the state to indicate a card play action has been initiated,
+     * retrieves the current player's nickname and relevant card details,
+     * and notifies the server with a play card message.
+     *
+     * @param e the ActionEvent that triggers this method
+     * @throws RemoteException if a remote communication error occurs
+     */
     @FXML
    public void playCardButton_toServer(ActionEvent e) throws RemoteException {
         isClickedPlayACard=true;
@@ -134,6 +143,15 @@ public class BoardController extends GenericSceneController implements Initializ
         getGuiApplication().getGui().notify(new playCardMessage(nickname, cardOnHandIndex_toServer,isFront_toServer, putACardX_toServer-40,-(putACardY_toServer-40)));
         playACard.setDisable(true);
     }
+    /**
+     * Handles the action event triggered by the get card button.
+     * Sets the state to indicate a card draw action has been initiated,
+     * retrieves the current player's nickname and game ID,
+     * and notifies the server with a draw card message based on the type of card being drawn.
+     *
+     * @param e the ActionEvent that triggers this method
+     * @throws RemoteException if a remote communication error occurs
+     */
     public void getACardButton_toServer(ActionEvent e) throws RemoteException {
         isClickedGetACard= true;
         String nickname =getGuiApplication().getGui().getUsername();
@@ -147,6 +165,12 @@ public class BoardController extends GenericSceneController implements Initializ
         }
 
     }
+
+    /**
+     * Handles the action of setting the card's visibility and orientation based on the selection state.
+     * If the card index for the card on hand is not null and the setBack checkbox is selected,
+     * it toggles the visibility of the front and back images of the card and updates the isFront_toServer flag.
+     */
     @FXML
     public void setBackCard(){
         if(cardOnHandIndex_toServer!=null) {
@@ -161,7 +185,15 @@ public class BoardController extends GenericSceneController implements Initializ
             }
         }
     }
-
+    /**
+     * Updates the provided list of ImageViews to display the back images of the cards in the player's hand.
+     * Sets the visibility of these ImageViews to false. If the player has played a card and has only two cards
+     * left, the third ImageView is set to null.
+     *
+     * @param imagesList the list of ImageViews to update with the back images of the cards
+     * @param p the Player whose hand of cards is being displayed
+     * @throws IOException if an I/O error occurs while loading the card images
+     */
 
     private void showBackCards(ArrayList<ImageView> imagesList, Player p)throws IOException{
         ArrayList<Card> backCardOnHand= (ArrayList<Card>) p.getCardOnHand();
@@ -176,7 +208,15 @@ public class BoardController extends GenericSceneController implements Initializ
             imagesList.get(2).setImage(null);
         }
     }
-
+    /**
+     * Displays the cards in the player's hand by updating the provided list of ImageViews.
+     * Sets all ImageViews to invisible initially, then updates each ImageView with the corresponding
+     * card's front image and sets them to visible. Also maps each ImageView to the card's code
+     * using the searchCode map.
+     *
+     * @param cardOnHand the list of cards in the player's hand
+     * @throws IOException if an I/O error occurs while loading the card images
+     */
     private void showCardOnHand(ArrayList<Card> cardOnHand) throws IOException {
         for (ImageView imageView : cardsOnHandImages){
             imageView.setVisible(false);
@@ -191,6 +231,17 @@ public class BoardController extends GenericSceneController implements Initializ
             imageView.setVisible(true);
         }
     }
+
+    /**
+     * Displays the resource and gold decks by updating the provided ImageViews.
+     * Sets images for the first two resource cards and the first two gold cards to be visible,
+     * and their third cards to be back images. Disables the ImageViews if the deck is empty.
+     * Clears any visual effects from the ImageViews.
+     *
+     * @param goldDeck the list of GoldCard objects to display
+     * @param resourceDeck the list of ResourceCard objects to display
+     * @throws IOException if an I/O error occurs while loading the card images
+     */
 
     private void showDecks(ArrayList<GoldCard> goldDeck, ArrayList<ResourceCard> resourceDeck) throws IOException {
         int i;
@@ -229,6 +280,16 @@ public class BoardController extends GenericSceneController implements Initializ
         }
     }
 
+
+    /**
+     * Updates and displays the board for the specified player.
+     * If the current player's board is not up-to-date or not present, it updates the player's board with the new card coordinates.
+     * It adds the card images to the grid at the specified coordinates on the board.
+     *
+     * @param b the Board to display
+     * @param p the Player whose board is being updated
+     * @throws IOException if an I/O error occurs while loading the card images
+     */
     private void showBoard(Board b, Player p) throws IOException {
         Board targetBoard = playerBoards.get(p.getPlayerID());
         GridPane targetGrid = playerGrids.get(p.getPlayerID());
@@ -261,6 +322,14 @@ public class BoardController extends GenericSceneController implements Initializ
 
     }
 //TODO animal back gold wrong
+    /**
+     * Creates an ImageView for the given card. Sets the image based on whether the card is front-facing or not.
+     * Configures the ImageView's size and disables interaction with it.
+     *
+     * @param card the Card for which the ImageView is created
+     * @return the configured ImageView displaying the card's image
+     * @throws IOException if an I/O error occurs while loading the card image
+     */
     private ImageView createImageView(Card card) throws IOException {
         Image image = null;
         ImageView imageView= new ImageView();
@@ -276,7 +345,69 @@ public class BoardController extends GenericSceneController implements Initializ
 
         return imageView;
     }
+    /**
+     * Updates the graphical user interface based on different game states.
+     * CHATMESSAGE: Handles the update case when a new chat message is received.
+     * Calls the method to display the new message on the UI.
 
+     * LASTROUND:Handles the update case when it is the last round of the game.
+     * Displays a specific chat message indicating the last round.
+
+     * ENDGAME:Handles the update case when the game ends.
+     * Disables game-related controls such as playing cards and drawing cards.
+     * Displays the winners and a special message about the loser.
+     * Updates the game status text and makes the victory pane visible.
+
+     * YOURROUND: Handles the update case when it is the player's turn.
+     * Updates the game status text to indicate it's the player's turn to play and draw cards.
+     * Sets the text color of the game status to white.
+     * Applies a special visual effect to the background of the player's cards on hand.
+
+     * DEFAULT:
+     * 1.Retrieves player information and updates UI elements accordingly, including player's cards on hand,
+     * gold and resource decks, and counters for different game elements.
+     * Updates the UI elements displaying the counts of various game elements such as animals, mushrooms, feathers,
+     * parchment, vegetal, insect, and ink.
+     * Updates the game interface by showing the decks， boards, cards on hand, and displaying the back of the cards for each opponent.
+     * Updates the game interface and disables user actions if it is not the current player's turn.
+
+     * 2.If it's not initialized:
+
+     * Initializes the game board and setup when the application is first started or reset.
+     * Depending on the player's color, assigns the appropriate grid pane to {@code myGrid}.
+     * Disables all decks and initializes common target cards and player-specific target card.
+     * Sets up the game board with common and player-specific targets.
+     * Sets the initial game status text to prompt the player to choose a card from their hand.
+     * Sets the text color of the game status to white for visibility.
+     * Applies a special visual effect to the background of the player's cards on hand.
+     * Adds heart images to the grid for visual enhancement, excluding the central position (40, 40).
+
+     * Event handler for mouse click on heart images displayed on the game grid.
+     * Handles primary mouse button clicks when a card on hand is clicked.
+     * Enables the "Set Back" button, sets the board click status to true, and updates game status text.
+     * Disables and hides the clicked card on hand.
+     * Enables the "Play Card" button for playing the selected card.
+     * Determines which heart image was clicked and retrieves its grid coordinates.
+     * Removes temporary card images from the board if the clicked position differs from the previously selected position.
+     * Updates server-side coordinates for placing the card on the board.
+     * Displays the front and back images of the selected card on the game board.
+     * Handles toggling between front and back card images based on the "Set Back" button selection.
+
+     * Event handler for mouse click on the temporary image displayed on the game board.
+     * Handles primary mouse button clicks when a card on the board is clicked.
+     * Updates game status text and resets state variables related to card selection.
+     * Hides the temporary image of the card on the board and enables the "Set Back" button.
+     * Disables the "Play Card" button and resets board click status.
+     * Makes all cards on hand visible and clickable again.
+     * Resets the effect of the clicked card on hand and toggles the selection state for that card.
+     * Clears the server-side index of the selected card on hand.
+     * Removes temporary card images from the board.
+     * Reinitializes the temporary image objects for future use.
+
+     *
+     * @param update the type of update to process
+     * @throws IOException if there is an error while updating the model
+     */
     @Override
     public void updateModel(UPDATE update) throws IOException {
         ViewModel model = getGuiApplication().getGui().getMyMatch();
@@ -287,6 +418,7 @@ public class BoardController extends GenericSceneController implements Initializ
             case LASTROUND -> {
                 showChatMessage(new ServerChatMessage(new ClientChatMessage(0,"Server",true,"","THIS IS THE LAST ROUND, COME ON, GO FOR THE VICTORY")));
             }
+
             case ENDMESSAGE -> {
                 StringBuilder winner = new StringBuilder();
                 // disabilito gioco carta
@@ -567,9 +699,6 @@ public class BoardController extends GenericSceneController implements Initializ
                             disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
                         }
                     });
-                    for(Player p : getGuiApplication().getGui().getMyMatch().getPlayers()){
-
-                    }
                     yellow.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
@@ -749,12 +878,21 @@ public class BoardController extends GenericSceneController implements Initializ
             }
         }
     }
-
+    /**
+     * Disables all visual effects related to highlighting gold elements in the game interface.
+     * This method sets the effect of both the deck background and the card-on-hand background to null,
+     * effectively removing any visual highlights.
+     */
     private void disableAllGoldLights() {
         deckBackground.setEffect(null);
         cardOnHandBackground.setEffect(null);
     }
-
+    /**
+     * Applies a gold-colored drop shadow effect to the specified image view.
+     * This method is used to visually highlight the image view with a gold color.
+     *
+     * @param imageView the ImageView to which the gold drop shadow effect will be applied
+     */
     private void lightGold(ImageView imageView) {
         DropShadow dropShadow = new DropShadow();
         dropShadow.setColor(Color.rgb(255, 215, 0, 0.75));
@@ -762,7 +900,13 @@ public class BoardController extends GenericSceneController implements Initializ
         dropShadow.setSpread(0.5);
         imageView.setEffect(dropShadow);
     }
-
+    /**
+     * Highlights the current player by applying a gold-colored drop shadow effect to their associated image.
+     * This method first removes any existing effects from all player images, then applies the gold drop shadow
+     * effect to the image corresponding to the current player.
+     *
+     * @param model the ViewModel containing the current player's information
+     */
     private void lightCurrentPlayer(ViewModel model) {
         for (ImageView image : playerColorMap.values()){
             image.setEffect(null);
@@ -773,7 +917,11 @@ public class BoardController extends GenericSceneController implements Initializ
         dropShadow.setSpread(0.5);
         playerColorMap.get(model.getCurrentPlayer().getPlayerID()).setEffect(dropShadow);
     }
-
+    /**
+     * Initializes the player pane and maps player colors to their respective UI elements.
+     * This method sets up the mapping of player colors to panes and player images, assigns nicknames
+     * to the corresponding UI elements, and initializes color events for each player.
+     */
     private void initPtPane() {
         paneMap = HashBiMap.create();
         paneMap.put(PlayerColor.RED,redPane);
@@ -818,17 +966,31 @@ public class BoardController extends GenericSceneController implements Initializ
         }
 
     }
-
+    /**
+     * Displays all chat messages in the game interface.
+     * This method retrieves all chat messages from the server and displays each message in the chat area.
+     */
 
     private void showAllChat() {
         for(ServerChatMessage msg : getGuiApplication().getGui().getChat()){
             showChatMessage(msg);
         }
     }
-
+    /**
+     * Displays the most recent chat message in the game interface.
+     * This method retrieves the last chat message from the server and displays it in the chat area.
+     */
     private void showNewMessage() {
         showChatMessage(getGuiApplication().getGui().getChat().getLast());
     }
+
+    /**
+     * Displays a chat message in the game interface.
+     * This method formats the chat message based on its type (public or private),
+     * sets the appropriate color, and adds it to the chat area.
+     *
+     * @param msg the ServerChatMessage object containing the chat message to be displayed
+     */
     private void showChatMessage(ServerChatMessage msg){
         Color color = Color.WHITE;
         String channel;
@@ -847,7 +1009,14 @@ public class BoardController extends GenericSceneController implements Initializ
         chatMessage.getStyleClass().add("chatText");
        Platform.runLater(()->chatVBox.getChildren().add(chatMessage));
     }
-
+    /**
+     * Displays an error message in the game interface and handles the necessary UI adjustments.
+     * This method sets the game status text to the specified error message and updates the text color to red.
+     * If an error occurs while playing a card, it resets the card visibility and enables card and deck interactions.
+     * If an error occurs while getting a card, it sets the appropriate error flag.
+     *
+     * @param string the error message to be displayed
+     */
     @Override
     public void ShowErrorMessage(String string){
         gameStatus.setText(string);
@@ -872,7 +1041,13 @@ public class BoardController extends GenericSceneController implements Initializ
         isError_getCard = true;
         }
     }
-
+    /**
+     * Applies a lighting effect to the specified image view.
+     * This method creates a distant light source with specified azimuth and elevation,
+     * and applies a lighting effect to the image view to enhance its visual appearance.
+     *
+     * @param imageView the ImageView to which the lighting effect will be applied
+     */
     private void light(ImageView imageView) {
         Light.Distant light = new Light.Distant();
         light.setAzimuth(45); // Angolo della luce
@@ -885,7 +1060,14 @@ public class BoardController extends GenericSceneController implements Initializ
         // Applica l'effetto all'immagine
         imageView.setEffect(lighting);
     }
-
+    /**
+     * Sets up the game board by loading and displaying images for various game elements.
+     * This method initializes images for the board background, card backgrounds, point table, and target cards,
+     * and organizes the images into respective lists for easy management.
+     *
+     * @param commonTarget the list of common target cards to be displayed on the board
+     * @param personalTarget the personal target card to be displayed on the board
+     */
     private void setUpBoard(ArrayList<TargetCard> commonTarget,TargetCard personalTarget)
     {
         Image myImage1 = new Image(getClass().getResourceAsStream("/images/view/playGround.jpg"));
@@ -930,30 +1112,59 @@ public class BoardController extends GenericSceneController implements Initializ
         disableVisibilityCardOnHand(backCardsOnHandImages_GREEN);
 
     }
-
+    /**
+     * Sets the visibility of a list of ImageView objects to true.
+     * This method iterates through the provided list of ImageView objects
+     * and makes each ImageView visible.
+     *
+     * @param arr the list of ImageView objects to make visible
+     */
     private void visibleCardsOnHand(ArrayList <ImageView> arr){
         for(ImageView im: arr){
             im.setVisible(true);
         }
     }
-
+    /**
+     * Disables the visibility of a list of ImageView objects by setting them to invisible.
+     * This method iterates through the provided list of ImageView objects
+     * and sets the visibility of each ImageView to false.
+     *
+     * @param arr the list of ImageView objects to make invisible
+     */
     private void disableVisibilityCardOnHand(ArrayList <ImageView> arr){
         for(ImageView im: arr){
             im.setVisible(false);
         }
     }
-
+    /**
+     * Disables interaction with the cards on hand by setting them to disabled state.
+     * This method iterates through the list of ImageView objects representing cards on hand
+     * and disables interaction with each ImageView.
+     */
     private void disableCardOnHand(){
         for(ImageView imageView :cardsOnHandImages){
             imageView.setDisable(true);
         }
     }
-
+    /**
+     * Enables interaction with the cards on hand by setting them to enabled state.
+     * This method iterates through the list of ImageView objects representing cards on hand
+     * and enables interaction with each ImageView.
+     */
     private void ableCardOnHand(){
         for(ImageView imageView :cardsOnHandImages){
             imageView.setDisable(false);
         }
     }
+
+    /**
+     * Sets the position and visibility of a StackPane element based on a given point value.
+     * Enables the StackPane element for interaction and adjusts its position on an AnchorPane
+     * based on the specified point value, ensuring it stays within predefined PTPOSITION coordinates.
+     *
+     * @param pane the StackPane element to be configured
+     * @param point the point value used to determine the PTPOSITION coordinates and visibility
+     */
     private void setStackPt(StackPane pane,int point){
         pane.setDisable(false);
         pane.setVisible(true);
@@ -964,6 +1175,12 @@ public class BoardController extends GenericSceneController implements Initializ
         AnchorPane.setTopAnchor(pane,pt.y);
         AnchorPane.setLeftAnchor(pane,pt.x);
     }
+    /**
+     * Updates the point display and position for each player on the game interface.
+     * This method iterates through the list of players in the current match,
+     * sets the position and visibility of their respective score displays and updates their nicknames accordingly.
+     */
+
     private void updatePt(){
         for (Player p  : getGuiApplication().getGui().getMyMatch().getPlayers()){
             setStackPt(paneMap.get(p.getPlayerID()), p.currentScore);
@@ -992,7 +1209,12 @@ public class BoardController extends GenericSceneController implements Initializ
         }
 
     }
-
+    /**
+     * Enables interaction with the resource and gold decks by setting them to an enabled state.
+     * This method specifically enables interaction with the first and second resource cards,
+     * the kingdom resource deck, the first and second gold cards, and the kingdom gold deck.
+     * It allows users to interact with these elements after they have been disabled.
+     */
     private void ableDecks(){
         firstResourceCard.setDisable(false);
         secondResourceCard.setDisable(false);
@@ -1001,6 +1223,13 @@ public class BoardController extends GenericSceneController implements Initializ
         secondGoldCard.setDisable(false);
         kingdomGoldDeck.setDisable(false);
     }
+
+    /**
+     * Disables interaction with the resource and gold decks by setting them to a disabled state.
+     * This method specifically disables interaction with the first and second resource cards,
+     * the kingdom resource deck, the first and second gold cards, and the kingdom gold deck.
+     * It prevents users from interacting with these elements.
+     */
     private void disableDecks(){
         firstResourceCard.setDisable(true);
         secondResourceCard.setDisable(true);
@@ -1010,7 +1239,13 @@ public class BoardController extends GenericSceneController implements Initializ
         kingdomGoldDeck.setDisable(true);
 
     }
-
+    /**
+     * Disables interaction with all deck ImageView objects except for the specified ImageView.
+     * This method iterates through the list of deck ImageView objects (decksImages) and disables
+     * each ImageView except for the one specified by the parameter imageView.
+     *
+     * @param imageView the ImageView object for which interaction should remain enabled
+     */
     private void disableDecksEXCEPTone(ImageView imageView){
         for(ImageView c: decksImages){
             if(!c.equals(imageView)){
@@ -1019,7 +1254,13 @@ public class BoardController extends GenericSceneController implements Initializ
         }
 
     }
-
+    /**
+     * Initializes the chat choice dropdown list with player nicknames and a "Public" option.
+     * Adds each player's nickname (except the current client's nickname) to the chatChoice dropdown list.
+     * Also adds a "Public" option and sets it as the default selected value.
+     *
+     * @param players the list of players in the current match
+     */
     private void initializeChatChoice(List<Player> players){
         String client = getGuiApplication().getGui().getUsername();
         for (Player p :players){
@@ -1031,7 +1272,15 @@ public class BoardController extends GenericSceneController implements Initializ
         chatChoice.setValue("Public");
     }
 
-
+    /**
+     * Sends a chat message based on user input and selected chat destination.
+     * Determines if the message is intended for all players or a specific player based on the chatChoice value.
+     * If the chatDestination is "Public", the message is set to be for all players.
+     * Otherwise, it sends the message to the specified player and updates the chat display.
+     * Clears the chatTextField after sending the message.
+     *
+     * @throws RemoteException if there's an issue with remote method invocation
+     */
     private void sendChatMessage() throws RemoteException {
         boolean isForAll = false;
 
@@ -1047,12 +1296,23 @@ public class BoardController extends GenericSceneController implements Initializ
             chatTextField.clear();
         }
     }
-
+    /**
+     * Closes the point pane in response to an ActionEvent.
+     * Sets the visibility of ptPane to false and disables interaction with it.
+     *
+     * @param event the ActionEvent triggering the method call
+     */
     public void closePt(ActionEvent event) {
         ptPane.setVisible(false);
         ptPane.setDisable(true);
     }
-
+    /**
+     * Toggles the visibility and enablement of the point pane based on its current state.
+     * If the point pane (ptPane) is disabled, it sets it to be visible and enables interaction with it.
+     * If the point pane is already enabled, it invokes the closePt method to hide and disable the point pane.
+     *
+     * @param event the ActionEvent triggering the method call
+     */
     public void openPt(ActionEvent event) {
         if(ptPane.isDisable()){
             ptPane.setVisible(true);
@@ -1061,6 +1321,15 @@ public class BoardController extends GenericSceneController implements Initializ
             closePt(event);
         }
     }
+
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     * Sets up initial states and event handlers for the chat functionality, player boards,
+     * and various draw areas (resource cards, gold cards, and target cards).
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         chatDestination=null;
@@ -1142,8 +1411,6 @@ public class BoardController extends GenericSceneController implements Initializ
                         secondCardOnHand.setEffect(null);
                         gameStatus.setText("CHOOSE ONE OF YOUR CARDS ON HAND");
                         gameStatus.setTextFill(Color.WHITE);
-
-                        //disillumino
                     }
                     toggle2=!toggle2;
                 }
@@ -1218,7 +1485,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         isClickedDeck = true;
                         disableDecksEXCEPTone(firstGoldCard);
                         light(firstGoldCard);
-                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setText("CLICK THE BUTTON GET A CARD");
                         gameStatus.setTextFill(Color.WHITE);
                         getACard.setDisable(false);
                     }else{
@@ -1243,7 +1510,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         getResourceCardIndex_toServer = 0;
                         disableDecksEXCEPTone(firstResourceCard);
                         light(firstResourceCard);
-                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setText("CLICK THE BUTTON GET A CARD");
                         gameStatus.setTextFill(Color.WHITE);
                         getACard.setDisable(false);
                     }else {
@@ -1268,7 +1535,7 @@ public class BoardController extends GenericSceneController implements Initializ
                     getGoldCardIndex_toServer = 1;
                     disableDecksEXCEPTone(secondGoldCard);
                     light(secondGoldCard);
-                    gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                    gameStatus.setText("CLICK THE BUTTON GET A CARD");
                     gameStatus.setTextFill(Color.WHITE);
                 }else{
                     getACard.setDisable(true);
@@ -1293,7 +1560,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         getResourceCardIndex_toServer = 1;
                         disableDecksEXCEPTone(secondResourceCard);
                         light(secondResourceCard);
-                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setText("CLICK THE BUTTON GET A CARD");
                         gameStatus.setTextFill(Color.WHITE);
                     }else {
                         getACard.setDisable(true);
@@ -1318,7 +1585,7 @@ public class BoardController extends GenericSceneController implements Initializ
                         getGoldCardIndex_toServer = 2;
                         disableDecksEXCEPTone(kingdomGoldDeck);
                         light(kingdomGoldDeck);
-                        gameStatus.setText("CLICK THE BUTTON -GET A CARD");
+                        gameStatus.setText("CLICK THE BUTTON GET A CARD");
                         gameStatus.setTextFill(Color.WHITE);
                         getACard.setDisable(false);
                     }else{
@@ -1348,7 +1615,14 @@ public class BoardController extends GenericSceneController implements Initializ
         kingdomResourceDeck.setCursor(Cursor.HAND);
         kingdomResourceDeck.setEffect(null);
     }
-
+    /**
+     * Initializes event handlers for a draw area represented by an ImageView (firstTargetCard)
+     * and a corresponding TextField (cTarget2). Sets up mouse enter and exit events to control
+     * visibility of cTarget2 and a large image display pane (bigImgPane).
+     *
+     * @param firstTargetCard The ImageView representing the draw area.
+     * @param cTarget2        The TextField associated with the draw area.
+     */
     private void initDrawAreaEvent(ImageView firstTargetCard, TextField cTarget2) {
         firstTargetCard.setOnMouseEntered(event -> {
             cTarget2.setVisible(true);
@@ -1359,6 +1633,14 @@ public class BoardController extends GenericSceneController implements Initializ
             bigImgPane.setVisible(false);
         });
     }
+
+    /**
+     * Initializes event handlers for an ImageView (`color`) representing a color indicator and its associated TextField (`nick`).
+     * Sets up mouse enter and exit events to control the visibility of the `nick` TextField.
+     *
+     * @param color The ImageView representing the color indicator.
+     * @param nick  The TextField associated with the color indicator.
+     */
     private void initColorEvent(ImageView color, TextField nick) {
        color.setOnMouseEntered(event -> {
             nick.setVisible(true);
@@ -1368,12 +1650,22 @@ public class BoardController extends GenericSceneController implements Initializ
         });
     }
 
-
+    /**
+     * Enables and displays a larger version of an image (`image`) in a designated ImageView (`biggerImg`) and makes the
+     * big image display pane (`bigImgPane`) visible.
+     *
+     * @param image The image to display in a larger format.
+     */
     private void enableBigImg(Image image) {
         biggerImg.setImage(image);
         bigImgPane.setVisible(true);
     }
-
+    /**
+     * Handles the action to close and disable the win pane in response to an ActionEvent.
+     * Sets the visibility of the win pane (`winPane`) to false and disables interaction with it.
+     *
+     * @param event The ActionEvent triggering the method call.
+     */
     @FXML
     public void exitWin(ActionEvent event) {
         winPane.setVisible(false);
