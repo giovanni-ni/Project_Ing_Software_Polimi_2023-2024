@@ -228,7 +228,7 @@ public class SingleMatchController extends Thread{
         }else {
             boolean findPlayer = false;
             for(Player p : match.getPlayers()){
-                if (Objects.equals(p.getNickname(), clientChatMessage.getNickname()))
+                if (Objects.equals(p.getNickname(), clientChatMessage.getToPlayer()))
                     findPlayer= true;
             }
             if (findPlayer){
