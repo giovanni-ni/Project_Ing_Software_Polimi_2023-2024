@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+
+/**
+ * Enumeration of the file paths of the cards json files
+ */
 public enum FilePath {
 
     RESOURCECARDPATH("/json/ResourceCard.json"),
@@ -12,9 +16,10 @@ public enum FilePath {
     POSITIONGOALTARGETCARDPATH("/json/PositionGoalTarget.json");
    public final String value;
 
-
+    /**
+     * Constructor of the enum with the value of the path
+     */
     FilePath(String value) {
-
         this.value = value;
     }
 }

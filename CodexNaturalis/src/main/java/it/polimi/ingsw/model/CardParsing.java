@@ -10,7 +10,10 @@ import java.util.List;
 
 public class CardParsing implements Serializable {
 
-
+    /**
+     * Card Factory of the Resource cards
+     * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     */
 
     public List<ResourceCard> loadResourceCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -20,7 +23,10 @@ public class CardParsing implements Serializable {
         });
         return cards;
     }
-
+    /**
+     * Card Factory of the Gold Cards
+     * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     */
     public List<GoldCard> loadGoldCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<GoldCard> cards;
@@ -29,6 +35,10 @@ public class CardParsing implements Serializable {
         });
         return cards;
     }
+    /**
+     * Card Factory of the Initial Cards
+     * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     */
     public List<InitialCard> loadInitialCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         List<InitialCard> cards;
@@ -37,6 +47,12 @@ public class CardParsing implements Serializable {
         });
         return cards;
     }
+
+    /**
+     * Card Factory of the Target Cards
+     * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file, in order of
+     * Counter Target cards, Oblique Target cards, Position Target cards
+     */
     public List<TargetCard> loadTargetCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -62,6 +78,10 @@ public class CardParsing implements Serializable {
 
         return cards;
     }
+
+    /**
+     * Card Parsing constructor
+     */
     public CardParsing() {
     }
 }
