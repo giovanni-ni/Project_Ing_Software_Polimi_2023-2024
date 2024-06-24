@@ -420,6 +420,7 @@ public class BoardController extends GenericSceneController implements Initializ
             }
 
             case ENDMESSAGE -> {
+                updatePt();
                 StringBuilder winner = new StringBuilder();
                 // disabilito gioco carta
                 myGrid.setDisable(true);
