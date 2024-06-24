@@ -36,6 +36,7 @@ public class StartController extends GenericSceneController {
     private void AskConnection(ActionEvent event) throws IOException {
         print("key pressed");
         getGuiApplication().showScene(ScenesName.ASKCONNECTION);
+        Sound.playSound("opening.wav");
     }
 
     @FXML

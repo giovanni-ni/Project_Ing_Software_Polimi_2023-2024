@@ -82,7 +82,7 @@ public class GUI extends Thread implements Ui {
             chat.add((ServerChatMessage) msg);
             guiApplication.updateCurrentSceneModel(UPDATE.CHATMESSAGE);
             if(((ServerChatMessage) msg).getChatMsg().equals("快点吧")) {
-
+                Sound.playSound("6589.wav");
             }
 
         }
