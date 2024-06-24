@@ -448,4 +448,12 @@ public class SingleMatchController extends Thread{
     public void setLimitPly(int limitPly) {
         this.limitPly = limitPly;
     }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
 }
