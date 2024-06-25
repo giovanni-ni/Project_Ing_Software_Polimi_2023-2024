@@ -225,4 +225,16 @@ public class GUI extends Thread implements Ui {
     public ArrayList<ServerChatMessage> getChat() {
         return chat;
     }
+
+    /**
+     * Retrieves the chat messages received from the server.
+     *
+     * @return The list of ServerChatMessage objects representing chat messages.
+     */
+    public void initializeForNewGame(){
+        matchID = 0;
+        username = null;
+        chat = new ArrayList<>();
+    }
+
 }

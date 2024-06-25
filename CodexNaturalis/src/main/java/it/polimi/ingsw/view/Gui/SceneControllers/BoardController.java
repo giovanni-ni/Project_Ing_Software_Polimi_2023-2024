@@ -10,6 +10,7 @@ import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Gui.SceneControllers.ptPositions.PTPOSITION;
+import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
@@ -100,7 +101,7 @@ public class BoardController extends GenericSceneController implements Initializ
     @FXML
     Label gameStatus;
     @FXML
-    Button  playACard, getACard;
+    Button  playACard, getACard, back;
     @FXML
     GridPane gridPane, gridPane2, gridPane3, gridPane4, myGrid;
     @FXML
@@ -418,6 +419,7 @@ public class BoardController extends GenericSceneController implements Initializ
             }
 
             case ENDMESSAGE -> {
+                back.setVisible(true);
                 updatePt();
                 StringBuilder winner = new StringBuilder();
                 myGrid.setDisable(true);
@@ -485,6 +487,7 @@ public class BoardController extends GenericSceneController implements Initializ
                             myGrid =gridPane4;
                         }
                     }
+                    back.setVisible(false);
                     disableDecks();
                     ArrayList<TargetCard> commonTarget = model.getCommonTarget();
                     TargetCard targetCard = myPlayer.getTarget();
@@ -1660,6 +1663,15 @@ public class BoardController extends GenericSceneController implements Initializ
     public void exitWin(ActionEvent event) {
         winPane.setVisible(false);
         winPane.setDisable(true);
+    }
+
+    /**
+     * Handles the action go back to the menu in response to an ActionEvent.
+     * @param event The ActionEvent triggering the method call.
+     */
+    public void goBack(ActionEvent event) throws IOException {
+        getGuiApplication().initializeAfter();
+        getGuiApplication().showScene(ScenesName.STARTMENU);
     }
 }
 

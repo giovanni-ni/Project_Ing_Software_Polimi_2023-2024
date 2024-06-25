@@ -13,6 +13,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
@@ -39,9 +40,13 @@ public class WaitingController extends GenericSceneController implements Initial
      */
     @FXML
     void setPlayerReady() throws RemoteException {
+        ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
+        for (Player p : players){
+            if (Objects.equals(p.nickname, getGuiApplication().getGui().getUsername()));
+            isReady = p.getReady();
+        }
         if (!isReady) {
             getGuiApplication().getGui().notify(new SetReadyMessage());
-            isReady = true;
         }
     }
 
@@ -137,5 +142,10 @@ public class WaitingController extends GenericSceneController implements Initial
         tickList = getTickList();
         ballList = getBallList();
         nickList = getNickList();
+        for (int i =0; i< ballList.size();i++) {
+            ballList.get(i).setVisible(false);
+            nickList.get(i).setText("");
+            tickList.get(i).setVisible(false);
+        }
     }
 }

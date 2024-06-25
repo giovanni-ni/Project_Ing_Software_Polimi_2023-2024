@@ -30,6 +30,7 @@ public class GUIApplication extends Application {
     private Stage stage;
     private BiMap<Scene, ScenesName> scenesList;
     private BiMap<GenericSceneController, ScenesName> controllerList;
+    private Stage pStage;
 
     /**
      * Entry point of the JavaFX application.
@@ -41,6 +42,7 @@ public class GUIApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         initGUI();
+        pStage = primaryStage;
         loadStage(primaryStage);
         stage.setOnCloseRequest(we -> System.exit(0)); // Ensure application closes properly
         showScene(ScenesName.START); // Show the initial scene
@@ -64,6 +66,13 @@ public class GUIApplication extends Application {
         Gui = new GUI(this);
     }
 
+    /**
+     * Initializes the GUI instance to get ready to another game.
+     */
+    public void initializeAfter() throws IOException {
+        getGui().initializeForNewGame();
+        loadStage(pStage);
+    }
     /**
      * Loads the primary stage of the application with scenes defined in ScenesName enum.
      *

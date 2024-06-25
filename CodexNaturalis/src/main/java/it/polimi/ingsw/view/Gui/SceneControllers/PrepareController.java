@@ -69,9 +69,11 @@ public class PrepareController extends GenericSceneController implements Initial
             if (step == 1) {
                 if (!targetOneCheck.isSelected() && !targetTwoCheck.isSelected())
                     super.ShowErrorMessage("Please choose at least one");
-                else
+                else{
                     getGuiApplication().getGui().notify(new FrontOrBackMessage(targetOneCheck.isSelected()));
-                step++;
+                    step=2;
+                }
+
             } else if (step == 2) {
                 BiMap<PlayerColor, CheckBox> allCheckBox = HashBiMap.create();
                 allCheckBox.put(PlayerColor.RED, redCheck);
