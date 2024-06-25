@@ -651,7 +651,7 @@ public class BoardController extends GenericSceneController implements Initializ
                                 yellow.setCursor(Cursor.HAND);
                             }
                             case GREEN -> {
-                                if(p.nickname==model.getFirstPlayer())
+                                if(Objects.equals(p.nickname, model.getFirstPlayer()))
                                     green1.setVisible(true);
                                 green.setVisible(true);
                                 green.setCursor(Cursor.HAND);
