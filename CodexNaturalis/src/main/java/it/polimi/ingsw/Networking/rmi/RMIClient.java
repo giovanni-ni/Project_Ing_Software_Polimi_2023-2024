@@ -21,7 +21,7 @@ import java.util.List;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
-
+// todo javadoc
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     private String nickname;
 

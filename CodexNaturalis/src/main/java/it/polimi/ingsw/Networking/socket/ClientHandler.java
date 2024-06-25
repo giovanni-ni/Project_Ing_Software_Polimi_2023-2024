@@ -12,7 +12,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-
+// todo javadoc
 public class ClientHandler extends Thread {
 
     private final Socket clientSocket;

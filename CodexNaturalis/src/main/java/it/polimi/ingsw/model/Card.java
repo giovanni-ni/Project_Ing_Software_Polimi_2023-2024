@@ -4,7 +4,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
-
+// todo javadoc
 public class Card implements Serializable {
 
 	private int code;

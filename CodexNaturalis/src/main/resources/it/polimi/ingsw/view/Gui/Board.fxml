@@ -1024,7 +1024,7 @@
          <children>
             <ImageView fx:id="biggerImg" fitHeight="199.0" fitWidth="289.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../images/cards/102.jpg" />
+                  <Image url="@../../../../../images/cards/102.png" />
                </image>
             </ImageView>
          </children>

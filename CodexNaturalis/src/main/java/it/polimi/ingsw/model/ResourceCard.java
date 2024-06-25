@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.Map;
-
+// todo javadoc
 public class ResourceCard extends Card implements Serializable {
 
 	private Elements kingdom;

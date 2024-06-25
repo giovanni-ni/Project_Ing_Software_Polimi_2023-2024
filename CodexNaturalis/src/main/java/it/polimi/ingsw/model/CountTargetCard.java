@@ -3,7 +3,7 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-
+// todo javadoc
 public class CountTargetCard extends TargetCard implements Serializable {
 
     Elements[] elemRequired;

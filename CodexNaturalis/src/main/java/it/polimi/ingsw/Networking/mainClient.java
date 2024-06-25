@@ -18,7 +18,7 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
-
+// todo javadoc
 public class mainClient
 {
 

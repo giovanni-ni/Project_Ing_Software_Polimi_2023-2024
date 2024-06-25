@@ -5,7 +5,7 @@ import com.google.common.collect.HashBiMap;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+// todo javadoc
 public class ObliqueTargetCard extends TargetCard implements Serializable {
 
     private Elements elemRequired;

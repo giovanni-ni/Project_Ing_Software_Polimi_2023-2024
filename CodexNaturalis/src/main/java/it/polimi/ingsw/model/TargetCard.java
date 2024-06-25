@@ -2,7 +2,7 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+// todo javadoc
 public abstract class TargetCard implements Serializable {
 
 	private int idCard;

@@ -113,7 +113,121 @@ public class PrepareController extends GenericSceneController implements Initial
      */
     @Override
     public void updateModel(UPDATE update) throws IOException {
-        // Method implementation as per original code...
+
+        if (!initialized){
+            Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+            List<TargetCard> targetCards = List.of(myPlayer.getTargetOnHand());
+            ArrayList<TargetCard> commonTargets = getGuiApplication().getGui().getMyMatch().getCommonTarget();
+            InitialCard initialCard = myPlayer.getInitialCard();
+            target1 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getFirst().getIdCard(), true))));
+            target2 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getLast().getIdCard(), true))));
+            frontInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), true))));
+            backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), false))));
+            common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
+            common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
+            updateDrawCard();
+            initialized =true;
+        }
+        if (colorChoose && step==2){
+            step++;
+        }
+        Loading.setVisible(false);
+        // step 0 show draw card area
+        // step 1 initial card selection
+        // step 2 color selection
+        // step 3 show common target
+        // step 4 private target selection
+        switch (step){
+            case 0 ->{
+                maintext.setImage(textDeck);
+                maintext.setVisible(true);
+
+                setPane(colorPane,false);
+
+                targetOneImg.setVisible(false);
+                targetTwoImg.setVisible(false);
+
+                setAllCheckBoxFalse();
+
+                targetOneCheck.setVisible(false);
+                targetTwoCheck.setVisible(false);
+
+                setPane(drawCardPane,true);
+
+                confirm.setDisable(false);
+            }
+            case 1 -> {
+                setPane(drawCardPane,false);
+                maintext.setImage(textInitial);
+                targetOneImg.setImage(frontInitial);
+                targetTwoImg.setImage(backInitial);
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                targetOneCheck.setVisible(true);
+                targetTwoCheck.setVisible(true);
+                confirm.setDisable(false);
+            }
+            case 2 ->{
+                maintext.setImage(textColor);
+                updateColorPane();
+                setPane(colorPane,true);
+                setPane(drawCardPane,false);
+                targetOneImg.setVisible(false);
+                targetTwoImg.setVisible(false);
+                targetOneCheck.setVisible(false);
+                targetTwoCheck.setVisible(false);
+            }
+            case 3 ->{
+
+                setPane(colorPane,false);
+                setPane(drawCardPane,false);
+                maintext.setImage(textCommon);
+                targetOneImg.setImage(common1);
+                targetTwoImg.setImage(common2);
+                targetOneCheck.setVisible(false);
+                targetTwoCheck.setVisible(false);
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                confirm.setDisable(false);
+            }
+            case 4->{
+                setPane(colorPane,false);
+                setPane(drawCardPane,false);
+                maintext.setImage(textTarget);
+                targetOneImg.setImage(target1);
+                targetTwoImg.setImage(target2);
+                targetOneCheck.setVisible(true);
+                targetTwoCheck.setVisible(true);
+                targetOneImg.setVisible(true);
+                targetTwoImg.setVisible(true);
+                confirm.setDisable(false);
+            }
+            default -> {
+                boolean allReady = true;
+                ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
+                for (Player p : players){
+                    if (p.getPlayerID()==null){
+                        allReady =false;
+                    }
+                }
+                if (allReady){
+                    Platform.runLater(()->getGuiApplication().showScene(ScenesName.BOARD));
+                }else {
+                    maintext.setVisible(false);
+                    confirm.setDisable(false);
+                    confirm.setVisible(false);
+                    waiting.setVisible(true);
+                    setPane(colorPane, false);
+                    setPane(drawCardPane,false);
+                    targetOneImg.setVisible(false);
+                    targetTwoImg.setVisible(false);
+                    setAllCheckBoxFalse();
+
+                    targetOneCheck.setVisible(false);
+                    targetTwoCheck.setVisible(false);
+                }
+            }
+        }
     }
 
     /**
@@ -121,7 +235,12 @@ public class PrepareController extends GenericSceneController implements Initial
      * Hides panes that do not correspond to the player's color choice.
      */
     private void updateColorPane() {
-        // Method implementation as per original code...
+        for (VBox vBox : colorVboxs.values()) {
+            vBox.setVisible(false);
+        }
+        for (PlayerColor color : getGuiApplication().getGui().getMyMatch().getPlayerColors()){
+            colorVboxs.get(color).setVisible(true);
+        }
     }
 
     /**
@@ -130,7 +249,40 @@ public class PrepareController extends GenericSceneController implements Initial
      * @throws IOException If there is an error in retrieving or displaying the card images.
      */
     private void updateDrawCard() throws IOException {
-        // Method implementation as per original code...
+        ArrayList<ResourceCard> resourceDeck = getGuiApplication().getGui().getMyMatch().getResourceDeck();
+        ArrayList<GoldCard> goldDeck = getGuiApplication().getGui().getMyMatch().getGoldDeck();
+        int i ;
+        for (i =0; i<3 && i<resourceDeck.size() ; i++){
+            ResourceCard card = resourceDeck.get(i);
+            //set the third one back and others front
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
+        }
+        while(i<3){
+            //if the for loops ends because of deck empty disable others slots
+            ImageView imageView = decksImages.get(i);
+            imageView.setVisible(false);
+            imageView.setEffect(null);
+            i++;
+        }
+        //same logic for the gold cards slots
+        for (i =0 ; i<3 && i<goldDeck.size() ; i++){
+            GoldCard card = goldDeck.get(i);
+            if (i!=2)
+                card.setFront(true);
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(card)))));
+        }
+        while(i<3){
+            ImageView imageView = decksImages.get(i+3);
+            imageView.setEffect(null);
+            imageView.setVisible(false);
+            i++;
+        }
     }
 
     /**

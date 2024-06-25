@@ -4,7 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import java.io.Serializable;
-
+// todo javadoc
 public class PositionGoalTarget extends TargetCard implements Serializable {
 
     Elements firstElement;

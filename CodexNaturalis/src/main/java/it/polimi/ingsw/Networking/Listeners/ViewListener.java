@@ -4,7 +4,7 @@ import it.polimi.ingsw.Message.Message;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
+// todo javadoc
 public class ViewListener implements Listener{
 
     private final ObjectOutputStream out;

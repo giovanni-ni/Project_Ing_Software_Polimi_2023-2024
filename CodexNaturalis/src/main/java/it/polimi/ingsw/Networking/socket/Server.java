@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
-
+// todo javadoc
 public class Server extends Thread{
 
     private ServerSocket serverSocket;

@@ -1,5 +1,5 @@
 package it.polimi.ingsw.Networking;
-
+// todo javadoc
 public enum DefaultPort {
     SOCKETPORT(4234),
     RMIPORT(1234);
