@@ -200,7 +200,7 @@ public class BoardController extends GenericSceneController implements Initializ
         for(int i =0 ;i<p.getCardOnHand().size();i++){
             ImageView imageView;
             imageView=imagesList.get(i);
-            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByBackCard(backCardOnHand.get(i),false)))));
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByBackCard(backCardOnHand.get(i))))));
             imageView.setVisible(false);
         }
         //if a player played a card, I do not show his thirdCardOnHand

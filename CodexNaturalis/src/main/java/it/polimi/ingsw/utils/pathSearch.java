@@ -8,7 +8,11 @@ import java.io.IOException;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.findCardById;
 
 public class pathSearch {
-
+    /**
+     * Get the card path by the card id and the front boolean
+     * @param cardId : the card id of the card path
+     * @param isFront : boolean of the card front or back status
+     */
     public static String getPathByCardID(int cardId, boolean isFront)  {
         String path = null;
         Object card = null;
@@ -76,10 +80,19 @@ public class pathSearch {
         }
         return  path;
     }
+    /**
+     * Get the card path by the card
+     * @param card : the card id of the card path
+     */
     public static String getPathByCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),card.getIsFront());
     }
-    public static String getPathByBackCard(Card card,Boolean isFront) throws IOException {
+
+    /**
+     * Get the  back card path by the card
+     * @param card : the card id of the card path
+     */
+    public static String getPathByBackCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),false);
     }
 }
