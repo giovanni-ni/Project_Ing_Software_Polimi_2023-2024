@@ -9,7 +9,10 @@ import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 public class Sound {
-
+    /**
+     * Play the sound selected with the name of the sound file in the path.
+     * @param soundName: sound name to play
+     */
     public static synchronized void playSound(final String soundName) {
 
             new Thread(() -> {

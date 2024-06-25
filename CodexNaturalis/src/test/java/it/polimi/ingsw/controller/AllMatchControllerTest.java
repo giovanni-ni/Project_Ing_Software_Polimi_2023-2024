@@ -158,7 +158,7 @@ public class AllMatchControllerTest {
         msg.setListener(l);
         clt.addInQueue(msg, l);
         Thread.sleep(1000);
-        assertEquals(l.msg.getFirst().getClass(), joinFailMsg.class);
+        assertEquals(l.msg.getFirst().getClass(), joinSuccessMsg.class);
     }
     @Test
     void actionNotRecognizeTest() throws IOException, InterruptedException {

@@ -15,54 +15,83 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for the waiting scene where players can ready up.
+ */
 public class WaitingController extends GenericSceneController implements Initializable {
 
-    private  HashMap<Integer,ImageView> ballList;
-    private  HashMap<Integer,ImageView> tickList;
-    private  HashMap<Integer, Text> nickList;
-    boolean isReady = false;
-
+    private HashMap<Integer, ImageView> ballList;
+    private HashMap<Integer, ImageView> tickList;
+    private HashMap<Integer, Text> nickList;
+    private boolean isReady = false;
 
     @FXML
-    ImageView blueBall, redBall, yellowBall, greenBall, tickBlue, tickRed,tickYellow, tickGreen;
+    ImageView blueBall, redBall, yellowBall, greenBall, tickBlue, tickRed, tickYellow, tickGreen;
 
     @FXML
     Text roomID, nickBlue, nickRed, nickYellow, nickGreen;
 
+    /**
+     * Event handler method for setting the player's ready status.
+     * Notifies the server with a SetReadyMessage when the player is not ready.
+     *
+     * @throws RemoteException If there is an issue with remote method invocation.
+     */
     @FXML
     void setPlayerReady() throws RemoteException {
-        if (!isReady){
+        if (!isReady) {
             getGuiApplication().getGui().notify(new SetReadyMessage());
-            isReady=true;
+            isReady = true;
         }
     }
 
-
+    /**
+     * Updates the model based on the current state of players in the match.
+     *
+     * @param update The type of update triggering the model update.
+     */
     @Override
-    public void updateModel(UPDATE update){
-
+    public void updateModel(UPDATE update) {
         ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
         int i = 0;
-        for (Player p : players){
+        for (Player p : players) {
             ballList.get(i).setVisible(true);
             nickList.get(i).setText(p.nickname);
             tickList.get(i).setVisible(p.getReady());
             i++;
         }
-        roomID.setText("Room ID: "+getGuiApplication().getGui().getMatchID());
-
+        roomID.setText("Room ID: " + getGuiApplication().getGui().getMatchID());
     }
 
-
-    private HashMap<Integer,ImageView> getBallList(){
+    /**
+     * Retrieves the HashMap of ImageView objects representing player balls.
+     *
+     * @return The HashMap containing player ball ImageViews.
+     */
+    private HashMap<Integer, ImageView> getBallList() {
         return getPlayerColorImageViewHashMap(blueBall, redBall, yellowBall, greenBall);
     }
-    private HashMap<Integer,ImageView> getTickList(){
+
+    /**
+     * Retrieves the HashMap of ImageView objects representing player ready ticks.
+     *
+     * @return The HashMap containing player ready tick ImageViews.
+     */
+    private HashMap<Integer, ImageView> getTickList() {
         return getPlayerColorImageViewHashMap(tickBlue, tickRed, tickYellow, tickGreen);
     }
 
+    /**
+     * Creates a HashMap of ImageView objects based on player colors.
+     *
+     * @param tickBlue   The ImageView for the blue player's ready tick.
+     * @param tickRed    The ImageView for the red player's ready tick.
+     * @param tickYellow The ImageView for the yellow player's ready tick.
+     * @param tickGreen  The ImageView for the green player's ready tick.
+     * @return The HashMap containing player ready tick ImageViews.
+     */
     private HashMap<Integer, ImageView> getPlayerColorImageViewHashMap(ImageView tickBlue, ImageView tickRed, ImageView tickYellow, ImageView tickGreen) {
-        HashMap<Integer,ImageView> tickList = new HashMap<>();
+        HashMap<Integer, ImageView> tickList = new HashMap<>();
         tickList.put(0, tickBlue);
         tickList.put(1, tickRed);
         tickList.put(2, tickYellow);
@@ -70,26 +99,43 @@ public class WaitingController extends GenericSceneController implements Initial
         return tickList;
     }
 
-    private  HashMap<Integer, Text> getNickList(){
-        HashMap<Integer, Text>  nickList= new HashMap<>();
+    /**
+     * Retrieves the HashMap of Text objects representing player nicknames.
+     *
+     * @return The HashMap containing player nickname Text objects.
+     */
+    private HashMap<Integer, Text> getNickList() {
+        HashMap<Integer, Text> nickList = new HashMap<>();
         nickList.put(0, nickBlue);
-        nickList.put(1,nickRed);
+        nickList.put(1, nickRed);
         nickList.put(2, nickYellow);
         nickList.put(3, nickGreen);
         return nickList;
     }
+
+    /**
+     * Displays an error message on the screen with a specified string and sets the text color to red.
+     *
+     * @param string The error message to display.
+     */
     @Override
-    public void ShowErrorMessage(String string){
+    public void ShowErrorMessage(String string) {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
-        isReady=false;
+        isReady = false;
     }
 
+    /**
+     * Initializes the waiting scene controller, setting up the initial state of player balls,
+     * ready ticks, and player nicknames.
+     *
+     * @param url            The location used to resolve relative paths for the root object.
+     * @param resourceBundle The resources specific to this controller.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-            tickList = getTickList();
-            ballList = getBallList();
-            nickList = getNickList();
+        tickList = getTickList();
+        ballList = getBallList();
+        nickList = getNickList();
     }
 }
-
