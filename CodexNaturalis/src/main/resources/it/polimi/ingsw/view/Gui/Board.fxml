@@ -8,6 +8,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -165,6 +166,38 @@
             <Font name="Arial Bold" size="13.0" />
          </font>
       </TextField>
+      <ImageView fx:id="blue1" disable="true" fitHeight="60.0" fitWidth="50.0" layoutX="1222.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../../../images/view/blue.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="-1.0" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="red1" fitHeight="50.0" fitWidth="50.0" layoutX="1217.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../../../images/view/red.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="-1.0" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="green1" fitHeight="50.0" fitWidth="50.0" layoutX="1222.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../../../images/view/green.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="-1.0" />
+         </effect>
+      </ImageView>
+      <ImageView fx:id="yellow1" disable="true" fitHeight="50.0" fitWidth="50.0" layoutX="1222.0" layoutY="209.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../../../images/view/yellow.png" />
+         </image>
+         <effect>
+            <ColorAdjust brightness="-1.0" />
+         </effect>
+      </ImageView>
       <ImageView fx:id="blue" fitHeight="60.0" fitWidth="50.0" layoutX="1212.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="18.0">
          <image>
             <Image url="@../../../../../images/view/blue.png" />

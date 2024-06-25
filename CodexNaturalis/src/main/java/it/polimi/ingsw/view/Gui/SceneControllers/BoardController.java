@@ -95,7 +95,7 @@ public class BoardController extends GenericSceneController implements Initializ
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
             firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack,
-            blue, red, yellow, green,firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
+            blue, red, yellow, green, blue1,red1, yellow1, green1, firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
             secondCardOnHand_RED,secondCardOnHand_YELLOW,secondCardOnHand_GREEN,thirdCardOnHand_BLUE,thirdCardOnHand_RED,thirdCardOnHand_YELLOW,thirdCardOnHand_GREEN,biggerImg;
     @FXML
     Label gameStatus;
@@ -633,18 +633,26 @@ public class BoardController extends GenericSceneController implements Initializ
                     for (Player p : getGuiApplication().getGui().getMyMatch().getPlayers()) {
                         switch (p.getPlayerID()) {
                             case BLUE -> {
+                                if(p.nickname==model.getFirstPlayer())
+                                    blue1.setVisible(true);
                                 blue.setVisible(true);
                                 blue.setCursor(Cursor.HAND);
                             }
                             case RED -> {
+                                if(p.nickname==model.getFirstPlayer())
+                                    red1.setVisible(true);
                                 red.setVisible(true);
                                 red.setCursor(Cursor.HAND);
                             }
                             case YELLOW -> {
+                                if(Objects.equals(p.nickname, model.getFirstPlayer()))
+                                    yellow1.setVisible(true);
                                 yellow.setVisible(true);
                                 yellow.setCursor(Cursor.HAND);
                             }
                             case GREEN -> {
+                                if(p.nickname==model.getFirstPlayer())
+                                    green1.setVisible(true);
                                 green.setVisible(true);
                                 green.setCursor(Cursor.HAND);
                             }
