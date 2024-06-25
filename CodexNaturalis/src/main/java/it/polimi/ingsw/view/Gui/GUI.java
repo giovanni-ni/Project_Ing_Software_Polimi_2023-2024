@@ -227,9 +227,7 @@ public class GUI extends Thread implements Ui {
     }
 
     /**
-     * Retrieves the chat messages received from the server.
-     *
-     * @return The list of ServerChatMessage objects representing chat messages.
+     * Initialize the Gui data if game finished and user want to play with the same connection
      */
     public void initializeForNewGame(){
         matchID = 0;

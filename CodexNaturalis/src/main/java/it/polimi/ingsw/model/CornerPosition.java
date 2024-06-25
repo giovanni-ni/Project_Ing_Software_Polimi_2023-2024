@@ -5,12 +5,24 @@ package it.polimi.ingsw.model;
  */
 public enum CornerPosition {
 
+	/**
+	 * Up left position
+	 */
 	UPLEFT,
 
+	/**
+	 * Up right position
+	 */
 	UPRIGHT,
 
+	/**
+	 * Down left position
+	 */
 	DOWNLEFT,
 
+	/**
+	 * Down right position
+	 */
 	DOWNRIGHT;
 
 }

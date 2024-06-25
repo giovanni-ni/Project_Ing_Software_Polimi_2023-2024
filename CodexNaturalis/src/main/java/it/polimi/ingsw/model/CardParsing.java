@@ -13,6 +13,7 @@ public class CardParsing implements Serializable {
     /**
      * Card Factory of the Resource cards
      * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     * @return list of Cards
      */
 
     public List<ResourceCard> loadResourceCards() throws IOException {
@@ -26,6 +27,8 @@ public class CardParsing implements Serializable {
     /**
      * Card Factory of the Gold Cards
      * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     * @return list of Cards
+     * @throws IOException
      */
     public List<GoldCard> loadGoldCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -38,6 +41,8 @@ public class CardParsing implements Serializable {
     /**
      * Card Factory of the Initial Cards
      * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file
+     * @return list of Cards
+     * @throws IOException
      */
     public List<InitialCard> loadInitialCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -52,6 +57,8 @@ public class CardParsing implements Serializable {
      * Card Factory of the Target Cards
      * This method returns the cards loaded in the respective json file in a List in order of the cards as in the json file, in order of
      * Counter Target cards, Oblique Target cards, Position Target cards
+     * @return list of Cards
+     * @throws IOException
      */
     public List<TargetCard> loadTargetCards() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();

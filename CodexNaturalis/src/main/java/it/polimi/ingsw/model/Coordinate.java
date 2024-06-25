@@ -2,7 +2,9 @@ package it.polimi.ingsw.model;
 
 import java.io.Serializable;
 import java.util.Objects;
-
+/**
+ * Coordinate of a card in the board Map
+ */
 public class Coordinate implements Serializable {
     private int x;
     private int y;
@@ -23,6 +25,7 @@ public class Coordinate implements Serializable {
     }
     /**
      * Getter of the x data of the coordinate
+     * @return x coordinate
      */
     public int getX() {
         return x;
@@ -30,6 +33,7 @@ public class Coordinate implements Serializable {
 
     /**
      * Getter of the y data of the coordinate
+     * @return y coordinate
      */
     public int getY() {
         return y;
@@ -37,6 +41,7 @@ public class Coordinate implements Serializable {
 
     /**
      * Setter of the y data of the coordinate
+     * @param y coordinate
      */
     public void setY(int y) {
         this.y = y;
@@ -44,6 +49,7 @@ public class Coordinate implements Serializable {
 
     /**
      * Setter of the x data of the coordinate
+     * @param x coordinate
      */
     public void setX(int x) {
         this.x = x;

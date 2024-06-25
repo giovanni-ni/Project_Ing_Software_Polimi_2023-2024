@@ -1668,6 +1668,7 @@ public class BoardController extends GenericSceneController implements Initializ
     /**
      * Handles the action go back to the menu in response to an ActionEvent.
      * @param event The ActionEvent triggering the method call.
+     * @throws IOException
      */
     public void goBack(ActionEvent event) throws IOException {
         getGuiApplication().initializeAfter();

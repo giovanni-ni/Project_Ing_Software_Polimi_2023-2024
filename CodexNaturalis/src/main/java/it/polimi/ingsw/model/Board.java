@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Board of the player which places his/her card
  * it is initialized with an initial Card, it is unique for each player in the game.
- * @author: Gong, Huang, Ni, Gu
  */
 public class Board implements Serializable {
 
@@ -22,6 +21,9 @@ public class Board implements Serializable {
 
 	private ArrayList<Integer> exists;
 
+	/**
+	 * Constructor of the board of each player at the start of the game
+	 */
 	public Board(){
 
 	}
@@ -53,7 +55,10 @@ public class Board implements Serializable {
 	 * Add the card on the board and count the new elements showed up and deletes the covered ones.
 	 * This method is used only if the check method is called first and returns true
 
-	 * @param input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player; x:the coordinate x of the position desired; y:coordinate y desired
+	 * @param input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player;
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
+	 * @return boolean of the add card status, success or fail
 
 	 */
 	public boolean addCard(ResourceCard input,int x, int y) {
@@ -78,8 +83,8 @@ public class Board implements Serializable {
 	 * This method is used by the player class to check the availability of the board
 	 *
 	 * @return returns a boolean, if there are all free empty corners, and it is a free slot it returns true, otherwise false
-	 * @param x the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+	 * @param x the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public boolean check(int x, int y) {
 		/* no Exception handle*/
@@ -101,7 +106,7 @@ public class Board implements Serializable {
 	 * @return boolean returns a boolean, if there is a free empty corners
 	 * @param x the coordinate x of the position desired;
 	 * @param y coordinate y desired
-
+	 * @param corner corner position that should be checked
 	 */
 
 
@@ -134,7 +139,8 @@ public class Board implements Serializable {
 	/**
 	 * method used for adding the number of elements present in the board of the player
 
-	 * @param element: the element which number has to be increased;value: the value of the element that has to be increased or decreased
+	 * @param element: the element which number has to be increased;
+	 * @param value: the amount of the element which number has to be increased;
 
 	 */
 	public void addElement(Elements element, Integer value){
@@ -198,6 +204,7 @@ public class Board implements Serializable {
 	 * it can also be called to add only an element of the corner indicated
 	 * Remember that a new card placed also causes elements covered so is suggested to call also the method deleteCoveredElements
 	 * @param card with the corner selected and its element that would be added in the counter of elements
+	 * @param corner the corner selected
 
 	 */
 	public void addCornerElement(Card card, CornerPosition corner){
@@ -233,7 +240,8 @@ public class Board implements Serializable {
 	 * Delete from the counter all the covered element in that coordinate there is a card placed
 	 * This method is used normally after the method addCorners and add Card.
 
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public void deleteCoveredElements(int x, int y){
 		for (CornerPosition corner : CornerPosition.values()) {
@@ -246,7 +254,10 @@ public class Board implements Serializable {
 	 * Delete from the  counter  element covered in the coordinate and selected corner where is a card  placed
 	 * This method is used normally used in deleteCoveredElements or after the method addCorners and add Card if there is a single corner covered.
 
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
+	 * @param corner: corner position of the card with coordinate x y desired
+	 *
 
 	 */
 	public void deleteCoveredByCorner(int x, int y,CornerPosition corner){
@@ -293,9 +304,9 @@ public class Board implements Serializable {
 	 * Is implemented mainly to count the covered card by the gold card with the bonusType of HideCorners
 	 *
 	 * @return: int count: quantity of cards about the coordinate
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
-
 	public int numCardsAbout(int x, int y){
 		int count=0;
 		if (isCardCoordinate(x+1,y+1))
@@ -312,8 +323,9 @@ public class Board implements Serializable {
 	/**
 	 * Check if there is a Card in coordinates given
 
-	 * @return: boolean:true if there is a card, otherwise false
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
+	 * @return boolean true if there is a card, otherwise false
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public boolean isCardCoordinate(int x, int y){
 		return cardCoordinate.containsValue(new Coordinate(x,y));
