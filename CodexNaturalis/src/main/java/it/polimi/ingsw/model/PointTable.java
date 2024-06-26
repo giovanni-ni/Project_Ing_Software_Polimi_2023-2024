@@ -92,8 +92,11 @@ public class PointTable implements Serializable {
 	}
 
 	/**
-	 * Getter of the players who has the greater point in the game
-	 * @return : List of the max point players
+	 * This method finds the players with the maximum points from a given set of players.
+	 * It returns a list of players who have the highest points.
+	 *
+	 * @param players A set of Player objects to be evaluated.
+	 * @return A list of players who have the maximum points.
 	 */
 	private List<Player> getPlayers(Set<Player> players) {
 		int max=0;
@@ -115,10 +118,13 @@ public class PointTable implements Serializable {
 	}
 
 	/**
-	 * Getter of the number of the target completed by the player
-	 * This method will count the common targets and the private one
-	 * It will count only once if the target is completed
-	 * @return : Integer of the count fo targets completed
+	 * This method counts the number of target points for a given player. It checks
+	 * the player's own target as well as a list of TargetCard objects to determine
+	 * how many of them have points greater than zero.
+	 *
+	 * @param p           The player whose targets are being evaluated.
+	 * @param targetCards An ArrayList of TargetCard objects to be checked.
+	 * @return The number of targets that have points greater than zero.
 	 */
 	public int CountTarget(Player p, ArrayList<TargetCard> targetCards) {
 		int countOfTarget = 0;

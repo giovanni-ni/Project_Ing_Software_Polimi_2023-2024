@@ -16,6 +16,13 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
  */
 public class App 
 {
+
+    /**
+     * The main method is the entry point of the application.
+     * It prints "Hello World" to the console.
+     *
+     * @param args command-line arguments (not used).
+     */
     public static void main( String[] args ) {
         System.out.println("Hello World");
     }

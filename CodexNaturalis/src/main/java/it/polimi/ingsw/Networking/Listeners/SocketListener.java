@@ -56,7 +56,6 @@ public class SocketListener implements Listener {
     /**
      * Helper method to finish sending data over the output stream.
      *
-     * @throws IOException if an I/O error occurs
      */
     public OutputStream getOut() {
         return out;
