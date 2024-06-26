@@ -10,6 +10,7 @@ import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 
 import it.polimi.ingsw.model.*;
 import it.polimi.ingsw.view.Gui.SceneControllers.ptPositions.PTPOSITION;
+import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 
 import javafx.event.ActionEvent;
@@ -71,7 +72,6 @@ public class BoardController extends GenericSceneController implements Initializ
     private ArrayList<ImageView> backCardsOnHandImages_RED = new ArrayList<>();
     private ArrayList<ImageView> backCardsOnHandImages_YELLOW= new ArrayList<>();
     private ArrayList<ImageView> backCardsOnHandImages_GREEN = new ArrayList<>();
-    //todo delete unuseful elements
     private HashMap<ImageView, Integer> searchCode= new HashMap<>();
     Boolean initialized =false;
     Boolean isClickedCardOnHand=false;
@@ -96,12 +96,12 @@ public class BoardController extends GenericSceneController implements Initializ
     ImageView cardOnHandBackground, boardBrown, firstCardOnHand, secondCardOnHand, thirdCardOnHand,
             deckBackground, pointTable, firstResourceCard, secondResourceCard, kingdomResourceDeck,
             firstGoldCard, secondGoldCard, kingdomGoldDeck, firstTargetCard, secondTargetCard, backTargetCard,boardTmpImage, boardTmpImageBack,
-            blue, red, yellow, green,firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
+            blue, red, yellow, green, blue1,red1, yellow1, green1, firstCardOnHand_BLUE,firstCardOnHand_RED,firstCardOnHand_YELLOW,firstCardOnHand_GREEN,secondCardOnHand_BLUE,
             secondCardOnHand_RED,secondCardOnHand_YELLOW,secondCardOnHand_GREEN,thirdCardOnHand_BLUE,thirdCardOnHand_RED,thirdCardOnHand_YELLOW,thirdCardOnHand_GREEN,biggerImg;
     @FXML
     Label gameStatus;
     @FXML
-    Button  playACard, getACard;
+    Button  playACard, getACard, back;
     @FXML
     GridPane gridPane, gridPane2, gridPane3, gridPane4, myGrid;
     @FXML
@@ -200,7 +200,7 @@ public class BoardController extends GenericSceneController implements Initializ
         for(int i =0 ;i<p.getCardOnHand().size();i++){
             ImageView imageView;
             imageView=imagesList.get(i);
-            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByBackCard(backCardOnHand.get(i),false)))));
+            imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByBackCard(backCardOnHand.get(i))))));
             imageView.setVisible(false);
         }
         //if a player played a card, I do not show his thirdCardOnHand
@@ -321,7 +321,6 @@ public class BoardController extends GenericSceneController implements Initializ
         }
 
     }
-//TODO animal back gold wrong
     /**
      * Creates an ImageView for the given card. Sets the image based on whether the card is front-facing or not.
      * Configures the ImageView's size and disables interaction with it.
@@ -382,7 +381,7 @@ public class BoardController extends GenericSceneController implements Initializ
      * Applies a special visual effect to the background of the player's cards on hand.
      * Adds heart images to the grid for visual enhancement, excluding the central position (40, 40).
 
-     * Event handler for mouse click on heart images displayed on the game grid.
+     * Event handler for mouse click on plus images displayed on the game grid.
      * Handles primary mouse button clicks when a card on hand is clicked.
      * Enables the "Set Back" button, sets the board click status to true, and updates game status text.
      * Disables and hides the clicked card on hand.
@@ -420,16 +419,14 @@ public class BoardController extends GenericSceneController implements Initializ
             }
 
             case ENDMESSAGE -> {
+                back.setVisible(true);
                 updatePt();
                 StringBuilder winner = new StringBuilder();
-                // disabilito gioco carta
                 myGrid.setDisable(true);
 
                 playACard.setDisable(true);
                 setBack.setDisable(true);
                 disableCardOnHand();
-
-                // disabilito pesca carta
                 disableDecks();
                 getResourceCardIndex_toServer=null;
                 getGoldCardIndex_toServer=null;
@@ -490,6 +487,7 @@ public class BoardController extends GenericSceneController implements Initializ
                             myGrid =gridPane4;
                         }
                     }
+                    back.setVisible(false);
                     disableDecks();
                     ArrayList<TargetCard> commonTarget = model.getCommonTarget();
                     TargetCard targetCard = myPlayer.getTarget();
@@ -500,9 +498,8 @@ public class BoardController extends GenericSceneController implements Initializ
                         for (int i = 0; i < 82; i++)
                             for (int j = 0; j < 82; j++) {
                                 if (((i + j) % 2 == 0) && !(i == 40 && j == 40)) {
-                                //add heart
                                 ImageView imageViewHeart = new ImageView();
-                                imageViewHeart.setImage(new Image(getClass().getResourceAsStream("/images/view/heart.png")));
+                                imageViewHeart.setImage(new Image(getClass().getResourceAsStream("/images/view/plus.png")));
                                 imageViewHeart.setCursor(Cursor.HAND);
                                 imageViewHeart.setFitWidth(15);
                                 imageViewHeart.setFitHeight(15);
@@ -510,31 +507,24 @@ public class BoardController extends GenericSceneController implements Initializ
                                 stackPane.setAlignment(Pos.CENTER);
                                 myGrid.add(stackPane, i, j);
 
-                                //what happens if you click the heart
                                 imageViewHeart.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                     @Override
                                     public void handle(MouseEvent event) {
                                         if (event.getButton() == MouseButton.PRIMARY && isClickedCardOnHand) {
-                                            //abilito la casella
                                             setBack.setDisable(false);
                                             isClickedBoard = true;
                                             gameStatus.setText("CLICK THE BUTTON PLAY CARD or MOVE THE CARD ON THE BOARD");
                                             gameStatus.setTextFill(Color.WHITE);
 
-                                            // rendo invisibile le carte che ho in mano
                                             cardsOnHandImages.get(cardOnHandIndex_toServer).setDisable(true);
                                             cardsOnHandImages.get(cardOnHandIndex_toServer).setVisible(false);
-
-                                            // ora puoi cliccare il bottone di giocare una carta
                                             playACard.setDisable(false);
 
-                                            // search which heart is clicked
                                             ImageView imageClicked = (ImageView) event.getSource();
                                             StackPane stackPane = (StackPane) imageClicked.getParent();
                                             Integer columnIndex = GridPane.getColumnIndex(stackPane);
                                             Integer rowIndex = GridPane.getRowIndex(stackPane);
 
-                                            // after you first put of card you can move it on the board
                                             if (!Objects.equals(putACardY_toServer, rowIndex) || !Objects.equals(putACardX_toServer, columnIndex)) {
 
                                                 myGrid.getChildren().remove(boardTmpImage);
@@ -545,7 +535,6 @@ public class BoardController extends GenericSceneController implements Initializ
                                             putACardY_toServer = rowIndex == null ? 0 : rowIndex;
 
 
-                                            //add frontCard
                                             boardTmpImage.setImage(cardsOnHandImages.get(cardOnHandIndex_toServer).getImage());
                                             boardTmpImage.setFitWidth(146);
                                             boardTmpImage.setFitHeight(100);
@@ -553,7 +542,6 @@ public class BoardController extends GenericSceneController implements Initializ
 
                                             myGrid.add(boardTmpImage, putACardX_toServer, putACardY_toServer);
 
-                                            // add back card
                                             Image image = null;
                                             Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
                                             ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
@@ -564,7 +552,6 @@ public class BoardController extends GenericSceneController implements Initializ
                                             boardTmpImageBack.setFitWidth(146);
                                             myGrid.add(boardTmpImageBack, putACardX_toServer, putACardY_toServer);
 
-                                            // in base alla casella decido quale carta mostrare
                                             if (!setBack.isSelected()) {
                                                 boardTmpImageBack.setVisible(false);
                                                 boardTmpImage.setVisible(true);
@@ -575,7 +562,6 @@ public class BoardController extends GenericSceneController implements Initializ
                                                 isFront_toServer = false;
                                             }
 
-                                            // se clico un' altra volta una carta front del board
                                             boardTmpImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
                                                 @Override
                                                 public void handle(MouseEvent event) {
@@ -591,32 +577,32 @@ public class BoardController extends GenericSceneController implements Initializ
                                                         playACard.setDisable(true);
                                                         isClickedBoard = false;
 
-                                                        // rendo visibile la carta in mano
                                                         for (ImageView ima : cardsOnHandImages) {
                                                             ima.setVisible(true);
                                                             ima.setDisable(false);
                                                         }
-                                                        //todo got a null pointer exception here because of index
-                                                        cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
-                                                        switch (cardOnHandIndex_toServer) {
-                                                            case 0:
-                                                                toggle1 = !toggle1;
-                                                                break;
-                                                            case 1:
-                                                                toggle2 = !toggle2;
-                                                                break;
-                                                            case 2:
-                                                                toggle3 = !toggle3;
-                                                                break;
+
+                                                        if(cardOnHandIndex_toServer!=null){
+                                                            cardsOnHandImages.get(cardOnHandIndex_toServer).setEffect(null);
+                                                            switch (cardOnHandIndex_toServer) {
+                                                                case 0:
+                                                                    toggle1 = !toggle1;
+                                                                    break;
+                                                                case 1:
+                                                                    toggle2 = !toggle2;
+                                                                    break;
+                                                                case 2:
+                                                                    toggle3 = !toggle3;
+                                                                    break;
+                                                            }
                                                         }
+
 
                                                         cardOnHandIndex_toServer = null;
 
-                                                        // rimnuovo le carte sul board
                                                         myGrid.getChildren().remove(boardTmpImage);
                                                         myGrid.getChildren().remove(boardTmpImageBack);
 
-                                                        // inizializzo boardTmpImage
                                                         boardTmpImage = new ImageView();
                                                         boardTmpImageBack = new ImageView();
                                                     }
@@ -644,20 +630,36 @@ public class BoardController extends GenericSceneController implements Initializ
                     initialized = true;
                     yellow.setVisible(false);
                     green.setVisible(false);
+                    red.setVisible(false);
+                    blue.setVisible(false);
                     int i = 0;
                     for (Player p : getGuiApplication().getGui().getMyMatch().getPlayers()) {
-                        if (i == 0) {
-                            red.setCursor(Cursor.HAND);
-                        } else if (i == 1) {
-                            blue.setCursor(Cursor.HAND);
-                        } else if (i == 2) {
-                            yellow.setVisible(true);
-                            yellow.setCursor(Cursor.HAND);
-                        } else if (i == 3) {
-                            green.setVisible(true);
-                            green.setCursor(Cursor.HAND);
+                        switch (p.getPlayerID()) {
+                            case BLUE -> {
+                                if(p.nickname==model.getFirstPlayer())
+                                    blue1.setVisible(true);
+                                blue.setVisible(true);
+                                blue.setCursor(Cursor.HAND);
+                            }
+                            case RED -> {
+                                if(p.nickname==model.getFirstPlayer())
+                                    red1.setVisible(true);
+                                red.setVisible(true);
+                                red.setCursor(Cursor.HAND);
+                            }
+                            case YELLOW -> {
+                                if(Objects.equals(p.nickname, model.getFirstPlayer()))
+                                    yellow1.setVisible(true);
+                                yellow.setVisible(true);
+                                yellow.setCursor(Cursor.HAND);
+                            }
+                            case GREEN -> {
+                                if(Objects.equals(p.nickname, model.getFirstPlayer()))
+                                    green1.setVisible(true);
+                                green.setVisible(true);
+                                green.setCursor(Cursor.HAND);
+                            }
                         }
-                        i++;
                     }
                     blue.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
@@ -667,10 +669,9 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(false);
                             scrollPane3.setVisible(false);
                             scrollPane4.setVisible(false);
-                            // my ID is blue, show myFrontCardOnHand
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.BLUE)){
                                 visibleCardsOnHand(cardsOnHandImages);
-                            }else { //my id is not  blue show back cards
+                            }else {
                                 visibleCardsOnHand(backCardsOnHandImages_BLUE);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
                             }
@@ -688,10 +689,9 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane2.setVisible(true);
                             scrollPane3.setVisible(false);
                             scrollPane4.setVisible(false);
-                            // my ID is red, show myFrontCardOnHand
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.RED)){
                                 visibleCardsOnHand(cardsOnHandImages);
-                            }else { //my id is not  red show back cards
+                            }else {
                                 visibleCardsOnHand(backCardsOnHandImages_RED);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
                             }
@@ -804,22 +804,17 @@ public class BoardController extends GenericSceneController implements Initializ
                         gameStatus.setTextFill(Color.WHITE);
                     }
 
-                    // disabilito gioco carta
                     myGrid.setDisable(true);
 
                     playACard.setDisable(true);
                     setBack.setDisable(true);
                     disableCardOnHand();
 
-                    // disabilito pesca carta
                     disableDecks();
                     getResourceCardIndex_toServer=null;
                     getGoldCardIndex_toServer=null;
                     getACard.setDisable(true);
                 }else{
-                    //se sono nel mio turno
-                    //abilito gioco carta
-
                     myGrid.setDisable(false);
 
                     ableCardOnHand();
@@ -1051,14 +1046,11 @@ public class BoardController extends GenericSceneController implements Initializ
      */
     private void light(ImageView imageView) {
         Light.Distant light = new Light.Distant();
-        light.setAzimuth(45); // Angolo della luce
-        light.setElevation(30); // Elevazione della luce
+        light.setAzimuth(45);
+        light.setElevation(30);
 
-        // Applica l'effetto di illuminazione
         Lighting lighting = new Lighting();
         lighting.setLight(light);
-
-        // Applica l'effetto all'immagine
         imageView.setEffect(lighting);
     }
     /**
@@ -1075,9 +1067,9 @@ public class BoardController extends GenericSceneController implements Initializ
         Image myImage2 =new Image(getClass().getResourceAsStream("/images/view/transparentTabCoh.png"));
         Image myImage3 =new Image(getClass().getResourceAsStream("/images/view/transparentTabDeck.png"));
         Image myImage4 =new Image(getClass().getResourceAsStream("/images/view/pointTableBottom.png"));
-        Image myImage6= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(0).getIdCard()+").jpg"));
-        Image myImage7= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(1).getIdCard()+").jpg"));
-        Image myImage8= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+personalTarget.getIdCard()+").jpg"));
+        Image myImage6= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(0).getIdCard()+").png"));
+        Image myImage7= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+commonTarget.get(1).getIdCard()+").png"));
+        Image myImage8= new Image(getClass().getResourceAsStream("/images/cards/TargetCardFront("+personalTarget.getIdCard()+").png"));
         boardBrown.setImage(myImage1);
         cardOnHandBackground.setImage(myImage2);
         deckBackground.setImage(myImage3);
@@ -1671,6 +1663,16 @@ public class BoardController extends GenericSceneController implements Initializ
     public void exitWin(ActionEvent event) {
         winPane.setVisible(false);
         winPane.setDisable(true);
+    }
+
+    /**
+     * Handles the action go back to the menu in response to an ActionEvent.
+     * @param event The ActionEvent triggering the method call.
+     * @throws IOException
+     */
+    public void goBack(ActionEvent event) throws IOException {
+        getGuiApplication().initializeAfter();
+        getGuiApplication().showScene(ScenesName.STARTMENU);
     }
 }
 

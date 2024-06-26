@@ -5,24 +5,37 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
-//import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.ArrayList;
-//import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-//import it.polimi.ingsw.model.ViewModel;
-//import org.json.simple.JSONArray;
-//import org.json.simple.JSONObject;
+/**
+ * The AllMatchesController class manages multiple game matches
+ * SingleMatchController instances and coordinates incoming messages
+ * from clients.
+
+ * It follows the Singleton pattern to ensure there is only one instance of
+ * AllMatchesController in the application.
+ * Messages from clients are processed asynchronously using a blocking queue
+ * controllerMessages and are dispatched to the appropriate
+ * SingleMatchController instance based on the message type.
+ */
 public class AllMatchesController extends Thread {
 
     private static AllMatchesController instance = null;
 
+    /**
+     * Retrieves the singleton instance of {@code AllMatchesController}. If the
+     * instance does not exist, it creates a new one.
+     *
+     * @return The singleton instance of {@code AllMatchesController}
+     * @throws IOException If an I/O error occurs during initialization
+     */
     public synchronized static AllMatchesController getInstance() throws IOException {
         if (instance == null) {
             instance = new AllMatchesController();
@@ -34,22 +47,35 @@ public class AllMatchesController extends Thread {
     private final BlockingQueue<GenericClientMessage> controllerMessages = new LinkedBlockingQueue<>();
 
 
+    /**
+     * Adds a client message to the processing queue and associates it with a
+     * listener if it is marked as a main controller message.
+     *
+     * @param temp     The client message to add to the queue
+     * @param listener The listener associated with the message
+     */
     public void addInQueue(GenericClientMessage temp, Listener listener){
         if (temp.isMainControllerMessage()){
             temp.setListener(listener);
         }
         controllerMessages.add(temp);
     }
+
+    /**
+     * Initializes the {@code AllMatchesController} instance and starts its thread.
+     *
+     * @throws IOException If an I/O error occurs during initialization
+     */
     public AllMatchesController() throws IOException {
         this.start();
         this.runningControllers = new ArrayList<>();
     }
 
-    public AllMatchesController(ArrayList<SingleMatchController> runningControllers) {
-        this.start();
-        this.runningControllers = runningControllers;
-    }
-
+    /**
+     * The main processing loop for handling client messages. Messages are taken
+     * from the queue and either executed directly or forwarded to the appropriate
+     * {@link SingleMatchController} instance.
+     */
     @Override
     public void run() {
         GenericClientMessage temp;
@@ -91,6 +117,13 @@ public class AllMatchesController extends Thread {
     }*/
 
 
+    /**
+     * Creates a new game match based on the provided {@link CreateGameMessage}.
+     *
+     * @param msg The message containing details for creating a new game match
+     * @return A message indicating the result of creating the match
+     * @throws IOException If an I/O error occurs during match creation
+     */
     public Message createNewMatch(CreateGameMessage msg ) throws IOException {
 
         msg.setGameID(runningControllers.size());
@@ -104,6 +137,15 @@ public class AllMatchesController extends Thread {
         return joinMatch((JoinGameMessage)msg);
 
     }
+
+    /**
+     * Allows a player to join an existing game match based on the provided
+     * {@link JoinGameMessage}.
+     *
+     * @param msg The message containing player details and game ID
+     * @return A message indicating the result of the join operation
+     * @throws IOException If an I/O error occurs during the join process
+     */
     public Message joinMatch(JoinGameMessage msg ) throws IOException {
         Player p= new Player(msg.getNickname());
         msg.getListener().setNickname(p.getNickname());
@@ -123,6 +165,13 @@ public class AllMatchesController extends Thread {
 
     }
 
+    /**
+     * Executes a client message by determining its type and delegating it to the
+     * appropriate method.
+     *
+     * @param msg The client message to execute
+     * @throws IOException If an I/O error occurs during message execution
+     */
     public void execute(GenericClientMessage msg) throws IOException {
         Message message = null;
         if(msg instanceof CreateGameMessage) {
@@ -144,40 +193,19 @@ public class AllMatchesController extends Thread {
 
         } else if (msg instanceof JoinGameMessage){
             message = joinMatch((JoinGameMessage) msg);
-        } /*else if (msg instanceof ReconnectRequestMsg) {
-            ReconnectRequestMsg m = (ReconnectRequestMsg) msg;
-            boolean found = false;
-            for(int i= 0; i < runningControllers.get(m.getGameID()).getMatch().getPlayers().size() && !found; i++) {
-                if(m.getNickname().equals(runningControllers.get(m.getGameID()).getMatch().getPlayers().get(i).nickname)) {
-                    message = new ReconnectSuccess(runningControllers.get(m.getGameID()).getMatch());
-
-                    msg.getListener().setNickname(msg.getNickname());
-                    found = true;
-                }
-            }
-            if(!found) {
-                message = new ActionNotRecognize("the username doesn't match");
-            }
-
-        } */else {
+        }else {
             message= new ActionNotRecognize();
         }
         msg.getListener().update(message);
-        //saveMatchesToJson();
-
     }
 
+    /**
+     * Retrieves the {@link SingleMatchController} instance based on the provided ID.
+     *
+     * @param id The ID of the match controller to retrieve
+     * @return The {@link SingleMatchController} instance corresponding to the ID
+     */
     public SingleMatchController getControllerbyId(int id) {
         return this.runningControllers.get(id);
     }
-
-    /*public void saveMatchesToJson() {
-
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("salvataggio.ser"))) {
-            oos.writeObject(runningControllers);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }*/
 }

@@ -23,7 +23,7 @@ class InitialCardTest {
         assertEquals(testCornersFront0.get(UPLEFT),EMPTY);
         assertEquals(testCornersFront0.get(UPRIGHT),VEGETAL);
         assertEquals(testCornersFront0.get(DOWNRIGHT),EMPTY);
-        assertEquals(testCornersFront0.get(DOWNLEFT),EMPTY);
+        assertEquals(testCornersFront0.get(DOWNLEFT),INSECT);
     }
 
     @Test
@@ -31,8 +31,8 @@ class InitialCardTest {
         Map<CornerPosition, Elements> testCornerBack0= testCard0.getCornersBack();
         assertEquals(testCornerBack0.get(UPLEFT),MUSHROOMS);
         assertEquals(testCornerBack0.get(UPRIGHT),VEGETAL);
-        assertEquals(testCornerBack0.get(DOWNRIGHT),INSECT);
-        assertEquals(testCornerBack0.get(DOWNLEFT),ANIMALS);
+        assertEquals(testCornerBack0.get(DOWNRIGHT),ANIMALS);
+        assertEquals(testCornerBack0.get(DOWNLEFT),INSECT);
 
     }
 

@@ -15,9 +15,12 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
+/**
+ * The SingleMatchController class manages a single match in a game. It handles player actions, game state transitions, and
+ * communication with clients through listeners. It extends Thread to allow concurrent processing of player actions.
+ */
 
-
-public class SingleMatchController extends Thread implements Serializable {
+public class SingleMatchController extends Thread implements Serializable{
 
     private Match match;
     private final int MAX_NUMCARD_ON_HAND= 3;
@@ -27,11 +30,23 @@ public class SingleMatchController extends Thread implements Serializable {
     private int limitPly =0;
 
     private final BlockingQueue<GenericClientMessage> processingQueue = new LinkedBlockingQueue<>();
-
+    /**
+     * Constructs a new SingleMatchController for the specified game ID and starts the thread.
+     *
+     * @param GameId the ID of the game to be controlled.
+     * @throws IOException if an I/O error occurs when creating the match.
+     */
     public SingleMatchController(int GameId) throws IOException {
         match =new Match(GameId);
         this.start();
     }
+
+    /**
+     * Sets a player as ready and starts the game if all players are ready.
+     *
+     * @param p the nickname of the player who is ready.
+     * @throws RemoteException if a remote communication error occurs.
+     */
     public void setPlayerAsReady_StartGameIfAllReady(String p) throws RemoteException {
 
         match.setPlayerReady(p);
@@ -43,7 +58,11 @@ public class SingleMatchController extends Thread implements Serializable {
             notifyAllListeners(new ActionSuccessMsg(this.match));
         }
     }
-
+    /**
+     * Starts the game by setting the match status, extracting target cards, distributing cards, and selecting the first player.
+     *
+     * @throws RemoteException if a remote communication error occurs.
+     */
     private void startGame() throws RemoteException {
         match.setStatus(MatchStatus.Playing);
         extractCommonTargetCard();
@@ -53,7 +72,14 @@ public class SingleMatchController extends Thread implements Serializable {
         notifyAllListeners(new gameStartMsg(this.match));
 
     }
-
+    /**
+     * Allows a player to draw a card from the specified deck.
+     *
+     * @param nickname the nickname of the player.
+     * @param isGoldCard true if drawing from the gold deck, false if from the resource deck.
+     * @param whichCard the index of the card to draw.
+     * @throws RemoteException if a remote communication error occurs.
+     */
     public void getACard (String nickname , boolean isGoldCard,int whichCard) throws RemoteException {
         Player currentPlayer=new Player(nickname);
         for (Player p :match.getPlayers()){
@@ -89,7 +115,13 @@ public class SingleMatchController extends Thread implements Serializable {
         }
 
     }
-
+    /**
+     * Checks if the current turn is the last turn of the game.
+     * The game enters the last round if the maximum points are reached
+     * or if both the gold and resource decks are empty.
+     *
+     * @throws RemoteException if a remote communication error occurs.
+     */
     private void ifLastTurn() throws RemoteException {
         if(match.getStatus()!=MatchStatus.LastRound && match.getStatus()!=MatchStatus.End){
             if (match.getPt().findMaxPoint()>=match.getPt().getMaxPlayerPoint() || (match.getGoldDeck().isEmpty()&&match.getResourceDeck().isEmpty())){
@@ -99,7 +131,17 @@ public class SingleMatchController extends Thread implements Serializable {
         }
     }
 
-
+    /**
+     * Allows a player to play a card from their hand onto the board.
+     * The card is placed at the specified coordinates and orientation.
+     * Updates the player's score and advances to the next player if conditions are met.
+     *
+     * @param nickname      the nickname of the player playing the card
+     * @param indexCardOnHand the index of the card in the player's hand
+     * @param coo           the coordinates where the card will be placed
+     * @param isFront       whether the card is placed front-side up
+     * @throws RemoteException if a remote communication error occurs
+     */
 
 
     public void playACardOnHand (String nickname , int indexCardOnHand, Coordinate coo, boolean isFront) throws RemoteException {
@@ -128,15 +170,15 @@ public class SingleMatchController extends Thread implements Serializable {
 
 
     }
-
-    public Match getMatch() {
-        return match;
-    }
-
-    public void setMatch(Match match) {
-        this.match = match;
-    }
-
+    /**
+     * Adds a player to the match and associates a listener with the player.
+     * Notifies all listeners when a new player joins. Starts the game if the player limit is reached.
+     *
+     * @param p        the player to be added
+     * @param listener the listener associated with the player
+     * @return true if the player was successfully added, false otherwise
+     * @throws RemoteException if a remote communication error occurs
+     */
     public boolean addPlayer(Player p, Listener listener) throws RemoteException {
 
         if (!isPlayerFull() && match.addPlayer(p)){
@@ -151,7 +193,11 @@ public class SingleMatchController extends Thread implements Serializable {
     }
 
 
-
+    /**
+     * The main execution method for the SingleMatchController thread.
+     * Continuously processes messages from the processing queue until the match ends.
+     * Sets the winners and notifies all listeners when the match ends.
+     */
     @Override
     public void run(){
         GenericClientMessage temp;
@@ -171,7 +217,12 @@ public class SingleMatchController extends Thread implements Serializable {
             }
         }
     }
-
+    /**
+     * Executes the appropriate action based on the type of the incoming message.
+     *
+     * @param msg The message containing the action to be executed.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     public void execute(GenericClientMessage msg) throws RemoteException {
 
         switch (msg) {
@@ -204,6 +255,12 @@ public class SingleMatchController extends Thread implements Serializable {
         }
     }
 
+    /**
+     * Handles the process of choosing a color by a player.
+     *
+     * @param msg The message containing the color choice.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     private void chooseColor(GenericClientMessage msg) throws RemoteException {
 
         ChooseColorMsg chooseColorMsg = (ChooseColorMsg)msg;
@@ -221,7 +278,12 @@ public class SingleMatchController extends Thread implements Serializable {
         }
 
     }
-
+    /**
+     * Sends a chat message to either all players or a specific player.
+     *
+     * @param msg The message to be sent.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     private void sendChatMsg(GenericClientMessage msg) throws RemoteException {
         ClientChatMessage clientChatMessage = (ClientChatMessage) msg;
         if( clientChatMessage.isForAll() ){
@@ -240,7 +302,14 @@ public class SingleMatchController extends Thread implements Serializable {
             }
         }
     }
-
+    /**
+     * Sets the initial card for a player based on the client message received.
+     * Updates the player's board with the initial card and notifies all listeners
+     * upon successful execution.
+     *
+     * @param msg The client message containing the initial card information.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     public void setInitialCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
 
@@ -254,6 +323,14 @@ public class SingleMatchController extends Thread implements Serializable {
         }
         notifyAllListeners(new ActionSuccessMsg(match));
     }
+    /**
+     * Sets the target card for a player based on the client message received.
+     * Updates the player's target card and notifies the corresponding listener
+     * upon successful execution.
+     *
+     * @param msg The client message containing the target card choice.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     public void setTargetCard(GenericClientMessage msg) throws RemoteException {
         for(Player p: match.getPlayers()) {
             if(p.getNickname().equals(msg.getNickname())) {
@@ -264,23 +341,55 @@ public class SingleMatchController extends Thread implements Serializable {
         getListenerOf(msg.getNickname()).update(new ActionSuccessMsg(match));
 
     }
+
+    /**
+     * Notifies all listeners in the match with the provided message.
+     *
+     * @param msg The message to be sent to all listeners.
+     * @throws RemoteException If there is a communication-related exception.
+     */
     public void notifyAllListeners(Message msg)throws RemoteException{
         for (Listener listener: match.getListenerList()){
             listener.update(msg);
         }
     }
-
+    /**
+     * Adds a generic client message to the processing queue.
+     * Messages in the queue are processed sequentially in a separate thread.
+     *
+     * @param msg The generic client message to be added to the processing queue.
+     */
     public void addInQueue(GenericClientMessage msg) {
         this.processingQueue.add(msg);
     }
-
+    /**
+     * Checks if the maximum number of players has been reached in the match.
+     *
+     * @return {@code true} if the number of players in the match is equal to or greater than 4; {@code false} otherwise.
+     */
     public boolean isPlayerFull(){
         return (match.getPlayers().size()>=4);
     }
+
+    /**
+     * Adds a listener to the match and assigns the match ID to the listener.
+     *
+     * @param listener The listener object to be added.
+     * @throws RemoteException If there is a communication-related issue while adding the listener.
+     */
     public void addListener(Listener listener) throws RemoteException {
         listener.setGameID(match.idMatch);
         match.addListener(listener);
     }
+
+    /**
+     * Retrieves the listener associated with the specified nickname.
+     *
+     * @param nickName The nickname of the player for which the listener is needed.
+     * @return The listener object associated with the specified nickname.
+     * @throws RemoteException If there is a communication-related issue while retrieving the listener.
+     * @throws NullPointerException If no listener is found for the given nickname.
+     */
 
     public Listener getListenerOf(String nickName) throws RemoteException {
 
@@ -292,6 +401,10 @@ public class SingleMatchController extends Thread implements Serializable {
         throw new NullPointerException();
 
     }
+    /**
+     * Distributes initial cards and sets up boards for all players in the match.
+     * Each player receives resource cards, target cards, and initializes their initial card and score.
+     */
     private void distributeCardsAndSetBoards(){
         for(Player p : match.getPlayers()){
 
@@ -308,10 +421,19 @@ public class SingleMatchController extends Thread implements Serializable {
             p.currentScore=0;
         }
     }
+    /**
+     * Extracts common target cards for the match.
+     * Adds the first target card to the common target list twice.
+     */
     private void extractCommonTargetCard(){
         match.getCommonTarget().add(match.getFirtTargetCard());
         match.getCommonTarget().add(match.getFirtTargetCard());
     }
+
+    /**
+     * Randomly selects the first player from the list of players in the match.
+     * Sets the selected player as both the first player and the current player in the match.
+     */
     private void extractFirstPlayer(){
         Random random = new Random();
         /*get a random num between 0 and 1 || 0 and 2 ||0 and 3*/
@@ -319,8 +441,20 @@ public class SingleMatchController extends Thread implements Serializable {
         match.setFirstPlayer(match.getPlayers().get(randomNumber).nickname);
         match.setCurrentPlayer(match.getPlayers().get(randomNumber));
     }
-
+    /**
+     * Sets the limit of players allowed in the match.
+     *
+     * @param limitPly The maximum number of players allowed in the match.
+     */
     public void setLimitPly(int limitPly) {
         this.limitPly = limitPly;
+    }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
     }
 }

@@ -132,7 +132,7 @@ class MatchTest {
         oldPlayers.get(1).getBoard().addCard(resourceCards.get(3),3, 3);
         oldPlayers.get(1).getBoard().addCard(resourceCards.get(4),4,4);
 
-        assertEquals(oldPlayers.get(1).getBoard().getCounterOfElements().get(Elements.MUSHROOMS),3);
+        assertEquals(oldPlayers.get(1).getBoard().getCounterOfElements().get(Elements.MUSHROOMS),4);
 
        assertEquals(targetCards.get(4).checkGoal(oldPlayers.get(1).getBoard()),1);
        oldPlayers.get(1).setTarget(targetCards.get(4));
@@ -171,7 +171,7 @@ class MatchTest {
         oldPlayers.get(0).getBoard().addCard(resourceCards.get(3),3, 3);
         oldPlayers.get(0).getBoard().addCard(resourceCards.get(4),1,1);
 
-        assertEquals(oldPlayers.get(1).getBoard().getCounterOfElements().get(Elements.MUSHROOMS),3);
+        assertEquals(oldPlayers.get(1).getBoard().getCounterOfElements().get(Elements.MUSHROOMS),4);
 
         assertEquals(targetCards.get(4).checkGoal(oldPlayers.get(1).getBoard()),1);
         oldPlayers.get(1).setTarget(targetCards.get(4));

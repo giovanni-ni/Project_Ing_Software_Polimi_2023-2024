@@ -1,16 +1,31 @@
 package it.polimi.ingsw.Message.ServerToClientMsg;
 
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.ViewModel;
 
-public class endGameMessage extends GenericServerMessage implements Message {
+/**
+ * Represents a message sent from the server to the client indicating the end of the game.
+ * It includes the final state of the game as a {@link ViewModel} object.
+ */
+public class endGameMessage extends GenericServerMessage {
+
     private final ViewModel model;
 
+    /**
+     * Constructs an endGameMessage with the provided Match object.
+     * Initializes the ViewModel based on the provided Match.
+     *
+     * @param match the Match object representing the final state of the game
+     */
     public endGameMessage(Match match) {
-        this.model=new ViewModel(match);
+        this.model = new ViewModel(match);
     }
 
+    /**
+     * Gets the ViewModel object containing the final state of the game.
+     *
+     * @return the ViewModel object
+     */
     public ViewModel getModel() {
         return this.model;
     }

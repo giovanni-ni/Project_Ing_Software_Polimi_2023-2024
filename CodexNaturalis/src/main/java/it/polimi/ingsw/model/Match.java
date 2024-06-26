@@ -37,6 +37,10 @@ public class Match implements Serializable {
 
 	private List<PlayerColor> playerColors;
 
+	public ArrayList<PlayerColor> notChosenColor;
+
+	private Player currentPlayer;
+
 	public int getIdMatch() {
 		return idMatch;
 	}
@@ -60,8 +64,6 @@ public class Match implements Serializable {
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
-
-	public ArrayList<PlayerColor> notChosenColor;
 
 	public ArrayList<InitialCard> getInitialDeck() {
 		return initialDeck;
@@ -110,9 +112,27 @@ public class Match implements Serializable {
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
+	public boolean getAutoStart() {
+		return this.autostart;
+	}
 
-	private Player currentPlayer;
+	public void setAutostart(boolean autostart) {
+		this.autostart = autostart;
+	}
 
+	public List<PlayerColor> getPlayerColors() {
+		return playerColors;
+	}
+
+
+
+
+	/**
+	 * Constructor to create a match with a specific ID.
+	 *
+	 * @param idMatch the ID of the match.
+	 * @throws IOException if an I/O error occurs during card loading.
+	 */
 	public Match(int idMatch) throws IOException {
 		CardParsing cp= new CardParsing();
 		this.idMatch = idMatch;
@@ -133,7 +153,11 @@ public class Match implements Serializable {
 		commonTarget = new ArrayList<TargetCard>();
 
 	}
-
+	/**
+	 * Default constructor to create a match.
+	 *
+	 * @throws IOException if an I/O error occurs during card loading.
+	 */
 	public Match() throws IOException {
 		CardParsing cp= new CardParsing();
 		pt=new PointTable();
@@ -154,7 +178,9 @@ public class Match implements Serializable {
 
 
 	}
-
+	/**
+	 * Shuffles all the decks in the match.
+	 */
 	public void shuffleAll() {
 		Collections.shuffle(targetDeck);
 		Collections.shuffle(resourceDeck);
@@ -162,6 +188,9 @@ public class Match implements Serializable {
 		Collections.shuffle(goldDeck);
 	}
 
+	/**
+	 * Sets the winners of the match based on the points and targets.
+	 */
 	public void setWinners (){
 		updateAllTargetPoints();
 		winners = new ArrayList<>();
@@ -184,6 +213,10 @@ public class Match implements Serializable {
 		}
 
 	};
+
+	/**
+	 * Updates the target points for all players.
+	 */
 	public void updateAllTargetPoints (){
 		for(Player p : players){
 			p.currentScore+=p.getTarget().countPoint(p.getBoard());
@@ -193,6 +226,9 @@ public class Match implements Serializable {
 		}
 	}
 
+	/**
+	 * Advances to the next player in the turn order.
+	 */
 	public void nextPlayer(){
 		String currPlayerNick = currentPlayer.nickname;
 
@@ -215,13 +251,23 @@ public class Match implements Serializable {
 		}
 
 	}
+
+	/**
+	 * Sets a player as ready.
+	 *
+	 * @param nickname the nickname of the player to set as ready.
+	 */
 	public void setPlayerReady (String nickname){
 		for(int i =0; i<players.size(); i++)
 			if(players.get(i).nickname.equals(nickname))
 				players.get(i).setReady(true);
 	}
 
-
+	/**
+	 * Checks if all players are ready.
+	 *
+	 * @return true if all players are ready, false otherwise.
+	 */
 	public boolean isAllPlayersReady() {
 		boolean allPlayersReady = true;
 		for (Player p : players) {
@@ -231,36 +277,76 @@ public class Match implements Serializable {
 		return allPlayersReady;
 	}
 
+	/**
+	 * Draws a resource card from the deck.
+	 *
+	 * @param i the index of the resource card to draw.
+	 * @return the drawn resource card.
+	 */
 	public ResourceCard getAResourceCard(int i) {
 		ResourceCard ris= resourceDeck.get(i);
 		resourceDeck.remove(i);
 		return ris;
 	}
+
+	/**
+	 * Draws a gold card from the deck.
+	 *
+	 * @param i the index of the gold card to draw.
+	 * @return the drawn gold card.
+	 */
 	public GoldCard getAGoldCard(int i){
 		GoldCard ris= goldDeck.get(i);
 		goldDeck.remove(i);
 		return ris;
 	}
+
+	/**
+	 * Draws the first target card from the deck.
+	 *
+	 * @return the drawn target card.
+	 */
 	public TargetCard getFirtTargetCard(){
 		TargetCard ris= targetDeck.getFirst();
 		targetDeck.removeFirst();
 		return ris;
 	}
 
+	/**
+	 * Draws the first initial card from the deck.
+	 *
+	 * @return the drawn initial card.
+	 */
 	public InitialCard getFirstInitialCard(){
 		InitialCard ris= initialDeck.getFirst();
 		initialDeck.removeFirst();
 		return ris;
 	}
 
+	/**
+	 * Gets the status of the match.
+	 *
+	 * @return the status of the match.
+	 */
 	public MatchStatus getStatus() {
 		return status;
 	}
 
+	/**
+	 * Sets the status of the match.
+	 *
+	 * @param status the status to set.
+	 */
 	public void setStatus(MatchStatus status) {
 		this.status = status;
 	}
 
+	/**
+	 * Adds a player to the match.
+	 *
+	 * @param p the player to add.
+	 * @return true if the player was added, false if a player with the same nickname already exists.
+	 */
 	public boolean addPlayer(Player p) {
 		for (Player player : players){
 			if (Objects.equals(player.getNickname(), p.getNickname()))
@@ -272,26 +358,50 @@ public class Match implements Serializable {
 		return true;
 	}
 
+
+	/**
+	 * Adds a listener to the match.
+	 *
+	 * @param listener the listener to add.
+	 */
 	public void addListener(Listener listener) {
 		listenerList.add(listener);
 	}
 
-	public void setListenerList(List<Listener> listenerList) {
-		this.listenerList = listenerList;
-	}
-
+	/**
+	 * Gets the list of listeners for the match.
+	 *
+	 * @return the list of listeners.
+	 */
 	public List<Listener> getListenerList() {
 		return listenerList;
 	}
 
+	/**
+	 * Gets the round count of the match.
+	 *
+	 * @return the round count.
+	 */
 	public int getRoundCount() {
 		return roundCount;
 	}
 
+
+	/**
+	 * Gets the winners of the match.
+	 *
+	 * @return the list of winners.
+	 */
 	public List<Player> getWinners() {
 		return winners;
 	}
 
+	/**
+	 * Updates the points for a player based on a resource card.
+	 *
+	 * @param card the resource card.
+	 * @param currentPlayer the player whose points are to be updated.
+	 */
 	public void updatePoint(ResourceCard card, Player currentPlayer) {
 		if(card.isGoldCard() && card.getIsFront()){
 			currentPlayer.currentScore +=((GoldCard) card).getGoalPoint(currentPlayer.getBoard());
@@ -305,15 +415,4 @@ public class Match implements Serializable {
 		getPt().updatePoint(currentPlayer);
 	}
 
-	public boolean getAutoStart() {
-		return this.autostart;
-	}
-
-	public void setAutostart(boolean autostart) {
-		this.autostart = autostart;
-	}
-
-	public List<PlayerColor> getPlayerColors() {
-		return playerColors;
-	}
 }

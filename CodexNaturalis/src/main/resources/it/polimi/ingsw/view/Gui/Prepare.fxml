@@ -51,12 +51,12 @@
                   <Insets left="300.0" />
                </StackPane.margin>
                <image>
-                  <Image url="@../../../../../images/cards/102.jpg" />
+                  <Image url="@../../../../../images/cards/102.png" />
                </image>
             </ImageView>
             <ImageView fx:id="targetTwoImg" fitHeight="200.0" fitWidth="500.0" pickOnBounds="true" preserveRatio="true" visible="false" StackPane.alignment="CENTER_RIGHT">
                <image>
-                  <Image url="@../../../../../images/cards/102.jpg" />
+                  <Image url="@../../../../../images/cards/102.png" />
                </image>
                <StackPane.margin>
                   <Insets right="300.0" />
@@ -85,12 +85,12 @@
                               <Insets right="50.0" />
                            </HBox.margin>
                            <image>
-                              <Image url="@../../../../../images/cards/VegetalBack.jpg" />
+                              <Image url="@../../../../../images/cards/VegetalBack.png" />
                            </image>
                         </ImageView>
                         <ImageView fx:id="resource1" fitHeight="150.0" fitWidth="160.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="cardImage">
                            <image>
-                              <Image url="@../../../../../images/cards/GoldCardFront(80).jpg" />
+                              <Image url="@../../../../../images/cards/GoldCardFront(80).png" />
                            </image>
                            <HBox.margin>
                               <Insets right="50.0" />
@@ -98,7 +98,7 @@
                         </ImageView>
                         <ImageView fx:id="resource2" fitHeight="150.0" fitWidth="160.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="cardImage">
                            <image>
-                              <Image url="@../../../../../images/cards/GoldCardFront(45).jpg" />
+                              <Image url="@../../../../../images/cards/GoldCardFront(45).png" />
                            </image>
                         </ImageView>
                      </children>
@@ -107,7 +107,7 @@
                      <children>
                         <ImageView fx:id="goldBack" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" styleClass="cardImage">
                            <image>
-                              <Image url="@../../../../../images/cards/VegetalBackGold.jpg" />
+                              <Image url="@../../../../../images/cards/VegetalBackGold.png" />
                            </image>
                            <HBox.margin>
                               <Insets right="50.0" />
@@ -115,7 +115,7 @@
                         </ImageView>
                         <ImageView fx:id="gold1" fitHeight="150.0" fitWidth="160.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="cardImage">
                            <image>
-                              <Image url="@../../../../../images/cards/GoldCardFront(44).jpg" />
+                              <Image url="@../../../../../images/cards/GoldCardFront(44).png" />
                            </image>
                            <HBox.margin>
                               <Insets right="50.0" />
@@ -123,7 +123,7 @@
                         </ImageView>
                         <ImageView fx:id="gold2" fitHeight="150.0" fitWidth="160.0" layoutX="210.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true" styleClass="cardImage">
                            <image>
-                              <Image url="@../../../../../images/cards/GoldCardFront(46).jpg" />
+                              <Image url="@../../../../../images/cards/GoldCardFront(46).png" />
                            </image>
                         </ImageView>
                      </children>

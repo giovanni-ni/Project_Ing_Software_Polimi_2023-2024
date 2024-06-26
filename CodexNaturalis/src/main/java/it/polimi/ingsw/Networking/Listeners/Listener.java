@@ -4,7 +4,7 @@ import it.polimi.ingsw.Message.Message;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
+// todo javadoc
 public interface Listener extends Remote {
 
     void update(Message msg) throws RemoteException;

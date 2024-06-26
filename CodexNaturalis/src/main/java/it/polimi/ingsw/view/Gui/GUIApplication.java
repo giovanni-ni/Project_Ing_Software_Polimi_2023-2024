@@ -21,83 +21,137 @@ import java.util.concurrent.BlockingQueue;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
-
-public class GUIApplication extends Application{
-    private  GUI Gui;
+/**
+ * The main application class for the graphical user interface.
+ * Manages scenes, controllers, and interactions within the GUI.
+ */
+public class GUIApplication extends Application {
+    private GUI Gui;
     private Stage stage;
     private BiMap<Scene, ScenesName> scenesList;
     private BiMap<GenericSceneController, ScenesName> controllerList;
+    private Stage pStage;
 
-
-
+    /**
+     * Entry point of the JavaFX application.
+     * Initializes the GUI, loads the primary stage, and shows the initial scene.
+     *
+     * @param primaryStage The primary stage of the application.
+     * @throws IOException If an error occurs during stage loading.
+     */
     @Override
     public void start(Stage primaryStage) throws IOException {
         initGUI();
+        pStage = primaryStage;
         loadStage(primaryStage);
-        stage.setOnCloseRequest(we -> System.exit(0));
-        showScene(ScenesName.START);
-        stage.setAlwaysOnTop(true);
-        stage.setAlwaysOnTop(false);
+        stage.setOnCloseRequest(we -> System.exit(0)); // Ensure application closes properly
+        showScene(ScenesName.START); // Show the initial scene
+        stage.setAlwaysOnTop(true); // Keep the stage always on top
+        stage.setAlwaysOnTop(false); // Allow the stage to be not always on top
     }
 
+    /**
+     * Main method to launch the application.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         launch(args);
     }
-    private void initGUI(){
-        Gui = new GUI(this);
 
+    /**
+     * Initializes the GUI instance associated with this application.
+     */
+    private void initGUI() {
+        Gui = new GUI(this);
     }
+
+    /**
+     * Initializes the GUI instance to get ready to another game.
+     */
+    public void initializeAfter() throws IOException {
+        getGui().initializeForNewGame();
+        loadStage(pStage);
+    }
+    /**
+     * Loads the primary stage of the application with scenes defined in ScenesName enum.
+     *
+     * @param primaryStage The primary stage of the application.
+     * @throws IOException If an error occurs during stage loading.
+     */
     private void loadStage(Stage primaryStage) throws IOException {
-        //icon
+        // Load icon
         Image icon = new Image("icon.png");
         primaryStage.setTitle("Codex Naturalis");
         primaryStage.getIcons().add(icon);
         primaryStage.setResizable(false);
-        // set stage
+
+        // Set primary stage
         stage = primaryStage;
 
-        //all stages loading
+        // Load all scenes defined in ScenesName enum using FXMLLoader
         FXMLLoader loader = new FXMLLoader();
         Parent root;
         scenesList = HashBiMap.create();
         controllerList = HashBiMap.create();
-        for (ScenesName scenesName : ScenesName.values()){
-            loader  = new FXMLLoader(getClass().getResource(scenesName.getPath()));
+        for (ScenesName scenesName : ScenesName.values()) {
+            loader = new FXMLLoader(getClass().getResource(scenesName.getPath()));
             root = loader.load();
-            ((GenericSceneController)loader.getController()).setGuiApplication(this);
-            controllerList.put(loader.getController(),scenesName);
-            scenesList.put(new Scene(root, 1280,720), scenesName);
-
+            ((GenericSceneController) loader.getController()).setGuiApplication(this);
+            controllerList.put(loader.getController(), scenesName);
+            scenesList.put(new Scene(root, 1280, 720), scenesName);
         }
-
     }
 
-    public void showScene(ScenesName scenesName){
-
-       Scene scene= scenesList.inverse().get(scenesName);
-       print("change to scene "+scenesName.toString());
-       stage.setScene(scene);
-       if(scenesName==ScenesName.START)
-           stage.centerOnScreen();
-       stage.show();
-       updateCurrentSceneModel(UPDATE.GENERAL);
-
-
+    /**
+     * Shows the specified scene in the primary stage.
+     *
+     * @param scenesName The name of the scene to show.
+     */
+    public void showScene(ScenesName scenesName) {
+        Scene scene = scenesList.inverse().get(scenesName);
+        print("change to scene " + scenesName.toString());
+        stage.setScene(scene);
+        if (scenesName == ScenesName.START)
+            stage.centerOnScreen(); // Center the stage on screen for START scene
+        stage.show();
+        updateCurrentSceneModel(UPDATE.GENERAL); // Update the model for the current scene
     }
-     public ScenesName getActualScene(){
-        return  scenesList.get(stage.getScene());
-     }
-    public GenericSceneController getActualSceneController(){
-        ScenesName scenesName =getActualScene();
+
+    /**
+     * Retrieves the current scene name from the primary stage.
+     *
+     * @return The current scene name.
+     */
+    public ScenesName getActualScene() {
+        return scenesList.get(stage.getScene());
+    }
+
+    /**
+     * Retrieves the controller associated with the current scene.
+     *
+     * @return The GenericSceneController instance for the current scene.
+     */
+    public GenericSceneController getActualSceneController() {
+        ScenesName scenesName = getActualScene();
         return controllerList.inverse().get(scenesName);
     }
 
-
+    /**
+     * Displays an error message in the current scene.
+     *
+     * @param description The error message description to display.
+     */
     public void showErrorMessage(String description) {
-        ScenesName scenesName =getActualScene();
+        ScenesName scenesName = getActualScene();
         controllerList.inverse().get(scenesName).ShowErrorMessage(description);
     }
 
+    /**
+     * Updates the model of the current scene based on the specified update type.
+     *
+     * @param update The type of update to apply to the scene's model.
+     */
     public void updateCurrentSceneModel(UPDATE update) {
         try {
             controllerList.inverse().get(getActualScene()).updateModel(update);
@@ -106,11 +160,12 @@ public class GUIApplication extends Application{
         }
     }
 
+    /**
+     * Retrieves the GUI instance associated with this application.
+     *
+     * @return The GUI instance.
+     */
     public GUI getGui() {
         return Gui;
     }
-
-
-    //
-
 }

@@ -1,5 +1,7 @@
 package it.polimi.ingsw.view.Gui.SceneControllers.ptPositions;
-
+/**
+ * Enum representing various distances used in GUI positioning in PointTable for each point in the point table.
+ */
 public enum PTPOSITION {
 
     PT0(DISTANCE.COULUMN1.data,DISTANCE.LINE0.data),

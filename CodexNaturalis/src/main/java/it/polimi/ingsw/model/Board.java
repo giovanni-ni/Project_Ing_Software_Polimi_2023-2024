@@ -12,7 +12,6 @@ import java.util.Map;
 /**
  * Board of the player which places his/her card
  * it is initialized with an initial Card, it is unique for each player in the game.
- * @author: Gong, Huang, Ni, Gu
  */
 public class Board implements Serializable {
 
@@ -22,16 +21,17 @@ public class Board implements Serializable {
 
 	private ArrayList<Integer> exists;
 
+	/**
+	 * Constructor of the board of each player at the start of the game
+	 */
 	public Board(){
 
 	}
 
 	/**
 	 * Constructor of the board of each player at the start of the game
-	 * @author: Gong
 	 * @param i:Initial card which would be place at the central position of the board;
 	 		isFront: boolean which represent the face of the card
-	 * @exception: WrongCentralElementException: the centralElement is not a natural element
 	 */
 	public Board(InitialCard i) {
 		/*no Exception handle*/
@@ -54,9 +54,12 @@ public class Board implements Serializable {
 	/**
 	 * Add the card on the board and count the new elements showed up and deletes the covered ones.
 	 * This method is used only if the check method is called first and returns true
-	 * @author: Gong
-	 * @param input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player; x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+
+	 * @param input: the card which would be put in the board;front: boolean which indicates the face of the card decided by de player;
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
+	 * @return boolean of the add card status, success or fail
+
 	 */
 	public boolean addCard(ResourceCard input,int x, int y) {
 		/* no Exception handle*/
@@ -78,10 +81,10 @@ public class Board implements Serializable {
 	/**
 	 * Check about the coordinates and the coordinate, if there are all free empty corners it returns true, otherwise false
 	 * This method is used by the player class to check the availability of the board
-	 * @author: Gong
-	 * @return: returns a boolean, if there are all free empty corners, and it is a free slot it returns true, otherwise false
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+	 *
+	 * @return returns a boolean, if there are all free empty corners, and it is a free slot it returns true, otherwise false
+	 * @param x the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public boolean check(int x, int y) {
 		/* no Exception handle*/
@@ -99,11 +102,11 @@ public class Board implements Serializable {
 	/**
 	 * Check selected side of the coordinate , if there is a free empty corner it returns true, otherwise false
 	 * This method is used by the check method to check the availability of a side of the coordinate
-	 * @author: Gong
-	 * @return  returns a boolean, if there is a free empty corners
+
+	 * @return boolean returns a boolean, if there is a free empty corners
 	 * @param x the coordinate x of the position desired;
 	 * @param y coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+	 * @param corner corner position that should be checked
 	 */
 
 
@@ -135,9 +138,10 @@ public class Board implements Serializable {
 
 	/**
 	 * method used for adding the number of elements present in the board of the player
-	 * @author: Gong
-	 * @param element: the element which number has to be increased;value: the value of the element that has to be increased or decreased
-	 * @exception: NegativeValueOfElements: when after changing the value of the count of elements it became negative
+
+	 * @param element: the element which number has to be increased;
+	 * @param value: the amount of the element which number has to be increased;
+
 	 */
 	public void addElement(Elements element, Integer value){
 
@@ -154,9 +158,9 @@ public class Board implements Serializable {
 
 	/**
 	 * increase the number of the element of 1
-	 * @author: Gong
+
 	 * @param element: the element which number has to be increased of 1;
-	 * @exception: NegativeValueOfElements: when after changing the value of the count of elements it became negative
+
 	 */
 	public void addElement(Elements element){
 		/* no Exception handle*/
@@ -174,10 +178,9 @@ public class Board implements Serializable {
 	/**
 	 * Add all the elements present in corners of the card selected
 	 * This method is used by the method addCard, remember that a new card placed also causes elements covered so is suggested to call also the method deleteCoveredElements
-	 * @author: Gong
-	 * @return: void
+
 	 * @param card:card with all elements that would be added in the counter of elements
-	 * @exception: nothing for now....
+
 	 */
 	public void addAllElements(Card card){
 		/* no Exception handle*/
@@ -200,10 +203,9 @@ public class Board implements Serializable {
 	 * This method is used by the method addCorners,
 	 * it can also be called to add only an element of the corner indicated
 	 * Remember that a new card placed also causes elements covered so is suggested to call also the method deleteCoveredElements
-	 * @author: Gong
-	 * @return: void
 	 * @param card with the corner selected and its element that would be added in the counter of elements
-	 * @exception: nothing for now....
+	 * @param corner the corner selected
+
 	 */
 	public void addCornerElement(Card card, CornerPosition corner){
 		/* no Exception handle*/
@@ -237,10 +239,9 @@ public class Board implements Serializable {
 	/**
 	 * Delete from the counter all the covered element in that coordinate there is a card placed
 	 * This method is used normally after the method addCorners and add Card.
-	 * @author: Gong
-	 * @return: void
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public void deleteCoveredElements(int x, int y){
 		for (CornerPosition corner : CornerPosition.values()) {
@@ -252,10 +253,12 @@ public class Board implements Serializable {
 	/**
 	 * Delete from the  counter  element covered in the coordinate and selected corner where is a card  placed
 	 * This method is used normally used in deleteCoveredElements or after the method addCorners and add Card if there is a single corner covered.
-	 * @author: Gong
-	 * @return: void
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
+	 * @param corner: corner position of the card with coordinate x y desired
+	 *
+
 	 */
 	public void deleteCoveredByCorner(int x, int y,CornerPosition corner){
         switch (corner) {
@@ -299,13 +302,11 @@ public class Board implements Serializable {
 	/**
 	 * Count the number of cards about the coordinate
 	 * Is implemented mainly to count the covered card by the gold card with the bonusType of HideCorners
-	 * @author: Gong
+	 *
 	 * @return: int count: quantity of cards about the coordinate
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative;
-	 * HighCoordinateException: the value is too high for the board;CountZeroException:impossible case which in the card has no cards about
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
-
 	public int numCardsAbout(int x, int y){
 		int count=0;
 		if (isCardCoordinate(x+1,y+1))
@@ -321,45 +322,90 @@ public class Board implements Serializable {
 
 	/**
 	 * Check if there is a Card in coordinates given
-	 * @author: Gong
-	 * @return: boolean:true if there is a card, otherwise false
-	 * @param x:the coordinate x of the position desired; y:coordinate y desired
-	 * @exception: NegativeCoordinateException: when the value of x or y or both is negative; HighCoordinateException: the value is too high for the board
+
+	 * @return boolean true if there is a card, otherwise false
+	 * @param x:the coordinate x of the position desired;
+	 * @param y:coordinate y desired
 	 */
 	public boolean isCardCoordinate(int x, int y){
 		return cardCoordinate.containsValue(new Coordinate(x,y));
 	}
 
+	/**
+	 * setter of counterOfElements
+	 * This method set the parameter as Encounter of elements of the Board as substitute of the old one.,
+	 *
+	 * @param counterOfElements the counter of Element that will be set
+	 */
 	public void setCounterOfElements(Map<Elements, Integer> counterOfElements) {
 		this.counterOfElements = counterOfElements;
 	}
+	/**
+	 * Getter of Counter of Elements.
+	 * This Method will return the counter of elements stored in the players board
+	 * @return : returns the counter of Elements
+	 */
 	public Map<Elements, Integer> getCounterOfElements() {
 		return counterOfElements;
 	}
-
+	/**
+	 * Getter of Array of integers that represents the card's id in the board.
+	 * @return : returns the Exists array
+	 */
 	public ArrayList<Integer> getExists() {
 		return exists;
 	}
-
+	/**
+	 * Getter HashBiMap of Card and it's Coordinate in the board
+	 * @return : returns the cardCoordinate BiMap
+	 */
 	public BiMap<Card, Coordinate> getCardCoordinate() {
 		return cardCoordinate;
 	}
-
+	/**
+	 * setter of CardCoordinate
+	 * This method set the parameter as the HashBiMap of cads and the respective coordinate of the Board as substitute of the old one.
+	 *
+	 * @param cardCoordinate the map that will be set
+	 */
 	public void setCardCoordinate(BiMap<Card, Coordinate> cardCoordinate) {
 		this.cardCoordinate = cardCoordinate;
 	}
-
+	/**
+	 * setter of Exists ArrayList of integer
+	 * This method set the parameter as the Exits Array of Card id of the Board as substitute of the old one.
+	 *
+	 * @param exists the ArrayList that will be set
+	 */
 	public void setExists(ArrayList<Integer> exists) {
 		this.exists = exists;
 	}
+	/**
+	 * Getter of the card that was played before by his coordinate
+	 * @param x: position x of the card
+	 * @param y: position y of the card
+	 * @return : card in the position given
+	 */
 	public Card getCardInBoard(int x, int y){
 		Card card = cardCoordinate.inverse().get(new Coordinate(x,y));
 		return card;
 	}
+	/**
+	 * Getter of the Coordinate that the card has
+	 * @param card: card's position that the method returns
+
+	 * @return : position of the parameter of the card
+	 */
 	public Coordinate getCoordinate (Card card){
 		Coordinate xy = cardCoordinate.get(card);
 		return xy;
 	}
+	/**
+	 * Getter of the Coordinate that the card id has
+	 * @param cardCode: card's position that the method returns
+
+	 * @return : position of the parameter of the card id
+	 */
 	public Coordinate getCoordinate (int cardCode){
 		Card theCard = new Card();
 		for (Card card : cardCoordinate.keySet()){
@@ -371,6 +417,10 @@ public class Board implements Serializable {
 
 	}
 
+	/**
+	 * Initialize the counter of elements
+	 * It is used for create a new table with 0 elements in the counter
+	 */
 	private void inizialize() {
 		this.counterOfElements.put(Elements.MUSHROOMS,0);
 		this.counterOfElements.put(Elements.VEGETAL,0);

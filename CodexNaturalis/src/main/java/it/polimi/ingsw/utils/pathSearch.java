@@ -8,7 +8,11 @@ import java.io.IOException;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.findCardById;
 
 public class pathSearch {
-
+    /**
+     * Get the card path by the card id and the front boolean
+     * @param cardId : the card id of the card path
+     * @param isFront : boolean of the card front or back status
+     */
     public static String getPathByCardID(int cardId, boolean isFront)  {
         String path = null;
         Object card = null;
@@ -19,27 +23,27 @@ public class pathSearch {
         }
         if (card instanceof CountTargetCard || card instanceof ObliqueTargetCard || card instanceof PositionGoalTarget){
             if (isFront){
-                path = "/images/cards/TargetCardFront("+cardId+").jpg";
+                path = "/images/cards/TargetCardFront("+cardId+").png";
             }else {
-                path = "/images/cards/TargetBack.jpg";
+                path = "/images/cards/TargetBack.png";
             }
         }else if (card instanceof GoldCard){
             if (isFront){
-                path = "/images/cards/GoldCardFront("+cardId+").jpg";
+                path = "/images/cards/GoldCardFront("+cardId+").png";
             }else {
                 Elements elements = ((GoldCard) card).getKingdom();
                 switch (elements) {
                     case MUSHROOMS -> {
-                        path = "/images/cards/MushroomBackGold.jpg";
+                        path = "/images/cards/MushroomBackGold.png";
                     }
                     case VEGETAL -> {
-                        path = "/images/cards/VegetalBackGold.jpg";
+                        path = "/images/cards/VegetalBackGold.png";
                     }
                     case ANIMALS -> {
-                        path = "/images/cards/AnimalBackGold.jpg";
+                        path = "/images/cards/AnimalBackGold.png";
                     }
                     default -> {
-                        path = "/images/cards/InsectBackGold.jpg";
+                        path = "/images/cards/InsectBackGold.png";
                     }
                 }
 
@@ -48,38 +52,47 @@ public class pathSearch {
         }else if (card instanceof ResourceCard){
 
             if (isFront){
-                path = "/images/cards/ResourceCardFront("+cardId+").jpg";
+                path = "/images/cards/ResourceCardFront("+cardId+").png";
             }else {
                 Elements elements = ((ResourceCard)card).getKingdom();
                 switch (elements) {
                     case MUSHROOMS -> {
-                        path = "/images/cards/MushroomBack.jpg";
+                        path = "/images/cards/MushroomBack.png";
                     }
                     case VEGETAL -> {
-                        path = "/images/cards/VegetalBack.jpg";
+                        path = "/images/cards/VegetalBack.png";
                     }
                     case ANIMALS -> {
-                        path = "/images/cards/AnimalBack.jpg";
+                        path = "/images/cards/AnimalBack.png";
                     }
                     default -> {
-                        path = "/images/cards/InsectBack.jpg";
+                        path = "/images/cards/InsectBack.png";
                     }
                 }
 
             }
         } else if (card instanceof InitialCard) {
             if (isFront){
-               path= "/images/cards/InitialCardFront("+cardId+").jpg";
+               path= "/images/cards/InitialCardFront("+cardId+").png";
             }else{
-                path= "/images/cards/InitialCardBack("+cardId+").jpg";
+                path= "/images/cards/InitialCardBack("+cardId+").png";
             }
         }
         return  path;
     }
+    /**
+     * Get the card path by the card
+     * @param card : the card id of the card path
+     */
     public static String getPathByCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),card.getIsFront());
     }
-    public static String getPathByBackCard(Card card,Boolean isFront) throws IOException {
+
+    /**
+     * Get the  back card path by the card
+     * @param card : the card id of the card path
+     */
+    public static String getPathByBackCard(Card card) throws IOException {
         return getPathByCardID(card.getCode(),false);
     }
 }

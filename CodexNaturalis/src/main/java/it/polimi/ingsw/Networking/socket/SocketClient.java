@@ -14,7 +14,7 @@ import java.net.Socket;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
-
+// todo javadoc
 public class SocketClient extends Thread implements Client {
     private Socket socket;
     private static ObjectInputStream inputStream;
