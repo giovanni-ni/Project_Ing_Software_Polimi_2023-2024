@@ -6,41 +6,109 @@ import com.google.common.collect.HashBiMap;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents an ObliqueTargetCard in the game, which extends {@link TargetCard}.
+ * An ObliqueTargetCard has properties such as a required element and a corner position.
+ */
 public class ObliqueTargetCard extends TargetCard implements Serializable {
 
+    // Attributes
+
+    /**
+     * The element required for the card's goal.
+     * Uses {@link Elements} to define the required element.
+     */
     private Elements elemRequired;
 
+    /**
+     * The corner position associated with the card.
+     * Uses {@link CornerPosition} to specify the corner position.
+     */
     private CornerPosition cornerPosition;
 
+    // Constructors
+
+    /**
+     * Constructs a new ObliqueTargetCard with default values.
+     */
     public ObliqueTargetCard() {
 
     }
+
+    /**
+     * Constructs a new ObliqueTargetCard with the specified properties.
+     *
+     * @param idCard         the unique identifier of the card
+     * @param basePoint      the base points of the card
+     * @param ifCommon       flag indicating if the card is common
+     * @param elemRequired   the element required for the card's goal
+     * @param cornerPosition the corner position associated with the card
+     */
     public ObliqueTargetCard(int idCard,int basePoint,boolean ifCommon,Elements elemRequired, CornerPosition cornerPosition) {
         super(idCard,basePoint,ifCommon);
         this.elemRequired = elemRequired;
         this.cornerPosition = cornerPosition;
     }
 
+    // Methods
+
+    /**
+     * Gets the element required for the card's goal.
+     *
+     * @return the required element
+     */
     public Elements getElemRequired() {
         return elemRequired;
     }
 
+    /**
+     * Sets the element required for the card's goal.
+     *
+     * @param elemRequired the required element to set
+     */
     public void setElemRequired(Elements elemRequired) {
         this.elemRequired = elemRequired;
     }
 
+    /**
+     * Gets the corner position associated with the card.
+     *
+     * @return the corner position
+     */
     public CornerPosition getcornerPosition() {
         return cornerPosition;
     }
 
+    /**
+     * Sets the corner position associated with the card.
+     *
+     * @param cornerPosition the corner position to set
+     */
     public void setcornerPosition(CornerPosition cornerPosition) {
         this.cornerPosition = cornerPosition;
     }
 
+    /**
+     * Counts the points scored by the ObliqueTargetCard based on the specified board.
+     * Points are calculated as the base points of the card multiplied by the number of oblique sets achieved.
+     *
+     * @param board the board to count points on
+     * @return the total points scored by the card
+     * @see Board
+     */
     @Override
     public int countPoint(Board board) {
         return super.getbasePoint() * checkGoal(board);
     }
+
+    /**
+     * Checks the goal of the ObliqueTargetCard based on the specified board.
+     * This method calculates how many complete oblique sets of the required element can be found on the board.
+     *
+     * @param board the board to check
+     * @return the number of complete oblique sets of the required element found on the board
+     * @see Board
+     */
     @Override
     public int checkGoal(Board board){
         BiMap<Card,Coordinate> copy = HashBiMap.create();
@@ -76,44 +144,4 @@ public class ObliqueTargetCard extends TargetCard implements Serializable {
 
         return n;
     }
-
-
-
-
-
-    //error code fixed but algorithm wrong
-    /*public int checkGoal2(Board board) {
-        BiMap<Card,Coordinate> copy = HashBiMap.create();
-        copy.putAll(board.getCardCoordinate());
-        int n = 0;
-
-        for(Card c: board.getCardCoordinate().keySet()) {
-            if(!(c instanceof InitialCard) && c.getKingdom().equals(this.elemRequired))  {
-                if(isCorrect(c, board)) {
-                    n++;
-                    copy.remove(c);
-                }
-            }
-        }
-        return n;
-    }
-
-
-    private boolean isCorrect(Card c, Board board) {
-        if (this.cornerPosition == CornerPosition.UPRIGHT) {
-            if (board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() - 1)!= null &&
-                    board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() - 1).getKingdom() == this.elemRequired) {
-                return board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() + 1) != null &&
-                        (board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() + 1).getKingdom() == this.elemRequired);
-            }
-        } else if (this.cornerPosition == CornerPosition.UPLEFT) {
-            if (board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() - 1)!=null &&
-                    board.getCardInBoard(board.getCoordinate(c).getX() + 1, board.getCoordinate(c).getY() - 1).getKingdom() == this.elemRequired) {
-                return board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() + 1) != null &&
-                        (board.getCardInBoard(board.getCoordinate(c).getX() - 1, board.getCoordinate(c).getY() + 1).getKingdom() == this.elemRequired);
-            }
-        }
-        return false;
-    }*/
-
 }

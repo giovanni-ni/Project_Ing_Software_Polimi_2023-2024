@@ -3,534 +3,126 @@ package it.polimi.ingsw.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Represents an abstract TargetCard in the game.
+ * A TargetCard has properties such as ID, base points, and a flag indicating if it's a common target card.
+ * Subclasses must implement the methods to check goals and count points.
+ */
 public abstract class TargetCard implements Serializable {
 
+	// Attributes
+
+	/**
+	 * The unique identifier of the card.
+	 */
 	private int idCard;
 
+	/**
+	 * The base points of the card.
+	 */
 	private int basePoint;
 
+	/**
+	 * Flag indicating if the card is a common card.
+	 */
 	private boolean ifCommon;
 
+	// Constructors
+
+	/**
+	 * Constructs a new TargetCard with default values.
+	 */
 	public TargetCard() {
 
 	}
 
+	/**
+	 * Constructs a new TargetCard with the specified properties.
+	 *
+	 * @param idCard    the unique identifier of the card
+	 * @param basePoint the base points of the card
+	 * @param ifCommon  flag indicating if the card is a common card
+	 */
 	public TargetCard(int idCard, int basePoint, boolean ifCommon) {
 		this.idCard = idCard;
 		this.basePoint = basePoint;
 		this.ifCommon = ifCommon;
 	}
 
+	// Methods
+
+	/**
+	 * Gets the base points of this TargetCard.
+	 *
+	 * @return the base points
+	 */
 	public int getbasePoint() {
 		return this.basePoint;
 	}
 
-	public void setbasePoint(int p) {
-		this.basePoint = p;
+
+	/**
+	 * Sets the base points of this TargetCard.
+	 *
+	 * @param basePoint the base points to set
+	 */
+	public void setbasePoint(int basePoint) {
+		this.basePoint = basePoint;
 	}
 
+	/**
+	 * Gets the unique identifier of this TargetCard.
+	 *
+	 * @return the unique identifier
+	 */
 	public int getIdCard() {
 		return idCard;
 	}
+
+	/**
+	 * Sets the unique identifier of this TargetCard.
+	 *
+	 * @param idCard the unique identifier to set
+	 */
 	public void setIdCard(int idCard) {
 		this.idCard = idCard;
 	}
 
+	/**
+	 * Checks if this TargetCard is a common card.
+	 *
+	 * @return true if the card is common, false otherwise
+	 */
 	public boolean isIfCommon() {
 		return ifCommon;
 	}
 
+	/**
+	 * Sets the flag indicating if this TargetCard is a common card.
+	 *
+	 * @param ifCommon the flag to set
+	 */
 	public void setIfCommon(boolean ifCommon) {
 		this.ifCommon = ifCommon;
 	}
 
-	/*public int checkTarget(Board input) {
-		/***********maybe controller part****************/
-		/*int n = 0;
-
-		switch(this.idCard) {
-			case 1:
-				n = input.getCounterOfElements().get(Elements.INK) / 2;
-				break;
-
-			case 2:
-				n = input.getCounterOfElements().get(Elements.FEATHER) / 2;
-				break;
-
-			case 3:
-				n = input.getCounterOfElements().get(Elements.PARCHMENT) / 2;
-				break;
-
-			case 4:
-				n = minNumElement(input.getCounterOfElements().get(Elements.PARCHMENT),input.getCounterOfElements().get(Elements.INK),input.getCounterOfElements().get(Elements.FEATHER));
-				break;
-
-			case 5:
-				ArrayList<Integer> copy = input.getExists();
-				for(int i = 1; i <= 10; i++) {
-					if(copy.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x+1, y-1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y-1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.MUSHROOMS) {
-								if(input.isCardCoordinate(x+2, y-2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y - 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.MUSHROOMS) {
-										n++;
-										copy.remove(i);
-										copy.remove(next);
-										copy.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 41; j <= 50; j++) {
-					if (copy.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x + 1, y - 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y - 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.MUSHROOMS) {
-								if (input.isCardCoordinate(x + 2, y - 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y - 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.MUSHROOMS) {
-										n++;
-										copy.remove(j);
-										copy.remove(next);
-										copy.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-				break;
-
-			case 6:
-				ArrayList<Integer> copy6 = input.getExists();
-				for(int i = 31; i <= 40; i++) {
-					if(copy6.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x+1, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.INSECT) {
-								if(input.isCardCoordinate(x+2, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy6.remove(i);
-										copy6.remove(next);
-										copy6.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 71; j <= 80; j++) {
-					if (copy6.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x + 1, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.INSECT) {
-								if (input.isCardCoordinate(x + 2, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy6.remove(j);
-										copy6.remove(next);
-										copy6.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-
-			case 7:
-				ArrayList<Integer> copy7 = input.getExists();
-				for(int i = 21; i <= 30; i++) {
-					if(copy7.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x+1, y-1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y-1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.ANIMALS) {
-								if(input.isCardCoordinate(x+2, y-2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y - 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.ANIMALS) {
-										n++;
-										copy7.remove(i);
-										copy7.remove(next);
-										copy7.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 61; j <= 70; j++) {
-					if (copy7.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x + 1, y - 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y - 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.ANIMALS) {
-								if (input.isCardCoordinate(x + 2, y - 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y - 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.ANIMALS) {
-										n++;
-										copy7.remove(j);
-										copy7.remove(next);
-										copy7.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-				break;
-
-			case 8:
-				ArrayList<Integer> copy8 = input.getExists();
-				for(int i = 11; i <= 20; i++) {
-					if(copy8.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x+1, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.VEGETAL) {
-								if(input.isCardCoordinate(x+2, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.VEGETAL) {
-										n++;
-										copy8.remove(i);
-										copy8.remove(next);
-										copy8.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 51; j <= 60; j++) {
-					if (copy8.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x + 1, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.VEGETAL) {
-								if (input.isCardCoordinate(x + 2, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 2, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.VEGETAL) {
-										n++;
-										copy8.remove(j);
-										copy8.remove(next);
-										copy8.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-			case 9:
-				n = input.getCounterOfElements().get(Elements.MUSHROOMS) / 3;
-				break;
-
-			case 10:
-				n = input.getCounterOfElements().get(Elements.INSECT) / 3;
-				break;
-
-			case 11:
-				n = input.getCounterOfElements().get(Elements.ANIMALS) / 3;
-				break;
-
-			case 12:
-				n = input.getCounterOfElements().get(Elements.VEGETAL) / 3;
-				break;
-
-			case 13:
-				ArrayList<Integer> copy13 = input.getExists();
-				for(int i = 1; i <= 10; i++) {
-					if(copy13.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.MUSHROOMS) {
-								if(input.isCardCoordinate(x+1, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.VEGETAL) {
-										n++;
-										copy13.remove(i);
-										copy13.remove(next);
-										copy13.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 41; j <= 50; j++) {
-					if (copy13.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.MUSHROOMS) {
-								if (input.isCardCoordinate(x + 1, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy13.remove(j);
-										copy13.remove(next);
-										copy13.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-			case 14:
-				ArrayList<Integer> copy14 = input.getExists();
-				for(int i = 21; i <= 30; i++) {
-					if(copy14.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x+1, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x+1, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.INSECT) {
-								if(input.isCardCoordinate(x+1, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy14.remove(i);
-										copy14.remove(next);
-										copy14.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 61; j <= 70; j++) {
-					if (copy14.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-						if (input.isCardCoordinate(x + 1, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x + 1, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.INSECT) {
-								if (input.isCardCoordinate(x + 1, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x + 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy14.remove(j);
-										copy14.remove(next);
-										copy14.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-			case 15:
-				ArrayList<Integer> copy15 = input.getExists();
-				for(int i = 1; i <= 10; i++) {
-					if(copy15.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x-1, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x-1, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.ANIMALS) {
-								if(input.isCardCoordinate(x-1, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x - 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.ANIMALS) {
-										n++;
-										copy15.remove(i);
-										copy15.remove(next);
-										copy15.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 41; j <= 50; j++) {
-					if (copy15.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x - 1, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x - 1, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.ANIMALS) {
-								if (input.isCardCoordinate(x - 1, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x - 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.ANIMALS) {
-										n++;
-										copy15.remove(j);
-										copy15.remove(next);
-										copy15.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-			case 16:
-				ArrayList<Integer> copy16 = input.getExists();
-				for(int i = 11; i <= 20; i++) {
-					if(copy16.contains(i)) {
-						Coordinate xy = input.getCoordinate(i);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if(input.isCardCoordinate(x, y+1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y+1);
-							int next = c1.getCode();
-							if(c1.getKingdom() == Elements.VEGETAL) {
-								if(input.isCardCoordinate(x-1, y+2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x - 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy16.remove(i);
-										copy16.remove(next);
-										copy16.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				for(int j = 51; j <= 60; j++) {
-					if (copy16.contains(j)) {
-						Coordinate xy = input.getCoordinate(j);
-						int x = xy.getX();
-						int y = xy.getY();
-
-						if (input.isCardCoordinate(x, y + 1)) {
-							ResourceCard c1 = (ResourceCard) input.getCardInBoard(x, y + 1);
-							int next = c1.getCode();
-							if (c1.getKingdom() == Elements.VEGETAL) {
-								if (input.isCardCoordinate(x-1, y + 2)) {
-									ResourceCard c2 = (ResourceCard) input.getCardInBoard(x - 1, y + 2);
-									int next_next = c2.getCode();
-									if (c2.getKingdom() == Elements.INSECT) {
-										n++;
-										copy16.remove(j);
-										copy16.remove(next);
-										copy16.remove(next_next);
-									}
-								}
-							}
-						}
-					}
-				}
-
-				break;
-
-		}
-
-		return 0;
-	}*/
-
-/*	private int minNumElement(int n1, int n2, int n3){
-		int min;
-		min = n1;
-		if(min >n2) {
-			min = n2;
-		}
-
-		if(min > n3) {
-			min = n3;
-		}
-
-		return min;
-	}*/
-
+	/**
+	 * Abstract method to check the goal of the card on the specified board.
+	 * Subclasses must implement this method.
+	 *
+	 * @param board the board to check
+	 * @return an integer representing the goal check result
+	 * @see Board
+	 */
 	public abstract int checkGoal(Board board);
 
+	/**
+	 * Abstract method to count the points of the card on the specified board.
+	 * Subclasses must implement this method.
+	 *
+	 * @param board the board to count points on
+	 * @return an integer representing the points counted
+	 * @see Board
+	 */
 	public abstract int countPoint(Board board);
 }

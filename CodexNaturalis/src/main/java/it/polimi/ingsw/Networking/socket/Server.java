@@ -1,14 +1,17 @@
 package it.polimi.ingsw.Networking.socket;
 
 import it.polimi.ingsw.controller.AllMatchesController;
+import it.polimi.ingsw.controller.SingleMatchController;
 
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Server extends Thread{
+public class Server extends Thread {
 
     private ServerSocket serverSocket;
 
@@ -20,9 +23,10 @@ public class Server extends Thread{
         try {
             serverSocket = new ServerSocket(port);
             handler = new ArrayList<>();
-            controllers= AllMatchesController.getInstance();
+            controllers = AllMatchesController.getInstance();
             this.start();
             System.out.println("Server Socket ready");
+            //loadMatchFromFile();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -32,7 +36,7 @@ public class Server extends Thread{
         try {
             while (!Thread.interrupted()) {
 
-                handler.add(new ClientHandler(serverSocket.accept(),this));
+                handler.add(new ClientHandler(serverSocket.accept(), this));
                 System.out.println("new connection accepted");
                 handler.getLast().start();
             }
@@ -53,4 +57,14 @@ public class Server extends Thread{
             }
         this.interrupt();
     }
+
+    /*public void loadMatchFromFile() {
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("salvataggio.ser"))) {
+            this.controllers = new AllMatchesController((ArrayList<SingleMatchController>) ois.readObject());
+            System.out.println(controllers.getControllerbyId(0).getMatch().getPlayers().get(0).getNickname());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }*/
 }

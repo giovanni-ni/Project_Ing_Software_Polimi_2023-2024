@@ -5,15 +5,20 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
+//import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+//import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+//import it.polimi.ingsw.model.ViewModel;
+//import org.json.simple.JSONArray;
+//import org.json.simple.JSONObject;
 public class AllMatchesController extends Thread {
 
     private static AllMatchesController instance = null;
@@ -38,6 +43,11 @@ public class AllMatchesController extends Thread {
     public AllMatchesController() throws IOException {
         this.start();
         this.runningControllers = new ArrayList<>();
+    }
+
+    public AllMatchesController(ArrayList<SingleMatchController> runningControllers) {
+        this.start();
+        this.runningControllers = runningControllers;
     }
 
     @Override
@@ -134,13 +144,40 @@ public class AllMatchesController extends Thread {
 
         } else if (msg instanceof JoinGameMessage){
             message = joinMatch((JoinGameMessage) msg);
-        }else {
+        } /*else if (msg instanceof ReconnectRequestMsg) {
+            ReconnectRequestMsg m = (ReconnectRequestMsg) msg;
+            boolean found = false;
+            for(int i= 0; i < runningControllers.get(m.getGameID()).getMatch().getPlayers().size() && !found; i++) {
+                if(m.getNickname().equals(runningControllers.get(m.getGameID()).getMatch().getPlayers().get(i).nickname)) {
+                    message = new ReconnectSuccess(runningControllers.get(m.getGameID()).getMatch());
+
+                    msg.getListener().setNickname(msg.getNickname());
+                    found = true;
+                }
+            }
+            if(!found) {
+                message = new ActionNotRecognize("the username doesn't match");
+            }
+
+        } */else {
             message= new ActionNotRecognize();
         }
         msg.getListener().update(message);
+        //saveMatchesToJson();
+
     }
 
     public SingleMatchController getControllerbyId(int id) {
         return this.runningControllers.get(id);
     }
+
+    /*public void saveMatchesToJson() {
+
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("salvataggio.ser"))) {
+            oos.writeObject(runningControllers);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }*/
 }

@@ -796,12 +796,32 @@ public class Tui  implements Ui {
             Tui.status = PlayerStatus.END;
             Tui.myMatch = ((endGameMessage) msg).getModel();
             Tui.myPlayer = ((endGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
-        }
+        } /*else if(msg instanceof ReconnectSuccess) {
+
+            Tui.myMatch = ((ReconnectSuccess) msg).getModel();
+            Tui.myPlayer = ((ReconnectSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            if(Tui.myMatch.getStatus().equals(MatchStatus.Playing)) {
+                Tui.status = PlayerStatus.GamePlay;
+            }
+
+            print("welcome back " + Tui.myPlayer.nickname);
+        }*/
 
         /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {
             Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
 
         }*/
 
+    }
+
+    public void askReconnect() throws RemoteException, InterruptedException {
+        print("enter your room: ");
+        int num = Integer.parseInt(in.nextLine());
+        print("enter your name: ");
+        String name = in.nextLine();
+        ReconnectRequestMsg msg = new ReconnectRequestMsg(name, num);
+        client.messageToServer(msg);
+
+        Thread.sleep(3000);
     }
 }

@@ -1,5 +1,9 @@
 package it.polimi.ingsw.model;
 
+/**
+ * Enumeration representing paths to JSON files for different types of cards in a game.
+ * Each constant provides a specific path to a JSON file corresponding to its card type.
+ */
 public enum FilePath {
 
     RESOURCECARDPATH("/json/ResourceCard.json"),

@@ -7,6 +7,7 @@ module it.polimi.ingsw {
     requires java.rmi;
     requires java.desktop;
     requires com.google.common;
+    requires json.simple;
 
     exports it.polimi.ingsw.model;
     exports it.polimi.ingsw.view;

@@ -6,6 +6,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A different implementation of the Match class, this is the one we send to the clients
+ * As such, we need to make all the objects in this class immutable, so that the clients
+ * cannot modify the course of the game.
+ * To do so, a strategy patter was implemented.
+ */
 public class ViewModel implements Serializable {
     public final int idMatch;
 

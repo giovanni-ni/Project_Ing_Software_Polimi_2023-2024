@@ -7,6 +7,7 @@ import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.model.*;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.Objects;
 import java.util.Random;
@@ -16,7 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 
 
-public class SingleMatchController extends Thread{
+public class SingleMatchController extends Thread implements Serializable {
 
     private Match match;
     private final int MAX_NUMCARD_ON_HAND= 3;

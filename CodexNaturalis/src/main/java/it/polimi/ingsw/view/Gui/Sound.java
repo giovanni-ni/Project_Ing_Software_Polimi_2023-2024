@@ -8,8 +8,16 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
+/**
+ * Utility class for playing sound from resources.
+ */
 public class Sound {
 
+    /**
+     * Plays a sound from the specified resource path.
+     *
+     * @param soundName the name of the sound file to play (relative path from "/images/cards/")
+     */
     public static synchronized void playSound(final String soundName) {
 
             new Thread(() -> {
