@@ -11,6 +11,10 @@ import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Server class handles incoming client connections and manages the lifecycle of the server.
+ * It accepts client connections and assigns a ClientHandler to each connected client.
+ */
 public class Server extends Thread {
 
     private ServerSocket serverSocket;
@@ -19,6 +23,12 @@ public class Server extends Thread {
 
     protected AllMatchesController controllers;
 
+    /**
+     * Starts the server on the specified port.
+     *
+     * @param port the port number on which the server listens for incoming connections
+     * @throws IOException if an I/O error occurs when opening the socket
+     */
     public void start(int port) throws IOException {
         try {
             serverSocket = new ServerSocket(port);
@@ -31,6 +41,10 @@ public class Server extends Thread {
             e.printStackTrace();
         }
     }
+    /**
+     * Runs the server thread.
+     * Accepts new client connections and assigns a ClientHandler to each.
+     */
     @Override
     public void run() {
         try {
@@ -50,6 +64,9 @@ public class Server extends Thread {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * Stops the server and interrupts all client handler threads.
+     */
     public void stopConnection() {
         if (handler != null)
             for (ClientHandler c : handler) {
