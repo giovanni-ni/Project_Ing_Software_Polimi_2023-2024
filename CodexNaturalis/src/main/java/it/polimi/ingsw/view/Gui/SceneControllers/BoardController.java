@@ -43,7 +43,10 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.*;
-
+/**
+ * Controller class for managing the game board interface and interactions.
+ * Extends GenericSceneController and implements Initializable for JavaFX.
+ */
 
 public class BoardController extends GenericSceneController implements Initializable {
 
