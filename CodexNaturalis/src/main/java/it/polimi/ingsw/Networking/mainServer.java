@@ -11,8 +11,17 @@ import java.net.Socket;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-// todo javadoc
+/**
+ * Main class for starting the server application.
+ */
 public class mainServer{
+    /**
+     * Main method to start the server.
+     *
+     * @param args command line arguments (not used)
+     * @throws IOException if there is an error with I/O operations
+     * @throws ClassNotFoundException if a class is not found during deserialization
+     */
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Server Socketserver = new Server();
         Socketserver.start(DefaultPort.SOCKETPORT.getNumber());

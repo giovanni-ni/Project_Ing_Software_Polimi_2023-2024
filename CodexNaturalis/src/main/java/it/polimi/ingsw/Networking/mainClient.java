@@ -18,15 +18,17 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
-// todo javadoc
+/**
+ * Main class for starting the client application.
+ */
 public class mainClient
 {
-
-        /**
-         *
-         * @param args
-         * @throws IOException
-         */
+    /**
+     * Main method to start the client application.
+     *
+     * @param args command line arguments (not used)
+     * @throws Exception if there is an error during execution
+     */
         public static void main(String[] args) throws Exception {
 
             Ui ui;
