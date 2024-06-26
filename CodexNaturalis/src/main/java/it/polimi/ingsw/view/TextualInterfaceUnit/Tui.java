@@ -18,40 +18,106 @@ import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
 
+/**
+ * The `Tui` class represents a Text User Interface for a game, implementing the `Ui` interface.
+ * It handles user interactions, game state management, and communication with the server.
+ *
+ * @see Ui
+ */
 public class Tui  implements Ui {
 
+    /**
+     * The username of the player using this Tui instance.
+     */
     private String username;
 
+
+    /**
+     * Static reference to the player's status.
+     *
+     * @see PlayerStatus
+     */
     public static PlayerStatus status;
 
+    /**
+     * Static variable indicating whether there has been a change in the game state.
+     */
     public static int hasChange;
 
+    /**
+     * Static boolean indicating whether the player has played in the current round.
+     */
     public static boolean hasPlayed;
 
+    /**
+     * Static reference to the ViewModel of the current match.
+     *
+     * @see ViewModel
+     */
     public static ViewModel myMatch;
 
+    /**
+     * 2D array representing the game board.
+     */
     private int[][] myBoard;
 
+    /**
+     * Static reference to the player object.
+     *
+     * @see Player
+     */
     public static Player myPlayer;
 
-    public static int matchID;
-
+    /**
+     * Boolean indicating if the connection type is RMI.
+     */
     private boolean isRMI = false;
 
+    /**
+     * Boolean indicating if the connection type is Socket.
+     */
     private boolean isSocket = false;
 
+    /**
+     * Scanner object for reading user input.
+     */
     private final Scanner in;
 
+    /**
+     * Integer representing the first player in the game.
+     */
     private int first;
 
+    /**
+     * Client object for communication with the server.
+     *
+     * @see Client
+     */
     private Client client;
 
+    /**
+     * Static ArrayList storing chat messages.
+     *
+     * @see ServerChatMessage
+     */
     public static ArrayList<ServerChatMessage> chat;
 
+    /**
+     * Integer for autostart configuration.
+     */
     private int autostart;
 
+
+    /**
+     * Static boolean indicating if the player is choosing a color.
+     */
     public static boolean choosingColor;
 
+    /**
+     * Constructor for the Tui class. Initializes the Tui and sets up the initial game state.
+     *
+     * @throws IOException if there is an error reading from the standard input.
+     */
     public Tui() throws IOException {
         in = new Scanner(System.in);
         this.status = PlayerStatus.MENU;
@@ -63,20 +129,11 @@ public class Tui  implements Ui {
         choosingColor = true;
     }
 
-    /*@Override
-    public void run() {
-        while(true) {
-            if(hasChange == 1) {
-                try {
-                    hasChange = 0;
-                    redirect();
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-    }*/
-
+    /**
+     * Initializes the game by setting up the connection type, logging in, and starting the game loop.
+     *
+     * @throws Exception if there is an error during initialization.
+     */
     public void init() throws Exception {
         autostart = 0;
         print(Print.Codex);
@@ -90,7 +147,7 @@ public class Tui  implements Ui {
         }
 
         askLogin();
-        //this.start();
+
         while(true) {
             redirect();
             System.out.flush();
@@ -99,6 +156,9 @@ public class Tui  implements Ui {
 
     }
 
+    /**
+     * Asks the user to choose the connection type (RMI or Socket).
+     */
     public void askConnectionType() {
         int option = 0;
         do {
@@ -122,13 +182,20 @@ public class Tui  implements Ui {
         }
     }
 
+    /**
+     * Waits for the user to press Enter to continue.
+     */
     public void askToContinue() {
         print("Press 'Enter' to continue");
         in.nextLine();
         print("-----------------------------------------------------------");
     }
 
-
+    /**
+     * Asks the user to enter their username.
+     *
+     * @throws Exception if there is an error during the login process.
+     */
     public void askLogin() throws Exception {
         String user;
         do{
@@ -152,6 +219,11 @@ public class Tui  implements Ui {
 
     }
 
+    /**
+     * Asks the user to choose an action from the menu.
+     *
+     * @throws Exception if there is an error during menu action selection.
+     */
     public void askMenuAction() throws Exception {
         print(Print.menuOption);
         print("-----------------------------------------------------------\n" +
@@ -172,7 +244,6 @@ public class Tui  implements Ui {
             case "exit", "ex" -> {
                 if (askExitGame()) return;
             }
-            //case "help", "h", "he" -> askHelp();
 
             default ->
                     print(Color.RED + "The [" + option + "] command cannot be found! Please try again.");
@@ -321,9 +392,7 @@ public class Tui  implements Ui {
 
         client.messageToServer(message);
 
-        //wait(100);
         Thread.sleep(1000);
-        //print(myMatch.idMatch);
 
     }
 
@@ -383,11 +452,6 @@ public class Tui  implements Ui {
     }
 
 
-    public void announceCurrentPlayer() throws RemoteException {
-
-    }
-
-
     public void showBoard() {
         int p = 1;
         print("-9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9");
@@ -402,6 +466,11 @@ public class Tui  implements Ui {
         }
     }
 
+    /**
+     * Handles redirection to appropriate game state methods based on the current status.
+     *
+     * @throws Exception if there is an error during redirection.
+     */
     public void redirect() throws Exception {
         if(status == PlayerStatus.MENU) {
             askMenuAction();
@@ -433,6 +502,13 @@ public class Tui  implements Ui {
             endGame();
         }
     }
+
+    /**
+     * Prepares the game by setting up the board, choosing colors, and initializing game elements.
+     *
+     * @throws IOException if there is an error reading from the standard input.
+     * @throws InterruptedException if the thread is interrupted while waiting.
+     */
 
     public void prepareGame() throws IOException, InterruptedException {
         List<Card> deck = new ArrayList<>();
@@ -546,6 +622,7 @@ public class Tui  implements Ui {
         status = PlayerStatus.GamePlay;
     }
 
+
     private void showDeck() {
         print("resource cards: ");
         printCard( myMatch.getResourceDeck().get(0));
@@ -561,6 +638,9 @@ public class Tui  implements Ui {
 
     }
 
+    /**
+     * Ends the game and displays the final scores and winners.
+     */
     public void endGame() {
         print("GAME END");
         print("Point table: ");
@@ -575,6 +655,12 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Draws a card from the deck.
+     *
+     * @throws IOException if there is an error reading from the standard input.
+     * @throws InterruptedException if the thread is interrupted while waiting.
+     */
     public void drawCard() throws IOException, InterruptedException {
         print("draw a card:\n" +
                 "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + " " + myMatch.getResourceDeck().get(1).getCode() +
@@ -610,18 +696,12 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
     }
 
-    /*public void waitingMethodReturn() {
-
-
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-
-
-    }*/
-
+    /**
+     * Handles in-game actions such as playing cards, chatting, and viewing game elements.
+     *
+     * @throws InterruptedException if the thread is interrupted while waiting.
+     * @throws IOException if there is an error reading from the standard input.
+     */
     public void inGame() throws InterruptedException, IOException {
         //print("in game method called");
 
@@ -740,6 +820,12 @@ public class Tui  implements Ui {
         print(message);
     }
 
+
+    /**
+     * Handles messages received from the server.
+     *
+     * @param msg the message received from the server
+     */
     @Override
     public void handleMessage(GenericServerMessage msg)  {
         if(msg instanceof joinSuccessMsg) {
@@ -814,6 +900,12 @@ public class Tui  implements Ui {
 
     }
 
+    /**
+     * Asks the user to reconnect to the game.
+     *
+     * @throws RemoteException if there is an error in remote communication.
+     * @throws InterruptedException if the thread is interrupted while waiting.
+     */
     public void askReconnect() throws RemoteException, InterruptedException {
         print("enter your room: ");
         int num = Integer.parseInt(in.nextLine());
