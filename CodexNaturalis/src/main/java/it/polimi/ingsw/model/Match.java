@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Represents a match in the game.
+ * This class handles the initialization, player management, game state, and score tracking for a match.
+ */
 public class Match implements Serializable {
 
 	public int idMatch;
@@ -40,86 +44,176 @@ public class Match implements Serializable {
 	public ArrayList<PlayerColor> notChosenColor;
 
 	private Player currentPlayer;
-
+	/**
+	 * Gets the ID of the match.
+	 *
+	 * @return the ID of the match.
+	 */
 	public int getIdMatch() {
 		return idMatch;
 	}
-
+	/**
+	 * Sets the ID of the match.
+	 *
+	 * @param idMatch the ID of the match.
+	 */
 	public void setIdMatch(int idMatch) {
 		this.idMatch = idMatch;
 	}
 
+	/**
+	 * Gets the point table of the match.
+	 *
+	 * @return the point table of the match.
+	 */
 	public PointTable getPt() {
 		return pt;
 	}
-
+	/**
+	 * Sets the point table of the match.
+	 *
+	 * @param pt the point table of the match.
+	 */
 	public void setPt(PointTable pt) {
 		this.pt = pt;
 	}
 
+	/**
+	 * Gets the list of players in the match.
+	 *
+	 * @return the list of players.
+	 */
 	public ArrayList<Player> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * Sets the list of players in the match.
+	 *
+	 * @param players the list of players.
+	 */
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
 
+	/**
+	 * Gets the initial deck of cards.
+	 *
+	 * @return the initial deck.
+	 */
 	public ArrayList<InitialCard> getInitialDeck() {
 		return initialDeck;
 	}
-
+	/**
+	 * Gets the resource deck of cards.
+	 *
+	 * @return the resource deck.
+	 */
 
 	public ArrayList<ResourceCard> getResourceDeck() {
 		return resourceDeck;
 	}
-
+	/**
+	 * Gets the list of player colors not yet chosen.
+	 *
+	 * @return the list of player colors not yet chosen.
+	 */
 	public ArrayList<PlayerColor> getNotChosenColor() {
 		return notChosenColor;
 	}
 
+	/**
+	 * Gets the gold deck of cards.
+	 *
+	 * @return the gold deck.
+	 */
 
 	public ArrayList<GoldCard> getGoldDeck() {
 		return goldDeck;
 	}
-
+	/**
+	 * Gets the target deck of cards.
+	 *
+	 * @return the target deck.
+	 */
 
 	public ArrayList<TargetCard> getTargetDeck() {
 		return targetDeck;
 	}
 
 
+	/**
+	 * Gets the common target cards.
+	 *
+	 * @return the common target cards.
+	 */
 	public ArrayList<TargetCard> getCommonTarget() {
 		return commonTarget;
 	}
-
+	/**
+	 * Sets the common target cards.
+	 *
+	 * @param commonTarget the common target cards.
+	 */
 	public void setCommonTarget(ArrayList<TargetCard> commonTarget) {
 		this.commonTarget = commonTarget;
 	}
-
+	/**
+	 * Gets the nickname of the first player.
+	 *
+	 * @return the nickname of the first player.
+	 */
 	public String getFirstPlayer() {
 		return firstPlayer;
 	}
 
+	/**
+	 * Sets the nickname of the first player.
+	 *
+	 * @param firstPlayer the nickname of the first player.
+	 */
 	public void setFirstPlayer(String firstPlayer) {
 		this.firstPlayer = firstPlayer;
 	}
 
+	/**
+	 * Gets the current player in the match.
+	 *
+	 * @return the current player.
+	 */
 	public Player getCurrentPlayer() {
 		return currentPlayer;
 	}
-
+	/**
+	 * Sets the current player in the match.
+	 *
+	 * @param currentPlayer the current player.
+	 */
 	public void setCurrentPlayer(Player currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
+	/**
+	 * Gets the auto-start status of the match.
+	 *
+	 * @return the auto-start status.
+	 */
 	public boolean getAutoStart() {
 		return this.autostart;
 	}
 
+	/**
+	 * Sets the auto-start status of the match.
+	 *
+	 * @param autostart the auto-start status.
+	 */
 	public void setAutostart(boolean autostart) {
 		this.autostart = autostart;
 	}
-
+	/**
+	 * Gets the list of player colors.
+	 *
+	 * @return the list of player colors.
+	 */
 	public List<PlayerColor> getPlayerColors() {
 		return playerColors;
 	}

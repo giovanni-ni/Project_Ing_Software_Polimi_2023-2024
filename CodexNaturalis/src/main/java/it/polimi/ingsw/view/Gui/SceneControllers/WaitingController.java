@@ -24,7 +24,7 @@ public class WaitingController extends GenericSceneController implements Initial
     private HashMap<Integer, ImageView> ballList;
     private HashMap<Integer, ImageView> tickList;
     private HashMap<Integer, Text> nickList;
-    private boolean isReady = false;
+
 
     @FXML
     ImageView blueBall, redBall, yellowBall, greenBall, tickBlue, tickRed, tickYellow, tickGreen;
@@ -40,14 +40,7 @@ public class WaitingController extends GenericSceneController implements Initial
      */
     @FXML
     void setPlayerReady() throws RemoteException {
-        ArrayList<Player> players = getGuiApplication().getGui().getMyMatch().getPlayers();
-        for (Player p : players){
-            if (Objects.equals(p.nickname, getGuiApplication().getGui().getUsername()));
-            isReady = p.getReady();
-        }
-        if (!isReady) {
-            getGuiApplication().getGui().notify(new SetReadyMessage());
-        }
+        getGuiApplication().getGui().notify(new SetReadyMessage());
     }
 
     /**
@@ -127,7 +120,7 @@ public class WaitingController extends GenericSceneController implements Initial
     public void ShowErrorMessage(String string) {
         ErrorMessage.setText(string);
         ErrorMessage.setFill(Color.RED);
-        isReady = false;
+
     }
 
     /**

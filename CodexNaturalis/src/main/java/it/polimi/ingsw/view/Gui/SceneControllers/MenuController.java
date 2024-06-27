@@ -42,11 +42,12 @@ public class MenuController extends GenericSceneController {
     void sendNickName(ActionEvent event) throws RemoteException {
         // Handle default and special nicknames
         if (Objects.equals(nickName.getText(), "")) {
-            nickName.setText("nuge" + numOfError);
+            nickName.setText("player" + numOfError);
         }
+        /*
         if (Objects.equals(nickName.getText(), "stefano")) {
             nickName.setText("别玩了呐 你已经输了");
-        }
+        }*/
 
         // Determine action based on current mode (create game or join game)
         if (isCreateGame) {
@@ -78,7 +79,7 @@ public class MenuController extends GenericSceneController {
         if (gameId.getText().matches("\\d+")) {
             // Handle default nickname if empty
             if (Objects.equals(nickName.getText(), "")) {
-                nickName.setText("nuge" + numOfError);
+                nickName.setText("player" + numOfError);
             }
             // Determine action based on current mode (join game or reconnect)
             if (isJoinGame) {

@@ -12,7 +12,11 @@ import java.io.*;
 import java.net.Socket;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-// todo javadoc
+
+/**
+ * The ClientHandler class handles communication between the server and a connected client.
+ * It reads messages from the client, processes them, and sends responses back.
+ */
 public class ClientHandler extends Thread {
 
     private final Socket clientSocket;
@@ -28,6 +32,13 @@ public class ClientHandler extends Thread {
 
     private final SocketListener gameListener;
     private final Server server;
+    /**
+     * Constructs a ClientHandler for a given client socket and server.
+     *
+     * @param soc    the client socket
+     * @param server the server to which the client is connected
+     * @throws IOException if an I/O error occurs when creating the input and output streams
+     */
     public ClientHandler(Socket soc, Server server) throws IOException {
         this.clientSocket = soc;
         this.inputStream = new ObjectInputStream(soc.getInputStream());
@@ -38,12 +49,18 @@ public class ClientHandler extends Thread {
 
 
     }
+    /**
+     * Interrupts the client handler thread.
+     */
 
     public void interruptThread() {
         this.interrupt();
     }
 
-
+    /**
+     * Runs the client handler thread.
+     * Reads messages from the client and processes them.
+     */
     @Override
     public void run() {
         try {

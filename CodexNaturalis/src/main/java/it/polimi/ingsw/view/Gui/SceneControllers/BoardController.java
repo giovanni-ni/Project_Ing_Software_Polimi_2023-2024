@@ -43,8 +43,10 @@ import java.rmi.RemoteException;
 import java.util.*;
 
 import static it.polimi.ingsw.utils.pathSearch.*;
-
-
+/**
+ * Controller class for managing the game board interface and interactions.
+ * Extends GenericSceneController and implements Initializable for JavaFX.
+ */
 public class BoardController extends GenericSceneController implements Initializable {
 
     @FXML
@@ -442,7 +444,7 @@ public class BoardController extends GenericSceneController implements Initializ
                 }
                 winVbox.getChildren().remove(winText);
                 //A richiesta di Stefano Hong
-                Text wint = new Text("Loser is JO77");
+                Text wint = new Text("Congratulations");
                 wint.setStyle(winText.getStyle());
                 wint.setFont(winText.getFont());
                 wint.setFill(winText.getFill());

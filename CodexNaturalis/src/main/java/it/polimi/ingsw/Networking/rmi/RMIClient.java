@@ -21,14 +21,23 @@ import java.util.List;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
-// todo javadoc
+/**
+ * The RMIClient class is responsible for connecting to a remote RMI server and handling communication.
+ */
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     private String nickname;
 
     private Integer gameId;
     private VirtualServer server;
     private Ui ui;
-
+    /**
+     * Constructs an RMIClient that connects to a remote RMI server.
+     *
+     * @param ip   the IP address of the remote server
+     * @param port the port number on which the remote server is listening
+     * @param ui   the user interface object to handle messages and interactions
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     public RMIClient(String ip, int port, Ui ui) throws RemoteException {
         try{
             this.ui = ui;
@@ -41,32 +50,64 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
         }
 
     }
-
+    /**
+     * Updates the client with a message from the server.
+     *
+     * @param msg the message from the server
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     @Override
     public void update(Message msg) throws RemoteException{
         ui.handleMessage((GenericServerMessage) msg);
     }
+    /**
+     * Sets the nickname of the player.
+     *
+     * @param nickname the player's nickname
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
 
     @Override
     public void setNickname(String nickname) throws RemoteException{
         this.nickname=nickname;
     }
-
+    /**
+     * Gets the nickname of the player.
+     *
+     * @return the player's nickname
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     @Override
     public String getNickname() throws RemoteException {
         return this.nickname;
     }
 
+    /**
+     * Gets the game ID associated with the player.
+     *
+     * @return the game ID
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     @Override
     public Integer getGameID() throws RemoteException {
         return this.gameId;
     }
-
+    /**
+     * Sets the game ID associated with the player.
+     *
+     * @param gameID the game ID
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     @Override
     public void setGameID(Integer gameID) throws RemoteException {
         this.gameId=gameID;
     }
-
+    /**
+     * Sends a message to the server.
+     *
+     * @param msg the message to send to the server
+     * @throws RemoteException if there is a problem with the remote method invocation
+     */
     @Override
     public void messageToServer(GenericClientMessage msg) throws RemoteException {
         server.addInQueue(msg, this );
