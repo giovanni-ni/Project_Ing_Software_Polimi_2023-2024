@@ -200,13 +200,15 @@ public class AllMatchesController extends Thread {
         if (msg instanceof CrashMsg){
             if(msg.getListener().getGameID()>=0){
                 SingleMatchController singleMatchController = getControllerbyId(msg.getListener().getGameID());
-                for (Player p :singleMatchController.getMatch().getPlayers()){
-                    if (Objects.equals(p.nickname, msg.getNickname())){
-                        //remove the disconnected player's listener
-                        singleMatchController.getMatch().getListenerList().remove(singleMatchController.getListenerOf(((CrashMsg) msg).getNickNameDisconnect()));
-                        getControllerbyId(msg.getListener().getGameID()).notifyAllListeners(new LeaveMessage(p.nickname));
-                        singleMatchController.interrupt();
-                        runningControllers.remove(singleMatchController);
+                if (singleMatchController!=null){
+                    for (Player p :singleMatchController.getMatch().getPlayers()){
+                        if (Objects.equals(p.nickname, msg.getNickname())){
+                            //remove the disconnected player's listener
+                            singleMatchController.getMatch().getListenerList().remove(singleMatchController.getListenerOf(((CrashMsg) msg).getNickNameDisconnect()));
+                            getControllerbyId(msg.getListener().getGameID()).notifyAllListeners(new LeaveMessage(p.nickname));
+                            singleMatchController.interrupt();
+                            runningControllers.remove(singleMatchController);
+                        }
                     }
                 }
 
@@ -221,6 +223,11 @@ public class AllMatchesController extends Thread {
      * @return The {@link SingleMatchController} instance corresponding to the ID
      */
     public SingleMatchController getControllerbyId(int id) {
-        return this.runningControllers.get(id);
+        for (SingleMatchController sC : runningControllers){
+            if (sC.getMatch().getIdMatch() == id){
+                return sC;
+            }
+        }
+        return null;
     }
 }

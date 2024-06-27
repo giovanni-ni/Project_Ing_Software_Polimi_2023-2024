@@ -8,4 +8,8 @@ public class LeaveMessage extends GenericServerMessage {
     public LeaveMessage(String leftPlayer) {
         this.leftPlayer = leftPlayer;
     }
+
+    public String getLeftPlayer() {
+        return leftPlayer;
+    }
 }

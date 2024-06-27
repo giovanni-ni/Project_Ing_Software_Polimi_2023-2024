@@ -10,6 +10,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import javafx.fxml.FXMLLoader;
 import java.io.IOException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
@@ -167,5 +170,33 @@ public class GUIApplication extends Application {
      */
     public GUI getGui() {
         return Gui;
+    }
+
+    public void showAllert(String leftPlayer) {
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Something went wrong");
+        alert.setHeaderText("Restart Application");
+        alert.setContentText(leftPlayer +"is disconnected");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            restartApplication();
+        }
+    }
+
+    private void restartApplication() {
+        Platform.runLater(() -> {
+            try {
+                // Restart the application
+                Application newApp = new GUIApplication();
+                Stage newStage = new Stage();
+                newApp.start(newStage);
+                pStage.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 }
