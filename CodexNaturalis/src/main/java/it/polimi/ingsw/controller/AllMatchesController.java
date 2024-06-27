@@ -10,6 +10,7 @@ import it.polimi.ingsw.model.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -79,7 +80,6 @@ public class AllMatchesController extends Thread {
     @Override
     public void run() {
         GenericClientMessage temp;
-        //this.runningControllers = new ArrayList<>();
 
         try {
             while (!this.isInterrupted()) {
@@ -134,7 +134,7 @@ public class AllMatchesController extends Thread {
         }
         runningControllers.add(c);
 
-        return joinMatch((JoinGameMessage)msg);
+        return joinMatch(msg);
 
     }
 
@@ -197,6 +197,21 @@ public class AllMatchesController extends Thread {
             message= new ActionNotRecognize();
         }
         msg.getListener().update(message);
+        if (msg instanceof CrashMsg){
+            if(msg.getListener().getGameID()>=0){
+                SingleMatchController singleMatchController = getControllerbyId(msg.getListener().getGameID());
+                for (Player p :singleMatchController.getMatch().getPlayers()){
+                    if (Objects.equals(p.nickname, msg.getNickname())){
+                        //remove the disconnected player's listener
+                        singleMatchController.getMatch().getListenerList().remove(singleMatchController.getListenerOf(((CrashMsg) msg).getNickNameDisconnect()));
+                        getControllerbyId(msg.getListener().getGameID()).notifyAllListeners(new LeaveMessage(p.nickname));
+                        singleMatchController.interrupt();
+                        runningControllers.remove(singleMatchController);
+                    }
+                }
+
+            }
+        }
     }
 
     /**

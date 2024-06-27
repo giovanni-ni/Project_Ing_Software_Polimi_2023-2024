@@ -1,5 +1,6 @@
 package it.polimi.ingsw.Networking.socket;
 
+import it.polimi.ingsw.Message.ClientToServerMsg.CrashMsg;
 import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ActionSuccessMsg;
@@ -74,6 +75,7 @@ public class ClientHandler extends Thread {
 
                 } catch (IOException | ClassNotFoundException e) {
                     System.out.println("ClientSocket cannot communicate no more with the client");
+                    server.controllers.addInQueue(new CrashMsg(gameListener.getNickname()),gameListener);
                     return;
                 }
             }
