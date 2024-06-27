@@ -925,6 +925,7 @@ public class Tui  implements Ui {
             Tui.status = PlayerStatus.END;
             Tui.myMatch = ((endGameMessage) msg).getModel();
             Tui.myPlayer = ((endGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            endGame();
         } /*else if(msg instanceof ReconnectSuccess) {
 
             Tui.myMatch = ((ReconnectSuccess) msg).getModel();
