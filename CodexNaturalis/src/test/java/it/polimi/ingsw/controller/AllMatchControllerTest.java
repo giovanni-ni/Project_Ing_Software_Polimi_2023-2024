@@ -3,17 +3,15 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.ActionNotRecognize;
-import it.polimi.ingsw.Message.ServerToClientMsg.joinFailMsg;
-import it.polimi.ingsw.Message.ServerToClientMsg.joinSuccessMsg;
+import it.polimi.ingsw.Message.ServerToClientMsg.JoinFailMsg;
+import it.polimi.ingsw.Message.ServerToClientMsg.JoinSuccessMsg;
 import it.polimi.ingsw.Networking.Listeners.Listener;
-import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.model.Match;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,8 +84,8 @@ public class AllMatchControllerTest {
         msg.setListener(l);
         testC.createNewMatch(msg);
         Match match = new Match();
-        Message msg2 = new joinSuccessMsg(match);
-        assertEquals(testC.createNewMatch(msg).getClass(), joinSuccessMsg.class);
+        Message msg2 = new JoinSuccessMsg(match);
+        assertEquals(testC.createNewMatch(msg).getClass(), JoinSuccessMsg.class);
     }
 
     @Test
@@ -113,11 +111,11 @@ public class AllMatchControllerTest {
         Thread.sleep(1000);
 
 
-        assertEquals(l1.msg.getFirst().getClass(), joinSuccessMsg.class);
+        assertEquals(l1.msg.getFirst().getClass(), JoinSuccessMsg.class);
 
         JoinGameMessage msg2 = new JoinGameMessage("antonio", 1);
         msg2.setListener(new SocketListener(out));
-        assertEquals(clt.joinMatch(msg2).getClass(), joinFailMsg.class);    //gameid not found
+        assertEquals(clt.joinMatch(msg2).getClass(), JoinFailMsg.class);    //gameid not found
 
         JoinGameMessage msg3 = new JoinGameMessage("antonio", 0);
         JoinGameMessage msg4 = new JoinGameMessage("marco", 0);
@@ -138,7 +136,7 @@ public class AllMatchControllerTest {
         Listener l5 = new SocketListener(out);
         msg6.setListener(l5);
 
-        assertEquals(clt.joinMatch(msg6).getClass(), joinFailMsg.class);    //Match full
+        assertEquals(clt.joinMatch(msg6).getClass(), JoinFailMsg.class);    //Match full
 
     }
 
@@ -158,7 +156,7 @@ public class AllMatchControllerTest {
         msg.setListener(l);
         clt.addInQueue(msg, l);
         Thread.sleep(1000);
-        assertEquals(l.msg.getFirst().getClass(), joinSuccessMsg.class);
+        assertEquals(l.msg.getFirst().getClass(), JoinSuccessMsg.class);
     }
     @Test
     void actionNotRecognizeTest() throws IOException, InterruptedException {
@@ -231,7 +229,7 @@ public class AllMatchControllerTest {
         clt.addInQueue(j, l5);
         Thread.sleep(1000);
 
-        assertEquals(l5.msg.getFirst().getClass(), joinSuccessMsg.class);
+        assertEquals(l5.msg.getFirst().getClass(), JoinSuccessMsg.class);
     }
 
     @Test
@@ -281,7 +279,7 @@ public class AllMatchControllerTest {
         clt.addInQueue(msg4, msg4.getListener());
         Thread.sleep(1000);
 
-        assertEquals(s.msg.getFirst().getClass(), joinFailMsg.class);
+        assertEquals(s.msg.getFirst().getClass(), JoinFailMsg.class);
 
 
 

@@ -3,7 +3,6 @@ package it.polimi.ingsw.controller;
 import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
-import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
@@ -11,7 +10,6 @@ import it.polimi.ingsw.model.Player;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -152,16 +150,16 @@ public class AllMatchesController extends Thread {
         for (SingleMatchController ctrl: runningControllers){
             if (ctrl.getMatch().idMatch== msg.getGameID()) {
                 if (ctrl.getMatch().getStatus()!= MatchStatus.Waiting)
-                    return new joinFailMsg("Match Started");
+                    return new JoinFailMsg("Match Started");
                 if (ctrl.isPlayerFull())
-                    return new joinFailMsg("Match Full");
+                    return new JoinFailMsg("Match Full");
                 if(!ctrl.addPlayer(p,msg.getListener())){
-                    return new joinFailMsg("Nick Name Used");
+                    return new JoinFailMsg("Nick Name Used");
                 }
-                return new joinSuccessMsg(ctrl.getMatch());
+                return new JoinSuccessMsg(ctrl.getMatch());
             }
         }
-        return new joinFailMsg("GameId not Found");
+        return new JoinFailMsg("GameId not Found");
 
     }
 
@@ -181,11 +179,11 @@ public class AllMatchesController extends Thread {
             for (int i =0 ; i<runningControllers.size();i++){
                 msg.setGameID(runningControllers.get(i).getMatch().getIdMatch());
                 message= joinMatch((JoinGameMessage) msg);
-                if(message instanceof joinSuccessMsg) {
+                if(message instanceof JoinSuccessMsg) {
                     break;
                 }
             }
-            if (! (message instanceof joinSuccessMsg)){
+            if (! (message instanceof JoinSuccessMsg)){
                 CreateGameMessage createGameMessage=new CreateGameMessage(msg.getNickname());
                 createGameMessage.setListener(msg.getListener());
                 message = createNewMatch(createGameMessage);

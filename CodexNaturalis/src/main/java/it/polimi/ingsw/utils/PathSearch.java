@@ -2,12 +2,11 @@ package it.polimi.ingsw.utils;
 
 import it.polimi.ingsw.model.*;
 
-import javax.swing.text.Element;
 import java.io.IOException;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.findCardById;
 
-public class pathSearch {
+public class PathSearch {
     /**
      * Get the card path by the card id and the front boolean
      * @param cardId : the card id of the card path

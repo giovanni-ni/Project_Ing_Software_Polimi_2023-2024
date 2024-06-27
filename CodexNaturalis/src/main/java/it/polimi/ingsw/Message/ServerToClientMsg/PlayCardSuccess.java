@@ -6,13 +6,13 @@ import it.polimi.ingsw.model.Match;
  * Represents a message sent to clients indicating that playing a card was successful.
  * Extends {@link ActionSuccessMsg}.
  */
-public class playCardSuccess extends ActionSuccessMsg {
+public class PlayCardSuccess extends ActionSuccessMsg {
 
     /**
-     * Constructs a playCardSuccess message based on the provided match model.
+     * Constructs a PlayCardSuccess message based on the provided match model.
      * @param model The match model representing the current game state.
      */
-    public playCardSuccess(Match model) {
+    public PlayCardSuccess(Match model) {
         super(model);
     }
 }

@@ -10,13 +10,13 @@ import java.io.Serializable;
  * Extends {@link ActionSuccessMsg}.
  * Implements {@link Message} and {@link java.io.Serializable}.
  */
-public class newPlayerInMsg extends ActionSuccessMsg implements Message, Serializable {
+public class NewPlayerInMsg extends ActionSuccessMsg implements Message, Serializable {
 
     /**
-     * Constructs a newPlayerInMsg object.
+     * Constructs a NewPlayerInMsg object.
      * @param model The Match object representing the current state of the game.
      */
-    public newPlayerInMsg(Match model) {
+    public NewPlayerInMsg(Match model) {
         super(model);
     }
 
