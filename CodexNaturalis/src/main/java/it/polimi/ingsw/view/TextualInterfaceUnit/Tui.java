@@ -207,10 +207,6 @@ public class Tui  implements Ui {
 
             } else {
                 this.username = user;
-
-                if(username.equals("nuge")) {
-                    print("nu哥yyds");
-                }
                 myPlayer = new Player(username);
 
                 return;
@@ -283,12 +279,15 @@ public class Tui  implements Ui {
 
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
-        int index;
+        int index = 3;
+        String s;
         do {
-            index = Integer.parseInt(in.nextLine());
-            if(index != 0 && index != 1 && index != 2) {
+            s = in.nextLine();
+            if(!s.equals("0") && !s.equals("1") && !s.equals("2")) {
                 print("error");
                 print("choose the card that you want to play: ");
+            } else {
+                index = Integer.parseInt(s);
             }
         }while(index != 0 && index != 1 && index != 2);
 
@@ -309,7 +308,6 @@ public class Tui  implements Ui {
             f = true;
         }
         print("position x: ");
-        String s;
         do {
             s = in.nextLine();
             if(s.isEmpty())
@@ -317,7 +315,6 @@ public class Tui  implements Ui {
         } while(s.isEmpty());
 
         int x = Integer.parseInt(s);
-
 
         print("position y: ");
 
@@ -334,7 +331,7 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
 
         if(status == PlayerStatus.Draw) {
-            myBoard[x+10][y+10] = code;
+            myBoard[x+10][10-y] = code;
         }
     }
 
@@ -398,15 +395,20 @@ public class Tui  implements Ui {
 
     private int askMaxSeats() throws Exception {
         int playerNumber = 0;
+        String s;
         do {
 
                 print("Please select the number of players for this match [2 to 4]: ");
-                playerNumber = Integer.parseInt(in.nextLine());
-                if (playerNumber < 2 || playerNumber > 4) {
-                    print(Color.RED + "Invalid number! Please try again.");
+
+                s = in.nextLine();
+                if(!s.equals("2") && !s.equals("3") && !s.equals("4")) {
+                    print("error");
+                    print("Please select the number of players for this match [2 to 4]: ");
+                } else {
+                    playerNumber = Integer.parseInt(s);
                 }
 
-        } while (playerNumber < 2 || playerNumber > 4);
+        } while (!s.equals("2") && !s.equals("3") && !s.equals("4"));
         print("Selected " + playerNumber + " players.");
         return playerNumber;
     }
@@ -418,17 +420,12 @@ public class Tui  implements Ui {
             print("---------------------------------------------");
             print("Please enter the room number: ");
             value = in.nextLine();
-        } while (value.equals(""));
+        } while (value.isEmpty());
         int matchID = Integer.parseInt(value);
         print("Selected Room [" + matchID + "].");
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         client.messageToServer(msg);
         Thread.sleep(1000);
-    }
-
-
-    public boolean askLeaveMatch() throws RemoteException {
-        return false;
     }
 
 
@@ -453,7 +450,7 @@ public class Tui  implements Ui {
 
 
     public void showBoard() {
-        int p = 1;
+        int p = 10;
         print("-9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9");
         print("");
         print("");
@@ -462,7 +459,7 @@ public class Tui  implements Ui {
                 System.out.print( myBoard[i][j]+" ");
             }
             print("        "+p);
-            p++;
+            p--;
         }
     }
 
@@ -559,17 +556,19 @@ public class Tui  implements Ui {
         showDeck();
 
         int choice;
-
+        String s;
         printCard(myPlayer.getInitialCard());
 
-        print("this is your initial card: front(0) or back(1) ");
-        do {
-            choice = Integer.parseInt(in.nextLine());
-            if(choice != 0 && choice != 1) {
+        print("this is your initial card: choose front(0) or back(1) ");
+
+            s = in.nextLine();
+
+            while(!s.equals("0") && !s.equals("1")) {
                 print("error");
                 print(" front(0) or back(1) ");
+                s = in.nextLine();
             }
-        } while(choice != 0 && choice != 1);
+            choice = Integer.parseInt(s);
         boolean b;
         if(choice == 0) {
             b = true;
@@ -588,13 +587,14 @@ public class Tui  implements Ui {
         print("1: ");
         printCard(myPlayer.getTargetOnHand()[1]);
 
-        do {
-            choice = Integer.parseInt(in.nextLine());
-            if(choice != 0 && choice != 1) {
-                System.out.println("error");
-                print("choose your personal target card from: ");
+            s = in.nextLine();
+            while(!s.equals("0") && !s.equals("1")) {
+
+                print("error");
+                print("choose your personal target card: 0 or 1 ");
+                s = in.nextLine();
             }
-        } while(choice != 0 && choice != 1);
+            choice = Integer.parseInt(s);
 
         SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
         client.messageToServer(msg);
@@ -676,9 +676,18 @@ public class Tui  implements Ui {
             } else if(option.equals("s")) {
                 askShowCard();
             } else if(option.equals("c")) {
+                String s;
                 print(" resource card: first(0) second(1) third(2) ");
                 print(" gold card: first(3) second(4) third(5) ");
-                int choice = Integer.parseInt(in.nextLine());
+                print("choose the card that you want to draw : ");
+                s = in.nextLine();
+
+                while(!s.equals("0") && !s.equals("1") && !s.equals("2") && !s.equals("3") && !s.equals("4") && !s.equals("5")) {
+                    print("error");
+                    print("choose the card that you want to draw : ");
+                }
+
+                int choice = Integer.parseInt(s);
                 boolean isGoldDeck = false;
                 if(choice > 2) {
                     isGoldDeck = true;
