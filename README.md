@@ -13,7 +13,7 @@
 | Feature | Implemented  |
 |:--------|:----|
 | Multiple Games   | :heavy_check_mark:    |
-| Resilience to clients disconnections  | :heavy_check_mark:    |
+| Resilience to clients disconnections  | :x:    |
 | Chat  | :heavy_check_mark:    |
 | Socket and RMI  | :heavy_check_mark:    |
 | Complete rules  | :heavy_check_mark:    |
