@@ -115,6 +115,8 @@ public class Tui  implements Ui {
 
     private boolean connectionSuccess;
 
+    private boolean finish;
+
     /**
      * Constructor for the Tui class. Initializes the Tui and sets up the initial game state.
      *
@@ -129,6 +131,7 @@ public class Tui  implements Ui {
         myPlayer.setReady(false);
         chat = new ArrayList<>();
         choosingColor = true;
+        finish = false;
     }
 
     /**
@@ -347,7 +350,7 @@ public class Tui  implements Ui {
         Thread.sleep(3000);
 
         if(status == PlayerStatus.Draw) {
-            myBoard[x+10][y+10] = code;
+            myBoard[10-x][y+10] = code;
         }
     }
 
@@ -514,6 +517,11 @@ public class Tui  implements Ui {
         if(status == PlayerStatus.END) {
             endGame();
         }
+
+        if(status == PlayerStatus.Finish && !finish ) {
+            print("Game End");
+            finish = true;
+        }
     }
 
     /**
@@ -660,6 +668,7 @@ public class Tui  implements Ui {
      * Ends the game and displays the final scores and winners.
      */
     public void endGame() {
+
         print("GAME END");
         print("Point table: ");
         for(Player p: myMatch.getPlayers()) {
@@ -670,6 +679,8 @@ public class Tui  implements Ui {
             print(p.getNickname() + ": " + p.currentScore + " points");
         }
         print("!!!!!!!");
+        Tui.status = PlayerStatus.Finish;
+
     }
 
 

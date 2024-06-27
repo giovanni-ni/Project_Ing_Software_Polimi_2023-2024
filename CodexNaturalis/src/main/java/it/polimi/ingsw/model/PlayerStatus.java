@@ -16,6 +16,8 @@ public enum PlayerStatus {
 
     END,
 
-    Preparing
+    Preparing,
+
+    Finish
 
 }
