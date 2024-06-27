@@ -100,6 +100,9 @@ public class GUI extends Thread implements Ui {
      * @throws IOException If an I/O error occurs during message handling.
      */
     public void handle(Message msg) throws IOException {
+        if (msg instanceof LeaveMessage){
+            Platform.runLater(() ->guiApplication.showAllert(((LeaveMessage)msg).getLeftPlayer()));
+        }
         if (msg instanceof ServerChatMessage) {
             chat.add((ServerChatMessage) msg);
             guiApplication.updateCurrentSceneModel(UPDATE.CHATMESSAGE);

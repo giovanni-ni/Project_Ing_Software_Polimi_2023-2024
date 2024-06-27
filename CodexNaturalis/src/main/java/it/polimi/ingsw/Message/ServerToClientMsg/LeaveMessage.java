@@ -10,6 +10,6 @@ public class LeaveMessage extends GenericServerMessage {
     }
 
     public String getLeftPlayer() {
-        return this.leftPlayer;
+        return leftPlayer;
     }
 }
