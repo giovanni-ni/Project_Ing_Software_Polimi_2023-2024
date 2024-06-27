@@ -68,7 +68,7 @@
                <children>
                   <ImageView fx:id="blueBall" fitHeight="400.0" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/1.png" />
+                        <Image url="@../../../../../images/view/grey.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="120.0" />
@@ -76,7 +76,7 @@
                   </ImageView>
                   <ImageView fx:id="redBall" fitHeight="400.0" fitWidth="150.0" layoutX="110.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/2.png" />
+                        <Image url="@../../../../../images/view/grey.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />
@@ -84,7 +84,7 @@
                   </ImageView>
                   <ImageView fx:id="yellowBall" fitHeight="400.0" fitWidth="150.0" layoutX="360.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/3.png" />
+                        <Image url="@../../../../../images/view/grey.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />
@@ -92,7 +92,7 @@
                   </ImageView>
                   <ImageView fx:id="greenBall" fitHeight="400.0" fitWidth="150.0" layoutX="610.0" layoutY="232.0" pickOnBounds="true" preserveRatio="true" visible="false">
                      <image>
-                        <Image url="@../../../../../images/view/4.png" />
+                        <Image url="@../../../../../images/view/grey.png" />
                      </image>
                      <HBox.margin>
                         <Insets bottom="60.0" left="150.0" />

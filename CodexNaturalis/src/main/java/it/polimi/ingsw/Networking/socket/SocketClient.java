@@ -58,12 +58,11 @@ public class SocketClient extends Thread implements Client {
         while (Server_ok) {
             try {
                 GenericServerMessage msg = (GenericServerMessage) inputStream.readObject();
-                print(msg);
                 ui.handleMessage(msg);
             } catch (ClassNotFoundException e) {
                 print("ClassNotFound");
             } catch (IOException e) {
-                print("IOException 服务器炸了");
+                print("IOException Server Connection failed");
                 Server_ok=false;
             }catch (NullPointerException e){
                 print("Connection has a problem, network is not reading");

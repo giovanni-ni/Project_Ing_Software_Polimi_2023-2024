@@ -17,7 +17,7 @@
                   <Image url="@../../../../../images/view/initialTab.JPG" />
                </image>
             </ImageView>
-            <Button mnemonicParsing="false" onAction="#goReconnect" StackPane.alignment="TOP_CENTER">
+            <Button disable="true" mnemonicParsing="false" onAction="#goReconnect" visible="false" StackPane.alignment="TOP_CENTER">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" styleClass="button">
                      <image>

@@ -6,11 +6,12 @@ import it.polimi.ingsw.Networking.socket.Server;
 import it.polimi.ingsw.controller.AllMatchesController;
 
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Enumeration;
+
 /**
  * Main class for starting the server application.
  */
@@ -32,5 +33,20 @@ public class mainServer{
         Registry registry= LocateRegistry.createRegistry(DefaultPort.RMIPORT.getNumber());
         registry.rebind (serverName, stub);
         System.out.println("server bound");
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                Enumeration<InetAddress> addresses = networkInterface.getInetAddresses();
+                while (addresses.hasMoreElements()) {
+                    InetAddress address = addresses.nextElement();
+                    if (!address.isLoopbackAddress() && address instanceof Inet4Address) {
+                        System.out.println("Local IP Address: " + address.getHostAddress());
+                    }
+                }
+            }
+        } catch (SocketException ex) {
+            ex.printStackTrace();
+        }
     }
 }
