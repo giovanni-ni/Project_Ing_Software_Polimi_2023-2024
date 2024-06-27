@@ -17,6 +17,7 @@
 - RMI
 - Chat
 - Multigames
+Regole Complete + CLI + GUI + Socket + 2 FA
 
 ## Jar Manual
 
