@@ -7,6 +7,8 @@ import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MatchStatus;
+import it.polimi.ingsw.model.Player;
+import it.polimi.ingsw.model.PlayerColor;
 import org.junit.jupiter.api.Test;
 import org.w3c.dom.ls.LSException;
 
@@ -188,9 +190,9 @@ public class SingleMatchControllerTest {
         for(String n: lis.keySet()) {
             if(clt.getControllerbyId(0).getMatch().getCurrentPlayer().nickname.equals(n)) {
                 assertEquals(lis.get(n).msg.getFirst().getClass(), NowIsYourRoundMsg.class);
-                assertEquals(lis.get(n).msg.get(1).getClass(),  LastRoundMessage.class);
+                assertEquals(lis.get(n).msg.get(1).getClass(),  drawCardSuccess.class);
             } else {
-                assertEquals( lis.get(n).msg.getFirst().getClass(), LastRoundMessage.class);
+                assertEquals( lis.get(n).msg.getFirst().getClass(), drawCardSuccess.class);
             }
         }
 
@@ -216,6 +218,34 @@ public class SingleMatchControllerTest {
         for(String n: lis.keySet()) {
             assertEquals(lis.get(n).msg.getFirst().getClass(), endGameMessage.class);
         }
+
+    }
+    @Test
+    void ChooseColorTest() throws InterruptedException, IOException {
+        SingleMatchController clt = new SingleMatchController(0);
+
+        clt.getMatch().setStatus(MatchStatus.Playing);
+        OutputStream o = new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+
+            }
+        };
+        ObjectOutputStream out = new ObjectOutputStream(o);
+        SocketListener socketListener1 = new SocketListener(out);
+        SocketListener socketListener2 = new SocketListener(out);
+
+        clt.addPlayer(new Player("manu"),socketListener1);
+        clt.addPlayer(new Player("mako"),socketListener2);
+
+        socketListener1.msg.clear();
+        socketListener2.msg.clear();
+
+        clt.execute(new ChooseColorMsg("manu",0, PlayerColor.BLUE));
+        assertEquals(socketListener1.msg.getFirst().getClass(),ActionSuccessMsg.class);
+        clt.execute(new ChooseColorMsg("mako",0, PlayerColor.BLUE));
+        assertEquals(socketListener2.msg.getFirst().getClass(),ActionNotRecognize.class);
+
 
     }
 

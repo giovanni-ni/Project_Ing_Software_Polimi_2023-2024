@@ -75,8 +75,7 @@
 
   </dependencies>
 
-  <build>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+  <build><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
         <plugin>
@@ -117,52 +116,69 @@
           <artifactId>maven-project-info-reports-plugin</artifactId>
           <version>3.4.2</version>
         </plugin>
-
-
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-shade-plugin</artifactId>
-          <version>3.2.4</version>
+          <version>3.4.1</version>
+          <configuration>
+            <filters>
+              <filter>
+                <artifact>*:*</artifact>
+                <excludes>
+                  <exclude>module-info.class</exclude>
+                  <exclude>META-INF/versions/*/module-info.class</exclude>
+                  <exclude>META-INF/MANIFEST.MF</exclude>
+                </excludes>
+              </filter>
+            </filters>
+          </configuration>
           <executions>
             <execution>
-              <id>Client_jar</id>
+              <id>server</id>
               <phase>package</phase>
               <goals>
                 <goal>shade</goal>
               </goals>
               <configuration>
+                <shadedArtifactAttached>true</shadedArtifactAttached>
+                <shadedClassifierName>server</shadedClassifierName>
                 <transformers>
-                  <transformer implementation=
-                                       "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>it.polimi.ingsw.Networking.mainClient</mainClass>
+                  <transformer
+                          implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>it.polimi.ingsw.Networking.MainServer</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
             </execution>
             <execution>
-              <id>Server_jar</id>
+              <id>client</id>
               <phase>package</phase>
               <goals>
                 <goal>shade</goal>
               </goals>
               <configuration>
+                <shadedArtifactAttached>true</shadedArtifactAttached>
+                <shadedClassifierName>client</shadedClassifierName>
                 <transformers>
-                  <transformer implementation=
-                                       "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                    <mainClass>it.polimi.ingsw.Networking.mainServer</mainClass>
+                  <transformer
+                          implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>it.polimi.ingsw.Networking.MainClient</mainClass>
                   </transformer>
                 </transformers>
               </configuration>
             </execution>
             <execution>
-              <id>App-jar</id>
+              <id>CodexGui</id>
               <phase>package</phase>
               <goals>
                 <goal>shade</goal>
               </goals>
               <configuration>
+                <shadedArtifactAttached>true</shadedArtifactAttached>
+                <shadedClassifierName>CodexGui</shadedClassifierName>
                 <transformers>
-                  <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <transformer
+                          implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                     <mainClass>it.polimi.ingsw.App</mainClass>
                   </transformer>
                 </transformers>
@@ -170,25 +186,7 @@
             </execution>
           </executions>
         </plugin>
-
-
-        <plugin>
-          <groupId>org.openjfx</groupId>
-          <artifactId>javafx-maven-plugin</artifactId>
-          <version>0.0.8</version>
-          <executions>
-            <execution>
-              <!-- Default configuration for running-->
-              <!-- Usage: mvn clean javafx:run-->
-              <id>default-cli</id>
-              <configuration>
-                <mainClass>it.polimi.ingsw.view.Gui.GUIApplication</mainClass>
-              </configuration>
-            </execution>
-          </executions>
-        </plugin>
-
       </plugins>
-    </pluginManagement>
+
   </build>
 </project>

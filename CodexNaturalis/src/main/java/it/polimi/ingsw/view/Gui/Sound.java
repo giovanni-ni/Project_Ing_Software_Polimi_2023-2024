@@ -20,7 +20,7 @@ public class Sound {
      */
     public static synchronized void playSound(final String soundName) {
 
-            new Thread(() -> {
+            /*new Thread(() -> {
                 try {
                     Clip clip = AudioSystem.getClip();
 
@@ -52,8 +52,9 @@ public class Sound {
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
-            }).start();
-        }
+            }).start();*/
+
+    }
 
 
 }
