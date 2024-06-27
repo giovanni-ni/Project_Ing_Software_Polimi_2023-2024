@@ -107,11 +107,13 @@ public class Tui  implements Ui {
      */
     private int autostart;
 
-
     /**
      * Static boolean indicating if the player is choosing a color.
      */
     public static boolean choosingColor;
+
+
+    private boolean connectionSuccess;
 
     /**
      * Constructor for the Tui class. Initializes the Tui and sets up the initial game state.
@@ -136,15 +138,24 @@ public class Tui  implements Ui {
      */
     public void init() throws Exception {
         autostart = 0;
+        connectionSuccess = false;
         print(Print.Codex);
         askToContinue();
-        askConnectionType();
-
-        if(isRMI) {
-            client = new RMIClient("localhost", DefaultPort.RMIPORT.getNumber(), this);
-        } else {
-            client = new SocketClient("localhost", DefaultPort.SOCKETPORT.getNumber(), this);
-        }
+        do {
+            String s = askConnectionType();
+            if(s.isEmpty()) {
+                s = "localhost";
+            }
+            if(isRMI) {
+                client = new RMIClient(s, DefaultPort.RMIPORT.getNumber(), this);
+            } else {
+                client = new SocketClient(s, DefaultPort.SOCKETPORT.getNumber(), this);
+            }
+            Thread.sleep(1000);
+            if(!connectionSuccess) {
+                print("connection failed retry...");
+            }
+        } while(!connectionSuccess);
 
         askLogin();
 
@@ -159,7 +170,7 @@ public class Tui  implements Ui {
     /**
      * Asks the user to choose the connection type (RMI or Socket).
      */
-    public void askConnectionType() {
+    public String askConnectionType() {
         int option = 0;
         do {
             print("""
@@ -171,7 +182,7 @@ public class Tui  implements Ui {
             try {
                 option = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
-                print("Invalid input. Try again. (1 or 2)");
+                print(ANSI_MUSHROOM + "Invalid input. Try again. (1 or 2)" +ANSI_RESET);
             }
         } while (option != 1 && option != 2);
 
@@ -180,6 +191,9 @@ public class Tui  implements Ui {
         } else {
             isSocket = true;
         }
+
+        print("insert server IP([ENTER] for localhost):  ");
+        return in.nextLine();
     }
 
     /**
@@ -279,15 +293,13 @@ public class Tui  implements Ui {
 
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
-        int index = 3;
-        String s;
+        int index = 3 ;
+
         do {
-            s = in.nextLine();
-            if(!s.equals("0") && !s.equals("1") && !s.equals("2")) {
-                print("error");
-                print("choose the card that you want to play: ");
-            } else {
-                index = Integer.parseInt(s);
+            try {
+                index = Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Invalid input. Try again. (0 or 1 or 2 )"+ANSI_RESET);
             }
         }while(index != 0 && index != 1 && index != 2);
 
@@ -308,30 +320,34 @@ public class Tui  implements Ui {
             f = true;
         }
         print("position x: ");
-        do {
-            s = in.nextLine();
-            if(s.isEmpty())
-                print("position x: ");
-        } while(s.isEmpty());
 
-        int x = Integer.parseInt(s);
+        Integer x;
+        do {
+            try {
+                x = Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Try again. Must be a number"+ANSI_RESET);
+                x = null;
+            }
+        } while(x == null);
 
         print("position y: ");
-
+        Integer y;
         do {
-            s = in.nextLine();
-            if(s.isEmpty())
-                print("position y: ");
-        } while(s.isEmpty());
-
-        int y = Integer.parseInt(s);
+            try {
+                y = Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Try again. Must be a number"+ANSI_RESET);
+                y = null;
+            }
+        } while(y == null);
 
         playCardMessage msg = new playCardMessage(this.username, index, f, x, y);
         client.messageToServer(msg);
-        Thread.sleep(1000);
+        Thread.sleep(3000);
 
         if(status == PlayerStatus.Draw) {
-            myBoard[x+10][10-y] = code;
+            myBoard[x+10][y+10] = code;
         }
     }
 
@@ -395,33 +411,33 @@ public class Tui  implements Ui {
 
     private int askMaxSeats() throws Exception {
         int playerNumber = 0;
-        String s;
         do {
 
                 print("Please select the number of players for this match [2 to 4]: ");
-
-                s = in.nextLine();
-                if(!s.equals("2") && !s.equals("3") && !s.equals("4")) {
-                    print("error");
-                    print("Please select the number of players for this match [2 to 4]: ");
-                } else {
-                    playerNumber = Integer.parseInt(s);
+                try {
+                    playerNumber = Integer.parseInt(in.nextLine());
+                } catch(NumberFormatException e) {
+                    print(ANSI_MUSHROOM + "Try again! 2 to 4"+ANSI_RESET);
                 }
+        } while (playerNumber != 2 && playerNumber != 3 && playerNumber != 4);
 
-        } while (!s.equals("2") && !s.equals("3") && !s.equals("4"));
         print("Selected " + playerNumber + " players.");
         return playerNumber;
     }
 
 
     public void askJoinMatch() throws Exception {
-        String value;
+        int matchID = -1;
         do {
             print("---------------------------------------------");
             print("Please enter the room number: ");
-            value = in.nextLine();
-        } while (value.isEmpty());
-        int matchID = Integer.parseInt(value);
+            try {
+                matchID = Integer.parseInt(in.nextLine());
+            } catch(NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Try again! must be a number > 0"+ANSI_RESET);
+                matchID = -1;
+            }
+        } while (matchID == -1);
         print("Selected Room [" + matchID + "].");
         GenericClientMessage msg = new JoinGameMessage(this.username, matchID);
         client.messageToServer(msg);
@@ -555,20 +571,22 @@ public class Tui  implements Ui {
 
         showDeck();
 
-        int choice;
-        String s;
+        int choice = -1;
+
         printCard(myPlayer.getInitialCard());
 
         print("this is your initial card: choose front(0) or back(1) ");
 
-            s = in.nextLine();
+        do {
 
-            while(!s.equals("0") && !s.equals("1")) {
-                print("error");
-                print(" front(0) or back(1) ");
-                s = in.nextLine();
+            try {
+                choice = Integer.parseInt(in.nextLine());
+            } catch(NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Try again! 0 or 1"+ANSI_RESET);
             }
-            choice = Integer.parseInt(s);
+
+        }while(choice != 0 && choice != 1);
+
         boolean b;
         if(choice == 0) {
             b = true;
@@ -587,14 +605,14 @@ public class Tui  implements Ui {
         print("1: ");
         printCard(myPlayer.getTargetOnHand()[1]);
 
-            s = in.nextLine();
-            while(!s.equals("0") && !s.equals("1")) {
-
-                print("error");
-                print("choose your personal target card: 0 or 1 ");
-                s = in.nextLine();
+        do {
+            try {
+                choice = Integer.parseInt(in.nextLine());
+            } catch (NumberFormatException e) {
+                print(ANSI_MUSHROOM + "Try Again! 0 or 1"+ANSI_RESET);
+                choice = -1;
             }
-            choice = Integer.parseInt(s);
+        } while(choice != 0 && choice != 1);
 
         SetTargetCardMessage msg = new SetTargetCardMessage(myMatch.idMatch, this.username, choice);
         client.messageToServer(msg);
@@ -680,14 +698,16 @@ public class Tui  implements Ui {
                 print(" resource card: first(0) second(1) third(2) ");
                 print(" gold card: first(3) second(4) third(5) ");
                 print("choose the card that you want to draw : ");
-                s = in.nextLine();
 
-                while(!s.equals("0") && !s.equals("1") && !s.equals("2") && !s.equals("3") && !s.equals("4") && !s.equals("5")) {
-                    print("error");
-                    print("choose the card that you want to draw : ");
-                }
+                int choice = -1;
+                do {
+                    try {
+                        choice = Integer.parseInt(in.nextLine());
+                    } catch(NumberFormatException e) {
+                        print(ANSI_MUSHROOM + "Try Again!"+ANSI_RESET);
+                    }
+                } while(choice != 0 && choice != 1 && choice != 2 && choice != 3 && choice != 4 && choice != 5);
 
-                int choice = Integer.parseInt(s);
                 boolean isGoldDeck = false;
                 if(choice > 2) {
                     isGoldDeck = true;
@@ -876,6 +896,9 @@ public class Tui  implements Ui {
             Tui.myPlayer = ((drawCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
         }
         else if(msg instanceof ActionSuccessMsg) {
+            if(!connectionSuccess) {
+                connectionSuccess = true;
+            }
             Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
             Tui.myPlayer = ((ActionSuccessMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
         } else if(msg instanceof ActionNotRecognize) {
