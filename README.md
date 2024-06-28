@@ -30,7 +30,10 @@
 
 >  *java -jar jarfilename.jar.*
 5. Launching the server on command line the terminal will show the ip address which the players have to insert in their client program to be connected.
-> 
+>
+## Jar from repository with Intellij
+1. Intellij: maven `menù -> MyShelfie -> Lifecycle -> Clean` 
+2. Intellij: maven  `menù -> MyShelfie -> Lifecycle -> Package` 
 
 ## Enjoy the Game!
 
