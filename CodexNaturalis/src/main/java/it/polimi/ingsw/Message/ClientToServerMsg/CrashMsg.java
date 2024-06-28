@@ -30,6 +30,11 @@ public class CrashMsg extends GenericClientMessage {
         isMessageForMain();
         super.setListener(listener);
     }
+    /**
+     * Retrieves the nickname of the player who has disconnected.
+     *
+     * @return the nickname of the disconnected player.
+     */
 
     public String getNickNameDisconnect() {
         return super.getNickname();
