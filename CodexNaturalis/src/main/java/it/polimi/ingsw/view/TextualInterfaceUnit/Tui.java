@@ -298,7 +298,11 @@ public class Tui  implements Ui {
 
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
-        int index = 3 ;
+        for(int i=0; i< myPlayer.getCardOnHand().size(); i++ ) {
+            print(i + " for card " + myPlayer.getCardOnHand().get(i).getCode());
+        }
+
+        int index = 3;
 
         do {
             try {
