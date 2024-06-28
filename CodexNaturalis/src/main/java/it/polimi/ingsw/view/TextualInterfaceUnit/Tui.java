@@ -766,11 +766,24 @@ public class Tui  implements Ui {
      * @throws InterruptedException if the thread is interrupted while waiting.
      */
     public void drawCard() throws IOException, InterruptedException {
-        print("draw a card:\n" +
-                "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + " " + myMatch.getResourceDeck().get(1).getCode() +
-                " kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
-                "\ngold cards: " + myMatch.getGoldDeck().get(0).getCode() + " " + myMatch.getGoldDeck().get(1).getCode() +
-                " kingdom of the third card: " + myMatch.getGoldDeck().get(2).getKingdom());
+        print("draw a card:\n");
+        print("resource cards: ");
+        for(int i = 0; i < 3 && i < myMatch.getResourceDeck().size(); i++) {
+           if(i == 0 || i == 1) {
+               print( myMatch.getResourceDeck().get(i).getCode()+"(" + i + ")" + " ");
+           } else {
+               print( " kingdom of the third card(2): " + myMatch.getResourceDeck().get(i).getKingdom());
+           }
+        }
+        print("gold cards: ");
+        for(int i = 0; i < 3 && i < myMatch.getGoldDeck().size(); i++) {
+            if(i == 0 || i == 1) {
+                int y = i+3;
+                print(myMatch.getGoldDeck().get(i).getCode() + "(" + y + ")"  + " ");
+            } else {
+                print(" kingdom of the third card(5): " + myMatch.getGoldDeck().get(i).getKingdom());
+            }
+        }
         String option;
         do{
             print(drawCard);
@@ -782,9 +795,6 @@ public class Tui  implements Ui {
                 askShowCard();
             } else if(option.equals("c")) {
                 String s;
-                print(" resource card: first(0) second(1) third(2) ");
-                print(" gold card: first(3) second(4) third(5) ");
-
 
                 int choice = -1;
                 do {
