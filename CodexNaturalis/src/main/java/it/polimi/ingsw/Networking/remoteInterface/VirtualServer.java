@@ -13,6 +13,8 @@ import java.rmi.RemoteException;
  */
 public interface VirtualServer extends Remote {
 
+    void receiveHeartbeat() throws RemoteException;
+
     /**
      * Establishes a connection with the server for a client.
      *
