@@ -32,8 +32,8 @@
 5. Launching the server on command line the terminal will show the ip address which the players have to insert in their client program to be connected.
 >
 ## Jar from repository with Intellij
-1. Intellij: maven `menù -> MyShelfie -> Lifecycle -> Clean` 
-2. Intellij: maven  `menù -> MyShelfie -> Lifecycle -> Package`
+1. Intellij: maven ` -> Lifecycle -> Clean` 
+2. Intellij: maven  ` -> Lifecycle -> Package`
 
 ## For Better Experence
 - Play with a computer that supports 1280 X 720 pixels or greater;
