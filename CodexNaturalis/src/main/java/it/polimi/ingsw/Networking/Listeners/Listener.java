@@ -47,4 +47,6 @@ public interface Listener extends Remote {
      * @throws RemoteException if there is an error with the remote method invocation
      */
     void setGameID(Integer gameID) throws RemoteException;
+
+    void heartBeat() throws RemoteException;
 }

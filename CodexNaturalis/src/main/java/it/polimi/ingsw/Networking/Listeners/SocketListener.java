@@ -5,6 +5,7 @@ import it.polimi.ingsw.Message.Message;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.rmi.RemoteException;
 
 /**
  * Listener implementation for handling socket-based communication.
@@ -89,5 +90,9 @@ public class SocketListener implements Listener {
     @Override
     public void setGameID(Integer gameID) {
         GameID = gameID;
+    }
+
+    @Override
+    public void heartBeat() throws RemoteException {
     }
 }
