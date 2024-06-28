@@ -589,9 +589,8 @@ public class Tui  implements Ui {
         }
 
         if(status == PlayerStatus.Finish && !finish ) {
-            print(Print.GameEnd);
+            //print(Print.GameEnd);
             finish = true;
-            System.exit(0);
         }
     }
 
