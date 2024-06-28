@@ -33,7 +33,11 @@
 >
 ## Jar from repository with Intellij
 1. Intellij: maven `menù -> MyShelfie -> Lifecycle -> Clean` 
-2. Intellij: maven  `menù -> MyShelfie -> Lifecycle -> Package` 
+2. Intellij: maven  `menù -> MyShelfie -> Lifecycle -> Package`
+
+## For Better Experence
+- Play with a computer that supports 1280 X 720 pixels or greater;
+- For TUI version, please use a terminal that supports ANSI colors
 
 ## Enjoy the Game!
 
