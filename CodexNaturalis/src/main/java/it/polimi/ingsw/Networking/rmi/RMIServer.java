@@ -9,13 +9,9 @@ import it.polimi.ingsw.model.Match;
 
 import java.io.IOException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.*;
 
 /**
  * The RMIServer class implements the VirtualServer interface and serves as the RMI server.
@@ -23,6 +19,8 @@ import java.util.concurrent.BlockingQueue;
  */
 public class RMIServer implements VirtualServer {
 
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    public boolean clientAlive = false;
     private final AllMatchesController mainController;
     final List<Listener> clients = new ArrayList<>();
 
@@ -36,6 +34,10 @@ public class RMIServer implements VirtualServer {
     public RMIServer(AllMatchesController mainController ) throws IOException {
         this.mainController=mainController;
     }
+    @Override
+    public void receiveHeartbeat() throws RemoteException {
+        clientAlive = true;
+    }
     /**
      * Connects a client to the server and sends an initial success message.
      *
@@ -47,6 +49,22 @@ public class RMIServer implements VirtualServer {
         synchronized (this.clients){
             client.update(new ActionSuccessMsg(new Match(0)));
             this.clients.add(client);
+            scheduler.scheduleAtFixedRate(() -> {
+                if (clientAlive) {
+                    try {
+                        System.out.println(client.getNickname()+"is alive");
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                    clientAlive = false; // Reset the flag
+                } else {
+                    try {
+                        System.out.println(client.getNickname()+"is disconnected");
+                    } catch (RemoteException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }, 0, 5, TimeUnit.SECONDS); // Check client status every 5 seconds
         }
     }
     /**

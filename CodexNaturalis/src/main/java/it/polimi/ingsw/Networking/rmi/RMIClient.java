@@ -18,6 +18,9 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
@@ -25,8 +28,8 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage
  * The RMIClient class is responsible for connecting to a remote RMI server and handling communication.
  */
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
+    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private String nickname;
-
     private Integer gameId;
     private VirtualServer server;
     private Ui ui;
@@ -45,6 +48,14 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
             Registry registry = LocateRegistry.getRegistry(ip, port);
             this.server = (VirtualServer) registry.lookup(serverName);
             this.server.connect(this);
+            scheduler.scheduleAtFixedRate(() -> {
+                try {
+                    server.receiveHeartbeat();
+                    System.out.println("Heartbeat sent to server");
+                } catch (RemoteException e) {
+                    System.out.println("Failed to send heartbeat to server");
+                }
+            }, 0, 5, TimeUnit.SECONDS); // Send heartbeat every 5 seconds
         }catch (Exception e){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
         }
