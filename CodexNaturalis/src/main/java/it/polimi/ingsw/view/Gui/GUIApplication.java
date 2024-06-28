@@ -172,19 +172,26 @@ public class GUIApplication extends Application {
         return Gui;
     }
 
+    /**
+     * Show Alert if there is a disconnection.
+     *
+     * @param leftPlayer The player that left the game or the server that lost connection.
+     */
     public void showAllert(String leftPlayer) {
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Something went wrong");
-        alert.setHeaderText("Restart Application");
-        alert.setContentText(leftPlayer +"is disconnected");
-
+        alert.setHeaderText(leftPlayer +" is disconnected");
+        alert.setContentText("Application will restart");
+        alert.getDialogPane().getScene().getWindow().setOnCloseRequest(windowEvent -> restartApplication());
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {
+        if (result.isPresent()) {
             restartApplication();
         }
     }
-
+    /**
+     * Method that restarts the Application after error
+     */
     private void restartApplication() {
         Platform.runLater(() -> {
             try {

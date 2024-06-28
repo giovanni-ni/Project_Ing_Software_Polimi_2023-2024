@@ -25,6 +25,7 @@ public class SocketListener implements Listener {
     public SocketListener(ObjectOutputStream outputStream) {
         this.out = outputStream;
         GameID = -1;
+        nickname = null;
     }
     /**
      * Updates the listener with a new message from the server.

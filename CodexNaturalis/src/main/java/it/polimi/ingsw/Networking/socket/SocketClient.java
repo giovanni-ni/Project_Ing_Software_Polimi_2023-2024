@@ -63,6 +63,7 @@ public class SocketClient extends Thread implements Client {
                 print("ClassNotFound");
             } catch (IOException e) {
                 print("IOException Server Connection failed");
+                ui.handleMessage(new LeaveMessage("Server"));
                 Server_ok=false;
             }catch (NullPointerException e){
                 print("Connection has a problem, network is not reading");
