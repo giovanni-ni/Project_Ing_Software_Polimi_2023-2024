@@ -47,6 +47,13 @@ public interface Listener extends Remote {
      * @throws RemoteException if there is an error with the remote method invocation
      */
     void setGameID(Integer gameID) throws RemoteException;
-
+    /**
+     * Handles the heartbeat signal from the client.
+     *
+     * This method is invoked to indicate that the client is still active and connected.
+     * It is typically called periodically to ensure the client has not disconnected.
+     *
+     * @throws RemoteException if a communication-related exception occurs during the remote method call.
+     */
     void heartBeat() throws RemoteException;
 }

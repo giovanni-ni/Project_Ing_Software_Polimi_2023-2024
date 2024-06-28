@@ -56,7 +56,11 @@ public class RMIServer implements VirtualServer {
             clients.remove(crashedClient);
         }, 0, 1, TimeUnit.SECONDS);
     }
-
+    /**
+     * Receives a heartbeat signal from the client.
+     *
+     * @throws RemoteException if a communication-related exception occurs during the remote method call
+     */
     @Override
     public void receiveHeartbeat() throws RemoteException {
 

@@ -115,7 +115,14 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     public void messageToServer(GenericClientMessage msg) throws RemoteException {
         server.addInQueue(msg, this );
     }
-
+    /**
+     * Handles the heartbeat signal from the client.
+     *
+     * This method is called to indicate that the client is still active and connected.
+     * It is typically invoked periodically by the client to ensure it remains connected.
+     *
+     * @throws RemoteException if a communication-related exception occurs during the remote method call.
+     */
     @Override
     public void heartBeat() throws RemoteException {
     }
