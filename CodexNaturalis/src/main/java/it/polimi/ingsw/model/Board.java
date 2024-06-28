@@ -303,7 +303,7 @@ public class Board implements Serializable {
 	 * Count the number of cards about the coordinate
 	 * Is implemented mainly to count the covered card by the gold card with the bonusType of HideCorners
 	 *
-	 * @return: int count: quantity of cards about the coordinate
+	 * @return : int count: quantity of cards about the coordinate
 	 * @param x:the coordinate x of the position desired;
 	 * @param y:coordinate y desired
 	 */
