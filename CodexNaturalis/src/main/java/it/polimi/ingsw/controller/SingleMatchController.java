@@ -6,9 +6,11 @@ import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.model.*;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
@@ -92,7 +94,9 @@ public class SingleMatchController extends Thread implements Serializable{
                 currentPlayer.getCardOnHand().size() < MAX_NUMCARD_ON_HAND) {
             if ((!(match.getGoldDeck().isEmpty())) || (!(match.getResourceDeck().isEmpty()))) {
                 if ((isGoldCard && match.getGoldDeck().isEmpty()) || // empty deck
-                        (!isGoldCard && match.getResourceDeck().isEmpty())) {
+                        (!isGoldCard && match.getResourceDeck().isEmpty())|| // empty deck
+                        (!isGoldCard && whichCard+1 > match.getResourceDeck().size()|| // empty deck
+                        (isGoldCard && whichCard+1 > match.getGoldDeck().size()))){
                     getListenerOf(nickname).update( new ActionNotRecognize("Deck Empty"));
                 } else if (whichCard >= FIRST_CARD && whichCard <= THIRD_CARD) {
                     if (isGoldCard)
@@ -160,6 +164,7 @@ public class SingleMatchController extends Thread implements Serializable{
                     match.updatePoint(card,currentPlayer);
                     if(match.getStatus()==MatchStatus.LastRound && match.getGoldDeck().isEmpty() && match.getResourceDeck().isEmpty()){
                         match.nextPlayer();
+                        getListenerOf(match.getCurrentPlayer().nickname).update(new NowIsYourRoundMsg());
                     }
                     notifyAllListeners( new PlayCardSuccess(match));
                 }else {
@@ -349,8 +354,13 @@ public class SingleMatchController extends Thread implements Serializable{
      * @throws RemoteException If there is a communication-related exception.
      */
     public void notifyAllListeners(Message msg)throws RemoteException{
+        ArrayList<Listener> disconnectedListeners = new ArrayList<>();
         for (Listener listener: match.getListenerList()){
-            listener.update(msg);
+            try{
+                listener.update(msg);
+            }catch(IOException e){
+                disconnectedListeners.add(listener);
+            }
         }
     }
     /**

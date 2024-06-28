@@ -229,7 +229,7 @@ public class BoardController extends GenericSceneController implements Initializ
             cardOnHand.get(i).setFront(true);
             imageView=cardsOnHandImages.get(i);
             imageView.setImage(new Image(Objects.requireNonNull(getClass().getResourceAsStream(getPathByCard(cardOnHand.get(i))))));
-            searchCode.put(imageView,cardOnHand.get(i).getCode()); // search code is used for?
+            searchCode.put(imageView,cardOnHand.get(i).getCode());
             imageView.setVisible(true);
         }
     }
@@ -673,6 +673,13 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane4.setVisible(false);
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.BLUE)){
                                 visibleCardsOnHand(cardsOnHandImages);
+                                try {
+                                    Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                    ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
+                                    showCardOnHand(cardOnHand);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }else {
                                 visibleCardsOnHand(backCardsOnHandImages_BLUE);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
@@ -693,6 +700,13 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane4.setVisible(false);
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.RED)){
                                 visibleCardsOnHand(cardsOnHandImages);
+                                try {
+                                    Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                    ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
+                                    showCardOnHand(cardOnHand);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }else {
                                 visibleCardsOnHand(backCardsOnHandImages_RED);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
@@ -712,7 +726,14 @@ public class BoardController extends GenericSceneController implements Initializ
                             // my ID is yellow, show myFrontCardOnHand
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.YELLOW)){
                                 visibleCardsOnHand(cardsOnHandImages);
-                            }else { //my id is not  red ,show back cards
+                                try {
+                                    Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                    ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
+                                    showCardOnHand(cardOnHand);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            }else {
                                 visibleCardsOnHand(backCardsOnHandImages_YELLOW);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
 
@@ -732,6 +753,13 @@ public class BoardController extends GenericSceneController implements Initializ
                             scrollPane4.setVisible(true);
                             if(getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername()).getPlayerID().equals(PlayerColor.GREEN)){
                                 visibleCardsOnHand(cardsOnHandImages);
+                                try {
+                                    Player myPlayer =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                                    ArrayList<Card> cardOnHand = (ArrayList<Card>) myPlayer.getCardOnHand();
+                                    showCardOnHand(cardOnHand);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
                             }else { //my id is not  red show back cards
                                 visibleCardsOnHand(backCardsOnHandImages_GREEN);
                                 disableVisibilityCardOnHand(cardsOnHandImages);
@@ -810,8 +838,16 @@ public class BoardController extends GenericSceneController implements Initializ
 
                     playACard.setDisable(true);
                     setBack.setDisable(true);
+                    Player myP =getGuiApplication().getGui().getMyMatch().getPlayerByNickname(getGuiApplication().getGui().getUsername());
+                    ArrayList<Card> cH = (ArrayList<Card>) myP.getCardOnHand();
+                    showCardOnHand(cH);
                     disableCardOnHand();
-
+                    toggle1=false;
+                    toggle2=false;
+                    toggle3=false;
+                    for (ImageView imageView :cardsOnHandImages){
+                        imageView.setEffect(null);
+                    }
                     disableDecks();
                     getResourceCardIndex_toServer=null;
                     getGoldCardIndex_toServer=null;
@@ -820,6 +856,7 @@ public class BoardController extends GenericSceneController implements Initializ
                     myGrid.setDisable(false);
 
                     ableCardOnHand();
+
                     if(!isError_playCard&&initialized&& tooggleMain && isClickedPlayACard){
                         gameStatus.setText("CHOOSE A CARD ON DECKS");
                         disableAllGoldLights();

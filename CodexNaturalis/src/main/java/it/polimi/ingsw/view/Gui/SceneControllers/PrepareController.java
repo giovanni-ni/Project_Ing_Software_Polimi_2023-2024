@@ -130,7 +130,7 @@ public class PrepareController extends GenericSceneController implements Initial
             updateDrawCard();
             initialized =true;
         }
-        if (colorChoose && step==2){
+        if (colorChoose && step==2&& update == UPDATE.GENERAL){
             step++;
         }
         Loading.setVisible(false);
