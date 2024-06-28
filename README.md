@@ -20,7 +20,6 @@
 | TUI + GUI  | :heavy_check_mark:    |
 | Server disconnections  | :x:    |
 
-
 ## Jar Manual
 
  1. Please to be sure that your system has the newest version of Java and that the system use that to run the Jar. Download it on https://www.oracle.com/it/java/technologies/downloads/#java22.
@@ -29,6 +28,7 @@
 4. To launch the [Server.jar](CodexNaturalis/deliverables/final/jar/Server.jar) and the [MainClient.jar](CodexNaturalis/deliverables/final/jar/MainClient.jar) with the UI selection please run it with the  corrisponding *.bat* file for Windows users or  launch them on the command line or terminal window with the command:
 
 >  *java -jar jarfilename.jar.*
-5. Launching the server on command line the terminal will show the ip adress which the players have to insert in their client program to be connected.
+5. Launching the server on command line the terminal will show the ip address which the players have to insert in their client program to be connected.
+> 
 
  
