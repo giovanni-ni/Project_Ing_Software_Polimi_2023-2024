@@ -577,8 +577,10 @@ public class Tui  implements Ui {
         }
 
         if(status == PlayerStatus.Draw) {
-            if(hasPlayed) {
+            if(hasPlayed && (!myMatch.getGoldDeck().isEmpty() || !myMatch.getResourceDeck().isEmpty())) {
                 drawCard();
+            } else {
+                status = PlayerStatus.GamePlay;
             }
         }
 
