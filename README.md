@@ -39,7 +39,7 @@
 - Play with a computer that supports 1280 X 720 pixels or greater;
 - For TUI version, please use a terminal that supports ANSI colors
 
-## Enjoy the Game!
+## Enjoy the Game! :)
 
 
  
