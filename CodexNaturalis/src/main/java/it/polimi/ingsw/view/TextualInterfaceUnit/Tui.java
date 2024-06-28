@@ -725,7 +725,7 @@ public class Tui  implements Ui {
                     choice -= 3;
                 }
 
-                drawCardMessage msg = new drawCardMessage(this.username, myMatch.getIdMatch(), isGoldDeck, choice);
+                DrawCardMessage msg = new DrawCardMessage(this.username, myMatch.getIdMatch(), isGoldDeck, choice);
                 client.messageToServer(msg);
 
             } else {
@@ -868,43 +868,43 @@ public class Tui  implements Ui {
      */
     @Override
     public void handleMessage(GenericServerMessage msg)  {
-        if(msg instanceof joinSuccessMsg) {
+        if(msg instanceof JoinSuccessMsg) {
             if(!status.equals(PlayerStatus.Preparing)) {
                 status = PlayerStatus.MatchStart;
-                myMatch = ((joinSuccessMsg) msg).getModel();
-                myPlayer = ((joinSuccessMsg) msg).getModel().getPlayers().getLast();
+                myMatch = ((JoinSuccessMsg) msg).getModel();
+                myPlayer = ((JoinSuccessMsg) msg).getModel().getPlayers().getLast();
                 print(myMatch.idMatch);
             }
-        } else if(msg instanceof joinFailMsg) {
-            print("join fail because" + ((joinFailMsg) msg).getDescription());
+        } else if(msg instanceof JoinFailMsg) {
+            print("join fail because" + ((JoinFailMsg) msg).getDescription());
         }else if(msg instanceof ServerChatMessage) {
             print("New chat Message:");
             showNewChatMessage(msg);
             //store the chat for historical chat view
             chat.add((ServerChatMessage)msg);
-        } else if(msg instanceof newPlayerInMsg) {
-            print("new player is in " + ((newPlayerInMsg) msg).getNicknameNewPlayer());
-        } else if(msg instanceof gameStartMsg) {
+        } else if(msg instanceof NewPlayerInMsg) {
+            print("new player is in " + ((NewPlayerInMsg) msg).getNicknameNewPlayer());
+        } else if(msg instanceof GameStartMsg) {
             //print("the game is starting.. 3.. 2.. 1..");
-            //print("numero di giocatori del ultimo model"+((gameStartMsg) msg).getModel().getPlayers().size());
-            myMatch = ((gameStartMsg) msg).getModel();
-            myPlayer = ((gameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            //print("numero di giocatori del ultimo model"+((GameStartMsg) msg).getModel().getPlayers().size());
+            myMatch = ((GameStartMsg) msg).getModel();
+            myPlayer = ((GameStartMsg) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             status = PlayerStatus.Preparing;
             //print("game status change" );
 
-        } else if(msg instanceof playCardSuccess) {
-            Tui.myMatch = ((playCardSuccess) msg).getModel();
-            Tui.myPlayer = ((playCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+        } else if(msg instanceof PlayCardSuccess) {
+            Tui.myMatch = ((PlayCardSuccess) msg).getModel();
+            Tui.myPlayer = ((PlayCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             Tui.hasChange = 1;
             Tui.hasPlayed = true;
-            if(((playCardSuccess) msg).getModel().getCurrentPlayer().getNickname().equals(Tui.myPlayer.nickname)) {
+            if(((PlayCardSuccess) msg).getModel().getCurrentPlayer().getNickname().equals(Tui.myPlayer.nickname)) {
                 Tui.status = PlayerStatus.Draw;
             }
 
-        } else if(msg instanceof drawCardSuccess) {
+        } else if(msg instanceof DrawCardSuccess) {
             Tui.status = PlayerStatus.GamePlay;
-            Tui.myMatch = ((drawCardSuccess) msg).getModel();
-            Tui.myPlayer = ((drawCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            Tui.myMatch = ((DrawCardSuccess) msg).getModel();
+            Tui.myPlayer = ((DrawCardSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
         }
         else if(msg instanceof ActionSuccessMsg) {
             if(!connectionSuccess) {
@@ -921,12 +921,18 @@ public class Tui  implements Ui {
             Tui.printMessage(((NowIsYourRoundMsg) msg).getDescription());
         } else if(msg instanceof LastRoundMessage) {
             Tui.printMessage("ATTENTION !! it's the last round");
-        } else if(msg instanceof endGameMessage) {
+        } else if(msg instanceof EndGameMessage) {
             Tui.status = PlayerStatus.END;
-            Tui.myMatch = ((endGameMessage) msg).getModel();
-            Tui.myPlayer = ((endGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
+            Tui.myMatch = ((EndGameMessage) msg).getModel();
+            Tui.myPlayer = ((EndGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             endGame();
-        } /*else if(msg instanceof ReconnectSuccess) {
+        } else if(msg instanceof LeaveMessage) {
+            print(((LeaveMessage) msg).getLeftPlayer() + "left the game. GAME OVER");
+            System.exit(0);
+        }
+
+
+            /*else if(msg instanceof ReconnectSuccess) {
 
             Tui.myMatch = ((ReconnectSuccess) msg).getModel();
             Tui.myPlayer = ((ReconnectSuccess) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
@@ -937,7 +943,8 @@ public class Tui  implements Ui {
             print("welcome back " + Tui.myPlayer.nickname);
         }*/
 
-        /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof drawCardSuccess || msg instanceof endGameMessage || msg instanceof gameStartMsg || msg instanceof joinSuccessMsg || msg instanceof playCardSuccess) {
+
+        /*if(msg instanceof ActionSuccessMsg /*|| msg instanceof DrawCardSuccess || msg instanceof EndGameMessage || msg instanceof GameStartMsg || msg instanceof JoinSuccessMsg || msg instanceof PlayCardSuccess) {
             Tui.myMatch = ((ActionSuccessMsg) msg).getModel();
 
         }*/

@@ -4,13 +4,11 @@ import it.polimi.ingsw.Message.ClientToServerMsg.*;
 import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.Listener;
-import it.polimi.ingsw.Networking.Listeners.SocketListener;
 import it.polimi.ingsw.model.Match;
 import it.polimi.ingsw.model.MatchStatus;
 import it.polimi.ingsw.model.Player;
 import it.polimi.ingsw.model.PlayerColor;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSException;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -116,7 +114,7 @@ public class SingleMatchControllerTest {
 
         Thread.sleep(2000);
 
-        assertEquals(l.msg.getFirst().getClass(), gameStartMsg.class);
+        assertEquals(l.msg.getFirst().getClass(), GameStartMsg.class);
 
         SetTargetCardMessage sMsg = new SetTargetCardMessage(0, "paolo", 0);
         SetTargetCardMessage sMsg1 = new SetTargetCardMessage(0, "pablo", 0);
@@ -153,13 +151,13 @@ public class SingleMatchControllerTest {
         clt.addInQueue(pMsg2, pMsg2.getListener());
         Thread.sleep(1000);
 
-        assertEquals(lis.get(nickname).msg.getFirst().getClass(), playCardSuccess.class);
+        assertEquals(lis.get(nickname).msg.getFirst().getClass(), PlayCardSuccess.class);
 
-        drawCardMessage dMessage = new drawCardMessage(nickname, 0, true, 1);
+        DrawCardMessage dMessage = new DrawCardMessage(nickname, 0, true, 1);
         clt.addInQueue(dMessage, dMessage.getListener());
         Thread.sleep(1000);
 
-        assertEquals(lis.get(nickname).msg.getFirst().getClass(), drawCardSuccess.class);
+        assertEquals(lis.get(nickname).msg.getFirst().getClass(), DrawCardSuccess.class);
 
         ClientChatMessage chatMessage = new ClientChatMessage(0, "paolo", true,"", "ciao");
         clt.addInQueue(chatMessage, chatMessage.getListener());
@@ -182,7 +180,7 @@ public class SingleMatchControllerTest {
 
         nickname = clt.getControllerbyId(0).getMatch().getCurrentPlayer().nickname;
         playCardMessage pMsg1 = new playCardMessage(nickname, 1, true, 1,1);
-        drawCardMessage dMessage1 = new drawCardMessage(nickname, 0, false, 1);
+        DrawCardMessage dMessage1 = new DrawCardMessage(nickname, 0, false, 1);
         clt.addInQueue(pMsg1, pMsg1.getListener());
         clt.addInQueue(dMessage1, dMessage1.getListener());
         Thread.sleep(1000);
@@ -190,9 +188,9 @@ public class SingleMatchControllerTest {
         for(String n: lis.keySet()) {
             if(clt.getControllerbyId(0).getMatch().getCurrentPlayer().nickname.equals(n)) {
                 assertEquals(lis.get(n).msg.getFirst().getClass(), NowIsYourRoundMsg.class);
-                assertEquals(lis.get(n).msg.get(1).getClass(),  drawCardSuccess.class);
+                assertEquals(lis.get(n).msg.get(1).getClass(),  DrawCardSuccess.class);
             } else {
-                assertEquals( lis.get(n).msg.getFirst().getClass(), drawCardSuccess.class);
+                assertEquals( lis.get(n).msg.getFirst().getClass(), DrawCardSuccess.class);
             }
         }
 
@@ -204,7 +202,7 @@ public class SingleMatchControllerTest {
         assertEquals(lis.get("paolo").msg.getFirst().getClass(), ActionNotRecognize.class);
 
         nickname = clt.getControllerbyId(0).getMatch().getCurrentPlayer().nickname.equals("paolo")? "pablo": "paolo";
-        drawCardMessage d1 = new drawCardMessage(nickname, 0, true, 1);
+        DrawCardMessage d1 = new DrawCardMessage(nickname, 0, true, 1);
         clt.addInQueue(d1, d1.getListener());
         Thread.sleep(1000);
 
@@ -216,7 +214,7 @@ public class SingleMatchControllerTest {
         Thread.sleep(1000);
 
         for(String n: lis.keySet()) {
-            assertEquals(lis.get(n).msg.getFirst().getClass(), endGameMessage.class);
+            assertEquals(lis.get(n).msg.getFirst().getClass(), EndGameMessage.class);
         }
 
     }
@@ -292,7 +290,7 @@ public class SingleMatchControllerTest {
 
         Thread.sleep(2000);
 
-        assertEquals(l.msg.getFirst().getClass(), gameStartMsg.class);
+        assertEquals(l.msg.getFirst().getClass(), GameStartMsg.class);
 
         SetTargetCardMessage sMsg = new SetTargetCardMessage(0, "paolo", 0);
         SetTargetCardMessage sMsg1 = new SetTargetCardMessage(0, "pablo", 0);

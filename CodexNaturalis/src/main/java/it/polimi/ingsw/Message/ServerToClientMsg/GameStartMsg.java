@@ -7,17 +7,17 @@ import it.polimi.ingsw.model.ViewModel;
  * Represents a message sent from the server to the client indicating the start of a game.
  * Extends {@link ActionSuccessMsg} and inherits the ViewModel containing the initial state of the game.
  */
-public class gameStartMsg extends ActionSuccessMsg {
+public class GameStartMsg extends ActionSuccessMsg {
 
     private final ViewModel viewModel;
 
     /**
-     * Constructs a gameStartMsg with the provided Match object.
+     * Constructs a GameStartMsg with the provided Match object.
      * Initializes the ViewModel based on the provided Match.
      *
      * @param match the Match object representing the initial state of the game
      */
-    public gameStartMsg(Match match) {
+    public GameStartMsg(Match match) {
         super(match);
         this.viewModel = new ViewModel(match);
     }

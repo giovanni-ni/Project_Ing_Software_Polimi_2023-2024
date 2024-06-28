@@ -4,7 +4,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
 import it.polimi.ingsw.Message.ClientToServerMsg.ClientChatMessage;
-import it.polimi.ingsw.Message.ClientToServerMsg.drawCardMessage;
+import it.polimi.ingsw.Message.ClientToServerMsg.DrawCardMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.playCardMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ServerChatMessage;
 
@@ -42,7 +42,7 @@ import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.*;
 
-import static it.polimi.ingsw.utils.pathSearch.*;
+import static it.polimi.ingsw.utils.PathSearch.*;
 /**
  * Controller class for managing the game board interface and interactions.
  * Extends GenericSceneController and implements Initializable for JavaFX.
@@ -159,10 +159,10 @@ public class BoardController extends GenericSceneController implements Initializ
         String nickname =getGuiApplication().getGui().getUsername();
         Integer  gameId= getGuiApplication().getGui().getMatchID();
         if(getGoldCardIndex_toServer!=null){
-            getGuiApplication().getGui().notify(new drawCardMessage(nickname,gameId, true, getGoldCardIndex_toServer ));
+            getGuiApplication().getGui().notify(new DrawCardMessage(nickname,gameId, true, getGoldCardIndex_toServer ));
 
         }else{
-            getGuiApplication().getGui().notify(new drawCardMessage(nickname,gameId, false, getResourceCardIndex_toServer ));
+            getGuiApplication().getGui().notify(new DrawCardMessage(nickname,gameId, false, getResourceCardIndex_toServer ));
 
         }
 

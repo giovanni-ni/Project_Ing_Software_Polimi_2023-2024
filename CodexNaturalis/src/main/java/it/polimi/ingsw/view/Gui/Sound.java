@@ -16,16 +16,16 @@ public class Sound {
     /**
      * Plays a sound from the specified resource path.
      *
-     * @param soundName the name of the sound file to play (relative path from "/images/cards/")
+     * @param soundName the name of the sound file to play (relative path from "/sound/")
      */
     public static synchronized void playSound(final String soundName) {
-
-            /*new Thread(() -> {
+            /*
+            new Thread(() -> {
                 try {
                     Clip clip = AudioSystem.getClip();
 
 
-                    InputStream in = Sound.class.getResourceAsStream("/images/cards/"+ soundName);
+                    InputStream in = Sound.class.getResourceAsStream("/sound/"+ soundName);
 
 
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
@@ -52,8 +52,8 @@ public class Sound {
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
-            }).start();*/
-
+            }).start();
+            */
     }
 
 

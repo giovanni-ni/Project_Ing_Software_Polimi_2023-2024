@@ -1,6 +1,5 @@
 package it.polimi.ingsw.view.Gui;
 
-import it.polimi.ingsw.Message.ClientToServerMsg.CreateGameMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.JoinGameMessage;
 import it.polimi.ingsw.Message.Message;
@@ -9,22 +8,14 @@ import it.polimi.ingsw.Networking.Client;
 import it.polimi.ingsw.Networking.DefaultPort;
 import it.polimi.ingsw.Networking.rmi.RMIClient;
 import it.polimi.ingsw.Networking.socket.SocketClient;
-import it.polimi.ingsw.model.MatchStatus;
-import it.polimi.ingsw.model.Player;
-import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.model.ViewModel;
-import it.polimi.ingsw.view.Gui.SceneControllers.BoardController;
 import it.polimi.ingsw.view.Gui.SceneControllers.UPDATE;
 import it.polimi.ingsw.view.Ui;
 import javafx.application.Platform;
 
 import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -116,7 +107,7 @@ public class GUI extends Thread implements Ui {
             chat.add((ServerChatMessage) msg);
             guiApplication.updateCurrentSceneModel(UPDATE.CHATMESSAGE);
             if (((ServerChatMessage) msg).getChatMsg().equals("快点吧")) {
-                Sound.playSound("6589.wav");
+                Sound.playSound("sound.wav");
             }
         }
         if (msg instanceof ActionNotRecognize) {
@@ -126,19 +117,19 @@ public class GUI extends Thread implements Ui {
                 Platform.runLater(() -> guiApplication.showScene(ScenesName.STARTMENU));
             }
         } else if (guiApplication.getActualScene() == ScenesName.ASKNICKNAME || guiApplication.getActualScene() == ScenesName.EASYJOIN) {
-            if (msg instanceof gameStartMsg) {
-                myMatch = ((gameStartMsg) msg).getModel();
+            if (msg instanceof GameStartMsg) {
+                myMatch = ((GameStartMsg) msg).getModel();
                 Platform.runLater(() -> guiApplication.showScene(ScenesName.PREPARE));
-            } else if (msg instanceof joinSuccessMsg) {
-                myMatch = ((joinSuccessMsg) msg).getModel();
+            } else if (msg instanceof JoinSuccessMsg) {
+                myMatch = ((JoinSuccessMsg) msg).getModel();
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(() -> guiApplication.showScene(ScenesName.WAITING));
-            } else if (msg instanceof joinFailMsg) {
-                Platform.runLater(() -> guiApplication.showErrorMessage(((joinFailMsg) msg).getDescription()));
+            } else if (msg instanceof JoinFailMsg) {
+                Platform.runLater(() -> guiApplication.showErrorMessage(((JoinFailMsg) msg).getDescription()));
             }
         } else if (guiApplication.getActualScene() == ScenesName.WAITING) {
-            if (msg instanceof gameStartMsg) {
-                myMatch = ((gameStartMsg) msg).getModel();
+            if (msg instanceof GameStartMsg) {
+                myMatch = ((GameStartMsg) msg).getModel();
                 Platform.runLater(() -> guiApplication.showScene(ScenesName.PREPARE));
             } else if (msg instanceof ActionSuccessMsg) {
                 myMatch = ((ActionSuccessMsg) msg).getModel();
@@ -146,19 +137,19 @@ public class GUI extends Thread implements Ui {
                 guiApplication.updateCurrentSceneModel(UPDATE.GENERAL);
             }
         } else if (guiApplication.getActualScene() == ScenesName.BOARD) {
-            if (msg instanceof playCardSuccess) {
-                myMatch = ((playCardSuccess) msg).getModel();
+            if (msg instanceof PlayCardSuccess) {
+                myMatch = ((PlayCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(() -> guiApplication.updateCurrentSceneModel(UPDATE.PLAYCARD));
-            } else if (msg instanceof drawCardSuccess) {
-                myMatch = ((drawCardSuccess) msg).getModel();
+            } else if (msg instanceof DrawCardSuccess) {
+                myMatch = ((DrawCardSuccess) msg).getModel();
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(() -> guiApplication.updateCurrentSceneModel(UPDATE.DRAWCARD));
             } else if (msg instanceof LastRoundMessage) {
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(() -> guiApplication.updateCurrentSceneModel(UPDATE.LASTROUND));
-            } else if (msg instanceof endGameMessage) {
-                myMatch = ((endGameMessage) msg).getModel();
+            } else if (msg instanceof EndGameMessage) {
+                myMatch = ((EndGameMessage) msg).getModel();
                 matchID = myMatch.getIdMatch();
                 Platform.runLater(() -> guiApplication.updateCurrentSceneModel(UPDATE.ENDMESSAGE));
             } else if (msg instanceof NowIsYourRoundMsg) {
@@ -172,8 +163,8 @@ public class GUI extends Thread implements Ui {
             myMatch = ((ActionSuccessMsg) msg).getModel();
             matchID = myMatch.getIdMatch();
             guiApplication.updateCurrentSceneModel(UPDATE.GENERAL);
-        } else if (msg instanceof joinFailMsg) {
-            guiApplication.showErrorMessage(((joinFailMsg) msg).getDescription());
+        } else if (msg instanceof JoinFailMsg) {
+            guiApplication.showErrorMessage(((JoinFailMsg) msg).getDescription());
         }
     }
 

@@ -50,10 +50,10 @@ public class ClientHandler extends Thread {
 
 
     }
+
     /**
      * Interrupts the client handler thread.
      */
-
     public void interruptThread() {
         this.interrupt();
     }

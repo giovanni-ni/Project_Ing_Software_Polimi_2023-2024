@@ -69,7 +69,7 @@ public class SingleMatchController extends Thread implements Serializable{
         distributeCardsAndSetBoards();
         extractFirstPlayer();
 
-        notifyAllListeners(new gameStartMsg(this.match));
+        notifyAllListeners(new GameStartMsg(this.match));
 
     }
     /**
@@ -102,7 +102,7 @@ public class SingleMatchController extends Thread implements Serializable{
 
                     ifLastTurn();
                     match.nextPlayer();
-                    notifyAllListeners(new drawCardSuccess(match));
+                    notifyAllListeners(new DrawCardSuccess(match));
                     getListenerOf(match.getCurrentPlayer().nickname).update(new NowIsYourRoundMsg());
                 } else { //wrong deck index
                     getListenerOf(nickname).update( new ActionNotRecognize("Not Valid Choice"));
@@ -161,7 +161,7 @@ public class SingleMatchController extends Thread implements Serializable{
                     if(match.getStatus()==MatchStatus.LastRound && match.getGoldDeck().isEmpty() && match.getResourceDeck().isEmpty()){
                         match.nextPlayer();
                     }
-                    notifyAllListeners( new playCardSuccess(match));
+                    notifyAllListeners( new PlayCardSuccess(match));
                 }else {
                      getListenerOf(nickname).update( new ActionNotRecognize("Not valid choice"));
                 }
@@ -182,7 +182,7 @@ public class SingleMatchController extends Thread implements Serializable{
     public boolean addPlayer(Player p, Listener listener) throws RemoteException {
 
         if (!isPlayerFull() && match.addPlayer(p)){
-            notifyAllListeners(new newPlayerInMsg(this.match));
+            notifyAllListeners(new NewPlayerInMsg(this.match));
             listener.setNickname(p.nickname);
             addListener(listener);
             if (limitPly>=2 && limitPly<=4 && match.getPlayers().size() == limitPly)
@@ -211,7 +211,7 @@ public class SingleMatchController extends Thread implements Serializable{
         if (match.getStatus()== MatchStatus.End){
             match.setWinners();
             try {
-                notifyAllListeners(new endGameMessage(match));
+                notifyAllListeners(new EndGameMessage(match));
             } catch (RemoteException e) {
                 throw new RuntimeException(e);
             }
@@ -226,7 +226,7 @@ public class SingleMatchController extends Thread implements Serializable{
     public void execute(GenericClientMessage msg) throws RemoteException {
 
         switch (msg) {
-            case drawCardMessage drawCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
+            case DrawCardMessage drawCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
                     getACard(msg.getNickname(), drawCardMessage.getDeck(), drawCardMessage.getNumberindex());
             case playCardMessage playCardMessage when (match.getStatus() == MatchStatus.Playing || match.getStatus() == MatchStatus.LastRound) ->
                     playACardOnHand(msg.getNickname(), playCardMessage.getIndexOfCardOnHand(), playCardMessage.getCoo(), playCardMessage.isFront());

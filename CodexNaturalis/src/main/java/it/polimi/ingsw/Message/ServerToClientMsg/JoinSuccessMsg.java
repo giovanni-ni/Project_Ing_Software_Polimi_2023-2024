@@ -6,13 +6,13 @@ import it.polimi.ingsw.model.Match;
  * Represents a message indicating successful joining of a game.
  * Extends {@link ActionSuccessMsg}.
  */
-public class joinSuccessMsg extends ActionSuccessMsg {
+public class JoinSuccessMsg extends ActionSuccessMsg {
 
     /**
-     * Constructs a joinSuccessMsg with the given match model.
+     * Constructs a JoinSuccessMsg with the given match model.
      * @param model The match model representing the current game state.
      */
-    public joinSuccessMsg(Match model) {
+    public JoinSuccessMsg(Match model) {
         super(model);
     }
 }

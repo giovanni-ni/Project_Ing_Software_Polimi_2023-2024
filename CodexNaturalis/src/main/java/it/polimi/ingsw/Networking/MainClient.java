@@ -1,19 +1,9 @@
 package it.polimi.ingsw.Networking;
 
-import it.polimi.ingsw.Message.ClientToServerMsg.*;
-import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.view.Gui.GUIApplication;
 import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 import it.polimi.ingsw.view.Ui;
 
-import javax.swing.*;
-import java.io.*;
-import java.net.Socket;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
 import java.util.Scanner;
 
 import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.*;
@@ -21,7 +11,7 @@ import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
 /**
  * Main class for starting the client application.
  */
-public class mainClient
+public class MainClient
 {
     /**
      * Main method to start the client application.

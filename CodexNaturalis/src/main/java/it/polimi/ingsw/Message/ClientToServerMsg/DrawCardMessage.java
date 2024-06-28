@@ -3,19 +3,19 @@ package it.polimi.ingsw.Message.ClientToServerMsg;
 /**
  * Message sent from the client to the server to draw a card.
  */
-public class drawCardMessage extends GenericClientMessage {
+public class DrawCardMessage extends GenericClientMessage {
     private boolean deck;
     private int numberindex;
 
     /**
-     * Constructs a drawCardMessage with the specified nickname, game ID, deck type, and card index.
+     * Constructs a DrawCardMessage with the specified nickname, game ID, deck type, and card index.
      *
      * @param nickname the nickname of the player drawing the card
      * @param gameId the ID of the game
      * @param deck the type of deck (true if drawing from a specific deck, false otherwise)
      * @param number the index number of the card to draw
      */
-    public drawCardMessage(String nickname, int gameId, boolean deck, int number) {
+    public DrawCardMessage(String nickname, int gameId, boolean deck, int number) {
         super(gameId, nickname);
         this.deck = deck;
         this.numberindex = number;

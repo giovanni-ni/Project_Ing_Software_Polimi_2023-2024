@@ -15,7 +15,7 @@ import java.util.Enumeration;
 /**
  * Main class for starting the server application.
  */
-public class mainServer{
+public class MainServer {
     /**
      * Main method to start the server.
      *

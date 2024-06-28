@@ -6,7 +6,7 @@ import it.polimi.ingsw.Message.ClientToServerMsg.ChooseColorMsg;
 import it.polimi.ingsw.Message.ClientToServerMsg.FrontOrBackMessage;
 import it.polimi.ingsw.Message.ClientToServerMsg.SetTargetCardMessage;
 import it.polimi.ingsw.model.*;
-import it.polimi.ingsw.utils.pathSearch;
+import it.polimi.ingsw.utils.PathSearch;
 import it.polimi.ingsw.view.Gui.ScenesName;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static it.polimi.ingsw.utils.pathSearch.getPathByCard;
+import static it.polimi.ingsw.utils.PathSearch.getPathByCard;
 public class PrepareController extends GenericSceneController implements Initializable {
 
     // FXML Injected fields
@@ -121,12 +121,12 @@ public class PrepareController extends GenericSceneController implements Initial
             List<TargetCard> targetCards = List.of(myPlayer.getTargetOnHand());
             ArrayList<TargetCard> commonTargets = getGuiApplication().getGui().getMyMatch().getCommonTarget();
             InitialCard initialCard = myPlayer.getInitialCard();
-            target1 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getFirst().getIdCard(), true))));
-            target2 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(targetCards.getLast().getIdCard(), true))));
-            frontInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), true))));
-            backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(initialCard.getCode(), false))));
-            common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
-            common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(pathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
+            target1 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(targetCards.getFirst().getIdCard(), true))));
+            target2 =new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(targetCards.getLast().getIdCard(), true))));
+            frontInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(initialCard.getCode(), true))));
+            backInitial =new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(initialCard.getCode(), false))));
+            common1 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(commonTargets.getFirst().getIdCard(), true))));
+            common2 = new Image(Objects.requireNonNull(getClass().getResourceAsStream(PathSearch.getPathByCardID(commonTargets.getLast().getIdCard(), true))));
             updateDrawCard();
             initialized =true;
         }
