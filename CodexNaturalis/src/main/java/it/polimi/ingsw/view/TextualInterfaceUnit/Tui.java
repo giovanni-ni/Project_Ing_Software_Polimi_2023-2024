@@ -145,6 +145,8 @@ public class Tui  implements Ui {
         print(Print.Codex);
         askToContinue();
         do {
+            isRMI = false;
+            isSocket = false;
             String s = askConnectionType();
             if(s.isEmpty()) {
                 s = "localhost";
@@ -225,7 +227,6 @@ public class Tui  implements Ui {
             } else {
                 this.username = user;
                 myPlayer = new Player(username);
-
                 return;
             }
         } while(user.isEmpty());
@@ -238,6 +239,7 @@ public class Tui  implements Ui {
      * @throws Exception if there is an error during menu action selection.
      */
     public void askMenuAction() throws Exception {
+
         print(Print.menuOption);
         print("-----------------------------------------------------------\n" +
                 "Enter the Command you wish to use: ");
@@ -454,30 +456,29 @@ public class Tui  implements Ui {
     }
 
 
-    public void showCommonGoals() {
+    public void showCommonGoals() throws IOException {
         print("common targets");
         for(TargetCard c: myMatch.getCommonTarget()) {
-            print(c.getIdCard());
+            printCardById(c.getIdCard());
         }
     }
 
 
-    public void showPersonalGoal() throws RemoteException {
+    public void showPersonalGoal() throws IOException {
         print("your target card");
-        print(myPlayer.getTarget().getIdCard());
+        printCardById(myPlayer.getTarget().getIdCard());
     }
 
 
     public void showBoard() {
         int p = 10;
-        print("-9 -8 -7 -6 -5 -4 -3 -2 -1 0 1 2 3 4 5 6 7 8 9");
-        print("");
+        print("-10\t-9\t-8\t-7\t-6\t-5\t-4\t-3\t-2\t-1\t0\t1\t2\t3\t4\t5\t6\t7\t8");
         print("");
         for (int i = 0; i < myBoard.length; i++) {
             for (int j = 0; j < myBoard[0].length; j++) {
-                System.out.print( myBoard[i][j]+" ");
+                System.out.print( myBoard[i][j]+"\t");
             }
-            print("        "+p);
+            print("\t"+p);
             p--;
         }
     }
@@ -519,8 +520,9 @@ public class Tui  implements Ui {
         }
 
         if(status == PlayerStatus.Finish && !finish ) {
-            print("Game End");
+            print(Print.GameEnd);
             finish = true;
+            System.exit(0);
         }
     }
 
@@ -680,6 +682,7 @@ public class Tui  implements Ui {
         }
         print("!!!!!!!");
         Tui.status = PlayerStatus.Finish;
+        print(Print.GameEnd);
 
     }
 
@@ -693,12 +696,13 @@ public class Tui  implements Ui {
     public void drawCard() throws IOException, InterruptedException {
         print("draw a card:\n" +
                 "resource cards: " + myMatch.getResourceDeck().get(0).getCode() + " " + myMatch.getResourceDeck().get(1).getCode() +
-                "kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
+                " kingdom of the third card: " + myMatch.getResourceDeck().get(2).getKingdom() +
                 "\ngold cards: " + myMatch.getGoldDeck().get(0).getCode() + " " + myMatch.getGoldDeck().get(1).getCode() +
                 " kingdom of the third card: " + myMatch.getGoldDeck().get(2).getKingdom());
         String option;
         do{
             print(drawCard);
+            print("action you want to do: ");
             option = in.nextLine();
             if(option.equals("chat")) {
                 askChat();
@@ -873,6 +877,7 @@ public class Tui  implements Ui {
                 status = PlayerStatus.MatchStart;
                 myMatch = ((JoinSuccessMsg) msg).getModel();
                 myPlayer = ((JoinSuccessMsg) msg).getModel().getPlayers().getLast();
+                print("roomID: ");
                 print(myMatch.idMatch);
             }
         } else if(msg instanceof JoinFailMsg) {
@@ -927,7 +932,8 @@ public class Tui  implements Ui {
             Tui.myPlayer = ((EndGameMessage) msg).getModel().getPlayerByNickname(Tui.myPlayer.nickname);
             endGame();
         } else if(msg instanceof LeaveMessage) {
-            print(((LeaveMessage) msg).getLeftPlayer() + "left the game. GAME OVER");
+            print(((LeaveMessage) msg).getLeftPlayer() + " lost. GAME OVER");
+            print(Print.GameEnd);
             System.exit(0);
         }
 
