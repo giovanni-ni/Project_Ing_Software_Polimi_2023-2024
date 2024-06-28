@@ -306,11 +306,12 @@ public class Tui  implements Ui {
 
         do {
             try {
+                print("choose:");
                 index = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
                 print(ANSI_MUSHROOM + "Invalid input. Try again. (0 or 1 or 2 )"+ANSI_RESET);
             }
-        }while(index != 0 && index != 1 && index != 2);
+        }while(index < 0 || index > myPlayer.getCardOnHand().size()-1);
 
         int code = myPlayer.getCardOnHand().get(index).getCode();
 
@@ -589,11 +590,12 @@ public class Tui  implements Ui {
 
         printCard(myPlayer.getInitialCard());
 
-        print("this is your initial card: choose front(0) or back(1) ");
+        print("this is your initial card:  ");
 
         do {
 
             try {
+                print("choose front(0) or back(1): ");
                 choice = Integer.parseInt(in.nextLine());
             } catch(NumberFormatException e) {
                 print(ANSI_MUSHROOM + "Try again! 0 or 1"+ANSI_RESET);
@@ -621,6 +623,7 @@ public class Tui  implements Ui {
 
         do {
             try {
+                print("0 or 1: ");
                 choice = Integer.parseInt(in.nextLine());
             } catch (NumberFormatException e) {
                 print(ANSI_MUSHROOM + "Try Again! 0 or 1"+ANSI_RESET);
@@ -716,11 +719,12 @@ public class Tui  implements Ui {
                 String s;
                 print(" resource card: first(0) second(1) third(2) ");
                 print(" gold card: first(3) second(4) third(5) ");
-                print("choose the card that you want to draw : ");
+
 
                 int choice = -1;
                 do {
                     try {
+                        print("choose the card that you want to draw : ");
                         choice = Integer.parseInt(in.nextLine());
                     } catch(NumberFormatException e) {
                         print(ANSI_MUSHROOM + "Try Again!"+ANSI_RESET);
@@ -802,8 +806,19 @@ public class Tui  implements Ui {
     }
 
     private void askShowCard() throws IOException {
-        print("which card do you want:");
-        printCardById(Integer.parseInt(in.nextLine()));
+
+        boolean success;
+        do {
+            try {
+                print("insert the code of the card:");
+                success = true;
+                printCardById(Integer.parseInt(in.nextLine()));
+            } catch (NumberFormatException e) {
+                print("is not a number");
+                success = false;
+            }
+        } while(!success);
+
     }
     public PlayerStatus getStatus() {
         return status;
