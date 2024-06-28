@@ -270,8 +270,6 @@ public class AllMatchControllerTest {
 
         Thread.sleep(1000);
 
-
-
         JoinGameMessage msg4 = new JoinGameMessage("pippo", 0);
         SocketListener s = new SocketListener(out);
         msg4.setListener(s);
@@ -281,7 +279,13 @@ public class AllMatchControllerTest {
 
         assertEquals(s.msg.getFirst().getClass(), JoinFailMsg.class);
 
-
+        CrashMsg crash = new CrashMsg("antonio");
+        SocketListener l9 = new SocketListener(out);
+        l9.setGameID(0);
+        crash.setListener(l9);
+        clt.addInQueue(crash, crash.getListener());
+        Thread.sleep(2000);
+        assertEquals(clt.getControllerbyId(0), null);
 
     }
 }

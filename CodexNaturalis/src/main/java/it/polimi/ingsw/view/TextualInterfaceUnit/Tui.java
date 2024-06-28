@@ -267,6 +267,12 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Sends a request to join the game session first.
+     *
+     * @throws InterruptedException if the thread is interrupted while sleeping.
+     * @throws RemoteException      if a remote exception occurs during communication.
+     */
     public void askJoinFirst() throws InterruptedException, RemoteException {
         GenericClientMessage msg = new JoinFirstMessage(this.username);
         client.messageToServer(msg);
@@ -274,6 +280,13 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Asks the player if they are ready to start and sends their readiness status
+     * to the server.
+     *
+     * @throws InterruptedException if the thread is interrupted while sleeping.
+     * @throws RemoteException      if a remote exception occurs during communication.
+     */
     public void askSetReady() throws InterruptedException, RemoteException {
         String option;
 
@@ -296,6 +309,13 @@ public class Tui  implements Ui {
         System.out.flush();
     }
 
+    /**
+     * Asks the player to choose a card, position, and orientation to play,
+     * then sends the chosen card's information to the server.
+     *
+     * @throws InterruptedException if the thread is interrupted while sleeping.
+     * @throws RemoteException      if a remote exception occurs during communication.
+     */
     public void askPlayCard() throws InterruptedException, RemoteException {
         print("choose the card that you want to play: ");
         for(int i=0; i< myPlayer.getCardOnHand().size(); i++ ) {
@@ -362,6 +382,13 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Asks the player to whom they want to send a message and the content of the message,
+     * then sends the chat message to the appropriate recipient(s) on the server.
+     *
+     * @throws RemoteException      if a remote exception occurs during communication.
+     * @throws InterruptedException if the thread is interrupted while sleeping.
+     */
     public void askChat() throws RemoteException, InterruptedException {
 
         print("who do you want to send the message to: (BROADCAST for all players)");
@@ -383,11 +410,15 @@ public class Tui  implements Ui {
         }
 
         Thread.sleep(1000);
-
-
     }
 
 
+    /**
+     * Asks the player if they want to create a match with auto-start option,
+     * and sends the match creation request to the server.
+     *
+     * @throws Exception if an error occurs during match creation.
+     */
     public void askCreateMatch() throws Exception {
 
         String choice;
@@ -419,6 +450,12 @@ public class Tui  implements Ui {
 
     }
 
+    /**
+     * Asks the player to select the number of seats (players) for a match.
+     *
+     * @return the number of players selected for the match.
+     * @throws Exception if an error occurs during input or if an invalid number of seats is selected.
+     */
     private int askMaxSeats() throws Exception {
         int playerNumber = 0;
         do {
@@ -436,6 +473,12 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Asks the player to enter the ID of the match they want to join,
+     * then sends the join request to the server.
+     *
+     * @throws Exception if an error occurs during match joining.
+     */
     public void askJoinMatch() throws Exception {
         int matchID = -1;
         do {
@@ -455,12 +498,22 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Exits the game.
+     *
+     * @return always returns false (unreachable code due to System.exit(0)).
+     * @throws RemoteException if a remote exception occurs during communication.
+     */
     public boolean askExitGame() throws RemoteException {
         System.exit(0);
         return false;
     }
 
-
+    /**
+     * Displays the common target cards for the current match.
+     *
+     * @throws IOException if an I/O error occurs while printing the cards.
+     */
     public void showCommonGoals() throws IOException {
         print("common targets");
         for(TargetCard c: myMatch.getCommonTarget()) {
@@ -469,12 +522,21 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * Displays the personal target card of the player.
+     *
+     * @throws IOException if an I/O error occurs while printing the card.
+     */
     public void showPersonalGoal() throws IOException {
         print("your target card");
         printCardById(myPlayer.getTarget().getIdCard());
     }
 
 
+    /**
+     * Displays the game board with current positions and values.
+     * Uses a grid layout with coordinates.
+     */
     public void showBoard() {
         int p = 10;
         print("-10\t-9\t-8\t-7\t-6\t-5\t-4\t-3\t-2\t-1\t0\t1\t2\t3\t4\t5\t6\t7\t8");
@@ -658,6 +720,9 @@ public class Tui  implements Ui {
     }
 
 
+    /**
+     * show the deck on table which can be drawn by the players
+     */
     private void showDeck() {
         print("resource cards: ");
         printCard( myMatch.getResourceDeck().get(0));
@@ -799,12 +864,18 @@ public class Tui  implements Ui {
         Thread.sleep(1000);
     }
 
+    /**
+     * show every player's points
+     */
     private void showPoints() {
         for(Player p : myMatch.getPlayers()) {
             print(p.getNickname() + ": " + "[" + p.getPlayerID() + "] "+ p.currentScore + " points");
         }
     }
 
+    /**
+     * use to print a specific card by its code
+     */
     private void askShowCard() throws IOException {
 
         boolean success;
