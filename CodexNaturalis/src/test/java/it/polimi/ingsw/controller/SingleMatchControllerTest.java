@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +68,11 @@ public class SingleMatchControllerTest {
         @Override
         public void setGameID(Integer gameID) {
             GameID = gameID;
+        }
+
+        @Override
+        public void heartBeat() throws RemoteException {
+
         }
     }
 

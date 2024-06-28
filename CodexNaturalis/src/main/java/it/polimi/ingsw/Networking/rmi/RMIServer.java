@@ -1,5 +1,8 @@
 package it.polimi.ingsw.Networking.rmi;
 
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
+import it.polimi.ingsw.Message.ClientToServerMsg.CrashMsg;
 import it.polimi.ingsw.Message.ClientToServerMsg.GenericClientMessage;
 import it.polimi.ingsw.Message.ServerToClientMsg.ActionSuccessMsg;
 import it.polimi.ingsw.Networking.Listeners.Listener;
@@ -23,6 +26,8 @@ public class RMIServer implements VirtualServer {
     public boolean clientAlive = false;
     private final AllMatchesController mainController;
     final List<Listener> clients = new ArrayList<>();
+    final BiMap <Listener,CrashMsg> crashMsgBiMap = HashBiMap.create();
+    private Listener crashedClient;
 
     final BlockingQueue<Integer> updates = new ArrayBlockingQueue<>(100);
     /**
@@ -33,11 +38,30 @@ public class RMIServer implements VirtualServer {
      */
     public RMIServer(AllMatchesController mainController ) throws IOException {
         this.mainController=mainController;
+        String nickname =null;
+        scheduler.scheduleAtFixedRate(() -> {
+            for (Listener c : clients){
+                try {
+                    c.heartBeat();
+                    crashMsgBiMap.put(c,new CrashMsg(c.getNickname(),c.getGameID(),c));
+
+                } catch(RemoteException e){
+
+                        CrashMsg msg = crashMsgBiMap.get(c);
+                        mainController.addInQueue(msg,c);
+
+                        crashedClient =c;
+                }
+            }
+            clients.remove(crashedClient);
+        }, 0, 1, TimeUnit.SECONDS);
     }
+
     @Override
     public void receiveHeartbeat() throws RemoteException {
-        clientAlive = true;
+
     }
+
     /**
      * Connects a client to the server and sends an initial success message.
      *
@@ -49,22 +73,7 @@ public class RMIServer implements VirtualServer {
         synchronized (this.clients){
             client.update(new ActionSuccessMsg(new Match(0)));
             this.clients.add(client);
-            scheduler.scheduleAtFixedRate(() -> {
-                if (clientAlive) {
-                    try {
-                        System.out.println(client.getNickname()+"is alive");
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
-                    clientAlive = false; // Reset the flag
-                } else {
-                    try {
-                        System.out.println(client.getNickname()+"is disconnected");
-                    } catch (RemoteException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }, 0, 5, TimeUnit.SECONDS); // Check client status every 5 seconds
+            this.crashMsgBiMap.put(client,new CrashMsg(client.getNickname(),client.getGameID(),client));
         }
     }
     /**
@@ -78,4 +87,5 @@ public class RMIServer implements VirtualServer {
     public void addInQueue(GenericClientMessage msg, Listener client) throws RemoteException {
         mainController.addInQueue(msg,client);
     }
+
 }

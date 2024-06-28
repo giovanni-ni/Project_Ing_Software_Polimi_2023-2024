@@ -5,32 +5,24 @@ import it.polimi.ingsw.Message.Message;
 import it.polimi.ingsw.Message.ServerToClientMsg.*;
 import it.polimi.ingsw.Networking.Listeners.Listener;
 import it.polimi.ingsw.Networking.remoteInterface.VirtualServer;
-import it.polimi.ingsw.model.PlayerStatus;
 import it.polimi.ingsw.Networking.Client;
-import it.polimi.ingsw.view.TextualInterfaceUnit.Tui;
 import it.polimi.ingsw.view.Ui;
 
-import java.io.IOException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.print;
-import static it.polimi.ingsw.view.TextualInterfaceUnit.Print.showNewChatMessage;
 /**
  * The RMIClient class is responsible for connecting to a remote RMI server and handling communication.
  */
 public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private String nickname;
-    private Integer gameId;
+    private Integer gameId = -1;
     private VirtualServer server;
     private Ui ui;
     /**
@@ -51,11 +43,11 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
             scheduler.scheduleAtFixedRate(() -> {
                 try {
                     server.receiveHeartbeat();
-                    System.out.println("Heartbeat sent to server");
                 } catch (RemoteException e) {
-                    System.out.println("Failed to send heartbeat to server");
+                    ui.handleMessage(new LeaveMessage("Server"));
+                    scheduler.shutdown();
                 }
-            }, 0, 5, TimeUnit.SECONDS); // Send heartbeat every 5 seconds
+            }, 0, 1, TimeUnit.SECONDS); // Send heartbeat every 5 seconds
         }catch (Exception e){
             ui.handleMessage(new ActionNotRecognize("Connection failed"));
         }
@@ -122,5 +114,9 @@ public class RMIClient extends UnicastRemoteObject implements Listener, Client {
     @Override
     public void messageToServer(GenericClientMessage msg) throws RemoteException {
         server.addInQueue(msg, this );
+    }
+
+    @Override
+    public void heartBeat() throws RemoteException {
     }
 }

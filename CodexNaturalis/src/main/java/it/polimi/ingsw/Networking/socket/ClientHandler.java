@@ -75,7 +75,8 @@ public class ClientHandler extends Thread {
 
                 } catch (IOException | ClassNotFoundException e) {
                     System.out.println("ClientSocket cannot communicate no more with the client");
-                    server.controllers.addInQueue(new CrashMsg(gameListener.getNickname()),gameListener);
+                    CrashMsg msg = new CrashMsg(gameListener.getNickname(), gameListener.getGameID(),gameListener);
+                    server.controllers.addInQueue(msg,gameListener);
                     return;
                 }
             }

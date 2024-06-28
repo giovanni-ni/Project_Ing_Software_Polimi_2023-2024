@@ -4,6 +4,8 @@ import it.polimi.ingsw.Message.Message;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.rmi.RemoteException;
+
 /**
  * Listener implementation for handling communication with a view.
  * This class manages an ObjectOutputStream to send messages to a view.
@@ -68,6 +70,11 @@ public class ViewListener implements Listener{
      */
     @Override
     public void setGameID(Integer gameID) {
+
+    }
+
+    @Override
+    public void heartBeat() throws RemoteException {
 
     }
 }

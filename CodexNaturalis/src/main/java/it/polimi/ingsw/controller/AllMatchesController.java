@@ -194,16 +194,16 @@ public class AllMatchesController extends Thread {
         }else {
             message= new ActionNotRecognize();
         }
-        msg.getListener().update(message);
+
         if (msg instanceof CrashMsg){
-            if(msg.getListener().getGameID()>=0){
-                SingleMatchController singleMatchController = getControllerbyId(msg.getListener().getGameID());
+            if(msg.getGameID()>=0){
+                SingleMatchController singleMatchController = getControllerbyId(msg.getGameID());
                 if (singleMatchController!=null){
                     for (Player p :singleMatchController.getMatch().getPlayers()){
                         if (Objects.equals(p.nickname, msg.getNickname())){
                             //remove the disconnected player's listener
-                            singleMatchController.getMatch().getListenerList().remove(singleMatchController.getListenerOf(((CrashMsg) msg).getNickNameDisconnect()));
-                            getControllerbyId(msg.getListener().getGameID()).notifyAllListeners(new LeaveMessage(p.nickname));
+                            singleMatchController.getMatch().getListenerList().remove(msg.getListener());
+                            getControllerbyId(msg.getGameID()).notifyAllListeners(new LeaveMessage(p.nickname));
                             singleMatchController.interrupt();
                             runningControllers.remove(singleMatchController);
                         }
@@ -211,6 +211,8 @@ public class AllMatchesController extends Thread {
                 }
 
             }
+        }else {
+            msg.getListener().update(message);
         }
     }
 

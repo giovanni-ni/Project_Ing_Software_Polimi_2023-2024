@@ -183,7 +183,7 @@ public class GUIApplication extends Application {
         alert.setTitle("Something went wrong");
         alert.setHeaderText(leftPlayer +" is disconnected");
         alert.setContentText("Application will restart");
-        alert.getDialogPane().getScene().getWindow().setOnCloseRequest(windowEvent -> restartApplication());
+        alert.getDialogPane().getScene().getWindow().setOnCloseRequest(windowEvent -> System.exit(0));
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent()) {
             restartApplication();
